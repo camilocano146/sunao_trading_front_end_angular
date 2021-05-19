@@ -1,0 +1,17 @@
+<div class="text-center my-3">
+  <h3 class="ml-4 mt-2">Dashboard</h3>
+</div>
+
+<div *ngIf="!preload">
+  Dashboard
+</div>
+
+<div *ngIf="!preload">
+  <h4 class="text-center">
+    No hay estadísticas aún
+  </h4>
+</div>
+
+<div *ngIf="preload" class="w-100 text-center">
+  <img src="./assets//gifs//loading.gif" alt="">
+</div>

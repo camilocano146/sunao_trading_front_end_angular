@@ -1,0 +1,196 @@
+{
+  "fields": {
+    "required": "Este campo es obligatorio",
+    "min_2": "Longitud mínima de 2 cacteres",
+    "min_4": "Longitud mínima de 4 cacteres",
+    "min_5": "Longitud mínima de 5 cacteres",
+    "min_8": "Longitud mínima de 8 cacteres",
+    "max_4": "Longitud máxima de 4 cacteres",
+    "max_15": "Longitud máxima de 15 cacteres",
+    "max_20": "Longitud máxima de 20 cacteres",
+    "max_25": "Longitud máxima de 25 cacteres",
+    "max_30": "Longitud máxima de 30 cacteres",
+    "max_40": "Longitud máxima de 40 cacteres",
+    "max_50": "Longitud máxima de 50 cacteres",
+    "max_100": "Longitud máxima de 100 cacteres",
+    "max_1000": "Longitud máxima de 1000 cacteres",
+    "invalid_email": "El correo no es válido",
+    "pattern_integer_numbers": "Solamente números enteros positivos",
+    "first_name": "Nombres",
+    "last_name": "Apellidos",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "repeat_password": "Repetir contraseña",
+    "name_full": "Nombre completo",
+    "country": "País",
+    "phone": "Teléfono",
+    "code": "Código",
+    "user": "User"
+  },
+  "success": {
+    "element_created": "Registro Creado"
+  },
+  "errors": {
+    "connection_error": "Error de conexión, por favor intente nuevamente",
+    "email_not_found": "El correo electrónico no pertenece a ninguna cuenta",
+    "unique_name": "El nombre ya esta asociado con una empresa, debe escribir uno diferente",
+    "unique_email": "El correo electrónico ya esta asociado con una cuenta, debe elegir uno diferente",
+    "file_not_valid": "Archivo no válido",
+    "select_file_mandatory": "Debe seleccionar un archivo"
+  },
+  "buttons": {
+    "save": "Guardar"
+  },
+  "auth": {
+    "sign_in": {
+      "title": "Ingresa a tu cuenta",
+      "enter": "Ingresar",
+      "enter_with": "Ingresar con",
+      "not_account": "No tienes cuenta ? Crea una",
+      "forget_password": "Olvidaste tu contraseña ? Ir a recuperar",
+      "sign_ok": "Sesión iniciada",
+      "sign_error": "Usuario o contraseña incorrectos",
+      "look_account": "Esta cuenta está bloqueada",
+      "email_not_verifies": "Por favor digite el código enviado a su correo electrónico"
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "title_two": "Completa los datos de registro para continuar",
+      "create": "Crear",
+      "register_with": "Registrate con",
+      "already_account": "Ya tienes una cuenta ? Ingresa",
+      "create_ok": "La cuenta ha sido creada exitosamente",
+      "email_not_verifies": "Cuenta creada, Por favor digite el código enviado a su correo electrónico"
+    },
+    "activate_account": {
+      "title": "Activa tu cuenta",
+      "activate": "Activar",
+      "request_code": "No tienes código? Solicita uno",
+      "code_error": "Código no encontrado",
+      "account_activated": "Cuenta activada, por favor inicia sesión"
+    },
+    "request_code": {
+      "title": "Solicitar código de activación",
+      "request": "Solicitar",
+      "already_code": "Ya tienes un código? Ir a activar",
+      "email_send": "Un código fue enviado a su correo electrónico"
+    },
+    "recover_password": {
+      "title": "Recuperar contraseña",
+      "recover": "Recuperar",
+      "already_recover_code": "Ya tienes código de recuperación? Ir a recuperar",
+      "email_send": "Un código fue enviado a su correo electrónico"
+    },
+    "change_password": {
+      "title": "Cambiar contraseña",
+      "change": "Guardar",
+      "back_sign_in": "Volver a Ingreso",
+      "changed": "La contraseña a sido cambiada",
+      "code_error": "Código no encontrado",
+      "different_passwords": "Las contraseñas no coinciden"
+    },
+    "choose_organization": {
+      "title": "Escoja una empresa o cree una nueva"
+    }
+  },
+  "alert": {
+    "go_back": "Regresar",
+    "accept": "Aceptar"
+  },
+  "lobby": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "comments": "Comentarios",
+      "requests": "Solicitudes",
+      "clients": "Clientes",
+      "operations": "Operaciones",
+      "warehouses": "Bodegas"
+    },
+    "common": {
+      "actions": "Acciones",
+      "delete": "delete",
+      "download_file": "Descargar Archvio",
+      "change_to_this_organization": "Cambiar a esta organización"
+    },
+    "requests": {
+      "title": "Solicitudes",
+      "create": "Crear",
+      "register": {
+        "title": "Crear Solicitud"
+      }
+    },
+    "load_data": {
+      "title": "Archivos cargados",
+      "create": "Subir",
+      "delete": "Eliminar Registro",
+      "deleted": "Dato Eliminado",
+      "error_deleted": "No fué posible eliminando el registro, por favor intente nuevamente",
+      "valid_file": "Es un Archivo Válido",
+      "valid_yes": "Si",
+      "valid_not": "No",
+      "register": {
+        "title": "Subir",
+        "type_load": "Tipo",
+        "year": "Año",
+        "file": "Oprima aquí o Arrastre para subir Archivo",
+        "formats": "Formatos soportados:",
+        "organization": "Organización",
+        "created_at": "Fecha de creación"
+      }
+    },
+    "clients": {
+      "title": "Clientes",
+      "create": "Crear",
+      "register": {
+        "title": "Crear Cliente"
+      }
+    },
+    "operations": {
+      "title": "Operaciones",
+      "create": "Crear",
+      "steps": {
+        "delivery": "Entrega",
+        "storage": "Almacenamiento",
+        "isolation": "Alistamiento",
+        "dispatch": "Despacho",
+        "operation_concluded": "Operación conluida"
+      }
+    },
+    "warehouses": {
+      "title": "Bodegas",
+      "create": "Crear",
+      "welcome_title": "Bienvenido al portal de administración de aliado.",
+      "welcome_sub_title": "Este es un espacio diseñado para facilitar tu vida y que puedas administrar la información de tus espacios, operaciones y pagos desde un solo lugar.",
+      "steps": {
+        "general_info": "Información de Bodega",
+        "product_types": "Tipos de producto",
+        "restriction": "Restricciones",
+        "images_videos": "Imágenes",
+        "additional_services": "Servicios adicionales",
+        "company_date": "Datos empresa",
+        "one": {
+          "fields": {
+            "name": "Nombre",
+            "direction": "Direccción",
+            "available_space": "Espacio disponible",
+            "city": "Ciudad",
+            "type_warehouse": "Tipo de bodega",
+            "type_product": "Tipo de producto",
+            "schedule": "Horario",
+            "restrictions": "¿Restricciones?",
+            "daily_rate": "Tarifa diaria",
+            "some_additional_service": "¿Algún servicio adicional?"
+          }
+        }
+      },
+      "register": {
+        "title": "Crear Bodega"
+      }
+    }
+  },
+  "steps_actions": {
+    "previous": "Anterior",
+    "save_and_next": "Continuar",
+    "next": "Siguiente"
+  }
+}

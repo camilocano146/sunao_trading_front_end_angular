@@ -1,0 +1,35 @@
+<div id="div-content-register" class="center-screen-element">
+  <div class="div-content">
+    <div class="div-container">
+      <div class="text-center" style="padding-top: 2em; padding-bottom: 1.5em;">
+        <img class="img-logo" src="./assets/logos/logo-white.png" width="160em" height="70em">
+      </div>
+      <h6 class="color-white text-center title">
+        <!--        {{'auth.sign_in.title' | translate}}-->
+        Ingresa los siguientes datos para finalizar tu registro y continuar tu liquidación.
+      </h6>
+      <div class="pt-3 pb-1 mx-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="email" matInput placeholder="Usuario" [formControl]="formControlEmail" required>
+          <mat-error *ngIf="formControlEmail.invalid">{{getErrorMessageEmail()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field (keyup.enter)="register()" class="w-100" appearance="outline">
+          <input type="password" matInput placeholder="Contraseña" [formControl]="formControlPassword" required>
+          <mat-error *ngIf="formControlPassword.invalid">{{getErrorMessagePassword()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button *ngIf="!preload" mat-raised-button class="w-75 button-auth" (click)="register()">
+          <h5>Continuar</h5>
+        </button>
+        <div *ngIf="preload" class="w-100 text-center">
+          <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+        </div>
+      </div>
+      <div class="mt-4 row" style="margin-bottom: .7em">
+        <a style="white-space: nowrap" routerLink="/" class="cursor-pointer a-navigate col p-0">Ya tengo usuario</a>
+        <a style="white-space: nowrap" routerLink="/recover-password" class="cursor-pointer a-navigate col p-0">Recupera contraseña</a>
+      </div>
+    </div>
+  </div>
+</div>

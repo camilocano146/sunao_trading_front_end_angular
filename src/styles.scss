@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~ng-snotify/styles/material";
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css"; // your theme
+
+$color-soft-blue: #007b8a;
+$color-dark-blue: #00303c;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.center-screen-element {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100vh;
+}
+
+.center-screen-element_80 {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 80vh;
+}
+
+.color-white {
+  color: white !important;
+}
+
+.text-right {
+  text-align: right !important;
+}

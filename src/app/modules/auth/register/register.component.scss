@@ -1,0 +1,29 @@
+@import '../auth.component';
+
+//mat-form-field {
+  //max-height: 4em;
+//}
+
+// tamaño de text field y screen block cuando la pantalla es pequeña para que no queden centrados los componenetes
+
+#div-content-register {
+  .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+  }
+
+  .mat-form-field-infix {
+    height: 3em !important;
+    //padding: 8px !important;
+  }
+}
+
+.header{
+  text-align: center;
+  padding-top: 5vh;
+}
+
+@media (max-height: 650px) {
+  .center-screen-element {
+    display: block !important;
+  }
+}

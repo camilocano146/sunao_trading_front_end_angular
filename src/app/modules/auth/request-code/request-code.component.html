@@ -1,0 +1,29 @@
+<div id="div-content-request-code" class="center-screen-element">
+  <div class="div-content">
+    <div class="text-center">
+      <img class="img-logo" src="./assets/logo/default.png">
+    </div>
+    <div class="div-container">
+      <h5 class="color-white text-center title">
+        {{'auth.request_code.title' | translate}}
+      </h5>
+      <div>
+        <mat-form-field class="w-100" appearance="outline">
+          <input class="text-center" matInput placeholder="{{'fields.email' | translate}}" [formControl]="formControlEmail" required>
+          <mat-error *ngIf="formControlEmail.invalid">{{getErrorMessageEmail()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button *ngIf="!preload" mat-raised-button class="w-100 button-auth" (click)="requestCode()">
+          <h5>{{'auth.request_code.request' | translate}}</h5>
+        </button>
+        <div *ngIf="preload" class="w-100 text-center">
+          <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+        </div>
+      </div>
+      <div class="mt-4 text-center">
+        <a routerLink="/activate-account" class="cursor-pointer a-navigate">{{'auth.request_code.already_code' | translate}}</a>
+      </div>
+    </div>
+  </div>
+</div>

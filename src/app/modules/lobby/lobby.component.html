@@ -1,0 +1,46 @@
+<div class="example-container">
+  <mat-toolbar>
+    <!-- <img src="./assets/logo/logo.jpg" height="40px" style="margin-left: 10px;" alt=""> -->
+    <button mat-icon-button (click)="snav.toggle()">
+      <img src="./assets/icons-menu/lista.svg">
+    </button>
+    <img id="img-logo" (click)="goToDashboard()" src="./assets/logos/logo-white.png" width="70" height="35" style="margin-left: 1em !important;" alt="Logo">
+    <h6 class="ml-3 color-white">
+
+    </h6>
+    <div class="w-100 text-right div-menu-right">
+      <mat-menu #menuNotification="matMenu">
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <img src="./assets/icons-menu/settings-24px.svg">
+      </button>
+      <mat-menu #menu="matMenu">
+        <!-- <button mat-menu-item>
+                    <img>account_box>
+                    <span>Perfil</span>
+                  </button> -->
+        <button mat-menu-item (click)="logOut()">
+          <img src="./assets/icons-menu/power_settings_new-24px.svg" class="mr-2">
+          <span>Cerrar sesión</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+  <mat-sidenav-container id="mat-sidenav-app" class="example-sidenav-container">
+    <mat-sidenav #snav [mode]="isMobileScreen() ? 'over' : 'side'" [fixedInViewport]="isMobileScreen()" fixedTopGap="56">
+      <mat-nav-list class="mt-4">
+        <a [ngClass]="isSelectOption('/lobby') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="./" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center'}"></div>
+          {{'lobby.menu.dashboard' | translate}}
+        </a>
+        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
+          {{'lobby.menu.requests' | translate}}
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content style="overflow-x: hidden">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

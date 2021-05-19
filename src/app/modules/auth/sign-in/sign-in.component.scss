@@ -1,0 +1,17 @@
+@import '../auth.component';
+
+.div-main {
+  //background-image: url(/assets/auth/background.jpg);
+}
+
+.div-container {
+  padding: 1.3em 2.3em 0.3em;
+}
+
+// display block cuando la pantalla es pequeña para que no queden centrados los componenetes
+
+@media (max-height: 600px) {
+  .center-screen-element {
+    display: block !important;
+  }
+}
