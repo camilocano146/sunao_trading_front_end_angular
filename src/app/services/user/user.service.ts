@@ -11,7 +11,7 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  register(body: User): Observable<any> {
+  register(body: Credential): Observable<any> {
     return this.httpClient.post('user/', body);
   }
 

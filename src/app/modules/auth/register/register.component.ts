@@ -9,6 +9,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import * as sha1 from 'js-sha1';
+import {Credential} from '../../../models/Credential';
 
 @Component({
   selector: 'app-register',
@@ -24,6 +25,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   );
   preload: boolean;
   checkTermsAndConditions: boolean;
+  hidePass = true;
 
   constructor(
     private translate: TranslateService,
@@ -77,16 +79,19 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
     if (this.formControlEmail.valid && this.formControlPassword.valid) {
       this.preload = true;
-      const user: User = {
-        email: this.formControlEmail.value.toString().toLowerCase(),
-        password: sha1(this.formControlPassword.value),
-      };
-      this.userService.register(user).subscribe(
+      const credential: Credential = new Credential(
+        this.formControlEmail.value.toString().toLowerCase(),
+        sha1(this.formControlPassword.value)
+      );
+      credential.email = this.formControlEmail.value.toString().toLowerCase();
+      this.userService.register(credential).subscribe(
         value => {
-          this.router.navigate(['/activate-account']);
+          // this.router.navigate(['/activate-account']);
           // this.userService.saveLocalStorageToken(value.body.token);
-          // this.userService.saveLocalStorageUser(value.body.user);
           // this.router.navigate(['lobby']);
+          this.userService.saveLocalStorageToken(value.access_token);
+          this.userService.saveLocalStorageUser(value.user);
+          this.router.navigate(['lobby']);
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.register.create_ok'));
           // this.notifyService.showWarningSnapshot(this.translate.instant('auth.register.email_not_verifies'));
         }, (error: HttpErrorResponse) => {

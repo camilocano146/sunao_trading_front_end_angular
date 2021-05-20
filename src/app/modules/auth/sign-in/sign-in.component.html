@@ -14,7 +14,10 @@
           <mat-error *ngIf="formControlUser.invalid">{{getErrorMessageUser()}}</mat-error>
         </mat-form-field>
         <mat-form-field (keyup.enter)="signIn()" class="w-100" appearance="outline">
-          <input type="password" matInput placeholder="Contraseña" [formControl]="formControlPassword" required>
+          <input type="password" matInput placeholder="Contraseña" [formControl]="formControlPassword" [type]="hidePass ? 'password' : 'text'" required>
+          <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+            <mat-icon class="color-aqua-blue">{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
           <mat-error *ngIf="formControlPassword.invalid">{{getErrorMessagePassword()}}</mat-error>
         </mat-form-field>
       </div>

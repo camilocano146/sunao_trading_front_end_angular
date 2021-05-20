@@ -23,6 +23,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
     [Validators.required]
   );
   preload: boolean;
+  hidePass = true;
 
   constructor(private translate: TranslateService, private userService: UserService, private notifyService: NotifyService, private router: Router) {
     // (document.getElementsByClassName('img-background')[0] as HTMLElement).style.height = (document.getElementsByClassName('div-content')[0] as HTMLElement).style.height;
@@ -90,10 +91,11 @@ export class SignInComponent implements OnInit, AfterViewInit {
               this.notifyService.showErrorSnapshot(this.translate.instant('errors.connection_error'));
             }
           } else if (httpErrorResponse.status === 401) {
-            if (errorMessage?.includes('unverify email'.toUpperCase())) {
-              this.router.navigate(['activate-account']);
-              this.notifyService.showWarningSnapshot(this.translate.instant('auth.sign_in.email_not_verifies'));
-            } else if (errorMessage?.includes('user don\'t found'.toUpperCase())) {
+            // if (errorMessage?.includes('unverify email'.toUpperCase())) {
+            //   this.router.navigate(['activate-account']);
+            //   this.notifyService.showWarningSnapshot(this.translate.instant('auth.sign_in.email_not_verifies'));
+            // }
+            if (errorMessage?.includes('user don\'t found'.toUpperCase())) {
               this.notifyService.showErrorSnapshot(this.translate.instant('auth.sign_in.sign_error'));
             }
           } else {

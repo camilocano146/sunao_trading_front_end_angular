@@ -7,6 +7,7 @@ export class Credential {
     public client_id: string;
     public client_secret: string;
     public grant_type = 'password';
+    public email?: string;
 
     constructor(
         public username: string,

@@ -43,6 +43,11 @@
   color: white;
   border-radius: 0;
   height: 3.5em;
+  font-weight: bold !important;
+}
+
+.button-auth h5 {
+  font-weight: bold !important;
 }
 
 .button-auth h5 {
@@ -55,6 +60,9 @@
   right: 0;
   opacity: 1;
   filter: brightness(30%);
+
+  //background: url(~src/assets/backgrounds/background-one.jpg);
+  //backdrop-filter: brightness(30%) opacity(1);
 }
 
 .img-background {
@@ -64,8 +72,8 @@
 }
 
 .div-content {
-  min-width: 360px;
-  max-width: 360px;
+  min-width: 350px;
+  max-width: 350px;
   //margin: calc(100vh * 0.1) auto auto;
   //padding-top: 2em;
   padding-bottom: 1em;

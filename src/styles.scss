@@ -31,3 +31,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .text-right {
   text-align: right !important;
 }
+
+@font-face {
+  font-family: 'Raleway_Regular';
+  src: url(../src/assets/fonts/Raleway-Regular.ttf);
+}
+
+*:not(mat-icon) {
+  font-family: Raleway_Regular;
+}

@@ -24,6 +24,8 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
     [Validators.required, Validators.minLength(8), Validators.maxLength(100)]
   );
   preload: boolean;
+  hidePass1 = true;
+  hidePass2 = true;
 
   constructor(
     private translate: TranslateService,
