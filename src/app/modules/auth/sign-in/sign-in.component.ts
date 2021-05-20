@@ -28,8 +28,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
   constructor(private translate: TranslateService, private userService: UserService, private notifyService: NotifyService, private router: Router) {
     // (document.getElementsByClassName('img-background')[0] as HTMLElement).style.height = (document.getElementsByClassName('div-content')[0] as HTMLElement).style.height;
     // (document.getElementsByClassName('div-img-background')[0] as HTMLElement).style.filter = 'brightness(50%)';
-    if (ManageLocalStorage.getUser() && ManageLocalStorage.getToken()) {
-      this.router.navigate(['lobby/operations-list']);
+    if (ManageLocalStorage.getToken()) {
+      this.router.navigate(['lobby']);
     }
   }
 
