@@ -1,0 +1,30 @@
+@import '../../../../../styles';
+
+.btn-back-next {
+  background-color: $color-soft-blue;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
+
+.btn-change {
+  background-color: $color-soft-blue;
+  color: white !important;
+  border-radius: 0 !important;
+}
+
+.div-info {
+  //box-shadow: 5px 0 30px black;
+  box-shadow: 5px 0 18px #888888;
+}
+
+#div-info-container img {
+  width: 40px;
+  //padding-right: 1em;
+}
+
+#div-info-container span {
+  padding-left: 1em;
+}

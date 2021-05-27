@@ -12,14 +12,25 @@
       <mat-menu #menuNotification="matMenu">
       </mat-menu>
       <button mat-icon-button [matMenuTriggerFor]="menu">
-        <img src="./assets/icons-menu/settings-24px.svg">
+        <img src="./assets/icons-menu/notifications_fill_24dp.svg">
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <img src="./assets/icons-menu/settings_fill_24dp.svg">
       </button>
       <mat-menu #menu="matMenu">
-        <!-- <button mat-menu-item>
-                    <img>account_box>
-                    <span>Perfil</span>
-                  </button> -->
-        <button mat-menu-item (click)="logOut()">
+        <button [routerLink]="['my-transactions']" class="button-menu-right" mat-menu-item>
+          <img src="./assets/icons-menu/point_of_sale_black_24dp.svg" class="mr-2">
+          <span>Mis Transacciones</span>
+        </button>
+        <button [routerLink]="['my-plan']" class="button-menu-right" mat-menu-item>
+          <img src="./assets/icons-menu/fact_check_black_24dp.svg" class="mr-2">
+          <span>Mi Plan</span>
+        </button>
+        <button [routerLink]="['profile']" class="button-menu-right" mat-menu-item>
+          <img src="./assets/icons-menu/account_circle_black_24dp.svg" class="mr-2">
+          <span>Mi Perfil</span>
+        </button>
+        <button class="button-menu-right" mat-menu-item (click)="logOut()">
           <img src="./assets/icons-menu/power_settings_new-24px.svg" class="mr-2">
           <span>Cerrar sesión</span>
         </button>
@@ -31,11 +42,31 @@
       <mat-nav-list class="mt-4">
         <a [ngClass]="isSelectOption('/lobby') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="./" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center'}"></div>
-          {{'lobby.menu.dashboard' | translate}}
+          Mis Liquidaciones
         </a>
         <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
-          {{'lobby.menu.requests' | translate}}
+          Puertos
+        </a>
+        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
+          Locaciones
+        </a>
+        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
+          Productos
+        </a>
+        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
+          Capítulos
+        </a>
+        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
+          Flete Internacional
+        </a>
+        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
+          Costos Nacionales
         </a>
       </mat-nav-list>
     </mat-sidenav>

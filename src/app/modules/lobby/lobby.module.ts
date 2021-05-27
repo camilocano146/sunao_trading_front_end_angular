@@ -18,16 +18,22 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
-import {DashboardComponent} from './dashboard/dashboard.component';
+import {DashboardComponent} from './menu-components/dashboard/dashboard.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import { ProfileComponent } from './settings-comonents/profile/profile.component';
+import { MyPlanComponent } from './settings-comonents/my-plan/my-plan.component';
+import { MyTransactionsComponent } from './settings-comonents/my-transactions/my-transactions.component';
 
 @NgModule({
   declarations: [
     LobbyComponent,
     DashboardComponent,
+    ProfileComponent,
+    MyPlanComponent,
+    MyTransactionsComponent,
   ],
   imports: [
     CommonModule,

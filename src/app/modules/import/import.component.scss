@@ -1,0 +1,16 @@
+.div-img-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 1;
+  filter: brightness(30%);
+
+  //background: url(~src/assets/backgrounds/background-one.jpg);
+  //backdrop-filter: brightness(30%) opacity(1);
+}
+
+.img-background {
+  width: 100vw;
+  //height: 100vh;
+  object-fit: cover;
+}

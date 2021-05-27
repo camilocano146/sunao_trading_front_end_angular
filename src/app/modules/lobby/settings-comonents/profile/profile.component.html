@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="text-right">
+    <button mat-raised-button class="btn-verify">
+      <h5 class="m-0">
+        <img src="./assets/icons/cheque.svg" alt="" width="25" class="mr-5">
+        <span style="margin-left: 1em">
+        Verificada
+      </span>
+      </h5>
+    </button>
+  </div>
+  <div class="div-info">
+    <div class="row pb-5">
+      <h2 class="col-11 text-center mt-4">
+        Mi Cuenta
+      </h2>
+      <img class="col-1" src="./assets/icons/editar.svg" alt="" style="width: 4em">
+    </div>
+    <div id="div-info-container">
+      <div class="row justify-content-evenly">
+        <div class="col-3">
+          <h4>
+            <img src="./assets/icons/person_black_24dp.svg" alt="">
+            <span>
+              Nombre
+            </span>
+          </h4>
+        </div>
+        <div class="col-3">
+          <h4>
+            {{user?.name}}
+          </h4>
+        </div>
+      </div>
+      <div class="row justify-content-evenly">
+        <div class="col-3">
+          <h4>
+            <img src="./assets/icons/badge_black_24dp.svg" alt="">
+            <span>
+              Documento
+            </span>
+          </h4>
+        </div>
+        <div class="col-3">
+          <h4>
+            {{user?.document}} - {{user?.digit_check}}
+          </h4>
+        </div>
+      </div>
+      <div class="row justify-content-evenly">
+        <div class="col-3">
+          <h4>
+            <img src="./assets/icons/email_black_24dp%20(1).svg" alt="">
+            <span>
+              Correo
+            </span>
+          </h4>
+        </div>
+        <div class="col-3">
+          <h4>
+            {{user?.email}}
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5 pb-4">
+      <button mat-raised-button class="btn-change me-3">
+        <h5 class="m-0 px-4 py-3">
+            Cambiar correo
+        </h5>
+      </button>
+      <button mat-raised-button class="btn-change ms-3">
+        <h5 class="m-0 px-4 py-3">
+            Cambiar Contraseña
+        </h5>
+      </button>
+    </div>
+  </div>
+</div>

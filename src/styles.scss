@@ -5,10 +5,18 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css"; // your theme
 
 $color-soft-blue: #007b8a;
+$color-very-soft-blue: #6ba2b9;
 $color-dark-blue: #00303c;
+$color-yellow: #ffbf3b;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .center-screen-element {
   display: flex !important;
@@ -39,4 +47,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 *:not(mat-icon) {
   font-family: Raleway_Regular;
+}
+
+.color-blue {
+  color: $color-soft-blue;
+}
+
+.bc-white {
+  background-color: white;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.col-25 {
+  flex: 0 0 auto;
+  width: 20%;
+}
+
+.col-35 {
+  flex: 0 0 auto;
+  width: 31%;
 }

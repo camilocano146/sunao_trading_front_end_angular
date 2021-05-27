@@ -9,6 +9,11 @@ const routes: Routes = [
       import('./modules/auth/auth.module').then(module => module.AuthModule),
   },
   {
+    path: 'import',
+    loadChildren: () =>
+      import('./modules/import/import.module').then(module => module.ImportModule),
+  },
+  {
     path: 'lobby',
     canActivate: [AccessLobbyGuard],
     loadChildren: () =>

@@ -18,6 +18,7 @@ export interface User {
   camara_comercio_document?: string;
   representante_legal_document?: string;
   send_emails?: boolean;
+  digit_check?: string;
 }
 
 export interface UserLogin {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NotifyService} from '../../../services/notify/notify.service';
+import {NotifyService} from '../../../../services/notify/notify.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

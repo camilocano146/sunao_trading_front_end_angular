@@ -1,0 +1,269 @@
+<div class="div-main-costs">
+  <p id="title" class="color-white text-center">
+    Conoce los costos de tu importación ahora mismo
+  </p>
+  <p id="sub-title" class="text-center">
+    Ingresa los siguientes datos y conoce los detalles de tu liquidación al instante
+  </p>
+  <div class="text-right">
+    <button mat-raised-button class="btn-user-guide">
+      <h6 class="m-0">
+        <img src="./assets/icons/help_white_24dp.svg" alt="" width="35" class="mr-5">
+        <span style="margin-left: 1em">
+        Guia De Usuario
+      </span>
+      </h6>
+    </button>
+  </div>
+
+<!--  style="background-color: #1d353d"-->
+  <div class="pb-5">
+    <div id="div-menu" class="row m-0">
+      <div class="div-menu-item col row m-0"
+           [ngClass]="{'div-menu-item-background-image': currentStep === i, 'div-menu-item-background-color': i < currentStep}"
+           *ngFor="let step of listStepper; let i = index" (click)="currentStep = i">
+        <img class="col-5" [src]="step.imagePath" alt="">
+        <h6 class="m-0 col-7">{{step.name}}</h6>
+      </div>
+    </div>
+
+    <div class="div-content">
+      <div *ngIf="currentStep === 0">
+        <div class="div-content-info">
+          <h6 class="color-blue pt-5 pb-2">
+            Por favor seleccione la ciudad de origen y destino para listar sus puertos y seleccionar el indicado
+          </h6>
+          <div class="row">
+            <div class="col-6">
+              <h6>
+                Ciudad
+              </h6>
+              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
+                Debe oprimir sobre una ciudad para seleccionarla
+              </mat-error>
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
+                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
+                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
+                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                              [value]="option.name">
+                    <span>{{option.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+              </mat-form-field>
+
+              <h6>
+                Puerto
+              </h6>
+              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
+                Debe oprimir sobre una ciudad para seleccionarla
+              </mat-error>
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
+                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
+                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
+                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                              [value]="option.name">
+                    <span>{{option.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-6">
+              <h6>
+                Destino
+              </h6>
+              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
+                Debe oprimir sobre una ciudad para seleccionarla
+              </mat-error>
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
+                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
+                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
+                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                              [value]="option.name">
+                    <span>{{option.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+              </mat-form-field>
+
+              <h6>
+                Puerto
+              </h6>
+              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
+                Debe oprimir sobre una ciudad para seleccionarla
+              </mat-error>
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
+                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
+                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
+                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                              [value]="option.name">
+                    <span>{{option.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 1">
+        <div class="div-content-info">
+          <h6 class="color-blue pt-5 pb-2">
+            Por favor la partida arancelaria o el nombre del producto
+          </h6>
+          <div class="row">
+            <div class="col-6">
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput
+                       placeholder="Por nombre del producto"
+                       [formControl]="formControlProductName">
+              </mat-form-field>
+            </div>
+            <div class="col-6">
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput
+                       placeholder="Por partida arancelaria"
+                       [formControl]="formControlTariffHeading">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <mat-list class="bc-white" style="height: 250px; overflow-y: auto;">
+            <mat-list-item class="cursor-pointer" *ngFor="let productOrTariff of listProductOrTariff">
+              {{productOrTariff.name}}
+              <span class="text-right w-100">
+              {{productOrTariff.value}}
+            </span>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 2">
+        <div class="div-content-info">
+          <h6 class="color-blue pt-5 pb-2">
+            Por favor ingrese el valor FOB de la mercancia y la divisa en la que se encuentra
+          </h6>
+          <div class="row">
+            <div class="col-6">
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput
+                       placeholder="Por FOB de la mercancía"
+                       [formControl]="formControlProductName">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row m-0 justify-content-between">
+            <div *ngFor="let currency of listCurrencies" class="col-25 div-currency">
+              <div class="row bc-white p-3">
+                <h6 class="col-6 currency-name">
+                  {{currency.name}}
+                </h6>
+                <div class="col-6 text-right">
+                  <img [src]="currency.imageCountry" alt="" width="50">
+                </div>
+                <h2 class="text-center my-5 currency-abbreviation">
+                  {{currency.abbreviation}}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 3">
+        <div class="div-content-info">
+          <h6 class="color-blue pt-5 pb-2">
+            Por favor selecciona el tipo de contenedor
+          </h6>
+
+          <div class="row m-0 justify-content-between">
+            <div *ngFor="let currency of listContainers" class="col-35">
+              <div class="row bc-white pt-3">
+                <h5 class="text-center">
+                  {{currency.name}}
+                </h5>
+                <div class="text-center my-3">
+                  <img src="./assets/logos/logo-colors.png" alt="" style="width: 80px">
+                </div>
+                <div class="div-container-text p-0">
+                  <div class="row m-0 div-bc-container">
+                    <div class="col-4">
+                      Dimensiones
+                    </div>
+                    <div class="col-8 row m-0 p-0">
+                      <div class="col-4 p-0">
+                        Largo
+                      </div>
+                      <div class="col-4 p-0">
+                        Ancho
+                      </div>
+                      <div class="col-4 p-0">
+                        Alto
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row m-0 div-middle-container">
+                    <div class="col-4">
+                      Peso Tara
+                    </div>
+                    <div class="col-4 p-0">
+                      50
+                    </div>
+                    <div class="col-4 p-0">
+                      100
+                    </div>
+                  </div>
+
+                  <div class="row m-0 div-bc-container">
+                    <div class="col-4">
+                      Cantidad de carga
+                    </div>
+                    <div class="col-4 p-0">
+                      50
+                    </div>
+                    <div class="col-4 p-0">
+                      100
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center div-buttons">
+        <button *ngIf="currentStep === 0" mat-raised-button class="btn-back-next" (click)="actionButtonNext()">
+          <h5 class="m-0">
+            Continuar
+          </h5>
+        </button>
+        <button *ngIf="currentStep > 0" mat-raised-button class="btn-back-next me-3" (click)="actionButtonBack()">
+          <h5 class="m-0">
+            <img src="./assets/icons/arrow_left_24dp.svg" alt="">
+            <span style="margin-left: 1em">
+                Volver
+              </span>
+          </h5>
+        </button>
+        <button *ngIf="currentStep > 0" mat-raised-button class="btn-back-next ms-3" (click)="actionButtonNext()">
+          <h5 class="m-0">
+              <span style="margin-right: 1em">
+                Continuar
+              </span>
+            <img src="./assets/icons/arrow_right_24dp.svg" alt="">
+          </h5>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
