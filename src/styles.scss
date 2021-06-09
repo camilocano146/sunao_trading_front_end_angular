@@ -8,6 +8,7 @@ $color-soft-blue: #007b8a;
 $color-very-soft-blue: #6ba2b9;
 $color-dark-blue: #00303c;
 $color-yellow: #ffbf3b;
+$color-soft-red: #ff5959;
 
 html, body {
   height: 100%;
@@ -69,4 +70,59 @@ body {
 .col-35 {
   flex: 0 0 auto;
   width: 31%;
+}
+
+.flex-box-middle {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.flex-box-vertical-center {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.backdrop-dark {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+::ng-deep .div-without-padding mat-dialog-container {
+  padding: 0 !important;
+}
+
+.img-close-dialog {
+  width: 20px;
+  cursor: pointer;
+}
+
+.dialog-title {
+  background-color: $color-dark-blue;
+  padding: 15px;
+  margin: 0;
+
+  h5 {
+    margin-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+}
+
+.btn-blue {
+  background-color: $color-very-soft-blue;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.8em !important;
+}
+
+.btn-yellow {
+  background-color: $color-yellow;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.8em !important;
 }

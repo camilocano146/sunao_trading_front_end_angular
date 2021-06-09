@@ -1,0 +1,38 @@
+@import '../../../../../styles';
+
+.btn-liquidate {
+  background-color: $color-soft-blue;
+  color: white !important;
+  //height: 3em !important;
+  padding: 1em 3em;
+  border-radius: 0 !important;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
+
+.div-content {
+  margin-top: 2em;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+.div-content h5 {
+  padding-left: 2em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.div-content div {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: .3em;
+}
+
+.div-content div div {
+  background-color: $color-dark-blue;
+  width: 2em;
+  height: 2em;
+  mask-size: 2em !important;
+  -webkit-mask-size: 2em !important;
+}

@@ -6,7 +6,7 @@
     Ingresa los siguientes datos y conoce los detalles de tu liquidación al instante
   </p>
   <div class="text-right">
-    <button mat-raised-button class="btn-user-guide">
+    <button mat-raised-button class="btn-user-guide" (click)="openDialogHelp()">
       <h6 class="m-0">
         <img src="./assets/icons/help_white_24dp.svg" alt="" width="35" class="mr-5">
         <span style="margin-left: 1em">
@@ -21,7 +21,7 @@
     <div id="div-menu" class="row m-0">
       <div class="div-menu-item col row m-0"
            [ngClass]="{'div-menu-item-background-image': currentStep === i, 'div-menu-item-background-color': i < currentStep}"
-           *ngFor="let step of listStepper; let i = index" (click)="currentStep = i">
+           *ngFor="let step of listStepper; let i = index" (click)="changeStepOption(i)">
         <img class="col-5" [src]="step.imagePath" alt="">
         <h6 class="m-0 col-7">{{step.name}}</h6>
       </div>
@@ -56,7 +56,7 @@
               <h6>
                 Puerto
               </h6>
-              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
+              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastPortOriginSelected">
                 Debe oprimir sobre una ciudad para seleccionarla
               </mat-error>
               <mat-form-field class="w-100" appearance="outline">
@@ -75,7 +75,7 @@
               <h6>
                 Destino
               </h6>
-              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
+              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastDestinationSelected">
                 Debe oprimir sobre una ciudad para seleccionarla
               </mat-error>
               <mat-form-field class="w-100" appearance="outline">
@@ -93,7 +93,7 @@
               <h6>
                 Puerto
               </h6>
-              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
+              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastPortDestinationSelected">
                 Debe oprimir sobre una ciudad para seleccionarla
               </mat-error>
               <mat-form-field class="w-100" appearance="outline">
@@ -241,6 +241,81 @@
         </div>
       </div>
 
+      <div *ngIf="currentStep === 4">
+        <div class="div-content-info">
+          <h6 class="color-blue pt-5 pb-2 text-center">
+            Por favor selecciona el tipo de icoterm que deseas liquidar
+          </h6>
+
+          <div class="row justify-content-evenly">
+            <div class="col-5">
+              <div (click)="incotermCostSelected = 1" class="row py-2" [ngClass]="{'div-incoterm-costs-selected': incotermCostSelected === 1, 'div-incoterm-costs': incotermCostSelected !== 1}">
+                <h2 class="col-3">
+                  CFR
+                </h2>
+                <div class="col-7 flex-box-vertical-center">
+                  Cost
+                </div>
+                <div class="col-2 div-parent-icoterm-icon-info">
+                  <div class="div-icoterm-icon-info" matTooltip="Costo y Flete"
+                       matTooltipPosition="left"
+                       [matTooltipClass]="{'icoterm-tooltip-icons-selected': incotermCostSelected === 1, 'icoterm-tooltip-icons': incotermCostSelected !== 1}"
+                       [ngStyle]="{'mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center'}"></div>
+                </div>
+              </div>
+              <div (click)="incotermCostSelected = 2" class="row py-2 div-incoterm-costs"  [ngClass]="{'div-incoterm-costs-selected': incotermCostSelected === 2, 'div-incoterm-costs': incotermCostSelected !== 2}">
+                <h2 class="col-3">
+                  CIF
+                </h2>
+                <div class="col-7 flex-box-vertical-center">
+                  Cost
+                </div>
+                <div class="col-2 div-parent-icoterm-icon-info">
+                  <div class="div-icoterm-icon-info" matTooltip="Costo y Flete"
+                       matTooltipPosition="left"
+                       [matTooltipClass]="{'icoterm-tooltip-icons-selected': incotermCostSelected === 1, 'icoterm-tooltip-icons': incotermCostSelected !== 1}"
+                       [ngStyle]="{'mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center'}"></div>
+                </div>
+              </div>
+              <div (click)="incotermCostSelected = 3" class="row py-2 div-incoterm-costs"  [ngClass]="{'div-incoterm-costs-selected': incotermCostSelected === 3, 'div-incoterm-costs': incotermCostSelected !== 3}">
+                <h2 class="col-3">
+                  DDP
+                </h2>
+                <div class="col-7 flex-box-vertical-center">
+                  Delivered Duty Paid
+                </div>
+                <div class="col-2 div-parent-icoterm-icon-info">
+                  <div class="div-icoterm-icon-info" matTooltip="Costo y Flete"
+                       matTooltipPosition="left"
+                       [matTooltipClass]="{'icoterm-tooltip-icons-selected': incotermCostSelected === 1, 'icoterm-tooltip-icons': incotermCostSelected !== 1}"
+                       [ngStyle]="{'mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center'}"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-5">
+              <h6>
+                Ciudad
+              </h6>
+              <mat-error style="font-size: 10px" *ngIf="formControlCityIcoterm.value && !lastCityIcotermSelected">
+                Debe oprimir sobre una ciudad para seleccionarla
+              </mat-error>
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
+                       [formControl]="formControlCityIcoterm" [matAutocomplete]="autoLocations">
+                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
+                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                              [value]="option.name">
+                    <span>{{option.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="text-center div-buttons">
         <button *ngIf="currentStep === 0" mat-raised-button class="btn-back-next" (click)="actionButtonNext()">
           <h5 class="m-0">
@@ -255,10 +330,18 @@
               </span>
           </h5>
         </button>
-        <button *ngIf="currentStep > 0" mat-raised-button class="btn-back-next ms-3" (click)="actionButtonNext()">
+        <button *ngIf="currentStep > 0 && currentStep < listStepper.length - 2" mat-raised-button class="btn-back-next ms-3" (click)="actionButtonNext()">
           <h5 class="m-0">
               <span style="margin-right: 1em">
                 Continuar
+              </span>
+            <img src="./assets/icons/arrow_right_24dp.svg" alt="">
+          </h5>
+        </button>
+        <button *ngIf="currentStep >= listStepper.length - 2" mat-raised-button class="btn-back-next ms-3" (click)="openDialogResume()">
+          <h5 class="m-0">
+              <span style="margin-right: 1em">
+                Finalizar
               </span>
             <img src="./assets/icons/arrow_right_24dp.svg" alt="">
           </h5>

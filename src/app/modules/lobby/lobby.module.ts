@@ -18,22 +18,30 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
-import {DashboardComponent} from './menu-components/dashboard/dashboard.component';
+import {LiquidationDetailsComponent} from './menu-components/liquidations/liquidation-details/liquidation-details.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
-import { ProfileComponent } from './settings-comonents/profile/profile.component';
-import { MyPlanComponent } from './settings-comonents/my-plan/my-plan.component';
-import { MyTransactionsComponent } from './settings-comonents/my-transactions/my-transactions.component';
+import { ProfileComponent } from './settings-components/profile/profile.component';
+import { MyPlanComponent } from './settings-components/my-plan/my-plan.component';
+import { MyTransactionsComponent } from './settings-components/my-transactions/my-transactions.component';
+import { LocationsComponent } from './menu-components/locations/locations.component';
+import {DialogLocationCreateEditComponent} from './menu-components/locations/dialog-user-create/dialog-location-create-edit.component';
+import { LiquidationsComponent } from './menu-components/liquidations/liquidations.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
     LobbyComponent,
-    DashboardComponent,
+    LiquidationDetailsComponent,
     ProfileComponent,
     MyPlanComponent,
     MyTransactionsComponent,
+    LocationsComponent,
+    DialogLocationCreateEditComponent,
+    LiquidationsComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +65,8 @@ import { MyTransactionsComponent } from './settings-comonents/my-transactions/my
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
   ],
   providers: [
     {

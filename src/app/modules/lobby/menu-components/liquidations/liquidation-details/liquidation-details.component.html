@@ -1,0 +1,177 @@
+
+<!--<div *ngIf="preload" class="w-100 text-center">-->
+<!--  <img src="./assets//gifs//loading.gif" alt="">-->
+<!--</div>-->
+
+<div class="div-back-to-liquidation" (click)="goToLiquidations()">
+  <img class="ms-3" src="../../../../../../assets/icons/arrow_left_yellow_24dp.svg" alt="">
+  <h6 class="color-blue py-3 mb-0">
+    Volver a mis liquidaciones
+  </h6>
+</div>
+
+<div class="container">
+  <div class="div-info container pb-3">
+    <div class="row">
+      <h4 class="col-7 mt-1 color-blue m-0 flex-box-vertical-center">
+        Detalle de liquidación
+      </h4>
+      <div class="div-info-buttons col-5 row justify-content-end m-0">
+        <button mat-raised-button class="btn-blue col-5 me-4">
+          <h6 class="m-0">
+            <img src="../../../../../../assets/icons/cheque.svg" alt="" width="25" class="mr-5">
+            <span style="margin-left: 1em">
+              Exportar
+            </span>
+          </h6>
+        </button>
+        <button mat-raised-button class="btn-blue col-5">
+          <h6 class="m-0">
+            <img src="../../../../../../assets/icons/cheque.svg" alt="" width="25" class="mr-5">
+            <span style="margin-left: 1em">
+              Enviar
+            </span>
+          </h6>
+        </button>
+      </div>
+    </div>
+    <div id="div-info-container">
+      <div class="row div-header-info">
+        <div class="row col-3">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Origen:
+          </h6>
+        </div>
+
+        <div class="row col-3">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Destino:
+          </h6>
+        </div>
+
+        <div class="row col-3">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Producto:
+          </h6>
+        </div>
+
+        <div class="row col-3">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Divisa:
+          </h6>
+        </div>
+
+        <div class="row col-3">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Contenedor:
+          </h6>
+        </div>
+
+        <div class="row col-3">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Valor FOB:
+          </h6>
+        </div>
+
+        <div class="row col-3">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            INCOTERM:
+          </h6>
+        </div>
+      </div>
+
+      <h6 class="color-blue py-3 mb-0">
+        Para activar el filtro de infromación, ñpor favor activa las casillas de las que quieres visualizar
+      </h6>
+
+      <div class="row div-menu-options">
+        <div class="col div-option">
+          Valor FOB
+        </div>
+        <div class="col div-option">
+          Flete internacional
+        </div>
+        <div class="col div-option">
+          Seguro internacional
+        </div>
+        <div class="col div-option">
+          Aduana y postuarios
+        </div>
+        <div class="col div-option">
+          Arancel
+        </div>
+        <div class="col div-option">
+          Flete local
+        </div>
+      </div>
+
+      <div class="div-table pt-2">
+        <div class="row div-table-row">
+          <div class="col-9">
+            Valor
+          </div>
+          <div class="col-2 div-table-price">
+            <h4>
+              {{1200 | currency : 'USD' : 'symbol' : '1.0-0' }}
+            </h4>
+          </div>
+          <div class="col-1 div-table-img">
+            <img src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+          </div>
+        </div>
+        <div class="row div-table-row">
+          <div class="col-9">
+            Valor
+          </div>
+          <div class="col-2 div-table-price">
+            <h4>
+              {{1200 | currency}}
+            </h4>
+          </div>
+          <div class="col-1 div-table-img">
+            <img src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="div-total">
+        <h4>
+          Total DDP:
+        </h4>
+      </div>
+
+      <div class="row m-0 div-bottom-info">
+        <h6 class="color-blue py-3 mb-0 col-10">
+          Este valor es solo para efectos de flujo de caja y no está incluido en el total de la liquidación.
+        </h6>
+
+        <mat-checkbox class="col-2">
+          Visualizar IVA
+        </mat-checkbox>
+      </div>
+
+      <div class="pt-2">
+        <div class="row div-iva-row">
+          <div class="col-9">
+            IVA
+          </div>
+          <div class="col-2 div-table-price">
+            <h4>
+              {{1200 | currency : 'USD' : 'symbol' : '1.0-0' }}
+            </h4>
+          </div>
+          <div class="col-1 div-table-img">
+            <img src="../../../../../../assets/icons/arrow_drop_down_blue_24dp.svg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

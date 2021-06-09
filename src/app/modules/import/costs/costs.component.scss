@@ -169,3 +169,54 @@ p {
 .div-middle-container {
   height: 3em;
 }
+
+.div-incoterm-costs {
+  background-color: white !important;
+  height: fit-content !important;
+  margin-bottom: 1.5em !important;
+  cursor: pointer;
+}
+
+.div-incoterm-costs-selected {
+  background-color: $color-yellow !important;
+  margin-bottom: 1.5em !important;
+  height: fit-content !important;
+  cursor: pointer;
+
+  .div-icoterm-icon-info {
+    background-color: white;
+  }
+}
+
+.div-incoterm-costs-selected h2 {
+  color: white !important;
+}
+
+.div-parent-icoterm-icon-info {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.div-icoterm-icon-info {
+  background-color: $color-dark-blue;
+  width: 1.2em;
+  height: 1.2em;
+  mask-size: 1.2em !important;
+  -webkit-mask-size: 1.2em !important;
+}
+
+::ng-deep .icoterm-tooltip-icons {
+  background-color: $color-yellow;
+  font-size: 17px;
+  padding: 10px 30px !important;
+  width: unset !important;
+  max-width: unset !important;
+}
+
+::ng-deep .icoterm-tooltip-icons-selected {
+  background-color: $color-dark-blue;
+  font-size: 20px;
+  padding-left: 30px !important;
+  width: unset !important;
+  max-width: unset !important;
+}

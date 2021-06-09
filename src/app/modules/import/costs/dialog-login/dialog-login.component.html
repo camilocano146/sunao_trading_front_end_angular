@@ -1,0 +1,75 @@
+<div>
+  <div class="div-content">
+    <div class="div-container">
+      <div *ngIf="showLogin">
+        <div class="text-center" style="padding-top: 2em; padding-bottom: 2em;">
+          <img class="img-logo" src="./assets/logos/logo-white.png" width="160em" height="70em">
+        </div>
+        <h5 class="color-white text-center title">
+          <!--        {{'auth.sign_in.title' | translate}}-->
+          Ingresar tu usuario y contraseña
+        </h5>
+        <div class="pt-3 pb-1 mx-2">
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="email" matInput placeholder="Usuario" [formControl]="formControlUser" required>
+            <mat-error *ngIf="formControlUser.invalid">{{getErrorMessageUser()}}</mat-error>
+          </mat-form-field>
+          <mat-form-field (keyup.enter)="signIn()" class="w-100" appearance="outline">
+            <input type="password" matInput placeholder="Contraseña" [formControl]="formControlPassword" [type]="hidePass ? 'password' : 'text'" required>
+            <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+              <mat-icon class="color-aqua-blue">{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="formControlPassword.invalid">{{getErrorMessagePassword()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button *ngIf="!preload" mat-raised-button class="w-75 button-auth" (click)="signIn()">
+            <h5>Ingresar</h5>
+          </button>
+          <div *ngIf="preload" class="w-100 text-center">
+            <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 2.5em; margin-bottom: .7em">
+          <a style="white-space: nowrap" class="cursor-pointer a-navigate col p-0">Recupera contraseña</a>
+          <a style="white-space: nowrap" class="cursor-pointer a-navigate col p-0 text-right" (click)="actionShowRegister()">Registrarse</a>
+        </div>
+      </div>
+
+      <div *ngIf="showRegister">
+        <div class="text-center" style="padding-top: 2em; padding-bottom: 1.5em;">
+          <img class="img-logo" src="./assets/logos/logo-white.png" width="160em" height="70em">
+        </div>
+        <h6 class="color-white text-center title">
+          <!--        {{'auth.sign_in.title' | translate}}-->
+          Ingresa los siguientes datos para realizar tu registro.
+        </h6>
+        <div class="pt-3 pb-1 mx-2">
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="email" matInput placeholder="Usuario" [formControl]="formControlUser" required>
+            <mat-error *ngIf="formControlUser.invalid">{{getErrorMessageUser()}}</mat-error>
+          </mat-form-field>
+          <mat-form-field (keyup.enter)="register()" class="w-100" appearance="outline">
+            <input type="password" matInput placeholder="Contraseña" [formControl]="formControlPassword" [type]="hidePass ? 'password' : 'text'" required>
+            <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+              <mat-icon class="color-aqua-blue">{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="formControlPassword.invalid">{{getErrorMessagePassword()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button *ngIf="!preload" mat-raised-button class="w-75 button-auth" (click)="register()">
+            <h5>Continuar</h5>
+          </button>
+          <div *ngIf="preload" class="w-100 text-center">
+            <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+          </div>
+        </div>
+        <div class="mt-4 row" style="margin-bottom: .7em">
+          <a style="white-space: nowrap" class="cursor-pointer a-navigate col p-0" (click)="actionShowLogin()">Ya tengo usuario</a>
+          <a style="white-space: nowrap" routerLink="/activate-account" class="cursor-pointer a-navigate col p-0 text-right">Verificar cuenta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

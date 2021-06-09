@@ -1,0 +1,31 @@
+@import '../../../auth/auth.component';
+
+.div-container {
+  background-color: $color-dark-blue;
+  margin-top: unset;
+}
+
+::ng-deep .mat-form-field-outline {
+  border-radius: 10px !important;
+}
+
+::ng-deep .mat-form-field-infix {
+  display: flex !important;
+}
+
+.div-content {
+  min-width: unset;
+  max-width: unset;
+  padding-bottom: unset;
+  margin: 0 auto;
+}
+
+.div-main {
+  //background-image: url(/assets/auth/background.jpg);
+}
+
+@media (max-height: 600px) {
+  .center-screen-element {
+    display: block !important;
+  }
+}

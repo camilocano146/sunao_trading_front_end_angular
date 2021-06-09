@@ -1,11 +1,11 @@
 <div class="container">
   <div class="text-right">
-    <button mat-raised-button class="btn-verify">
+    <button mat-raised-button [ngClass]="{'btn-verify': user?.isActive, 'btn-not-verify': !user?.isActive}">
       <h5 class="m-0">
         <img src="./assets/icons/cheque.svg" alt="" width="25" class="mr-5">
         <span style="margin-left: 1em">
-        Verificada
-      </span>
+          {{user?.isActive ? 'Verificada' : 'No Verificada'}}
+        </span>
       </h5>
     </button>
   </div>

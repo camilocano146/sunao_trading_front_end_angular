@@ -1,0 +1,30 @@
+@import '../../../../../styles';
+
+::ng-deep .mat-form-field-infix {
+  color: white;
+}
+
+.input {
+  color: white;
+}
+
+.div-main {
+  max-width: 1300px;
+  margin: auto;
+}
+
+.div-parent-table {
+  overflow: auto !important;
+}
+
+.div-parent-table table {
+  min-width: 1300px !important;
+}
+
+th, td {
+  text-align: center !important;
+}
+
+.div-filter {
+  background-color: $color-soft-blue;
+}

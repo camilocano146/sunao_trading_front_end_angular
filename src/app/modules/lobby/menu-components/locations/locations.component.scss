@@ -1,0 +1,13 @@
+@import '../../../../../styles';
+
+.div-parent-table {
+  overflow: auto !important;
+}
+
+.div-parent-table table {
+  min-width: 1000px !important;
+}
+
+th, td {
+  text-align: center !important;
+}
