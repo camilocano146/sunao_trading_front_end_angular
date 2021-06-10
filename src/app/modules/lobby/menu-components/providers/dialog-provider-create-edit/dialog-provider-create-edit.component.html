@@ -37,7 +37,7 @@
       <mat-form-field class="w-100">
         <mat-label>Dirección</mat-label>
         <input matInput [formControl]="formControlAddress">
-        <mat-hint align="end">{{formControlAddress.value?.length || 0}}/{{maxLengthName}}</mat-hint>
+        <mat-hint align="end">{{formControlAddress.value?.length || 0}}/{{maxLengthPhone}}</mat-hint>
         <mat-error *ngIf="formControlAddress.invalid">{{getErrorMessageAddress()}}</mat-error>
       </mat-form-field>
     </div>

@@ -31,7 +31,7 @@ export class DialogProviderCreateEditComponent implements OnInit {
     null, [Validators.required, Validators.minLength(5), Validators.maxLength(this.maxLengthName)]
   );
   public formControlAddress: FormControl = new FormControl(
-    null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
+    null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthPhone)]
   );
   public formControlPhone: FormControl = new FormControl('',
     [Validators.required, Validators.minLength(8), Validators.maxLength(25)]

@@ -44,10 +44,6 @@
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center'}"></div>
           Mis Liquidaciones
         </a>
-        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
-          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/houseboat_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/houseboat_black_24dp.svg' + ') no-repeat center'}"></div>
-          Puertos
-        </a>
         <a [ngClass]="isSelectOption('/locations-countries') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="locations" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/location_on_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/location_on_black_24dp.svg' + ') no-repeat center'}"></div>
           Ubicaciones
@@ -55,6 +51,10 @@
         <a [ngClass]="isSelectOption('/providers') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="providers" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/manage_accounts_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/manage_accounts_black_24dp.svg' + ') no-repeat center'}"></div>
           Proveedores
+        </a>
+        <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/houseboat_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/houseboat_black_24dp.svg' + ') no-repeat center'}"></div>
+          Puertos
         </a>
         <a [ngClass]="isSelectOption('/requests') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="requests" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>

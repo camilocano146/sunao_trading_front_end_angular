@@ -21,4 +21,8 @@ export class ProviderService {
   getAll(offset: number, limit: number): Observable<any> {
     return this.httpClient.get(`provider/?offset=${offset}&limit=${limit}`);
   }
+
+  delete(id: number): Observable<any> {
+    return this.httpClient.delete(`provider/${id}/delete/`);
+  }
 }

@@ -9,6 +9,7 @@ import {DialogProviderCreateEditComponent} from './dialog-provider-create-edit/d
 import {Location} from '../../../../models/Location';
 import {ProviderService} from '../../../../services/provider/provider.service';
 import {Provider} from '../../../../models/Provider';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-locations',
@@ -82,6 +83,36 @@ export class ProvidersComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.loadTable();
+    });
+  }
+
+  openDialogRemove(provider: Provider): void {
+    Swal.fire({
+      title: '¿Confirma la eliminación de este proveedor?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#007b8a',
+      reverseButtons: true,
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.providerService.delete(provider.id).subscribe(value => {
+          Swal.fire(
+            'Proveedor Eliminado!',
+            '',
+            'success'
+          );
+          this.loadTable();
+        }, error => {
+          Swal.fire(
+            'No fue posible eliminar el proveedor, por favor intente nuevamente!',
+            '',
+            'error'
+          );
+        });
+      }
     });
   }
 }
