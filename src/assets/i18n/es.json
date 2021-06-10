@@ -2,6 +2,7 @@
   "fields": {
     "required": "Este campo es obligatorio",
     "min_2": "Longitud mínima de 2 cacteres",
+    "min_3": "Longitud mínima de 3 cacteres",
     "min_4": "Longitud mínima de 4 cacteres",
     "min_5": "Longitud mínima de 5 cacteres",
     "min_8": "Longitud mínima de 8 cacteres",
@@ -28,7 +29,8 @@
     "user": "User"
   },
   "success": {
-    "element_created": "Registro Creado"
+    "element_created": "Registro Creado",
+    "element_updated": "Registro Actualizado"
   },
   "errors": {
     "connection_error": "Error de conexión, por favor intente nuevamente",

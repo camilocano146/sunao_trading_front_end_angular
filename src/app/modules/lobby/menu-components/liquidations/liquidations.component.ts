@@ -7,7 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NotifyService} from '../../../../services/notify/notify.service';
 import {LocationService} from '../../../../services/location/location.service';
 import {MatDialog} from '@angular/material/dialog';
-import {LiquidationService} from '../../../../services/liquidation.service';
+import {LiquidationService} from '../../../../services/liquidation/liquidation.service';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -20,10 +20,12 @@ export class LiquidationsComponent implements OnInit {
   list: Location[];
   public displayedColumns: string[] = [
     'index',
-    'email',
-    'firstName',
-    'document',
-    'userInfo'
+    'reference',
+    'origin',
+    'destination',
+    'incoterm',
+    'date',
+    'actions',
   ];
   pageSizeOptions = AppComponent.pageSizeOptions;
   resultsLength: number;
@@ -35,7 +37,7 @@ export class LiquidationsComponent implements OnInit {
   formControlDestination: FormControl = new FormControl();
   formControlProduct: FormControl = new FormControl();
   filterSelectedValue: any;
-  values: any[];
+  values: any[] = ['Incoterm'];
 
   constructor(
     private translate: TranslateService,
@@ -43,7 +45,7 @@ export class LiquidationsComponent implements OnInit {
     private liquidationService: LiquidationService,
     private matDialog: MatDialog,
   ) {
-    this.loadTable();
+    // this.loadTable();
   }
 
   ngOnInit(): void {

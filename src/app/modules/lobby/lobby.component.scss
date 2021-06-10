@@ -123,3 +123,17 @@ mat-nav-list a:hover {
 .button-menu-right img {
   margin-right: .5em !important;
 }
+
+::ng-deep table th {
+  background-color: $color-dark-blue !important;
+}
+
+::ng-deep table th {
+  font-size: 20px !important;
+  color: white !important;
+}
+
+::ng-deep table th img {
+  margin-right: .5em !important;
+  width: 30px !important;
+}

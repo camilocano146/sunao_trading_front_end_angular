@@ -26,11 +26,15 @@ import {MatListModule} from '@angular/material/list';
 import { ProfileComponent } from './settings-components/profile/profile.component';
 import { MyPlanComponent } from './settings-components/my-plan/my-plan.component';
 import { MyTransactionsComponent } from './settings-components/my-transactions/my-transactions.component';
-import { LocationsComponent } from './menu-components/locations/locations.component';
-import {DialogLocationCreateEditComponent} from './menu-components/locations/dialog-user-create/dialog-location-create-edit.component';
+import { CountriesComponent } from './menu-components/countries/countries.component';
+import {DialogCountryCreateEditComponent} from './menu-components/countries/dialog-country-create-edit/dialog-country-create-edit.component';
 import { LiquidationsComponent } from './menu-components/liquidations/liquidations.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {DialogProviderCreateEditComponent} from './menu-components/providers/dialog-provider-create-edit/dialog-provider-create-edit.component';
+import {ProvidersComponent} from './menu-components/providers/providers.component';
+import {DialogCityCreateEditComponent} from './menu-components/cities/dialog-city-create-edit/dialog-city-create-edit.component';
+import {CitiesComponent} from './menu-components/cities/cities.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +43,13 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ProfileComponent,
     MyPlanComponent,
     MyTransactionsComponent,
-    LocationsComponent,
-    DialogLocationCreateEditComponent,
+    CountriesComponent,
+    DialogCountryCreateEditComponent,
     LiquidationsComponent,
+    ProvidersComponent,
+    DialogProviderCreateEditComponent,
+    CitiesComponent,
+    DialogCityCreateEditComponent,
   ],
   imports: [
     CommonModule,

@@ -38,9 +38,9 @@ export class CostsComponent implements OnInit {
   lastPortOriginSelected: Location;
   lastPortDestinationSelected: Location;
   listLocations: Location[] = [
-    {name: 'Malaga'},
-    {name: 'Pontevedra'},
-    {name: 'Sevilla'},
+    {name: 'Malaga', type: '1', father_location: undefined},
+    {name: 'Pontevedra', type: '1', father_location: undefined},
+    {name: 'Sevilla', type: '1', father_location: undefined},
   ];
   currentStep = 4;
   formControlProductName: FormControl = new FormControl('', [Validators.required]);

@@ -7,23 +7,23 @@ import {NotifyService} from '../../../../services/notify/notify.service';
 import {MatDialog} from '@angular/material/dialog';
 import {LocationService} from '../../../../services/location/location.service';
 import {User} from '../../../../models/User';
-import {DialogLocationCreateEditComponent} from './dialog-user-create/dialog-location-create-edit.component';
+import {DialogCountryCreateEditComponent} from './dialog-country-create-edit/dialog-country-create-edit.component';
 import {Location} from '../../../../models/Location';
+import {Router} from '@angular/router';
+import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
 
 @Component({
   selector: 'app-locations',
-  templateUrl: './locations.component.html',
-  styleUrls: ['./locations.component.scss']
+  templateUrl: './countries.component.html',
+  styleUrls: ['./countries.component.scss']
 })
-export class LocationsComponent implements OnInit, AfterViewInit {
+export class CountriesComponent implements OnInit, AfterViewInit {
   preload: boolean;
   list: Location[];
   public displayedColumns: string[] = [
     'index',
-    'email',
-    'firstName',
-    'document',
-    'userInfo'
+    'name',
+    'actions'
   ];
   pageSizeOptions = AppComponent.pageSizeOptions;
   resultsLength: number;
@@ -35,6 +35,7 @@ export class LocationsComponent implements OnInit, AfterViewInit {
     private notifyService: NotifyService,
     private locationService: LocationService,
     private matDialog: MatDialog,
+    private router: Router,
   ) {
     this.loadTable();
   }
@@ -49,14 +50,13 @@ export class LocationsComponent implements OnInit, AfterViewInit {
   loadTable(): void {
     this.preload = true;
     this.list = undefined;
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex + 1 : 1;
+    const page = this.paginator?.pageIndex ? this.paginator.pageIndex + 1 : 0;
     const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    console.log(page, limit);
-    this.locationService.getAll(page, limit).subscribe(
+    this.locationService.getAllCountries(page, limit).subscribe(
       value => {
         this.preload = false;
-        this.list = value.body.users;
-        this.resultsLength = value.body.total;
+        this.list = value.results;
+        this.resultsLength = value.count;
       }, error => {
         this.preload = false;
         this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
@@ -64,23 +64,29 @@ export class LocationsComponent implements OnInit, AfterViewInit {
     );
   }
 
-  openDialogUserInfo(user: User): void {
-    const dialogRef = this.matDialog.open(DialogLocationCreateEditComponent, {
+  openDialogCreate(): void {
+    const dialogRef = this.matDialog.open(DialogCountryCreateEditComponent, {
       width: '100vw',
       maxWidth: '400px',
-      data: user
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.loadTable();
     });
   }
 
-  openDialogCreate(location?: Location): void {
-    const dialogRef = this.matDialog.open(DialogLocationCreateEditComponent, {
+  openDialogEdit(location: Location): void {
+    const dialogRef = this.matDialog.open(DialogCountryCreateEditComponent, {
       width: '100vw',
       maxWidth: '400px',
       data: location
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.loadTable();
     });
+  }
+
+  goToCities(location: Location): void {
+    ManageSessionStorage.setCountrySelected(location);
+    this.router.navigate(['lobby/locations/cities/', location.id]);
   }
 }

@@ -27,4 +27,40 @@ th, td {
 
 .div-filter {
   background-color: $color-soft-blue;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .check-white .mat-checkbox-frame {
+  border-color: white !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border-radius: 0 !important;
+  background-color: white !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 0 !important;
+  border: 0 !important;
+  background-color: white !important;
+  min-width: 0 !important;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding-top: 0 !important;
+}
+
+::ng-deep .div-filter-right .mat-form-field-flex {
+  background-color: white !important;
+}
+
+.div-filter-right mat-form-field {
+  max-width: inherit;
+  margin-top: 1em;
+  height: 100px;
+}
+
+.div-buttons button {
+  width: fit-content;
 }

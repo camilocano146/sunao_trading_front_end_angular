@@ -124,5 +124,20 @@ body {
   height: 3em !important;
   border-radius: 0 !important;
   margin-top: 1.5em !important;
-  margin-bottom: 0.8em !important;
+  margin-bottom: 1em !important;
+}
+
+.color-red {
+  color: red !important;
+}
+
+.btn-close-dialog {
+  background-color: red;
+  color: white;
+  width: 2em;
+  padding: 0;
+}
+
+button h4 {
+  margin: 0 !important;
 }

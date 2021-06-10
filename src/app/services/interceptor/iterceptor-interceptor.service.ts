@@ -51,11 +51,8 @@ export class InterceptorService implements HttpInterceptor {
    * Agrega token
    */
   private addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
-    request = request.clone({
-      headers: request.headers.set('authorization', `${token}`)
-    });
     return request.clone({
-      headers: request.headers.set('token', `${token}`)
+      headers: request.headers.set('authorization', `Bearer ${token}`)
     });
   }
 }

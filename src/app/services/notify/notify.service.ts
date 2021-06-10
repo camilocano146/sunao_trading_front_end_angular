@@ -58,4 +58,12 @@ export class NotifyService {
   clear(): void {
     this.snotifyService.clear();
   }
+
+  showSuccessCreateOrEdit(dataEdit: boolean): void {
+    if (dataEdit) {
+      this.showSuccessSnapshot(this.translate.instant('success.element_updated'));
+    } else {
+      this.showSuccessSnapshot(this.translate.instant('success.element_created'));
+    }
+  }
 }

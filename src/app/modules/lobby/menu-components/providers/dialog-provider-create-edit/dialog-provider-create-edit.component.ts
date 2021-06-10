@@ -7,13 +7,15 @@ import {NotifyService} from '../../../../../services/notify/notify.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Location} from '../../../../../models/Location';
 import {UserService} from '../../../../../services/user/user.service';
+import {ProviderService} from '../../../../../services/provider/provider.service';
+import {Provider} from '../../../../../models/Provider';
 
 @Component({
   selector: 'app-dialog-groups-create',
-  templateUrl: './dialog-location-create-edit.component.html',
-  styleUrls: ['./dialog-location-create-edit.component.scss']
+  templateUrl: './dialog-provider-create-edit.component.html',
+  styleUrls: ['./dialog-provider-create-edit.component.scss']
 })
-export class DialogLocationCreateEditComponent implements OnInit {
+export class DialogProviderCreateEditComponent implements OnInit {
   /**
    * Preload create/edit
    */
@@ -25,49 +27,57 @@ export class DialogLocationCreateEditComponent implements OnInit {
   public formControlEmail: FormControl = new FormControl('',
     [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(40)]
   );
-  public name: FormControl = new FormControl(
+  public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(5), Validators.maxLength(this.maxLengthName)]
   );
-  public lastName: FormControl = new FormControl(
-    null, [Validators.required, Validators.minLength(5), Validators.maxLength(this.maxLengthName)]
+  public formControlAddress: FormControl = new FormControl(
+    null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
   public formControlPhone: FormControl = new FormControl('',
     [Validators.required, Validators.minLength(8), Validators.maxLength(25)]
   );
-  public formControlRol: FormControl = new FormControl('',
-    [Validators.required]
-  );
-  formControlPassword: FormControl = new FormControl('',
-    [Validators.required, Validators.minLength(8), Validators.maxLength(100)]
-  );
 
   constructor(
     private userService: UserService,
-    private locationService: LocationService,
-    public dialogRef: MatDialogRef<DialogLocationCreateEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    private providerService: ProviderService,
+    public dialogRef: MatDialogRef<DialogProviderCreateEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataEdit: Provider,
     private translate: TranslateService,
     private notifyService: NotifyService,
-  ) { }
+  ) {
+    if (dataEdit) {
+      this.formControlName.setValue(dataEdit.name);
+      this.formControlEmail.setValue(dataEdit.email);
+      this.formControlAddress.setValue(dataEdit.address);
+      this.formControlPhone.setValue(dataEdit.phone);
+    }
+  }
 
   ngOnInit(): void {
   }
 
-  /**
-   * Guardar el grupo
-   */
-  save(): void {
+  saveOrEdit(): void {
     if (this.formControlEmail.value) {
       this.formControlEmail.setValue(this.formControlEmail.value.toString().toLowerCase().trim());
     }
-    if (this.formControlEmail.valid && this.name.valid && this.lastName.valid && this.formControlPhone.valid && this.formControlRol.valid && this.formControlPassword.value) {
+    if (this.formControlName.valid && this.formControlEmail.valid && this.formControlAddress.valid && this.formControlPhone.valid) {
       this.preloadSave = true;
-      const body: Location = {
-        name: this.name.value,
+      const body: Provider = {
+        name: this.formControlName.value,
+        email: this.formControlEmail.value.toLowerCase(),
+        address: this.formControlAddress.value,
+        phone: this.formControlPhone.value,
+        status: '1'
       };
-      this.locationService.register(body).subscribe(res => {
+      let observable;
+      if (this.dataEdit) {
+        observable = this.providerService.edit(this.dataEdit.id, body);
+      } else {
+        observable = this.providerService.register(body);
+      }
+      observable.subscribe(res => {
         this.preloadSave = false;
-        this.notifyService.showSuccessSnapshot(this.translate.instant('success.element_created'));
+        this.notifyService.showSuccessCreateOrEdit(!!this.dataEdit);
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
         const errors = error.error.body?.mensaje?.errors;
@@ -79,11 +89,10 @@ export class DialogLocationCreateEditComponent implements OnInit {
         this.preloadSave = false;
       });
     } else {
-      this.name.markAsTouched();
-      this.lastName.markAsTouched();
+      this.formControlName.markAsTouched();
+      this.formControlAddress.markAsTouched();
       this.formControlEmail.markAsTouched();
       this.formControlPhone.markAsTouched();
-      this.formControlRol.markAsTouched();
     }
   }
 
@@ -103,21 +112,21 @@ export class DialogLocationCreateEditComponent implements OnInit {
    * Mensaje de error nombre
    */
   getErrorMessageName(): string {
-    return this.name.hasError('required')
+    return this.formControlName.hasError('required')
       ? this.translate.instant('fields.required')
-      : this.name.hasError('minlength')
+      : this.formControlName.hasError('minlength')
         ? this.translate.instant('fields.min_5')
-        : this.name.hasError('maxlength')
+        : this.formControlName.hasError('maxlength')
           ? this.translate.instant('fields.max_50')
           : '';
   }
 
-  getErrorMessageLastName(): string {
-    return this.lastName.hasError('required')
+  getErrorMessageAddress(): string {
+    return this.formControlAddress.hasError('required')
       ? this.translate.instant('fields.required')
-      : this.lastName.hasError('minlength')
-        ? this.translate.instant('fields.min_5')
-        : this.lastName.hasError('maxlength')
+      : this.formControlAddress.hasError('minlength')
+        ? this.translate.instant('fields.min_2')
+        : this.formControlAddress.hasError('maxlength')
           ? this.translate.instant('fields.max_50')
           : '';
   }
@@ -132,26 +141,15 @@ export class DialogLocationCreateEditComponent implements OnInit {
           : '';
   }
 
-  /**
-   * Devuelve el mensaje de password incorrecto
-   */
-  getErrorMessagePassword(): string {
-    return this.formControlPassword.hasError('required')
-      ? this.translate.instant('fields.required')
-      : this.formControlPassword.hasError('minlength')
-        ? this.translate.instant('fields.min_8')
-        : this.formControlPassword.hasError('maxlength')
-          ? this.translate.instant('fields.max_100')
-          : '';
-  }
-
-  getErrorMessageRol(): void {
-    return this.formControlRol.hasError('required')
-      ? this.translate.instant('fields.required')
-      : '';
-  }
-
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  private showSuccessMessage(): void {
+    if (this.dataEdit) {
+      this.notifyService.showSuccessSnapshot(this.translate.instant('success.element_updated'));
+    } else {
+      this.notifyService.showSuccessSnapshot(this.translate.instant('success.element_created'));
+    }
   }
 }
