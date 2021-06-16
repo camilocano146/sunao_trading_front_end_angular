@@ -35,6 +35,8 @@ import {DialogProviderCreateEditComponent} from './menu-components/providers/dia
 import {ProvidersComponent} from './menu-components/providers/providers.component';
 import {DialogCityCreateEditComponent} from './menu-components/cities/dialog-city-create-edit/dialog-city-create-edit.component';
 import {CitiesComponent} from './menu-components/cities/cities.component';
+import { PortTarifsComponent } from './menu-components/port-tarifs/port-tarifs.component';
+import { DialogImportPortTarifsComponent } from './menu-components/port-tarifs/dialog-import-port-tarifs/dialog-import-port-tarifs.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import {CitiesComponent} from './menu-components/cities/cities.component';
     DialogProviderCreateEditComponent,
     CitiesComponent,
     DialogCityCreateEditComponent,
+    PortTarifsComponent,
+    DialogImportPortTarifsComponent,
   ],
   imports: [
     CommonModule,

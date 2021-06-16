@@ -8,6 +8,7 @@ import {CountriesComponent} from './menu-components/countries/countries.componen
 import {LiquidationsComponent} from './menu-components/liquidations/liquidations.component';
 import {ProvidersComponent} from './menu-components/providers/providers.component';
 import {CitiesComponent} from './menu-components/cities/cities.component';
+import { PortTarifsComponent } from './menu-components/port-tarifs/port-tarifs.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       {path: 'providers', component: ProvidersComponent},
       {path: 'my-plan', component: MyPlanComponent},
       {path: 'profile', component: ProfileComponent},
+      {path: 'port-tarifs', component:PortTarifsComponent}
     ]
   },
 ];

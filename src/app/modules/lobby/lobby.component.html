@@ -72,6 +72,12 @@
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
           Costos Nacionales
         </a>
+
+        <a [ngClass]="isSelectOption('/port-tarifs') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="port-tarifs" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
+          Port tarifs
+        </a>
+
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content style="overflow-x: hidden">
