@@ -1,0 +1,18 @@
+@import '../../../../../../styles';
+
+.div-parent-table {
+  overflow: auto !important;
+}
+
+.div-parent-table table {
+  min-width: 900px !important;
+}
+
+th, td {
+  text-align: center !important;
+}
+
+.container-table {
+  max-height: 380px !important;
+  overflow-y: auto !important;
+}

@@ -10,17 +10,39 @@ export class ProviderService {
 
   constructor(private httpClient: HttpClient) { }
 
-  register(body: Provider): Observable<any> {
+  /**
+   * Intencacionales
+   */ 
+  registerIntenational(body: Provider): Observable<any> {
     return this.httpClient.post('provider/', body);
   }
 
-  edit(id: number, body: Provider): Observable<any> {
+  editIntenational(id: number, body: Provider): Observable<any> {
     return this.httpClient.put(`provider/${id}/edit/`, body);
   }
 
-  getAll(offset: number, limit: number): Observable<any> {
+  getListInternational(offset: number, limit: number): Observable<any> {
     return this.httpClient.get(`provider/?offset=${offset}&limit=${limit}`);
   }
+
+  /**
+   * Nationals 
+   */ 
+  registerNational(body: Provider): Observable<any> {
+    return this.httpClient.post('provider/create_national/', body);
+  }
+
+  editNational(id: number, body: Provider): Observable<any> {
+    return this.httpClient.put(`provider/${id}/edit_national/`, body);
+  }
+
+  getListNational(offset: number, limit: number): Observable<any> {
+    return this.httpClient.get(`provider/list_nationals/?offset=${offset}&limit=${limit}`);
+  }
+
+  /**
+   * Eliminar
+   */
 
   delete(id: number): Observable<any> {
     return this.httpClient.delete(`provider/${id}/delete/`);

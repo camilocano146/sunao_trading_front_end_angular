@@ -44,9 +44,8 @@ export class UserService {
   }
 
   getAll(offset: number, limit: number): Observable<any> {
-    let headers = new HttpHeaders();
-    headers = headers.set('page', offset.toString()).set('limit', limit.toString());
-    return this.httpClient.get('users/list', {headers});
+    
+    return this.httpClient.get(`users/?offset=${offset}&limit=${limit}`);
   }
 
   registerToOrganization(body: User): Observable<any> {
@@ -63,5 +62,9 @@ export class UserService {
 
   getUser(): Observable<any> {
     return this.httpClient.get(`users/my`);
+  }
+
+  activateDeactivateUser(user:User): Observable<any> {
+    return this.httpClient.post(`users/${user.id}/acivate_desactivate_user/`, user);
   }
 }

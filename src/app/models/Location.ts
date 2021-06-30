@@ -2,6 +2,7 @@
 export interface Location {
   id?: number;
   name: string;
-  father_location: number;
+  father_location_id?: number;
   type: string;
+  father_location?:Location;
 }

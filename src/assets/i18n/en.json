@@ -26,7 +26,9 @@
     "country": "País",
     "phone": "Teléfono",
     "code": "Código",
-    "user": "User"
+    "user": "User",
+    "name": "Name"
+
   },
   "success": {
     "element_created": "Registro Creado",
@@ -41,7 +43,10 @@
     "select_file_mandatory": "Debe seleccionar un archivo"
   },
   "buttons": {
-    "save": "Guardar"
+    "save": "Save",
+    "create": "Create",
+    "edit_city":"Edit city",
+    "edit_country":"Edit country"
   },
   "auth": {
     "sign_in": {
@@ -194,5 +199,27 @@
     "previous": "Anterior",
     "save_and_next": "Continuar",
     "next": "Siguiente"
+  },
+  "table":{
+    "fields":{
+      "names":"Name",
+      "email":"Email",
+      "phone":"Phone",
+      "active": "Active",
+      "actions": "Actions"
+    }
+  },
+  "chapter":{
+    "errors":{
+      "code_unique":"Chapter with this code already exists."
+    }
+  },
+  "locations":{
+    "title_countries":"List countries",
+    "title_municipality":"List cities of",
+    "return_countries": "Return to countries",
+    "errors":{
+      "unique_name":"Name country must be unique."
+    }
   }
 }

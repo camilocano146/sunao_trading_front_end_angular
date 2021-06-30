@@ -18,6 +18,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
 import {LiquidationDetailsComponent} from './menu-components/liquidations/liquidation-details/liquidation-details.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -31,12 +32,28 @@ import {DialogCountryCreateEditComponent} from './menu-components/countries/dial
 import { LiquidationsComponent } from './menu-components/liquidations/liquidations.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {DialogProviderCreateEditComponent} from './menu-components/providers/dialog-provider-create-edit/dialog-provider-create-edit.component';
-import {ProvidersComponent} from './menu-components/providers/providers.component';
+import {DialogProviderCreateEditComponent} from './menu-components/international-providers/dialog-provider-create-edit/dialog-provider-create-edit.component';
+import {InternationalProvidersComponent} from './menu-components/international-providers/international-providers.component';
 import {DialogCityCreateEditComponent} from './menu-components/cities/dialog-city-create-edit/dialog-city-create-edit.component';
 import {CitiesComponent} from './menu-components/cities/cities.component';
-import { PortTarifsComponent } from './menu-components/port-tarifs/port-tarifs.component';
-import { DialogImportPortTarifsComponent } from './menu-components/port-tarifs/dialog-import-port-tarifs/dialog-import-port-tarifs.component';
+import { PortTarifsComponent } from './menu-components/port-tarifs-international/port-tarifs-international.component';
+import { DialogImportPortTarifsComponent } from './menu-components/port-tarifs-international/dialog-import-port-tarifs/dialog-import-port-tarifs.component';
+import { ProductsComponent } from './menu-components/products/products.component';
+import { UsersComponent } from './menu-components/users/users.component';
+import { DialogProductCreateEditComponent } from './menu-components/products/dialog-product-create-edit/dialog-product-create-edit.component';
+import { PortsComponent } from './menu-components/ports/ports.component';
+import { DialogPortCreateEditComponent } from './menu-components/ports/dialog-port-create-edit/dialog-port-create-edit.component';
+import { DialogProductDetailsComponent } from './menu-components/products/dialog-product-details/dialog-product-details.component';
+import { ChaptersComponent } from './menu-components/chapters/chapters.component';
+import { DialogChapterCreateEditComponent } from './menu-components/chapters/dialog-chapter-create-edit/dialog-chapter-create-edit.component';
+import { PortTarifsNationalComponent } from './menu-components/port-tarifs-national/port-tarifs-national.component';
+import { DialogImportPortTarifsNationalComponent } from './menu-components/port-tarifs-national/dialog-import-port-tarifs-national/dialog-import-port-tarifs-national.component';
+import { PackagesComponent } from './menu-components/packages/packages.component';
+import { DialogPackageCreateEditComponent } from './menu-components/packages/dialog-package-create-edit/dialog-package-create-edit.component';
+import { CouponsComponent } from './menu-components/coupons/coupons.component';
+import { DialogCouponsCreateEditComponent } from './menu-components/coupons/dialog-coupons-create-edit/dialog-coupons-create-edit.component';
+import { NationalProvidersComponent } from './menu-components/national-providers/national-providers.component';
+import { DialogNationalProvidersCreateEditComponent } from './menu-components/national-providers/dialog-national-providers-create-edit/dialog-national-providers-create-edit.component';
 
 @NgModule({
   declarations: [
@@ -48,12 +65,28 @@ import { DialogImportPortTarifsComponent } from './menu-components/port-tarifs/d
     CountriesComponent,
     DialogCountryCreateEditComponent,
     LiquidationsComponent,
-    ProvidersComponent,
+    InternationalProvidersComponent,
     DialogProviderCreateEditComponent,
     CitiesComponent,
     DialogCityCreateEditComponent,
     PortTarifsComponent,
     DialogImportPortTarifsComponent,
+    ProductsComponent,
+    UsersComponent,
+    DialogProductCreateEditComponent,
+    PortsComponent,
+    DialogPortCreateEditComponent,
+    DialogProductDetailsComponent,
+    ChaptersComponent,
+    DialogChapterCreateEditComponent,
+    PortTarifsNationalComponent,
+    DialogImportPortTarifsNationalComponent,
+    PackagesComponent,
+    DialogPackageCreateEditComponent,
+    CouponsComponent,
+    DialogCouponsCreateEditComponent,
+    NationalProvidersComponent,
+    DialogNationalProvidersCreateEditComponent
   ],
   imports: [
     CommonModule,
@@ -79,6 +112,7 @@ import { DialogImportPortTarifsComponent } from './menu-components/port-tarifs/d
     MatListModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatTabsModule
   ],
   providers: [
     {

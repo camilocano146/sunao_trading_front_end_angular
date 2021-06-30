@@ -1,0 +1,288 @@
+<div class="" mat-dialog-title>
+  <div class="row justify-content-between">
+    <div class="col-10 col-sm-10 col-md-10">
+      <strong class="color-blue">
+        Detalles del producto  
+      </strong>
+    </div>
+    <div class="col-2 col-sm-2 col-md-2">
+      <button type="button" class="close btn-close-dialog" (click)="onNoClick()">
+        <span aria-hidden="false">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
+<mat-tab-group>
+  <!-- Ivas -->
+  <mat-tab label="IVA"> 
+    <div class="container container-table" style="max-width: max-content">
+      <div class="div-parent-table">
+        <table mat-table [dataSource]="listIvas" class="w-100">
+            
+          <!-- column id -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>
+              # Id
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <span >{{row.id}}</span>
+            </td>
+          </ng-container>
+
+          <!-- tarif Column -->
+          <ng-container matColumnDef="tarif">
+            <th mat-header-cell *matHeaderCellDef>
+                <img src="./assets/icons/nota.svg" alt="">
+                Tarif
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span >{{row.tarif}} </span>
+                
+              </td>
+          </ng-container>
+  
+          <!-- date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>
+                <img src="./assets/icons/nota.svg" alt="">
+                Fecha 
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.date">{{row.date}}</span>
+                <span *ngIf="!row.date">N/A</span>
+              </td>
+          </ng-container>
+          
+          
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsIvas"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsIvas;"></tr>
+        </table>
+      </div>
+      <mat-spinner *ngIf="preloadIvas" class="m-auto">Cargando</mat-spinner>
+      <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
+      <mat-paginator (page)="loadTableIvas()" [pageSizeOptions]="pageSizeOptionsIvas" [length]="resultsLengthIvas"></mat-paginator>
+    </div>
+  
+  </mat-tab>
+  <mat-tab label="Documentos de soporte">  
+      <div class="container container-table" style="max-width: max-content">
+          <div class="div-parent-table">
+            <table mat-table [dataSource]="listSupportDocument" class="w-100">
+              <!-- column id -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>
+                  # Id
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <span >{{row.id}}</span>
+                </td>
+              </ng-container>
+    
+              <!-- document Column -->
+              <ng-container matColumnDef="document">
+                <th mat-header-cell *matHeaderCellDef>
+                    <img src="./assets/icons/nota.svg" alt="">
+                    Document
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <span *ngIf="row.document  ">{{row.document}} </span>
+                    <span *ngIf="!row.document ">N/A</span>
+                  </td>
+              </ng-container>
+      
+              <!-- entity Column -->
+              <ng-container matColumnDef="entity">
+                <th mat-header-cell *matHeaderCellDef>
+                    
+                    Entidad
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                      <span *ngIf="row.entity  ">{{row.entity}} </span>
+                      <span *ngIf="!row.entity ">N/A</span>
+                  </td>
+              </ng-container>
+              
+              <!-- entity Column -->
+              <ng-container matColumnDef="electronic">
+                  <th mat-header-cell *matHeaderCellDef>
+                      
+                      Electronic
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <span *ngIf="row.electronic  ">{{row.electronic}} </span>
+                        <span *ngIf="!row.electronic ">N/A</span>
+                    </td>
+              </ng-container>
+                
+              <!-- date Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>
+                    <img src="./assets/icons/nota.svg" alt="">
+                    Fecha 
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <span *ngIf="row.date">{{row.date}}</span>
+                    <span *ngIf="!row.date">N/A</span>
+                  </td>
+              </ng-container>
+              
+              
+    
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsSupportDocument"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsSupportDocument;"></tr>
+            </table>
+          </div>
+          <mat-spinner *ngIf="preloadSupportDocument" class="m-auto">Cargando</mat-spinner>
+          <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
+          <mat-paginator (page)="loadTableSupportDocument()" [pageSizeOptions]="pageSizeOptionsSupportDocument" [length]="resultsLengthSupportDocument"></mat-paginator>
+        </div>
+  </mat-tab>
+  <mat-tab label="Acuerdos internacionales"> 
+    <div class="container container-table" style="max-width: max-content">
+      <div class="div-parent-table">
+        <table mat-table [dataSource]="listInternationalAgreement" class="w-100">
+          <!-- column id -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>
+              # Id
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <span >{{row.id}}</span>
+            </td>
+          </ng-container>
+
+          <!-- location Column -->
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef>
+              <img src="./assets/icons/nota.svg" alt="">
+              Locacion
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <span *ngIf="row.location  ">{{row.location}} </span>
+              <span *ngIf="!row.location ">N/A</span>
+            </td>
+          </ng-container>
+
+          <!-- date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>
+                <img src="./assets/icons/nota.svg" alt="">
+                Fecha 
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.date">{{row.date}}</span>
+                <span *ngIf="!row.date">N/A</span>
+              </td>
+          </ng-container>
+          
+          
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsInternationalAgreement"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsInternationalAgreement;"></tr>
+        </table>
+      </div>
+      <mat-spinner *ngIf="preloadInternationalAgreement" class="m-auto">Cargando</mat-spinner>
+      <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
+      <mat-paginator (page)="loadTableInternationalAgreement()" [pageSizeOptions]="pageSizeOptionsInternationalAgreement" [length]="resultsLengthInternationalAgreement"></mat-paginator>
+    </div>
+  </mat-tab>
+  <mat-tab label="Gravamen">
+    <div class="container container-table" style="max-width: max-content;">
+      <div class="div-parent-table mat-elevation-z1">
+        <table mat-table [dataSource]="listGravamen" class="w-100">
+          <!-- column id -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>
+              # Id
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <span >{{row.id}}</span>
+            </td>
+          </ng-container>
+
+          <!-- tarif Column -->
+          <ng-container matColumnDef="tarif">
+            <th mat-header-cell *matHeaderCellDef>
+                <img src="./assets/icons/nota.svg" alt="">
+                Tarif
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span >{{row.tarif}} </span>
+              </td>
+          </ng-container>
+          
+          <!-- date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>
+                <img src="./assets/icons/nota.svg" alt="">
+                Fecha 
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.date">{{row.date}}</span>
+                <span *ngIf="!row.date">N/A</span>
+              </td>
+          </ng-container>
+          
+          
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsGravamen"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsGravamen;"></tr>
+        </table>
+      </div>
+      <mat-spinner *ngIf="preloadGravamen" class="m-auto">Cargando</mat-spinner>
+      <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
+      <mat-paginator (page)="loadTableGravamen()" [pageSizeOptions]="pageSizeOptionsGravamen" [length]="resultsLengthGravamen"></mat-paginator>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Regimen de comercio">
+    <div class="container" style="max-width: max-content">
+      <div class="div-parent-table">
+        <table mat-table [dataSource]="listTradeRegimen" class="w-100">
+          <!-- column id -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>
+              # Id
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <span >{{row.id}}</span>
+            </td>
+          </ng-container>
+
+          <!-- concept Column -->
+          <ng-container matColumnDef="concept">
+            <th mat-header-cell *matHeaderCellDef>
+                <img src="./assets/icons/nota.svg" alt="">
+                Concepto
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.concept  ">{{row.concept}} </span>
+                <span *ngIf="!row.concept ">N/A</span>
+              </td>
+          </ng-container>
+          
+          <!-- date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>
+                <img src="./assets/icons/nota.svg" alt="">
+                Fecha 
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.date">{{row.date}}</span>
+                <span *ngIf="!row.date">N/A</span>
+              </td>
+          </ng-container>
+          
+          
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsTradeRegimen"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsTradeRegimen;"></tr>
+        </table>
+      </div>
+      <mat-spinner *ngIf="preloadTradeRegimen" class="m-auto">Cargando</mat-spinner>
+      <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
+      <mat-paginator (page)="loadTableTradeRegimen()" [pageSizeOptions]="pageSizeOptionsTradeRegimen" [length]="resultsLengthTradeRegimen"></mat-paginator>
+    </div>
+  </mat-tab>
+</mat-tab-group>

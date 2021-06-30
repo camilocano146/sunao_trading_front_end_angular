@@ -1,0 +1,51 @@
+<div class="" mat-dialog-title>
+    <div class="row justify-content-between">
+      <div class="col-10 col-sm-10 col-md-10">
+        <strong class="color-blue">
+            <div *ngIf="data.dataEdit">
+                Editar Capitulo
+            </div>
+            <div *ngIf="!data.dataEdit">
+                Agregar Capitulo
+            </div>
+        </strong>
+      </div>
+      <div class="col-2 col-sm-2 col-md-2">
+        <button type="button" class="close btn-close-dialog" (click)="onNoClick()">
+          <span aria-hidden="false">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div *ngIf="preload" class="w-100 text-center">
+      <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+    </div>
+    <div *ngIf="!preload" class="row text-center">
+      <div class="col-12" style="margin-bottom: 10px;">
+        <mat-form-field class="w-100">
+          <mat-label>Nombre</mat-label>
+          <input matInput [formControl]="formControlName">
+          <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
+          <mat-error *ngIf="formControlName.invalid">Nombre requerido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12" style="margin-bottom: 10px;">
+        <mat-form-field class="w-100">
+          <mat-label>Codigo</mat-label>
+          <input matInput [formControl]="formControlCode">
+          <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
+          <mat-error *ngIf="formControlCode.invalid">Codigo requerido</mat-error>
+        </mat-form-field>
+      </div>
+     
+    </div>
+  </div>
+  <div *ngIf="!preload" class="text-center" mat-dialog-actions style="margin-top: 10px;">
+    <button *ngIf="!preloadSave" mat-raised-button color="primary" class="w-100" (click)="saveOrEdit()">
+      {{'buttons.save' | translate}}
+    </button>
+    <div *ngIf="preloadSave" class="w-100 text-center">
+      <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+    </div>
+  </div>

@@ -19,7 +19,7 @@ export class LiquidationsComponent implements OnInit {
   preload: boolean;
   list: Location[];
   public displayedColumns: string[] = [
-    'index',
+    'id',
     'reference',
     'origin',
     'destination',
@@ -58,9 +58,8 @@ export class LiquidationsComponent implements OnInit {
   loadTable(): void {
     this.preload = true;
     this.list = undefined;
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex + 1 : 1;
     const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    console.log(page, limit);
+    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
     this.liquidationService.getAll(page, limit).subscribe(
       value => {
         this.preload = false;

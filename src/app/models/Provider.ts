@@ -6,4 +6,5 @@ export interface Provider {
   email: string;
   phone: string;
   status: string;
+  type:string;
 }

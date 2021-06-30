@@ -25,7 +25,7 @@ export class CitiesComponent implements OnInit, AfterViewInit {
   preload: boolean;
   list: Location[];
   public displayedColumns: string[] = [
-    'index',
+    'id',
     'name',
     'actions'
   ];
@@ -63,8 +63,8 @@ export class CitiesComponent implements OnInit, AfterViewInit {
   loadTable(): void {
     this.preload = true;
     this.list = undefined;
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex + 1 : 0;
     const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
     this.locationService.getAllCitiesOfCountry(this.idCountry, page, limit).subscribe(
       value => {
         this.preload = false;

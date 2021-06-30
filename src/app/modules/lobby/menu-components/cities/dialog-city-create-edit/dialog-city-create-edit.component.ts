@@ -21,7 +21,7 @@ export class DialogCityCreateEditComponent implements OnInit {
    */
   public preload: boolean;
   public preloadSave: boolean;
-  maxLengthName = 100;
+  maxLengthName = 45;
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
@@ -47,20 +47,21 @@ export class DialogCityCreateEditComponent implements OnInit {
       this.preloadSave = true;
       const body: Location = {
         name: this.formControlName.value,
-        father_location: this.data.idCountry,
+        father_location_id: this.data.idCountry,
         type: ConstantsApp.TYPE_LOCATION_CITY
       };
       let observable;
       if (this.data.dataEdit) {
-        observable = this.locationService.edit(this.data.dataEdit.id, body);
+        observable = this.locationService.editMunicipality(this.data.dataEdit.id, body);
       } else {
-        observable = this.locationService.register(body);
+        observable = this.locationService.registerMunicipality(body);
       }
       observable.subscribe(res => {
         this.preloadSave = false;
         this.notifyService.showSuccessCreateOrEdit(!!this.data.dataEdit);
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
+        console.log(error)
         const errors = error.error.body?.mensaje?.errors;
         if (errors?.name?.message?.toString()?.toUpperCase()?.includes('name must be unique'.toUpperCase())) {
           this.notifyService.showErrorSnapshot(this.translate.instant('errors.unique_name'));

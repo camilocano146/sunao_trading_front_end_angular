@@ -1,0 +1,109 @@
+<div class="full-width mt-3">
+  <div class="row margin-mobile-top-orgs my-2 text-center" style="margin-left: 0px !important; margin-right: 0px !important;">
+    <h3 class="w-100">Lista de proveedores</h3>
+  </div>
+
+  <div class="container col-12  text-right" style="max-width: 1050px; min-width: 200px;">
+    
+    <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 230px !important;">
+      <h4 class="my-2">
+        <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
+        <span style="margin-left: 1em">
+          Crear
+        </span>
+      </h4>
+    </button>
+    
+  </div>
+
+  <div class="mat-elevation-z8 container" style="max-width: max-content">
+    <div class="div-parent-table">
+      <table mat-table [dataSource]="list" class="w-100">
+
+        <!-- column id -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>
+            Id
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span >{{row.id}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/provider_white.svg" alt="">
+            Nombre
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.name">{{row.name}}</span>
+            <span *ngIf="!row.name">N/A</span>
+          </td>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/import/menu/location.svg" alt="">
+            Dirección
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.address">{{row.address}}</span>
+            <span *ngIf="!row.address">N/A</span>
+          </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/email_white.svg" alt="">
+            Email
+          </th>
+          <td style="max-width: 150px;" mat-cell *matCellDef="let row">{{row.email}}</td>
+        </ng-container>
+
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/phone_white.svg" alt="">
+            Teléfono
+          </th>
+          <td style="max-width: 150px;" mat-cell *matCellDef="let row">
+            <span *ngIf="row.phone">{{row.phone}}</span>
+            <span *ngIf="!row.phone">N/A</span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/nota.svg" alt="">
+            Acciones
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <img src="./assets/icons/more_vert_black_24dp.svg" alt="">
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialogEdit(row)">
+                <img src="./assets/icons/edit_black_24dp.svg" alt="">
+                Editar
+              </button>
+              <button mat-menu-item (click)="openDialogRemove(row)">
+                <img src="./assets/icons/delete_black_24dp.svg" alt="">
+                Eliminar
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-spinner *ngIf="preload" class="m-auto">Cargando</mat-spinner>
+    <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
+    <mat-paginator (page)="loadTable()" [pageSizeOptions]="pageSizeOptions" [length]="resultsLength"></mat-paginator>
+  </div>
+</div>

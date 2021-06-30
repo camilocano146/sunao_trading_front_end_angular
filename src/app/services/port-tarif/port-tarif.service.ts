@@ -14,12 +14,24 @@ export class PortTarifService {
     return this.httpClient.get(`port_tarif/?offset=${offset}&limit=${limit}`);
   }
 
-  importFilePortTarifs(file: any):Observable<any>{
+  getPortTarifsNational(offset: number, limit: number): Observable<any> {
+    return this.httpClient.get(`port_tarif/list_port_tarif_national/?offset=${offset}&limit=${limit}`);
+  }
+
+  importFilePortTarifsInternational(file: any):Observable<any>{
 
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.httpClient.post<any>('port_tarif/importPortsTarif/', formData);
+    return this.httpClient.post<any>('port_tarif/import_ports_tarif_international/', formData);
   }
+
+  importFilePortTarifsNational(file: any):Observable<any>{
+
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post<any>('port_tarif/import_ports_tarif_national/', formData);
+  }
+
 
 }

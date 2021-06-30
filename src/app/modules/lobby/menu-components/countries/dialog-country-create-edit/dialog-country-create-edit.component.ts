@@ -18,9 +18,10 @@ export class DialogCountryCreateEditComponent implements OnInit {
   /**
    * Preload create/edit
    */
+  is_click_save:boolean= false;
   public preload: boolean;
   public preloadSave: boolean;
-  maxLengthName = 100;
+  maxLengthName = 45;
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
@@ -42,6 +43,7 @@ export class DialogCountryCreateEditComponent implements OnInit {
   }
 
   saveOrEdit(): void {
+    this.is_click_save= true;
     if (this.formControlName.valid) {
       this.preloadSave = true;
       const body: Location = {
@@ -60,9 +62,11 @@ export class DialogCountryCreateEditComponent implements OnInit {
         this.notifyService.showSuccessCreateOrEdit(!!this.dataEdit);
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
-        const errors = error.error.body?.mensaje?.errors;
-        if (errors?.name?.message?.toString()?.toUpperCase()?.includes('name must be unique'.toUpperCase())) {
-          this.notifyService.showErrorSnapshot(this.translate.instant('errors.unique_name'));
+        
+        const errors = error.error.non_field_errors[0];
+        console.log(errors)
+        if (errors.toString()?.toUpperCase()?.includes('name country must be unique.'.toUpperCase())) {
+          this.notifyService.showErrorSnapshot(this.translate.instant('locations.errors.unique_name'));
         } else {
           this.notifyService.showErrorSnapshot(this.translate.instant('errors.connection_error'));
         }
