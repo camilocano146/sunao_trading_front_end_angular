@@ -50,6 +50,8 @@ export class DialogProductDetailsComponent implements OnInit {
   @ViewChild(MatPaginator) paginatorInternationalAgreement: MatPaginator;
   public displayedColumnsInternationalAgreement: string[] = [
     'id',
+    "title",
+    "gravamen",
     "location",
     "date"
   ];

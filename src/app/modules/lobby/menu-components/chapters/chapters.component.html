@@ -3,7 +3,7 @@
       <h3 class="w-100">Lista de capitulos</h3>
     </div>
   
-    <div class="container col-12  text-right" style="max-width: 1050px; min-width: 200px;">
+    <div class="container col-12  text-right" style="max-width: 1250px; min-width: 200px;">
       <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 200px !important;">
         <h4>
           <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
@@ -14,7 +14,7 @@
       </button>
     </div>
 
-    <div class="mat-elevation-z8 container" style="max-width: max-content">
+    <div class="mat-elevation-z8 container" style="max-width: 1225px">
       <div class="div-parent-table">
         <table mat-table [dataSource]="list" class="w-100">
             
@@ -65,7 +65,7 @@
                 <mat-menu #menu="matMenu">
                   <button mat-menu-item (click)="openDialogEdit(row)">
                     <img src="./assets/icons/edit_black_24dp.svg" alt="">
-                    Editar Chapter
+                    Editar Capitulo
                   </button>
                 </mat-menu>
                 

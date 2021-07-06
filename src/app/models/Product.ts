@@ -5,5 +5,6 @@ export interface Product {
     chapter_code: string;
     description: string;
     chapter?:any;
+    subcategory?:string;
 }
   

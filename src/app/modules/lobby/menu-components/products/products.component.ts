@@ -27,7 +27,7 @@ export class ProductsComponent implements OnInit {
     'id',
     "name",
     "code",
-    "description",
+    "subcategory",
     "actions"
   ];
 
