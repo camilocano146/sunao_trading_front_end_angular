@@ -1,4 +1,4 @@
-import { Location } from "./Location";
+import { Location } from './Location';
 
 export interface Port {
     id?: number;
@@ -7,6 +7,5 @@ export interface Port {
     latitud: string;
     longitud: string;
     location?: Location;
-    location_id?:number;
+    location_id?: number;
 }
-  

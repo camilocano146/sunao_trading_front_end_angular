@@ -220,3 +220,15 @@ p {
   width: unset !important;
   max-width: unset !important;
 }
+
+#step-origin-destination {
+  agm-map {
+    height: 200px;
+  }
+}
+
+#step-incoterm {
+  agm-map {
+    height: 140px;
+  }
+}

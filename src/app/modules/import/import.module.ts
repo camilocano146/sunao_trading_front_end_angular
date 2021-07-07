@@ -17,6 +17,7 @@ import {DialogHelpComponent} from './costs/dialog-help/dialog-help.component';
 import {DialogLoginComponent} from './costs/dialog-login/dialog-login.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {AgmCoreModule} from '@agm/core';
 
 
 @NgModule({
@@ -40,6 +41,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatTooltipModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
   ]
 })
 export class ImportModule { }

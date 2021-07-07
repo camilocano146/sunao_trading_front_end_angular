@@ -25,7 +25,12 @@ export class SignInComponent implements OnInit, AfterViewInit {
   preload: boolean;
   hidePass = true;
 
-  constructor(private translate: TranslateService, private userService: UserService, private notifyService: NotifyService, private router: Router) {
+  constructor(
+    private translate: TranslateService,
+    private userService: UserService,
+    private notifyService: NotifyService,
+    private router: Router
+  ) {
     // (document.getElementsByClassName('img-background')[0] as HTMLElement).style.height = (document.getElementsByClassName('div-content')[0] as HTMLElement).style.height;
     // (document.getElementsByClassName('div-img-background')[0] as HTMLElement).style.filter = 'brightness(50%)';
     if (ManageLocalStorage.getToken()) {

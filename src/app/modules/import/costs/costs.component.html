@@ -28,7 +28,7 @@
     </div>
 
     <div class="div-content">
-      <div *ngIf="currentStep === 0">
+      <div id="step-origin-destination" *ngIf="currentStep === 0">
         <div class="div-content-info">
           <h6 class="color-blue pt-5 pb-2">
             Por favor seleccione la ciudad de origen y destino para listar sus puertos y seleccionar el indicado
@@ -36,77 +36,85 @@
           <div class="row">
             <div class="col-6">
               <h6>
-                Ciudad
+                Origen
               </h6>
               <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected">
                 Debe oprimir sobre una ciudad para seleccionarla
               </mat-error>
               <mat-form-field class="w-100" appearance="outline">
-                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
-                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
-                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
-                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllCities(formControlOrigin)"
+                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations1">
+                <mat-autocomplete autoActiveFirstOption #autoLocations1="matAutocomplete">
+                  <mat-option *ngFor="let option of listLocationsOrigin" (onSelectionChange)="onSelectOptionOrigin(option)"
                               [value]="option.name">
-                    <span>{{option.name}}</span>
+                    <span>{{option.name | titlecase}}</span>
                   </mat-option>
                 </mat-autocomplete>
-                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+                <mat-error>{{getErrorMessageRequired(formControlOrigin)}}</mat-error>
               </mat-form-field>
 
               <h6>
                 Puerto
               </h6>
-              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastPortOriginSelected">
+              <mat-error style="font-size: 10px" *ngIf="formControlOriginPort.value && !lastPortOriginSelected">
                 Debe oprimir sobre una ciudad para seleccionarla
               </mat-error>
               <mat-form-field class="w-100" appearance="outline">
-                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
-                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
-                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
-                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllPorts(lastOriginSelected, formControlOriginPort)"
+                       [formControl]="formControlOriginPort" [matAutocomplete]="autoLocations2">
+                <mat-autocomplete autoActiveFirstOption #autoLocations2="matAutocomplete">
+                  <mat-option *ngFor="let option of listPortsOrigin" (onSelectionChange)="onSelectOptionOrigenPort(option)"
                               [value]="option.name">
                     <span>{{option.name}}</span>
                   </mat-option>
                 </mat-autocomplete>
-                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+                <mat-error>{{getErrorMessageRequired(formControlOriginPort)}}</mat-error>
               </mat-form-field>
+
+              <agm-map [latitude]="+this.lastPortOriginSelected?.latitud || defaultLatitude" [longitude]="+this.lastPortOriginSelected?.longitud || defaultLongitude">
+                <agm-marker [latitude]="+this.lastPortOriginSelected?.latitud || defaultLatitude" [longitude]="+this.lastPortOriginSelected?.longitud || defaultLongitude"></agm-marker>
+              </agm-map>
             </div>
             <div class="col-6">
               <h6>
                 Destino
               </h6>
-              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastDestinationSelected">
+              <mat-error style="font-size: 10px" *ngIf="formControlDestination.value && !lastDestinationSelected">
                 Debe oprimir sobre una ciudad para seleccionarla
               </mat-error>
               <mat-form-field class="w-100" appearance="outline">
-                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
-                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
-                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
-                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
-                              [value]="option.name">
-                    <span>{{option.name}}</span>
+                <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllCities(formControlDestination)"
+                       [formControl]="formControlDestination" [matAutocomplete]="autoLocations3">
+                <mat-autocomplete autoActiveFirstOption #autoLocations3="matAutocomplete">
+                  <mat-option *ngFor="let option of listLocationsDestination" (onSelectionChange)="onSelectOptionDestination(option)"
+                              [value]="option.name | titlecase">
+                    <span>{{option.name | titlecase}}</span>
                   </mat-option>
                 </mat-autocomplete>
-                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+                <mat-error>{{getErrorMessageRequired(formControlDestination)}}</mat-error>
               </mat-form-field>
 
               <h6>
                 Puerto
               </h6>
-              <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastPortDestinationSelected">
-                Debe oprimir sobre una ciudad para seleccionarla
+              <mat-error style="font-size: 10px" *ngIf="formControlDestinationPort.value && !lastPortDestinationSelected">
+                Debe oprimir sobre una puerto para seleccionarlo
               </mat-error>
               <mat-form-field class="w-100" appearance="outline">
-                <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
-                       [formControl]="formControlOrigin" [matAutocomplete]="autoLocations">
-                <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
-                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllPorts(lastDestinationSelected, formControlDestinationPort)"
+                       [formControl]="formControlDestinationPort" [matAutocomplete]="autoLocations4">
+                <mat-autocomplete autoActiveFirstOption #autoLocations4="matAutocomplete">
+                  <mat-option *ngFor="let option of listPortsDestination" (onSelectionChange)="onSelectOptionDestinationPort(option)"
                               [value]="option.name">
                     <span>{{option.name}}</span>
                   </mat-option>
                 </mat-autocomplete>
-                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+                <mat-error>{{getErrorMessageRequired(formControlDestinationPort)}}</mat-error>
               </mat-form-field>
+
+              <agm-map [latitude]="+this.lastPortDestinationSelected?.latitud || defaultLatitude" [longitude]="+this.lastPortDestinationSelected?.longitud || defaultLongitude">
+                <agm-marker [latitude]="+this.lastPortDestinationSelected?.latitud || defaultLatitude" [longitude]="+this.lastPortDestinationSelected?.longitud || defaultLongitude"></agm-marker>
+              </agm-map>
             </div>
           </div>
         </div>
@@ -241,7 +249,7 @@
         </div>
       </div>
 
-      <div *ngIf="currentStep === 4">
+      <div id="step-incoterm" *ngIf="currentStep === 4">
         <div class="div-content-info">
           <h6 class="color-blue pt-5 pb-2 text-center">
             Por favor selecciona el tipo de icoterm que deseas liquidar
@@ -304,13 +312,17 @@
                 <input type="text" aria-label="Number" matInput (ngModelChange)="changeOriginAutocomplete()"
                        [formControl]="formControlCityIcoterm" [matAutocomplete]="autoLocations">
                 <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
-                  <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"
+                  <mat-option *ngFor="let option of listLocationsOrigin" (onSelectionChange)="onSelectOptionOrigin(option)"
                               [value]="option.name">
                     <span>{{option.name}}</span>
                   </mat-option>
                 </mat-autocomplete>
-                <mat-error>{{getErrorMessageLocation(formControlOrigin)}}</mat-error>
+                <mat-error>{{getErrorMessageRequired(formControlOrigin)}}</mat-error>
               </mat-form-field>
+
+              <agm-map [latitude]="0" [longitude]="0">
+                <agm-marker [latitude]="0" [longitude]="0"></agm-marker>
+              </agm-map>
             </div>
           </div>
         </div>
