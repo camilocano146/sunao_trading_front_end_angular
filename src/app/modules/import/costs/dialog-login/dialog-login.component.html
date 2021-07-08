@@ -31,8 +31,17 @@
           </div>
         </div>
         <div class="row" style="margin-top: 2.5em; margin-bottom: .7em">
-          <a style="white-space: nowrap" class="cursor-pointer a-navigate col p-0">Recupera contraseña</a>
-          <a style="white-space: nowrap" class="cursor-pointer a-navigate col p-0 text-right" (click)="actionShowRegister()">Registrarse</a>
+          <a style="white-space: nowrap"
+             class="cursor-pointer a-navigate col p-0"
+             [href]="'#/recover-password'"
+             target="_blank">
+            Recupera contraseña
+          </a>
+          <a style="white-space: nowrap"
+             class="cursor-pointer a-navigate col p-0 text-right"
+             (click)="actionShowRegister()">
+            Registrarse
+          </a>
         </div>
       </div>
 
@@ -57,6 +66,12 @@
             <mat-error *ngIf="formControlPassword.invalid">{{getErrorMessagePassword()}}</mat-error>
           </mat-form-field>
         </div>
+        <mat-checkbox [(ngModel)]="checkTermsAndConditions"
+                      (click)="openDialogTermsAndConditions($event)"
+                      [disabled]="preload"
+                      class="d-flex justify-content-center color-white check-white mb-3">
+          Términos y condiciones
+        </mat-checkbox>
         <div class="d-flex justify-content-center">
           <button *ngIf="!preload" mat-raised-button class="w-75 button-auth" (click)="register()">
             <h5>Continuar</h5>
@@ -67,7 +82,9 @@
         </div>
         <div class="mt-4 row" style="margin-bottom: .7em">
           <a style="white-space: nowrap" class="cursor-pointer a-navigate col p-0" (click)="actionShowLogin()">Ya tengo usuario</a>
-          <a style="white-space: nowrap" routerLink="/activate-account" class="cursor-pointer a-navigate col p-0 text-right">Verificar cuenta</a>
+          <a style="white-space: nowrap"
+             [href]="'#/activate-account'" target="_blank"
+             class="cursor-pointer a-navigate col p-0 text-right">Verificar cuenta</a>
         </div>
       </div>
     </div>

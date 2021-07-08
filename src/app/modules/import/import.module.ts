@@ -6,7 +6,7 @@ import { ImportComponent } from './import.component';
 import { CostsComponent } from './costs/costs.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatOptionModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -18,6 +18,10 @@ import {DialogLoginComponent} from './costs/dialog-login/dialog-login.component'
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {AgmCoreModule} from '@agm/core';
+import {AppModule} from '../../app.module';
+import {ReplaceTextPipe} from '../../pipes/replace-text/replace-text.pipe';
+import { PlansComponent } from './plans/plans.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -27,6 +31,8 @@ import {AgmCoreModule} from '@agm/core';
     DialogResumeComponent,
     DialogHelpComponent,
     DialogLoginComponent,
+    ReplaceTextPipe,
+    PlansComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +49,9 @@ import {AgmCoreModule} from '@agm/core';
     MatProgressSpinnerModule,
     AgmCoreModule.forRoot({
       apiKey: ''
-    })
+    }),
+    FormsModule,
+    MatCheckboxModule
   ]
 })
 export class ImportModule { }

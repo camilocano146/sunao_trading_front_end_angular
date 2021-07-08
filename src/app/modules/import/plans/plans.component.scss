@@ -1,0 +1,29 @@
+@import '../../../../styles';
+@import '../import.component';
+
+.div-main-costs {
+  max-width: 80vw !important;
+  margin: auto;
+}
+
+#title {
+  font-size: 2.7em;
+}
+
+#sub-title {
+  font-size: 1.8em;
+  color: $color-yellow;
+}
+
+.button-buy {
+  position: relative !important;
+  bottom: -30px !important;
+}
+
+.btn-soft-blue {
+  height: 5em !important;
+}
+
+.div-plan-info h6 {
+  font-size: 14px !important;
+}

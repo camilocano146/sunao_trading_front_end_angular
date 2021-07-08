@@ -25,6 +25,8 @@ export class DialogCityCreateEditComponent implements OnInit {
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
+  formControlLatitude: FormControl = new FormControl(null, [Validators.required]);
+  formControlLongitude: FormControl = new FormControl(null, [Validators.required]);
 
   constructor(
     private userService: UserService,
@@ -36,6 +38,8 @@ export class DialogCityCreateEditComponent implements OnInit {
   ) {
     if (this.data.dataEdit) {
       this.formControlName.setValue(data.dataEdit.name);
+      this.formControlLatitude.setValue(data.dataEdit.latitude);
+      this.formControlLongitude.setValue(data.dataEdit.longitude);
     }
   }
 
@@ -48,7 +52,9 @@ export class DialogCityCreateEditComponent implements OnInit {
       const body: Location = {
         name: this.formControlName.value,
         father_location_id: this.data.idCountry,
-        type: ConstantsApp.TYPE_LOCATION_CITY
+        type: ConstantsApp.TYPE_LOCATION_CITY,
+        latitude: +this.formControlLatitude.value,
+        longitude: +this.formControlLongitude.value,
       };
       let observable;
       if (this.data.dataEdit) {

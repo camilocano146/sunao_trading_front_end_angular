@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import * as sha1 from 'js-sha1';
 import {Credential} from '../../../models/Credential';
+import {DialogTermsAndConditionsUserComponent} from "../dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component";
 
 @Component({
   selector: 'app-register',
@@ -77,7 +78,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     if (this.formControlEmail.value) {
       this.formControlEmail.setValue(this.formControlEmail.value.toString().toLowerCase().trim());
     }
-    if (this.formControlEmail.valid && this.formControlPassword.valid) {
+    if (!this.checkTermsAndConditions) {
+      this.notifyService.showErrorSnapshot('Debes aceptar los términos y condiciones');
+    }
+    if (this.formControlEmail.valid && this.formControlPassword.valid && this.checkTermsAndConditions) {
       this.preload = true;
       const credential: Credential = new Credential(
         this.formControlEmail.value.toString().toLowerCase(),
@@ -111,16 +115,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   openDialogTermsAndConditions(event: MouseEvent): void {
-    // if (!this.checkTermsAndConditions) {
-    //   event.preventDefault();
-    //   const dialogRef = this.matDialog.open(DialogTermsAndConditionsUserComponent, {
-    //     width: window.innerWidth < 500 ? '96vw' : '90vw',
-    //     maxWidth: '96vw',
-    //     height: 'max-content',
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     this.checkTermsAndConditions = !!result;
-    //   });
-    // }
+    if (!this.checkTermsAndConditions) {
+      event.preventDefault();
+      const dialogRef = this.matDialog.open(DialogTermsAndConditionsUserComponent, {
+        width: window.innerWidth < 500 ? '96vw' : '90vw',
+        maxWidth: '96vw',
+        height: 'max-content',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.checkTermsAndConditions = !!result;
+      });
+    }
   }
 }

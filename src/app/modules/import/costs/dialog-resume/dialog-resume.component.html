@@ -11,55 +11,55 @@
   <div class="row">
     <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
     <h5 class="col-10">
-      Origen:
+      Origen: {{data.cityOrigin?.name | titlecase}} ({{data.cityOrigin?.father_location?.name | titlecase}})
     </h5>
   </div>
 
   <div class="row">
     <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
     <h5 class="col-10">
-      Destino:
+      Destino: {{data.cityDestination?.name | titlecase}} ({{data.cityDestination?.father_location?.name | titlecase}})
     </h5>
   </div>
 
   <div class="row">
     <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
     <h5 class="col-10">
-      Producto:
+      Producto: {{data.product?.name}}
     </h5>
   </div>
 
   <div class="row">
     <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center'}"></div>
     <h5 class="col-10">
-      Divisa:
+      Divisa: {{data.currency?.abbreviation}}
     </h5>
   </div>
 
   <div class="row">
     <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center'}"></div>
     <h5 class="col-10">
-      Contenedor:
+      Contenedor: {{data.container?.name}}
     </h5>
   </div>
 
   <div class="row">
     <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center'}"></div>
     <h5 class="col-10">
-      Valor FOB:
+      Valor FOB: $ {{data.fobValue | number | replaceText:',':'.' }}
     </h5>
   </div>
 
   <div class="row">
     <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center'}"></div>
     <h5 class="col-10">
-      INCOTERM:
+      INCOTERM: {{data.incoterm?.name}}
     </h5>
   </div>
 </div>
 
 <div class="text-center">
-  <button mat-raised-button class="btn-liquidate">
+  <button mat-raised-button class="btn-liquidate" (click)="liquidate()">
     <h5 class="m-0">
       Liquidar
     </h5>

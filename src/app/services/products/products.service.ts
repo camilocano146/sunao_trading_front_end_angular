@@ -12,7 +12,11 @@ export class ProductsService {
 
   getListProducts(offset: number, limit: number): Observable<any> {
     return this.httpClient.get(`product/?offset=${offset}&limit=${limit}`);
-  } 
+  }
+
+  getListProductsNoAuth(offset: number, limit: number): Observable<any> {
+    return this.httpClient.get(`product_no_auth/?offset=${offset}&limit=${limit}`);
+  }
 
   register(location: Product): Observable<any> {
     return this.httpClient.post('product/', location);

@@ -24,6 +24,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
+import {DialogTermsAndConditionsUserComponent} from './dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatIconModule} from '@angular/material/icon';
     RequestCodeComponent,
     RecoverPasswordComponent,
     ChangePasswordComponent,
+    DialogTermsAndConditionsUserComponent,
   ],
   imports: [
     CommonModule,

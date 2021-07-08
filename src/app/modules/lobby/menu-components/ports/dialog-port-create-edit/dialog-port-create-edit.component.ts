@@ -25,7 +25,7 @@ export class DialogPortCreateEditComponent implements OnInit {
   public preload: boolean;
   public preloadSave: boolean;
   maxLengthName = 100;
-  
+
   public list_cities : Location[]=[]
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
@@ -34,14 +34,14 @@ export class DialogPortCreateEditComponent implements OnInit {
   public formControlAddress: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
-  
+
   public formControlLatitud: FormControl = new FormControl(
     null, [Validators.required,  Validators.maxLength(this.maxLengthName)]
   );
   public formControlLongitud: FormControl = new FormControl(
     null, [Validators.required,  Validators.maxLength(this.maxLengthName)]
   );
-  
+
   public formControlLocation: FormControl = new FormControl(
     null, [  Validators.maxLength(this.maxLengthName)]
   );
@@ -53,17 +53,14 @@ export class DialogPortCreateEditComponent implements OnInit {
     private translate: TranslateService,
     private notifyService: NotifyService,
   ) {
-    
     this.preload=true;
-
-    this.locationService.getAllCities(0, 30).subscribe(res=>{
-      
-      this.list_cities=res.results;
+    this.locationService.getAllCities(0, 30).subscribe(res => {
+      this.list_cities = res.results;
       if (this.data.dataEdit) {
         this.formControlName.setValue(data.dataEdit.name);
         this.formControlAddress.setValue(data.dataEdit.address)
-        this.formControlLatitud.setValue(data.dataEdit.latitud);
-        this.formControlLongitud.setValue(data.dataEdit.longitud);
+        this.formControlLatitud.setValue(data.dataEdit.latitude);
+        this.formControlLongitud.setValue(data.dataEdit.longitude);
         this.formControlLocation.setValue(data.dataEdit.location.id);
       }
       this.preload= false;
@@ -77,10 +74,9 @@ export class DialogPortCreateEditComponent implements OnInit {
       const body: Port = {
         name: this.formControlName.value,
         address: this.formControlAddress.value,
-        latitud: this.formControlLatitud.value,
-        longitud : this.formControlLongitud.value,
+        latitude: +this.formControlLatitud.value,
+        longitude : +this.formControlLongitud.value,
         location_id : this.formControlLocation.value.id,
-        
       };
       let observable;
 
@@ -95,8 +91,8 @@ export class DialogPortCreateEditComponent implements OnInit {
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
         const errors = error.error.body?.mensaje?.errors;
-        
-        
+
+
         if (errors?.name?.message?.toString()?.toUpperCase()?.includes('name must be unique'.toUpperCase())) {
           this.notifyService.showErrorSnapshot(this.translate.instant('errors.unique_name'));
         } else {
@@ -111,7 +107,7 @@ export class DialogPortCreateEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   searchSelectorCities(event){

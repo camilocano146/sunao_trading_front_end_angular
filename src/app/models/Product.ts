@@ -1,3 +1,4 @@
+
 export interface Product {
     id?: number;
     name: string;
@@ -7,4 +8,3 @@ export interface Product {
     chapter?:any;
     subcategory?:string;
 }
-  

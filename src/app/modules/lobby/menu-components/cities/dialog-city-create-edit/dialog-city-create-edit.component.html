@@ -25,6 +25,24 @@
         <mat-error *ngIf="formControlName.invalid">{{getErrorMessageName()}}</mat-error>
       </mat-form-field>
     </div>
+
+    <div class="col-12" style="margin-bottom: 10px;">
+      <mat-form-field class="w-100">
+        <mat-label>Latitud</mat-label>
+        <input matInput [formControl]="formControlLatitude">
+        <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
+        <mat-error *ngIf="formControlLatitude.invalid">Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12" style="margin-bottom: 10px;">
+      <mat-form-field class="w-100">
+        <mat-label>Longitud</mat-label>
+        <input matInput [formControl]="formControlLongitude">
+        <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
+        <mat-error *ngIf="formControlLongitude.invalid">Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
   </div>
 </div>
 <div *ngIf="!preload" class="text-center" mat-dialog-actions style="margin-top: 10px;">

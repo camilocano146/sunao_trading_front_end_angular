@@ -4,8 +4,8 @@ export interface Port {
     id?: number;
     name: string;
     address: string;
-    latitud: string;
-    longitud: string;
+    latitude: number;
+    longitude: number;
     location?: Location;
     location_id?: number;
 }

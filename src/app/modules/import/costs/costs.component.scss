@@ -1,4 +1,10 @@
 @import '../../../../styles';
+@import '../import.component';
+
+.div-main-costs {
+  max-width: 1000px !important;
+  margin: auto;
+}
 
 p {
   margin: 0;
@@ -31,11 +37,6 @@ p {
   border-radius: 0 !important;
   margin-top: 2em !important;
   margin-bottom: 2em !important;
-}
-
-.div-main-costs {
-  max-width: 1000px !important;
-  margin: auto;
 }
 
 #div-menu {
@@ -231,4 +232,28 @@ p {
   agm-map {
     height: 140px;
   }
+}
+
+.div-border-selected {
+  border: 5px solid $color-yellow;
+}
+
+.text-title-blue {
+  text-align: center !important;
+}
+
+.div-container:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+
+  .currency-name {
+    padding-top: 0;
+  }
+}
+
+.div-img-container {
+  //width: auto;
+  height: 100px;
+  //transform: scale(0.4) !important;
+  margin: auto;
 }

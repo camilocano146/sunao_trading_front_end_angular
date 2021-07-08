@@ -20,8 +20,8 @@ export class DialogPackageCreateEditComponent implements OnInit {
   public preload: boolean;
   public preloadSave: boolean;
   maxLengthName = 100;
-  
-  
+
+
   public formControlLiquidationQuantity: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
@@ -33,7 +33,7 @@ export class DialogPackageCreateEditComponent implements OnInit {
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
-  
+
   public formControlCost: FormControl = new FormControl(
     null, [Validators.required,  Validators.maxLength(5)]
   );
@@ -55,7 +55,7 @@ export class DialogPackageCreateEditComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    
+
   }
 
   saveOrEdit(): void {
@@ -65,7 +65,7 @@ export class DialogPackageCreateEditComponent implements OnInit {
         name: this.formControlName.value,
         cost: this .formControlCost.value,
         liquidation_quantity: this.formControlLiquidationQuantity.value,
-        time:this.formControlTime.value
+        time: this.formControlTime.value
       };
       let observable;
 

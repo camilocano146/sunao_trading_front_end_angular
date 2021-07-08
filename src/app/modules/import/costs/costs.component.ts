@@ -12,16 +12,16 @@ import {PortsService} from '../../../services/ports/ports.service';
 import {AppComponent} from '../../../app.component';
 import {Observable, Subscription} from 'rxjs';
 import {ContainerService} from '../../../services/container/container.service';
+import {ImportCost} from '../../../models/ImportCost';
+import {Currency} from '../../../models/Currency';
+import {Utilities} from '../../../utils/Utilities';
+import {Incoterm} from '../../../models/Incoterm';
+import {ProductsService} from '../../../services/products/products.service';
+import {Product} from '../../../models/Product';
 
 interface Step {
   imagePath: string;
   name: string;
-}
-
-interface Currency {
-  name: string;
-  abbreviation: string;
-  imageCountry: string;
 }
 
 @Component({
@@ -63,48 +63,71 @@ export class CostsComponent implements OnInit {
   currentStep = 0;
   formControlProductName: FormControl = new FormControl('', [Validators.required]);
   formControlTariffHeading: FormControl = new FormControl('', [Validators.required]);
-  listProductOrTariff = [
-    {name: 'asd', value: 13712123},
-  ];
+  formControlValueFOB: FormControl = new FormControl('', [Validators.required]);
+  listProduct: Product[];
   listCurrencies: Currency[] = [
     {name: 'Euro', abbreviation: 'EUR', imageCountry: './assets/flags/union-europea.svg'},
     {name: 'Dolar', abbreviation: 'USD', imageCountry: './assets/flags/estados-unidos.svg'},
     {name: 'Libra', abbreviation: 'GBP', imageCountry: './assets/flags/reino-unido.svg'},
     {name: 'Peso', abbreviation: 'COP', imageCountry: './assets/flags/colombia.svg'},
   ];
-  listContainers: Container[] = [
-    {name: 'Euro'},
-    {name: 'Euro'},
-    {name: 'Euro'},
-  ];
+  listContainers: Container[] = [];
   formControlCityIcoterm: FormControl = new FormControl('', [Validators.required]);
-  lastCityIcotermSelected: Location;
   incotermCostSelected: number;
+  listIncoterm: Incoterm[] = [
+    {name: 'CFR', description: 'Cost and freight'},
+    {name: 'CIF', description: 'Cost, insurance and freight'},
+    {name: 'DDP', description: 'Delivered Duty Paid'},
+  ];
+  selectedIncoterm: Incoterm;
   private timer: number;
   private listSubscribesLocation: Subscription[] = [];
   defaultLatitude = 0;
   defaultLongitude = 0;
+  selectedCurrency: Currency;
+  selectedContainer: Container;
+  util = Utilities;
+  lastSelectedIcotermCity: Location;
+  selectedProduct: Product;
+  listLocationsIcoterm: Location[];
 
   constructor(
     public matDialog: MatDialog,
     public locationService: LocationService,
     public portsService: PortsService,
     public containerService: ContainerService,
+    public productsService: ProductsService,
   ) { }
 
   ngOnInit(): void {
-    console.log(this.currentStep);
-    // this.openDialogLogin();
-
     this.getAllCities(this.formControlOrigin, true);
     this.getAllCities(this.formControlDestination, true);
     this.getContaiters();
+    this.getProducts();
   }
 
   getContaiters(): void {
     this.containerService.getAll(0, this.limitContainers).subscribe(value => {
       this.listContainers = value.results;
-      console.log(this.listContainers);
+      this.listContainers[0].dimension = {long: 20, width: 8, height: 6};
+      this.listContainers[0].weight = 2300;
+      this.listContainers[0].capacity = 25000;
+      this.listContainers[0].img = {width: 70, color: '#ffbf3b'};
+      this.listContainers[1].dimension = {long: 40, width: 8, height: 6};
+      this.listContainers[1].weight = 3570;
+      this.listContainers[1].capacity = 8268.8;
+      this.listContainers[1].img = {width: 80, color: '#007b8a'};
+      this.listContainers[2].dimension = {long: 11.575, width: 2.285, height: 2.250};
+      this.listContainers[2].weight = 4800;
+      this.listContainers[2].capacity = 10584;
+      this.listContainers[2].img = {width: 80, color: '#ffbf3b'};
+    });
+  }
+
+  getProducts(): void {
+    this.productsService.getListProductsNoAuth(0, 10).subscribe(res => {
+      this.listProduct = res.results;
+    }, error => {
     });
   }
 
@@ -140,6 +163,30 @@ export class CostsComponent implements OnInit {
     }, AppComponent.timeMillisDelayFilter);
   }
 
+  getAllCitiesIcotermStep(): void {
+    if (this.lastSelectedIcotermCity?.name?.toUpperCase() !== this.formControlCityIcoterm?.value?.toUpperCase()) {
+      this.lastSelectedIcotermCity = undefined;
+    }
+    if (this.lastSelectedIcotermCity) {
+      return;
+    }
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      for (const subscribeL of this.listSubscribesLocation) {
+        subscribeL.unsubscribe();
+      }
+      this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
+      const subscribeLocation = this.locationService.getPublicAllCitiesByCountry(this.lastDestinationSelected.father_location?.id, 0, this.limit, this.formControlCityIcoterm.value);
+      this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
+        // console.log(res);
+        this.listLocationsIcoterm = res.results;
+      }, error => {
+      }));
+    }, AppComponent.timeMillisDelayFilter);
+  }
+
   getAllPorts(city: Location, formControl: FormControl): void {
     if (formControl === this.formControlOriginPort && this.lastPortOriginSelected?.name?.toUpperCase() !== this.formControlOriginPort?.value?.toUpperCase()) {
       this.lastPortOriginSelected = undefined;
@@ -170,11 +217,8 @@ export class CostsComponent implements OnInit {
     }, AppComponent.timeMillisDelayFilter);
   }
 
-  // http://localhost:8000/api/v1/continer_type_no_auth/?offset=0&limit=5
-
-  changeOriginAutocomplete(formControl: FormControl): void {
-
-  }
+  // changeOriginAutocomplete(formControl: FormControl): void {
+  // }
 
   onSelectOptionOrigin(option: Location): void {
     this.lastOriginSelected = option;
@@ -214,19 +258,39 @@ export class CostsComponent implements OnInit {
   }
 
   actionButtonNext(): void {
-    if (this.currentStep < this.listStepper.length) {
-      this.currentStep += 1;
+    if (this.canGoToNextStep()) {
+      if (this.currentStep < this.listStepper.length) {
+        this.currentStep += 1;
+      }
     }
   }
 
   openDialogResume(): void {
+    if (!this.canGoToNextStep()) {
+      return;
+    }
+    const dataImportConst: ImportCost = {
+      cityOrigin: this.lastOriginSelected,
+      cityDestination: this.lastDestinationSelected,
+      currency: this.selectedCurrency,
+      container: this.selectedContainer,
+      fobValue: this.formControlValueFOB.value,
+      incoterm: this.selectedIncoterm,
+      portOrigin: this.lastPortOriginSelected,
+      portDestination: this.lastPortDestinationSelected,
+      product: this.selectedProduct,
+    };
+    if (!this.disabledFormIcotermType()) {
+      dataImportConst.cityIcoterm = this.lastSelectedIcotermCity;
+    }
     this.matDialog.open(DialogResumeComponent, {
       width: '500px',
       maxWidth: '96vw',
       height: '500px',
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
-      panelClass: 'div-without-padding'
+      panelClass: 'div-without-padding',
+      data: dataImportConst,
     });
   }
 
@@ -241,20 +305,68 @@ export class CostsComponent implements OnInit {
     });
   }
 
-  openDialogLogin(): void {
-    this.matDialog.open(DialogLoginComponent, {
-      width: '350px',
-      maxHeight: '96vh',
-      backdropClass: 'backdrop-dark',
-      panelClass: 'div-without-padding'
-    });
+  changeStepOption(i: number): void {
+    if (this.canGoToNextStep()) {
+      if (i === this.listStepper.length - 1) {
+        this.openDialogResume();
+      } else {
+        this.currentStep = i;
+      }
+    }
   }
 
-  changeStepOption(i: number): void {
-    if (i === this.listStepper.length - 1) {
-      this.openDialogResume();
+  getErrorMessageFOB(): string {
+    return this.formControlProductName.hasError('required')
+      ? 'Este campo es obligatorio'
+      : this.formControlProductName.hasError('pattern')
+        ? 'Solo números positivos'
+        : this.formControlProductName.hasError('min')
+          ? 'Mínimo 1'
+          : '';
+  }
+
+  selectIcotermType(incoterm: Incoterm): void {
+    this.selectedIncoterm = incoterm;
+    this.disabledFormIcotermType();
+  }
+
+  disabledFormIcotermType(): boolean {
+    if (this.selectedIncoterm !== this.listIncoterm[this.listIncoterm.length - 1]) {
+      this.formControlCityIcoterm.disable();
+      return true;
     } else {
-      this.currentStep = i;
+      this.formControlCityIcoterm.enable();
+      return false;
     }
+  }
+
+  onSelectOptionIncotermCity(option: Location): void {
+    this.lastSelectedIcotermCity = option;
+  }
+
+  canGoToNextStep(): boolean {
+    if (this.currentStep === 0 && (!this.lastOriginSelected || !this.lastDestinationSelected || !this.lastPortOriginSelected || !this.lastPortDestinationSelected)) {
+      this.formControlOrigin.markAsTouched();
+      this.formControlDestination.markAsTouched();
+      this.formControlOriginPort.markAsTouched();
+      this.formControlDestinationPort.markAsTouched();
+      return false;
+    } else if (this.currentStep === 1 && !this.selectedProduct) {
+      return false;
+    } else if (this.currentStep === 2 && (this.formControlValueFOB.invalid || !this.selectedCurrency)) {
+      this.formControlValueFOB.markAsTouched();
+      return false;
+    } else if (this.currentStep === 3 && !this.selectedContainer) {
+      this.formControlValueFOB.markAsTouched();
+      return false;
+    } else if (this.currentStep === 4 && this.isInvalidIncotermStep()) {
+      this.formControlCityIcoterm.markAsTouched();
+      return false;
+    }
+    return true;
+  }
+
+  private isInvalidIncotermStep(): boolean {
+    return (this.selectedIncoterm && !this.disabledFormIcotermType() && !this.lastSelectedIcotermCity) || !this.selectedIncoterm;
   }
 }

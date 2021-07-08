@@ -15,11 +15,10 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {InterceptorService} from './services/interceptor/iterceptor-interceptor.service';
-import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

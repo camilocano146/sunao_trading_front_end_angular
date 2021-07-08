@@ -45,4 +45,10 @@ export class LocationService {
       `location_no_auth/list_all_municipality/?offset=${offset}&limit=${limit}`;
     return this.httpClient.get(url);
   }
+
+  getPublicAllCitiesByCountry(idCountry: number, offset: number, limit: number, regex?: string): Observable<any> {
+    const url = regex ? `location_no_auth/${idCountry}/list_municipality_country/?offset=${offset}&limit=${limit}&regex=${regex}` :
+      `location_no_auth/${idCountry}/list_municipality_country/?offset=${offset}&limit=${limit}`;
+    return this.httpClient.get(url);
+  }
 }

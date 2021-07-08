@@ -4,5 +4,7 @@ export interface Location {
   name: string;
   father_location_id?: number;
   type: string;
-  father_location?:Location;
+  father_location?: Location;
+  latitude?: number;
+  longitude?: number;
 }

@@ -12,7 +12,7 @@ export class PackageService {
 
   getListPackages(offset: number, limit: number): Observable<any> {
     return this.httpClient.get(`package/?offset=${offset}&limit=${limit}`);
-  } 
+  }
 
   register(body: Package): Observable<any> {
     return this.httpClient.post('package/', body);

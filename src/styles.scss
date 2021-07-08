@@ -58,6 +58,10 @@ body {
   background-color: white;
 }
 
+.bc-very-soft-blue {
+  background-color: $color-very-soft-blue;
+}
+
 .cursor-pointer {
   cursor: pointer !important;
 }
@@ -109,8 +113,35 @@ body {
   }
 }
 
-.btn-blue {
+.btn-very-soft-blue {
   background-color: $color-very-soft-blue;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.8em !important;
+}
+
+.btn-soft-blue {
+  background-color: $color-soft-blue;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.8em !important;
+}
+
+.btn-blue {
+  background-color: $color-dark-blue;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.8em !important;
+}
+
+.btn-red {
+  background-color: $color-soft-red;
   color: white !important;
   height: 3em !important;
   border-radius: 0 !important;
@@ -127,6 +158,10 @@ body {
   margin-bottom: 1em !important;
 }
 
+.color-yellow {
+  color: $color-yellow !important;
+}
+
 .color-red {
   color: red !important;
 }
@@ -140,4 +175,8 @@ body {
 
 button h4 {
   margin: 0 !important;
+}
+
+.opacity-disabled {
+  opacity: 0.5 !important;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {UserService} from '../../../../services/user/user.service';
@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {Credential} from '../../../../models/Credential';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as sha1 from 'js-sha1';
+import {DialogTermsAndConditionsUserComponent} from '../../../auth/dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
 
 @Component({
   selector: 'app-dialog-resume',
@@ -25,18 +26,19 @@ export class DialogLoginComponent implements OnInit {
   hidePass = true;
   showLogin = true;
   showRegister: boolean;
+  checkTermsAndConditions: boolean;
 
   constructor(
     private translate: TranslateService,
     private userService: UserService,
     private notifyService: NotifyService,
     private router: Router,
-    public matDialogRef: MatDialogRef<DialogLoginComponent>
+    public matDialogRef: MatDialogRef<DialogLoginComponent>,
+    public matDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
   }
-
 
   /**
    * Mensajes de error campo usuario
@@ -109,7 +111,10 @@ export class DialogLoginComponent implements OnInit {
     if (this.formControlUser.value) {
       this.formControlUser.setValue(this.formControlUser.value.toString().toLowerCase().trim());
     }
-    if (this.formControlUser.valid && this.formControlPassword.valid) {
+    if (!this.checkTermsAndConditions) {
+      this.notifyService.showErrorSnapshot('Debes aceptar los términos y condiciones');
+    }
+    if (this.formControlUser.valid && this.formControlPassword.valid && this.checkTermsAndConditions) {
       this.preload = true;
       const credential: Credential = new Credential(
         this.formControlUser.value.toString().toLowerCase(),
@@ -156,5 +161,19 @@ export class DialogLoginComponent implements OnInit {
     this.formControlUser.reset();
     this.formControlPassword.reset();
     this.hidePass = true;
+  }
+
+  openDialogTermsAndConditions(event: MouseEvent): void {
+    if (!this.checkTermsAndConditions) {
+      event.preventDefault();
+      const dialogRef = this.matDialog.open(DialogTermsAndConditionsUserComponent, {
+        width: window.innerWidth < 500 ? '96vw' : '90vw',
+        maxWidth: '96vw',
+        height: 'max-content',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.checkTermsAndConditions = !!result;
+      });
+    }
   }
 }

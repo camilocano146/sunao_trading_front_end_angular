@@ -1,0 +1,34 @@
+<div class="div-main-costs">
+  <p id="title" class="color-white text-center">
+    Elige la opción ideal para tu negocio
+  </p>
+  <p id="sub-title" class="text-center">
+    Tenemos la mejor solución para tus necesidades, escoge el plan y comienza a importar ya!
+  </p>
+
+  <div class="row justify-content-center">
+    <div class="bc-white col-3 mx-4" [ngClass]="{'mt-5': i >= 3, 'mt-3': i < 3}" *ngFor="let plan of listPlans; let i = index">
+      <h3 class="pt-5 text-center color-blue">
+        {{plan.name}}
+      </h3>
+      <img class="py-5" src="" alt="">
+      <div class="mx-3 div-plan-info">
+        <h6 class="pb-3 color-blue m-0">
+          <img src="./assets/icons/check_green_24dp.svg" alt="">
+          {{plan.time}} {{plan.time === 1 ? 'mes' : 'meses'}} de vigencia
+        </h6>
+        <h6 class="pb-3 color-blue m-0">
+          <img src="./assets/icons/check_green_24dp.svg" alt="">
+          {{plan.liquidation_quantity}} liquidaciones mensuales
+        </h6>
+      </div>
+      <div class="text-center">
+        <button mat-raised-button class="btn-soft-blue w-75 button-buy">
+          <h3 class="mb-0">
+            Comprar
+          </h3>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
