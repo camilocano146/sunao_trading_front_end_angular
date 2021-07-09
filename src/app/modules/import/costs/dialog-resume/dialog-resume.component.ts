@@ -8,6 +8,7 @@ import {DialogLoginComponent} from '../dialog-login/dialog-login.component';
 import {Router} from '@angular/router';
 import {LiquidationService} from '../../../../services/liquidation/liquidation.service';
 import {Liquidation} from '../../../../models/Liquidation';
+import {NotifyService} from "../../../../services/notify/notify.service";
 
 @Component({
   selector: 'app-dialog-resume',
@@ -24,6 +25,7 @@ export class DialogResumeComponent implements OnInit {
     public matDialog: MatDialog,
     public router: Router,
     public liquidationService: LiquidationService,
+    private notifyService: NotifyService,
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +61,8 @@ export class DialogResumeComponent implements OnInit {
       this.router.navigate(['import/plans']);
       this.preload = false;
     }, error => {
+      this.preload = false;
+      this.notifyService.showError('', 'No fué posible registrar la liquidación, por favor intente nuevamente.');
     });
   }
 

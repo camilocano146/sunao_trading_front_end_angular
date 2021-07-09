@@ -7,7 +7,7 @@ import { CostsComponent } from './costs/costs.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatOptionModule} from '@angular/material/core';
+import {MatOptionModule, MatRippleModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatListModule} from '@angular/material/list';
@@ -22,6 +22,8 @@ import {AppModule} from '../../app.module';
 import {ReplaceTextPipe} from '../../pipes/replace-text/replace-text.pipe';
 import { PlansComponent } from './plans/plans.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {DialogCreateTransactionComponent} from "../common-components/create-transaction/dialog-create-transaction.component";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -33,6 +35,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     DialogLoginComponent,
     ReplaceTextPipe,
     PlansComponent,
+    DialogCreateTransactionComponent,
+  ],
+  exports: [
+    AgmCoreModule
   ],
   imports: [
     CommonModule,
@@ -51,7 +57,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
       apiKey: ''
     }),
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRippleModule,
+    MatSelectModule
   ]
 })
 export class ImportModule { }

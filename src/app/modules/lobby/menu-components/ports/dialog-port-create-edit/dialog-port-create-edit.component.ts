@@ -35,16 +35,20 @@ export class DialogPortCreateEditComponent implements OnInit {
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
 
-  public formControlLatitud: FormControl = new FormControl(
-    null, [Validators.required,  Validators.maxLength(this.maxLengthName)]
-  );
-  public formControlLongitud: FormControl = new FormControl(
-    null, [Validators.required,  Validators.maxLength(this.maxLengthName)]
-  );
-
+  // public formControlLatitud: FormControl = new FormControl(
+  //   null, [Validators.required,  Validators.maxLength(this.maxLengthName)]
+  // );
+  // public formControlLongitud: FormControl = new FormControl(
+  //   null, [Validators.required,  Validators.maxLength(this.maxLengthName)]
+  // );
+  //
   public formControlLocation: FormControl = new FormControl(
     null, [  Validators.maxLength(this.maxLengthName)]
   );
+  longitude = 0;
+  latitude = 0;
+  constants = ConstantsApp;
+
   constructor(
     private portsService: PortsService,
     private locationService: LocationService,
@@ -58,28 +62,29 @@ export class DialogPortCreateEditComponent implements OnInit {
       this.list_cities = res.results;
       if (this.data.dataEdit) {
         this.formControlName.setValue(data.dataEdit.name);
-        this.formControlAddress.setValue(data.dataEdit.address)
-        this.formControlLatitud.setValue(data.dataEdit.latitude);
-        this.formControlLongitud.setValue(data.dataEdit.longitude);
+        this.formControlAddress.setValue(data.dataEdit.address);
+        // this.formControlLatitud.setValue(data.dataEdit.latitude);
+        // this.formControlLongitud.setValue(data.dataEdit.longitude);
         this.formControlLocation.setValue(data.dataEdit.location.id);
+        this.latitude = +data.dataEdit.latitude;
+        this.longitude = +data.dataEdit.longitude;
       }
-      this.preload= false;
+      console.log(this.latitude, this.longitude);
+      this.preload = false;
     });
-
   }
 
   saveOrEdit(): void {
-    if (this.formControlName.valid) {
+    if (this.formControlName.valid && this.havePosition()) {
       this.preloadSave = true;
       const body: Port = {
         name: this.formControlName.value,
         address: this.formControlAddress.value,
-        latitude: +this.formControlLatitud.value,
-        longitude : +this.formControlLongitud.value,
         location_id : this.formControlLocation.value.id,
+        latitude: +this.latitude,
+        longitude : +this.longitude,
       };
       let observable;
-
       if (this.data.dataEdit) {
         observable = this.portsService.edit(this.data.dataEdit.id, body);
       } else {
@@ -91,14 +96,11 @@ export class DialogPortCreateEditComponent implements OnInit {
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
         const errors = error.error.body?.mensaje?.errors;
-
-
         if (errors?.name?.message?.toString()?.toUpperCase()?.includes('name must be unique'.toUpperCase())) {
           this.notifyService.showErrorSnapshot(this.translate.instant('errors.unique_name'));
         } else {
           this.notifyService.showErrorSnapshot(this.translate.instant('errors.connection_error'));
         }
-
         this.preloadSave = false;
       });
     } else {
@@ -110,17 +112,28 @@ export class DialogPortCreateEditComponent implements OnInit {
 
   }
 
-  searchSelectorCities(event){
-
-    if(event.path[0].value.length>5){
-      this.list_cities=[];
+  searchSelectorCities(event): void {
+    if(event.path[0].value.length > 5){
+      this.list_cities = [];
       this.locationService.getAllCities(0, 10, event.path[0].value).subscribe(res=>{
-        this.list_cities=res.results;
+        this.list_cities = res.results;
       })
     }
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  chooseMatPoint(event: MouseEvent): void {
+    // @ts-ignore
+    const coordinates = event.coords;
+    this.latitude = coordinates.lat.toFixed(ConstantsApp.maxFixedCoordinates);
+    this.longitude = coordinates.lng.toFixed(ConstantsApp.maxFixedCoordinates);
+  }
+
+  havePosition(): boolean {
+    // tslint:disable-next-line:triple-equals
+    return this.latitude != 0 && this.longitude != 0;
   }
 }

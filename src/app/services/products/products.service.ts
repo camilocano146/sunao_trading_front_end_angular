@@ -14,8 +14,8 @@ export class ProductsService {
     return this.httpClient.get(`product/?offset=${offset}&limit=${limit}`);
   }
 
-  getListProductsNoAuth(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`product_no_auth/?offset=${offset}&limit=${limit}`);
+  getListProductsNoAuth(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`product_no_auth/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   register(location: Product): Observable<any> {

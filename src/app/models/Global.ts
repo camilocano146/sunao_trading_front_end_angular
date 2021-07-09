@@ -7,6 +7,10 @@ export const Global = {
     // endPoint: 'http://127.0.0.1:8000/api/v1/',
 
     client_id: 'IrVZdMJswxlYguS7XWClPmXRszekHTIwi31ETqJW',
-    client_secret: 'x39M8pm4iHOOo4P32wX3IyKD6Nd4i7GJ0mJBmffssFiB5Jeg7aWltufoJNmqGVIAH3LAjgpr0wkTuLNljGtKlAVQThF6lMwA6WXZ1JUFBVdC0nrZ4zZmwjb7VLnb1db7'
+    client_secret: 'x39M8pm4iHOOo4P32wX3IyKD6Nd4i7GJ0mJBmffssFiB5Jeg7aWltufoJNmqGVIAH3LAjgpr0wkTuLNljGtKlAVQThF6lMwA6WXZ1JUFBVdC0nrZ4zZmwjb7VLnb1db7',
+
+    // end point página web
+    endPointWeb: 'http://localhost:4220'
+    // endPointWeb: 'http://sunao.com/app/#/'
   }
 };

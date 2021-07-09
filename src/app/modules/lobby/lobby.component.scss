@@ -75,19 +75,19 @@ mat-nav-list a {
 
 .a-option-menu-selected, .a-option-menu-selected:hover {
   background-color: $color-soft-blue !important;
-  color: black !important;
+  color: white !important;
   border-left: 4px solid $color-soft-blue !important;
 }
 
 .a-option-menu-selected {
   .icon {
-    background-color: black;
+    background-color: white !important;
   }
 }
 
 a:hover {
   background-color: $color-soft-blue !important;
-  color: black !important;
+  color: white !important;
 }
 
 mat-sidenav {
@@ -104,7 +104,7 @@ mat-sidenav {
 
 mat-nav-list a:hover {
   .icon {
-    background-color: black;
+    background-color: white !important;
   }
 }
 

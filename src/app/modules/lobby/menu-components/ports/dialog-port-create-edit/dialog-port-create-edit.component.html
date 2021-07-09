@@ -1,98 +1,112 @@
 <div class="" mat-dialog-title>
-    <div class="row justify-content-between">
-      <div class="col-10 col-sm-10 col-md-10">
-        <strong class="color-blue">
-            <div *ngIf="data.dataEdit">
-                Editar puerto
-            </div>
-            <div *ngIf="!data.dataEdit">
-                Agregar puerto
-            </div>
-        </strong>
-      </div>
-      <div class="col-2 col-sm-2 col-md-2">
-        <button type="button" class="close btn-close-dialog" (click)="onNoClick()">
-          <span aria-hidden="false">&times;</span>
-        </button>
-      </div>
+  <div class="row justify-content-between">
+    <div class="col-10 col-sm-10 col-md-10">
+      <strong class="color-blue">
+        <div *ngIf="data.dataEdit">
+          Editar puerto
+        </div>
+        <div *ngIf="!data.dataEdit">
+          Agregar puerto
+        </div>
+      </strong>
+    </div>
+    <div class="col-2 col-sm-2 col-md-2">
+      <button type="button" class="close btn-close-dialog" (click)="onNoClick()">
+        <span aria-hidden="false">&times;</span>
+      </button>
     </div>
   </div>
-  <div mat-dialog-content>
-    <div *ngIf="preload" class="w-100 text-center">
-      <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+</div>
+<div mat-dialog-content>
+  <div *ngIf="preload" class="w-100 text-center">
+    <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+  </div>
+  <div *ngIf="!preload" class="row text-center">
+    <div class="col-12" style="margin-bottom: 10px;">
+      <mat-form-field class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input matInput [formControl]="formControlName">
+        <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
+        <mat-error *ngIf="formControlName.invalid">Campo requerido</mat-error>
+      </mat-form-field>
     </div>
-    <div *ngIf="!preload" class="row text-center">
-      <div class="col-12" style="margin-bottom: 10px;">
-        <mat-form-field class="w-100">
-          <mat-label>Nombre</mat-label>
-          <input matInput [formControl]="formControlName">
-          <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
-          <mat-error *ngIf="formControlName.invalid">Campo requerido</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-12" style="margin-bottom: 10px;">
-        <mat-form-field class="w-100">
-          <mat-label>Address</mat-label>
-          <input matInput [formControl]="formControlAddress">
-          <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
-          <mat-error *ngIf="formControlAddress.invalid">Campo requerido</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12" style="margin-bottom: 10px;">
-        <mat-form-field class="w-100">
-          <mat-label>Latitud</mat-label>
-          <input matInput [formControl]="formControlLatitud">
-          <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
-          <mat-error *ngIf="formControlLatitud.invalid">Campo requerido</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12" style="margin-bottom: 10px;">
-        <mat-form-field class="w-100">
-          <mat-label>Longitud</mat-label>
-          <input matInput [formControl]="formControlLongitud">
-          <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
-          <mat-error *ngIf="formControlLongitud.invalid">Campo requerido</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12" style="margin-bottom: 10px;">
-        <mat-form-field class="w-100">
-            <mat-select [disableOptionCentering]="true" placeholder="Seleccione una locacion" [formControl]="formControlLocation"> 
-              
-              <mat-option  disabled>
-                <input type="search"
-                    placeholder="Buscar"
-                    class="form-control"
-                    (keyup)= "searchSelectorCities($event)"
-                  >
-              </mat-option>
-              <mat-option *ngIf="!list_cities.length===0">
-                  -------
-              </mat-option>
-              <mat-option *ngFor="let city of list_cities" [value]="city.id">
-                  {{city.name}} ({{city.father_location.name}})
-              </mat-option>
-              <mat-option disabled *ngIf="list_cities.length===0">
-                Buscando ...
-              </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-      </div>
-
-
+    <div class="col-12" style="margin-bottom: 10px;">
+      <mat-form-field class="w-100">
+        <mat-label>Address</mat-label>
+        <input matInput [formControl]="formControlAddress">
+        <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
+        <mat-error *ngIf="formControlAddress.invalid">Campo requerido</mat-error>
+      </mat-form-field>
     </div>
 
+    <!--      <div class="col-12" style="margin-bottom: 10px;">-->
+    <!--        <mat-form-field class="w-100">-->
+    <!--          <mat-label>Latitud</mat-label>-->
+    <!--          <input matInput [formControl]="formControlLatitud">-->
+    <!--          &lt;!&ndash; <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> &ndash;&gt;-->
+    <!--          <mat-error *ngIf="formControlLatitud.invalid">Campo requerido</mat-error>-->
+    <!--        </mat-form-field>-->
+    <!--      </div>-->
+
+    <!--      <div class="col-12" style="margin-bottom: 10px;">-->
+    <!--        <mat-form-field class="w-100">-->
+    <!--          <mat-label>Longitud</mat-label>-->
+    <!--          <input matInput [formControl]="formControlLongitud">-->
+    <!--          &lt;!&ndash; <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> &ndash;&gt;-->
+    <!--          <mat-error *ngIf="formControlLongitud.invalid">Campo requerido</mat-error>-->
+    <!--        </mat-form-field>-->
+    <!--      </div>-->
+
+    <div class="col-12" style="margin-bottom: 10px;">
+      <mat-form-field class="w-100">
+        <mat-select [disableOptionCentering]="true" placeholder="Seleccione una locacion" [formControl]="formControlLocation">
+
+          <mat-option  disabled>
+            <input type="search"
+                   placeholder="Buscar"
+                   class="form-control"
+                   (keyup)= "searchSelectorCities($event)"
+            >
+          </mat-option>
+          <mat-option *ngIf="!list_cities.length===0">
+            -------
+          </mat-option>
+          <mat-option *ngFor="let city of list_cities" [value]="city.id">
+            {{city.name}} ({{city.father_location.name}})
+          </mat-option>
+          <mat-option disabled *ngIf="list_cities.length === 0">
+            Buscando ...
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <h6 class="mb-2">
+        Seleccione un punto en el mapa
+      </h6>
+
+      <agm-map class="agm-map-height-small"
+               (mapClick)="chooseMatPoint($event)"
+               [latitude]="latitude"
+               [longitude]="longitude"
+               [zoom]="havePosition() ? constants.defaultZoom : constants.minZoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+      </agm-map>
+
+      <h6 *ngIf="!havePosition()" class="mt-2 color-red">
+        Debe seleccionar un punto en el mapa
+      </h6>
+    </div>
 
   </div>
-  <div *ngIf="!preload" class="text-center" mat-dialog-actions style="margin-top: 10px;">
-    <button *ngIf="!preloadSave" mat-raised-button color="primary" class="w-100" (click)="saveOrEdit()">
-      {{'buttons.save' | translate}}
-    </button>
-    <div *ngIf="preloadSave" class="w-100 text-center">
-      <mat-spinner diameter="40" class="m-auto"></mat-spinner>
-    </div>
+
+</div>
+<div *ngIf="!preload" class="text-center" mat-dialog-actions style="margin-top: 10px;">
+  <button *ngIf="!preloadSave" mat-raised-button color="primary" class="w-100" (click)="saveOrEdit()">
+    {{'buttons.save' | translate}}
+  </button>
+  <div *ngIf="preloadSave" class="w-100 text-center">
+    <mat-spinner diameter="40" class="m-auto"></mat-spinner>
   </div>
-  
+</div>

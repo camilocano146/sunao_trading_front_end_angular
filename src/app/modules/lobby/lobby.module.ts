@@ -54,6 +54,7 @@ import { CouponsComponent } from './menu-components/coupons/coupons.component';
 import { DialogCouponsCreateEditComponent } from './menu-components/coupons/dialog-coupons-create-edit/dialog-coupons-create-edit.component';
 import { NationalProvidersComponent } from './menu-components/national-providers/national-providers.component';
 import { DialogNationalProvidersCreateEditComponent } from './menu-components/national-providers/dialog-national-providers-create-edit/dialog-national-providers-create-edit.component';
+import {ImportModule} from "../import/import.module";
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { DialogNationalProvidersCreateEditComponent } from './menu-components/na
     MatListModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatTabsModule
+    MatTabsModule,
+    ImportModule
   ],
   providers: [
     {

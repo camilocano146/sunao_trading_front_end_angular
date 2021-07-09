@@ -1,0 +1,404 @@
+<div class="row dialog-title">
+  <h5 class="col-10">
+    PAGOS
+  </h5>
+  <div class="col-2 text-right">
+    <img class="img-close-dialog" src="./assets/icons/close_white.svg" alt="" (click)="matDialogRef.close()">
+  </div>
+</div>
+<div class="full-width" style="padding: 10px;">
+  <div *ngIf="preload" class="row">
+    <div class="col-12 center-horizontal">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  </div>
+  <div *ngIf="!preload" class="row" style="margin-bottom: 15px;">
+    <div class="col-12 text-center my-2">
+      <div>
+        <label class="label-form-pay-methods">Selecciona un método de pago</label>
+      </div>
+    </div>
+    <div class="col-6 col-md-6 col-lg-3">
+      <div class="card-payment-method cursor-pointer" (click)="selectMethod('CARD')">
+        <img src="./assets/transactions/credit-card.png" height="40px" alt="">
+        Tarjeta
+      </div>
+    </div>
+    <div class="col-6 col-md-6 col-lg-3">
+      <div class="card-payment-method cursor-pointer" (click)="selectMethod('NEQUI')">
+        <img src="./assets/transactions/nequi.png" height="40px" alt="">
+        NEQUI
+      </div>
+    </div>
+    <div class="col-6 col-md-6 col-lg-3">
+      <div class="card-payment-method cursor-pointer" (click)="selectMethod('PSE')">
+        <img src="./assets/transactions/pse.png" height="40px" alt="">
+        PSE
+      </div>
+    </div>
+    <div class="col-6 col-md-6 col-lg-3">
+      <div class="card-payment-method cursor-pointer" (click)="selectMethod('BANCOLOMBIA_TRANSFER')">
+        <img src="./assets/transactions/bancolombia.png" height="40px" alt="">
+        Bancolombia
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!preload" class="row justify-content-center">
+
+    <div class="col-12 col-md-11 col-lg-10 col-xl-8">
+      <!--Tarjate-->
+      <div *ngIf="payment_method_selected == 'CARD'" class="full-width card-form-pay-method" [formGroup]="card">
+        <div class="row without-margin justify-content-center">
+          <div class="col-12 mb-4" style="text-align: center;">
+            <label class="label-form-pay-methods">FORMULARIO TARJETA CREDITO/DÉBITO</label>
+            <br>
+            <strong>Comisión por transacción: 2.85% + $800 + IVA</strong>
+          </div>
+          <div class="col-12 col-md-8">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Número de
+              tarjeta</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="number" maxlength="16"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-hint>Introduce el número sin guiones</mat-hint>
+              <mat-error *ngIf="this.card.get('number').invalid">Debe tener 16 digitos</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4 col-lg-4">
+            <label class="color-purple-primary full-width without-margin"
+                   style="font-size: 14px;">CVC</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput [type]="hideCVC ? 'password' : 'text'" formControlName="cvc" maxlength="3"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <button mat-icon-button matSuffix (click)="hideCVC = !hideCVC" [attr.aria-label]="'ocultar'"
+                      [attr.aria-pressed]="hideCVC">
+                <mat-icon>{{hideCVC ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="this.card.get('cvc').invalid">Debe tener 3 digitos</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4">
+            <label class="color-purple-primary full-width without-margin"
+                   style="font-size: 14px;">Mes</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput type="number" formControlName="exp_month" maxlength="2" max="12"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.card.get('exp_month').invalid">{{getErrorCardMonth()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4">
+            <label class="color-purple-primary full-width without-margin"
+                   style="font-size: 14px;">Año</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="exp_year" maxlength="2"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.card.get('exp_year').invalid">{{getErrorCardYear()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-4">
+            <label class="color-purple-primary full-width without-margin"
+                   style="font-size: 14px;">Cuotas</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="installments" maxlength="2"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.card.get('installments').invalid">{{getErrorMessageCuotas()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Titular
+              de la tarjeta</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="card_holder" maxlength="150">
+              <mat-error *ngIf="this.card.get('card_holder').invalid">{{getErrorMessageName()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Correo
+              electrónico del titular</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="customer_email" maxlength="150">
+              <mat-error *ngIf="this.card.get('customer_email').invalid">{{getErrorMessageEmailCard()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Valor a
+              recargar</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="value" (ngModelChange)="calculateCommissionAndTotalValue()"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.card.get('value').invalid">{{getErrorMessageValue()}}</mat-error>
+              <mat-hint>Valor el COP</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-comission">
+              <strong>Comisión bancaria: </strong> {{commission | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-totalvalue">
+              <strong>Total: </strong> {{value_total | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-12 center-horizontal-vertical">
+            <mat-checkbox [formControl]="terms"></mat-checkbox>
+            <a
+              class="label-totalvalue cursor-pointer"
+              style="margin-bottom: 7px; text-decoration: underline; margin-left: 7px;"
+              (click)="openTerms()">Aceptar terminos y condiciones</a>
+          </div>
+          <mat-error *ngIf="terms.touched && terms.value == false">Debes aceptar los terminos y
+            condiciones
+          </mat-error>
+          <div class="col-8 center-horizontal-vertical" style="margin-top: 15px;">
+            <button matRipple class="btn-blue w-100 br-30px-general border-none"
+                    style="margin-bottom: 0px !important;" *ngIf="!preload_pay"
+                    (click)="onSubmit()">Pagar
+            </button>
+            <mat-spinner *ngIf="preload_pay" diameter="40"></mat-spinner>
+          </div>
+        </div>
+      </div>
+      <!--Nequi-->
+      <div *ngIf="payment_method_selected == 'NEQUI'" class="full-width card-form-pay-method" [formGroup]="nequi">
+        <div class="row without-margin justify-content-center">
+          <div class="col-12 mb-4" style="text-align: center;">
+            <label class="label-form-pay-methods">FORMULARIO NEQUI</label>
+            <br>
+            <strong>Comisión por transacción: 2.85% + $800 + IVA</strong>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Número de
+              celular</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="number" maxlength="12"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.nequi.get('number').invalid">{{getErrorMessagePhone()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Correo
+              electrónico del titular</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="customer_email" maxlength="150">
+              <mat-error *ngIf="this.nequi.get('customer_email').invalid">{{getErrorMessageEmailNequi()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Valor a
+              recargar</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="value" (ngModelChange)="calculateCommissionAndTotalValue()"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.nequi.get('value').invalid">{{getErrorMessageValueNEQUI()}}
+              </mat-error>
+              <mat-hint>Valor el COP</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-comission">
+              <strong>Comisión bancaria: </strong> {{commission | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-totalvalue">
+              <strong>Total: </strong> {{value_total | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-12 center-horizontal-vertical">
+            <mat-checkbox class="example-margin" [formControl]="terms"></mat-checkbox>
+            <a
+              class="label-totalvalue cursor-pointer"
+              style="margin-bottom: 7px; text-decoration: underline; margin-left: 7px;"
+              (click)="openTerms()">Aceptar terminos y condiciones</a>
+          </div>
+          <mat-error *ngIf="terms.touched && terms.value == false">Debes aceptar los terminos y
+            condiciones
+          </mat-error>
+          <div class="col-8 center-horizontal-vertical" style="margin-top: 15px;">
+            <button matRipple class="btn-blue w-100 br-30px-general border-none"
+                    style="margin-bottom: 0px !important;" *ngIf="!preload_pay"
+                    (click)="paymentNequi()">Pagar
+            </button>
+            <mat-spinner *ngIf="preload_pay" diameter="40"></mat-spinner>
+          </div>
+        </div>
+
+      </div>
+      <!--PSE-->
+      <div *ngIf="payment_method_selected == 'PSE'" class="full-width card-form-pay-method" [formGroup]="pse">
+        <div class="row without-margin justify-content-center">
+          <div class="col-12 mb-4" style="text-align: center;">
+            <label class="label-form-pay-methods">FORMULARIO PSE</label>
+            <br>
+            <strong>Comisión por transacción: 2.85% + $800 + IVA</strong>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="color-purple-primary full-width without-margin"
+                   style="font-size: 14px;">Banco</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <mat-select formControlName="institution">
+                <mat-option [value]="item.financial_institution_code"
+                            *ngFor="let item of pse_institutions">{{item.financial_institution_name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.pse.get('institution').invalid">Campo obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Tipo de
+              persona</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <mat-select formControlName="user_type">
+                <mat-option value="0">Natural</mat-option>
+                <mat-option value="1">Juridica</mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.pse.get('user_type').invalid">Campo obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Tipo de
+              documento</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <mat-select formControlName="user_doc">
+                <mat-option value="CC">Cedula de ciudanania</mat-option>
+                <mat-option value="NIT">NIT</mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.pse.get('user_doc').invalid">Campo obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Número de
+              documento</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="user_id" maxlength="12"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.pse.get('user_id').invalid">{{getErrorMessageDocumentPSE()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Correo
+              electrónico</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="customer_email" maxlength="150">
+              <mat-error *ngIf="this.pse.get('customer_email').invalid">{{getErrorMessageEmailPSE()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Valor a
+              recargar</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="value" (ngModelChange)="calculateCommissionAndTotalValue()"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.pse.get('value').invalid">{{getErrorMessageValuePSE()}}</mat-error>
+              <mat-hint>Valor el COP</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-comission">
+              <strong>Comisión bancaria: </strong> {{commission | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-totalvalue">
+              <strong>Total: </strong> {{value_total | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-12 center-horizontal-vertical">
+            <mat-checkbox class="example-margin" [formControl]="terms"></mat-checkbox>
+            <a
+              class="label-totalvalue cursor-pointer"
+              style="margin-bottom: 7px; text-decoration: underline; margin-left: 7px;"
+              (click)="openTerms()">Aceptar terminos y condiciones</a>
+          </div>
+          <mat-error *ngIf="terms.touched && terms.value == false">Debes aceptar los terminos y
+            condiciones
+          </mat-error>
+          <div class="col-8 center-horizontal-vertical" style="margin-top: 15px;">
+            <button matRipple class="btn-blue w-100 br-30px-general border-none"
+                    style="margin-bottom: 0px !important;" *ngIf="!preload_pay"
+                    (click)="paymentPse()">Pagar
+            </button>
+            <mat-spinner *ngIf="preload_pay" diameter="40"></mat-spinner>
+          </div>
+        </div>
+
+      </div>
+      <!--Bancolombia-->
+      <div *ngIf="payment_method_selected == 'BANCOLOMBIA_TRANSFER'" class="full-width card-form-pay-method"
+           [formGroup]="bancolombia">
+        <div class="row without-margin justify-content-center">
+          <div class="col-12 mb-4" style="text-align: center;">
+            <label class="label-form-pay-methods">FORMULARIO BANCOLOMBIA</label>
+            <br>
+            <strong>Comisión por transacción: 1.5% + $500 + IVA</strong>
+          </div>
+          <div class="col-12 ">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Tipo de
+              usuario</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <mat-select formControlName="user_type">
+                <mat-option value="PERSON">Persona Natural</mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.bancolombia.get('user_type').invalid">Campo obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Correo
+              electrónico</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="customer_email" maxlength="150">
+              <mat-error *ngIf="this.bancolombia.get('customer_email').invalid">{{getErrorMessageEmailBancolombia()}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <label class="color-purple-primary full-width without-margin" style="font-size: 14px;">Valor a
+              recargar</label>
+            <mat-form-field class="full-width" style="margin-top: -15px;">
+              <input matInput formControlName="value" (ngModelChange)="calculateCommissionAndTotalValue()"
+                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <mat-error *ngIf="this.bancolombia.get('value').invalid">{{getErrorMessageValueBancolombia()}}</mat-error>
+              <mat-hint>Valor el COP</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-comission">
+              <strong>Comisión bancaria: </strong> {{commission | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-6 center-horizontal" style="margin-bottom: 10px;">
+            <label class="label-totalvalue">
+              <strong>Total: </strong> {{value_total | currency:'COP':'symbol':'1.0'}}
+            </label>
+          </div>
+          <div class="col-12 center-horizontal-vertical">
+            <mat-checkbox class="example-margin" [formControl]="terms"></mat-checkbox>
+            <a
+              class="label-totalvalue cursor-pointer"
+              style="margin-bottom: 7px; text-decoration: underline; margin-left: 7px;"
+              (click)="openTerms()">Aceptar terminos y condiciones</a>
+          </div>
+          <mat-error *ngIf="terms.touched && terms.value == false">Debes aceptar los terminos y
+            condiciones
+          </mat-error>
+          <div class="col-8 center-horizontal-vertical" style="margin-top: 15px;">
+            <button matRipple class="btn-blue w-100 br-30px-general border-none"
+                    style="margin-bottom: 0px !important;" *ngIf="!preload_pay"
+                    (click)="paymentBancolombia()">Pagar
+            </button>
+            <mat-spinner *ngIf="preload_pay" diameter="40"></mat-spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

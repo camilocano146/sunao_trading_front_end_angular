@@ -25,8 +25,9 @@ export class DialogCityCreateEditComponent implements OnInit {
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
-  formControlLatitude: FormControl = new FormControl(null, [Validators.required]);
-  formControlLongitude: FormControl = new FormControl(null, [Validators.required]);
+  latitude = 0;
+  longitude = 0;
+  constants = ConstantsApp;
 
   constructor(
     private userService: UserService,
@@ -38,8 +39,8 @@ export class DialogCityCreateEditComponent implements OnInit {
   ) {
     if (this.data.dataEdit) {
       this.formControlName.setValue(data.dataEdit.name);
-      this.formControlLatitude.setValue(data.dataEdit.latitude);
-      this.formControlLongitude.setValue(data.dataEdit.longitude);
+      this.latitude = +data.dataEdit.latitude;
+      this.longitude = +data.dataEdit.longitude;
     }
   }
 
@@ -47,14 +48,14 @@ export class DialogCityCreateEditComponent implements OnInit {
   }
 
   saveOrEdit(): void {
-    if (this.formControlName.valid) {
+    if (this.formControlName.valid && this.havePosition()) {
       this.preloadSave = true;
       const body: Location = {
         name: this.formControlName.value,
         father_location_id: this.data.idCountry,
         type: ConstantsApp.TYPE_LOCATION_CITY,
-        latitude: +this.formControlLatitude.value,
-        longitude: +this.formControlLongitude.value,
+        latitude: +this.latitude,
+        longitude: +this.longitude,
       };
       let observable;
       if (this.data.dataEdit) {
@@ -96,5 +97,17 @@ export class DialogCityCreateEditComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  chooseMatPoint(event: MouseEvent): void {
+    // @ts-ignore
+    const coordinates = event.coords;
+    this.latitude = coordinates.lat.toFixed(ConstantsApp.maxFixedCoordinates);
+    this.longitude = coordinates.lng.toFixed(ConstantsApp.maxFixedCoordinates);
+  }
+
+  havePosition(): boolean {
+    // tslint:disable-next-line:triple-equals
+    return this.latitude != 0 && this.longitude != 0;
   }
 }

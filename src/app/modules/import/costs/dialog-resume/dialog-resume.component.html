@@ -59,9 +59,12 @@
 </div>
 
 <div class="text-center">
-  <button mat-raised-button class="btn-liquidate" (click)="liquidate()">
+  <button *ngIf="!preload" mat-raised-button class="btn-liquidate" (click)="liquidate()">
     <h5 class="m-0">
       Liquidar
     </h5>
   </button>
+  <div *ngIf="preload">
+    <mat-spinner diameter="50" class="m-auto"></mat-spinner>
+  </div>
 </div>

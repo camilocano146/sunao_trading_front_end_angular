@@ -61,8 +61,8 @@ export class CostsComponent implements OnInit {
   listPortsOrigin: Port[] = [];
   listPortsDestination: Port[] = [];
   currentStep = 0;
-  formControlProductName: FormControl = new FormControl('', [Validators.required]);
-  formControlTariffHeading: FormControl = new FormControl('', [Validators.required]);
+  formControlProductName: FormControl = new FormControl('', []);
+  formControlTariffHeading: FormControl = new FormControl('', []);
   formControlValueFOB: FormControl = new FormControl('', [Validators.required]);
   listProduct: Product[];
   listCurrencies: Currency[] = [
@@ -90,6 +90,12 @@ export class CostsComponent implements OnInit {
   lastSelectedIcotermCity: Location;
   selectedProduct: Product;
   listLocationsIcoterm: Location[];
+  preloadCityOrigin: boolean;
+  preloadCityDestination: boolean;
+  preloadCityPortOrigin: any;
+  preloadCityPortDestination: boolean;
+  preloadCityIncoterm: boolean;
+  preloadProducts: boolean;
 
   constructor(
     public matDialog: MatDialog,
@@ -124,11 +130,22 @@ export class CostsComponent implements OnInit {
     });
   }
 
-  getProducts(): void {
-    this.productsService.getListProductsNoAuth(0, 10).subscribe(res => {
-      this.listProduct = res.results;
-    }, error => {
-    });
+  getProducts(formControl?: FormControl): void {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preloadProducts = true;
+      this.listProduct?.splice(0, this.listProduct?.length);
+      this.selectedProduct = undefined;
+      const text = formControl?.value || '';
+      this.productsService.getListProductsNoAuth(0, 10, text).subscribe(res => {
+        this.listProduct = res.results;
+        this.preloadProducts = false;
+      }, error => {
+        this.preloadProducts = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
 
   getAllCities(formControl: FormControl, onInit?: boolean): void {
@@ -149,6 +166,13 @@ export class CostsComponent implements OnInit {
           subscribeL.unsubscribe();
         }
       }
+      if (formControl === this.formControlOrigin) {
+        this.preloadCityOrigin = true;
+        this.listLocationsOrigin?.splice(0, this.listLocationsOrigin?.length);
+      } else {
+        this.preloadCityDestination = true;
+        this.listLocationsDestination?.splice(0, this.listLocationsDestination?.length);
+      }
       this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
       const subscribeLocation = this.locationService.getPublicAllCities(0, this.limit, formControl.value);
       this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
@@ -158,7 +182,11 @@ export class CostsComponent implements OnInit {
         } else {
           this.listLocationsDestination = res.results;
         }
+        this.preloadCityOrigin = false;
+        this.preloadCityDestination = false;
       }, error => {
+        this.preloadCityOrigin = false;
+        this.preloadCityDestination = false;
       }));
     }, AppComponent.timeMillisDelayFilter);
   }
@@ -177,12 +205,16 @@ export class CostsComponent implements OnInit {
       for (const subscribeL of this.listSubscribesLocation) {
         subscribeL.unsubscribe();
       }
+      this.preloadCityIncoterm = true;
+      this.listLocationsIcoterm?.splice(0, this.listLocationsIcoterm?.length);
       this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
       const subscribeLocation = this.locationService.getPublicAllCitiesByCountry(this.lastDestinationSelected.father_location?.id, 0, this.limit, this.formControlCityIcoterm.value);
       this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
         // console.log(res);
         this.listLocationsIcoterm = res.results;
+        this.preloadCityIncoterm = false;
       }, error => {
+        this.preloadCityIncoterm = false;
       }));
     }, AppComponent.timeMillisDelayFilter);
   }
@@ -203,6 +235,13 @@ export class CostsComponent implements OnInit {
       for (const subscribeL of this.listSubscribesLocation) {
         subscribeL.unsubscribe();
       }
+      if (formControl === this.formControlOriginPort) {
+        this.preloadCityPortOrigin = true;
+        this.listPortsOrigin?.splice(0, this.listPortsOrigin?.length);
+      } else {
+        this.preloadCityPortDestination = true;
+        this.listPortsDestination?.splice(0, this.listPortsDestination?.length);
+      }
       this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
       const subscribeLocation = this.portsService.getPublicListPorts(city.id, 0, this.limit, formControl.value);
       this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
@@ -212,7 +251,11 @@ export class CostsComponent implements OnInit {
         } else {
           this.listPortsDestination = res.results;
         }
+        this.preloadCityPortOrigin = false;
+        this.preloadCityPortDestination = false;
       }, error => {
+        this.preloadCityPortOrigin = false;
+        this.preloadCityPortDestination = false;
       }));
     }, AppComponent.timeMillisDelayFilter);
   }
@@ -316,11 +359,11 @@ export class CostsComponent implements OnInit {
   }
 
   getErrorMessageFOB(): string {
-    return this.formControlProductName.hasError('required')
+    return this.formControlValueFOB.hasError('required')
       ? 'Este campo es obligatorio'
-      : this.formControlProductName.hasError('pattern')
+      : this.formControlValueFOB.hasError('pattern')
         ? 'Solo números positivos'
-        : this.formControlProductName.hasError('min')
+        : this.formControlValueFOB.hasError('min')
           ? 'Mínimo 1'
           : '';
   }

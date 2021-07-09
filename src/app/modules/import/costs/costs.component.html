@@ -45,6 +45,9 @@
                 <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllCities(formControlOrigin)"
                        [formControl]="formControlOrigin" [matAutocomplete]="autoLocations1">
                 <mat-autocomplete autoActiveFirstOption #autoLocations1="matAutocomplete">
+                  <mat-option *ngIf="preloadCityOrigin">
+                    <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+                  </mat-option>
                   <mat-option *ngFor="let option of listLocationsOrigin" (onSelectionChange)="onSelectOptionOrigin(option)"
                               [value]="option.name">
                     <span>{{option.name | titlecase}} ({{option.father_location.name | titlecase}})</span>
@@ -63,6 +66,9 @@
                 <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllPorts(lastOriginSelected, formControlOriginPort)"
                        [formControl]="formControlOriginPort" [matAutocomplete]="autoLocations2">
                 <mat-autocomplete autoActiveFirstOption #autoLocations2="matAutocomplete">
+                  <mat-option *ngIf="preloadCityPortOrigin">
+                    <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+                  </mat-option>
                   <mat-option *ngFor="let option of listPortsOrigin" (onSelectionChange)="onSelectOptionOrigenPort(option)"
                               [value]="option.name">
                     <span>{{option.name}}</span>
@@ -89,6 +95,9 @@
                 <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllCities(formControlDestination)"
                        [formControl]="formControlDestination" [matAutocomplete]="autoLocations3">
                 <mat-autocomplete autoActiveFirstOption #autoLocations3="matAutocomplete">
+                  <mat-option *ngIf="preloadCityDestination">
+                    <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+                  </mat-option>
                   <mat-option *ngFor="let option of listLocationsDestination" (onSelectionChange)="onSelectOptionDestination(option)"
                               [value]="option.name | titlecase">
                     <span>{{option.name | titlecase}} ({{option.father_location.name | titlecase}})</span>
@@ -107,6 +116,9 @@
                 <input type="text" aria-label="Number" matInput (ngModelChange)="this.getAllPorts(lastDestinationSelected, formControlDestinationPort)"
                        [formControl]="formControlDestinationPort" [matAutocomplete]="autoLocations4">
                 <mat-autocomplete autoActiveFirstOption #autoLocations4="matAutocomplete">
+                  <mat-option *ngIf="preloadCityPortDestination">
+                    <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+                  </mat-option>
                   <mat-option *ngFor="let option of listPortsDestination" (onSelectionChange)="onSelectOptionDestinationPort(option)"
                               [value]="option.name">
                     <span>{{option.name}}</span>
@@ -135,6 +147,7 @@
               <mat-form-field class="w-100" appearance="outline">
                 <input type="text" aria-label="Number" matInput
                        placeholder="Por nombre del producto"
+                       (ngModelChange)="this.getProducts(formControlProductName)"
                        [formControl]="formControlProductName">
               </mat-form-field>
             </div>
@@ -142,12 +155,16 @@
               <mat-form-field class="w-100" appearance="outline">
                 <input type="text" aria-label="Number" matInput
                        placeholder="Por partida arancelaria"
+                       (ngModelChange)="this.getProducts(formControlTariffHeading)"
                        [formControl]="formControlTariffHeading">
               </mat-form-field>
             </div>
           </div>
 
           <mat-list class="bc-white" style="height: 250px; overflow-y: auto;">
+            <mat-list-item *ngIf="this.preloadProducts">
+              <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+            </mat-list-item>
             <mat-list-item class="cursor-pointer"
                            (click)="selectedProduct = product"
                            [ngClass]="{'div-border-selected': selectedProduct === product, 'bc-very-soft-blue': (i % 2) !== 0}"
@@ -162,6 +179,11 @@
               </div>
             </mat-list-item>
           </mat-list>
+
+          <h6 *ngIf="!selectedProduct" class="color-red mt-3 text-center">
+            Por favor seleccione un producto
+          </h6>
+
         </div>
       </div>
 
@@ -332,6 +354,9 @@
                        [formControl]="formControlCityIcoterm"
                        [matAutocomplete]="autoLocations">
                 <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
+                  <mat-option *ngIf="preloadCityIncoterm">
+                    <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+                  </mat-option>
                   <mat-option *ngFor="let option of listLocationsIcoterm" (onSelectionChange)="onSelectOptionIncotermCity(option)"
                               [value]="option.name">
                     <span>{{option.name | titlecase}}</span>

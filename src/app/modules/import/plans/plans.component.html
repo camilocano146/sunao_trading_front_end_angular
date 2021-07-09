@@ -6,6 +6,19 @@
     Tenemos la mejor solución para tus necesidades, escoge el plan y comienza a importar ya!
   </p>
 
+  <div *ngIf="preload" class="w-100 mt-5">
+    <mat-spinner diameter="100" class="m-auto"></mat-spinner>
+  </div>
+
+  <div *ngIf="errorGetPlans" class="w-100 mt-5 text-center">
+    <h5 class="color-red">
+      Error consultando los planes, por favor intente cargarlos nuevamente.
+    </h5>
+    <button mat-raised-button class="btn-yellow" (click)="getAllPlans()">
+      Recargar
+    </button>
+  </div>
+
   <div class="row justify-content-center">
     <div class="bc-white col-3 mx-4" [ngClass]="{'mt-5': i >= 3, 'mt-3': i < 3}" *ngFor="let plan of listPlans; let i = index">
       <h3 class="pt-5 text-center color-blue">
@@ -23,7 +36,7 @@
         </h6>
       </div>
       <div class="text-center">
-        <button mat-raised-button class="btn-soft-blue w-75 button-buy">
+        <button mat-raised-button class="btn-soft-blue w-75 button-buy" (click)="showBuyDialog()">
           <h3 class="mb-0">
             Comprar
           </h3>

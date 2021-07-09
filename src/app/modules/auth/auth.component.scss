@@ -55,7 +55,7 @@
 }
 
 .div-img-background {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   opacity: 1;
@@ -67,7 +67,7 @@
 
 .img-background {
   width: 100vw;
-  //height: 100vh;
+  height: 100vh;
   object-fit: cover;
 }
 
