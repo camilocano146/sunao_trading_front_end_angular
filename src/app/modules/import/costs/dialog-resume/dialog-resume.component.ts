@@ -58,7 +58,13 @@ export class DialogResumeComponent implements OnInit {
     this.preload = true;
     const liquidate = this.buildLiquidate();
     this.liquidationService.liquidate(liquidate).subscribe(res => {
-      this.router.navigate(['import/plans']);
+      const userHastActivePackage = res.User_has_active_package;
+      if (!userHastActivePackage) {
+        this.router.navigate(['import/plans']);
+      } else {
+        this.router.navigate(['lobby']);
+      }
+      this.matDialogRef.close();
       this.preload = false;
     }, error => {
       this.preload = false;
@@ -69,7 +75,7 @@ export class DialogResumeComponent implements OnInit {
   private buildLiquidate(): Liquidation {
     return {
       badge: this.data.currency.abbreviation,
-      city_destination_id: this.data.cityIcoterm.id,
+      city_destination_id: this.data.cityIcoterm ? this.data.cityIcoterm.id : null,
       container_type_id: this.data.container.id,
       fob_cost: this.data.fobValue,
       incoterm: this.data.incoterm.name,

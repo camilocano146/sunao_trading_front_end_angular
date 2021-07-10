@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {PaymentService} from 'src/app/services/payment/payment.service';
 import {Router} from '@angular/router';
@@ -6,7 +6,9 @@ import {Utilities} from '../../../utils/Utilities';
 import {ConstantsApp} from '../../../utils/ConstantsApp';
 import {Global} from '../../../models/Global';
 import {NotifyService} from '../../../services/notify/notify.service';
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {ImportCost} from "../../../models/ImportCost";
+import {Package} from "../../../models/Package";
 
 @Component({
   selector: 'app-create-transaction',
@@ -46,7 +48,8 @@ export class DialogCreateTransactionComponent implements OnInit {
     private notifyService: NotifyService,
     private paymentService: PaymentService,
     private formBuilder: FormBuilder,
-    public matDialogRef: MatDialogRef<DialogCreateTransactionComponent>
+    public matDialogRef: MatDialogRef<DialogCreateTransactionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Package,
   ) {
     this.terms = new FormControl(false, Validators.required);
     this.preload_pay = false;
@@ -58,16 +61,13 @@ export class DialogCreateTransactionComponent implements OnInit {
       card_holder: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
       customer_email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(ConstantsApp.patternEmail)]],
       installments: [1, [Validators.required, Validators.min(1), Validators.max(36)]],
-      value: [0, [Validators.required, Validators.min(ConstantsApp.minRechargeTransaction), Validators.max(2300000)]]
     });
     this.nequi = this.formBuilder.group({
       number: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
-      value: [0, [Validators.required, Validators.min(ConstantsApp.minRechargeTransaction), Validators.max(2300000)]],
       customer_email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(ConstantsApp.patternEmail)]],
     });
     this.bancolombia = this.formBuilder.group({
       user_type: ['', Validators.required],
-      value: [0, [Validators.min(ConstantsApp.minRechargeTransaction), Validators.required]],
       customer_email: ['', [Validators.required, Validators.email, Validators.pattern(ConstantsApp.patternEmail)]],
       payment_description: ['RECARGA JOBKII - BANCOLOMBIA', [Validators.required]]
     });
@@ -76,18 +76,24 @@ export class DialogCreateTransactionComponent implements OnInit {
       user_doc: ['', Validators.required],
       user_id: ['', Validators.required],
       institution: ['', Validators.required],
-      value: [0, [Validators.min(ConstantsApp.minRechargeTransaction), Validators.required]],
       customer_email: ['', [Validators.required, Validators.email, Validators.pattern(ConstantsApp.patternEmail)]],
       payment_description: ['RECARGA JOBKII - PSE', [Validators.required]]
     });
 
     this.getPaymenthMethodsAndPretoken();
+
+    // console.log(Utilities.encrypt('comer'));
+    //
+    // const asd = {data: 'cePgn0THGl5wBvHEMM9ykbVWdxQGX8xYX2GrWl9Ecwe+f/a5T+0dC1OVPM3ovyaO1fbhigW48QhsbNwwGCWySraCGdKY5GXkzHN6dKu9S+H7p7+al3wexXgYt2X8mgaykUGzAxqlRounxp1QEmuZd3tC8sV0Gr2b5kU00apvSA3WrRdkbmXTPuY+jpJSydw32KY3/PU5n7DBp+THRHcrO6JVr5KqkSPwg65l//MUNDgEC9B7TW+FZeAXmDMb8jC2uGWBJsK9x4rUkVL24PVNU7o4tIezO8D90MQcNW9ZGA0jVZO9kabwEVaO77oKY7uEDQs0sUpLumWBmKdUWqL8BwMrb9tyQ/k7uEbHBFdQA3f4s9ywk7tt/d+r5RY9kcRbZbgZgF5jTe3AmXvRkuP6CCwwR0dd2rL9VZH6fJcUc/Y1Bi8sJD37P24S5YNKlDu9nwDAgN2JrdlZpuVXpJnUYpcDwO0dEOkKG0nn7ZtQcOXRDAG8Yy/uEM5x5rSeaL7HcbreD8CVtRw5QC/1shMEz+SOBj6I2nyBjU1lnVQsSBPgL5PrmB0GmoQYLbaCIeSVr2Jl6nTvwhR35sR2bxa1B3fOSrMcm8Sn3vWZxd2uBMYbA4lvxQfk4LH55xiibnPb7ax3TvAm7ufUAppQEWIOSSLOY/dAlXBDiyXSXZhEAEmE9MjkIWM2Njm/NRYrhNm987ys2MYz+7587z/czDdgZrNKtcdMTVew+ykC137R3Dqb7/y/WGOghCOKK8Bu85ws'};
+    // const data = Utilities.decrypt(asd);
   }
 
   ngOnInit(): void {
     // this.getPaymenthMethodsAndPretoken();
+    console.log('poipeipowqewe');
     this.paymentService.getInstitutions().subscribe(resp => {
-      const bodyInstruction = Utilities.decrypt(resp.body.body);
+      // const bodyInstruction = resp.body;
+      const bodyInstruction = Utilities.decrypt(resp.body);
       this.pse_institutions = bodyInstruction.data;
       this.preload = false;
     });
@@ -99,7 +105,10 @@ export class DialogCreateTransactionComponent implements OnInit {
   async getPaymenthMethodsAndPretoken(): Promise<any> {
     try {
       const res: any = await this.paymentService.getPretoken().toPromise();
-      const body = Utilities.decrypt(res.body.body);
+      // console.log(res);
+      const body = Utilities.decrypt(res.body);
+      // const body = res.body;
+      // console.log(Utilities.encrypt(body));
       this.link = body.data.presigned_acceptance.permalink;
       this.payment_methods = body.data.accepted_payment_methods;
       this.pre_token = body.data.presigned_acceptance.acceptance_token;
@@ -108,70 +117,57 @@ export class DialogCreateTransactionComponent implements OnInit {
     }
   }
 
-
   /**
    * Selecciona metodo de pago
    */
   selectMethod(item): void {
     this.payment_method_selected = item;
+    this.calculateCommissionAndTotalValue();
   }
 
   calculateCommissionAndTotalValue(): void {
     let commission = 0;
-    let value = 0;
+    const value = this.data.cost;
     if (this.payment_method_selected == 'CARD') {
-      value = +this.card.value.value;
       commission = Utilities.getCommissionCardPseNequi(value);
     } else if (this.payment_method_selected == 'NEQUI') {
-      value = +this.nequi.value.value;
       commission = Utilities.getCommissionCardPseNequi(value);
     } else if (this.payment_method_selected == 'BANCOLOMBIA_TRANSFER') {
-      value = +this.bancolombia.value.value;
       commission = Utilities.getCommissionBanColombia(value);
     } else if (this.payment_method_selected == 'PSE') {
-      value = +this.pse.value.value;
       commission = Utilities.getCommissionCardPseNequi(value);
     }
-    if (value >= ConstantsApp.minRechargeTransaction) {
-      this.commission = commission;
-      this.value_total = value - this.commission;
-    }
-    // let data = {value: +val, payment_method: this.payment_method_selected};
-    // this.paymentService.valueTotal(data).subscribe(res => {
-    //   this.value_total = res.body.body.total;
-    //   this.commission = res.body.body.commission;
-    //   this.preload_comission = false;
-    // }, err => {
-    //   this.notifyService.add({ severity: 'error', summary: 'Error', detail: 'No pudimos calcular la comisión de tu pago' });
-    //   this.preload_comission = false;
-    // });
+    this.commission = commission;
+    this.value_total = value + this.commission;
   }
-
 
   async onSubmit(): Promise<any> {
     this.submitted = true;
     if (this.card.invalid) {
       this.card.markAllAsTouched();
+      this.terms.markAsTouched();
       return;
     }
     if (this.terms.value == false) {
       this.terms.markAsTouched();
       return;
-
     }
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const infocard = {
       number: '' + this.card.value.number,
       cvc: '' + this.card.value.cvc,
-      exp_month: '' + this.card.value.exp_month,
+      exp_month: this.card.value.exp_month.length === 1 ? '0' + this.card.value.exp_month : '' + this.card.value.exp_month,
       exp_year: '' + this.card.value.exp_year,
       card_holder: '' + this.card.value.card_holder
     };
     this.paymentService.tokenCard(infocard).subscribe(response => {
-      const token_card = response.body.body.data.id;
+      // const token_card = response.body.body.data.id;
+      console.log(response);
+      response = Utilities.decrypt(response.body);
+      const token_card = response.data.id;
       const data = {
-        value: +this.card.value.value,
+        value: this.value_total,
         acceptance_token: this.pre_token,
         token: token_card,
         installments: +this.card.value.installments,
@@ -187,8 +183,9 @@ export class DialogCreateTransactionComponent implements OnInit {
         //     detail: 'Tu recarga ha sido exitosa.'
         // });
         // this.router.navigate(['/my-transactions/']);
-        const transactionBank = Utilities.decrypt(res.body?.body?.transaction_bank);
-        const status = transactionBank.data.status;
+        res = Utilities.decrypt(res.body);
+        const transactionBank = res?.data;
+        const status = transactionBank.status;
         this.showTransactionMessage(status, transactionBank);
       }, err => {
         this.notifyService.showSuccess('Aviso', 'No pudimos realizar tu pago, intenta nuevamente.');
@@ -204,6 +201,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.submitted = true;
     if (this.nequi.invalid) {
       this.nequi.markAllAsTouched();
+      this.terms.markAsTouched();
       return;
     }
     if (this.terms.value == false) {
@@ -213,7 +211,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const transaction = {
-      value: +this.nequi.value.value,
+      value: this.value_total,
       acceptance_token: this.pre_token,
       payment_method: this.payment_method_selected,
       customer_email: this.nequi.value.customer_email,
@@ -228,8 +226,10 @@ export class DialogCreateTransactionComponent implements OnInit {
       //     detail: 'Tu recarga ha sido exitosa.'
       // });
       // this.router.navigate(['/my-transactions/']);
-      const transactionBank = Utilities.decrypt(res.body?.body?.transaction_bank);
-      const status = transactionBank.data.status;
+      res = Utilities.decrypt(res.body);
+      const transactionBank = res.data;
+      // const transactionBank = Utilities.decrypt(res.body?.body?.transaction_bank);
+      const status = transactionBank.status;
       this.showTransactionMessage(status, transactionBank);
     }, err => {
       this.preload_pay = false;
@@ -241,6 +241,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.submitted = true;
     if (this.bancolombia.invalid) {
       this.bancolombia.markAllAsTouched();
+      this.terms.markAsTouched();
       return;
     }
     if (this.terms.value == false) {
@@ -250,7 +251,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const transaction = {
-      value: +this.bancolombia.value.value,
+      value: this.value_total,
       acceptance_token: this.pre_token,
       payment_method: this.payment_method_selected,
       customer_email: this.bancolombia.value.customer_email,
@@ -269,8 +270,9 @@ export class DialogCreateTransactionComponent implements OnInit {
       //     this.router.navigate(['my-transactions']);
       //     window.open(res.body.body.transaction_bank.data.payment_method.extra.async_payment_url, "_self ");
       // }, 3000);
-      const transactionBank = Utilities.decrypt(res.body?.body?.transaction_bank);
-      const status = transactionBank.data.status;
+      res = Utilities.decrypt(res.body);
+      const transactionBank = res?.data;
+      const status = transactionBank.status;
       this.showTransactionMessage(status, transactionBank, true);
     }, err => {
       this.preload_pay = false;
@@ -282,6 +284,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.submitted = true;
     if (this.pse.invalid) {
       this.pse.markAllAsTouched();
+      this.terms.markAsTouched();
       return;
     }
     if (this.terms.value == false) {
@@ -291,7 +294,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const transaction = {
-      value: +this.pse.value.value,
+      value: this.value_total,
       acceptance_token: this.pre_token,
       payment_method: this.payment_method_selected,
       customer_email: this.pse.value.customer_email,
@@ -304,8 +307,9 @@ export class DialogCreateTransactionComponent implements OnInit {
       redirect_url: this.URL_REDIRECT
     };
     this.paymentService.transactionPse(transaction).subscribe(res => {
-      const transactionBank = Utilities.decrypt(res.body?.body?.transaction_bank);
-      const status = transactionBank.data.status;
+      res = Utilities.decrypt(res.body);
+      const transactionBank = res?.data;
+      const status = transactionBank.status;
       this.showTransactionMessage(status, transactionBank, true);
     }, err => {
       this.preload_pay = false;
@@ -319,15 +323,18 @@ export class DialogCreateTransactionComponent implements OnInit {
       case 'APPROVED':
         if (redirectToInvoice) {
           this.notifyService.showSuccess('Aviso', 'En seguida serás redigirido a la página de tu banco.');
+          console.log(transactionBank);
           setTimeout(() => {
-            window.open(transactionBank?.data?.payment_method?.extra.async_payment_url, '_blank');
-            this.router.navigate(['my-transactions']);
+            window.open(transactionBank?.payment_method?.extra.async_payment_url, '_blank');
+            this.router.navigate(['lobby']);
             this.preload_pay = false;
+            this.matDialogRef.close();
           }, 1500);
         } else {
           this.notifyService.showSuccess('Aviso', 'Transaccion realizada exitosamente.');
           setTimeout(() => {
-            this.router.navigate(['my-transactions']);
+            this.router.navigate(['lobby']);
+            this.matDialogRef.close();
             this.preload_pay = false;
           }, 1000);
         }
@@ -345,7 +352,7 @@ export class DialogCreateTransactionComponent implements OnInit {
         this.preload_pay = false;
         break;
       default:
-        this.notifyService.showError('Aviso', 'Ha surido un error con tu transacción, por favor intenta nuevamente.');
+        this.notifyService.showError('Aviso', 'Ha surgido un error con tu transacción, por favor intenta nuevamente.');
         this.preload_pay = false;
         break;
     }

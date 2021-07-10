@@ -36,7 +36,7 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  showBuyDialog(): void {
+  showBuyDialog(plan: Package): void {
     this.matDialog.open(DialogCreateTransactionComponent, {
       width: '800px',
       maxWidth: '96vw',
@@ -44,6 +44,7 @@ export class PlansComponent implements OnInit {
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
       panelClass: 'div-without-padding',
+      data: plan
     });
   }
 }

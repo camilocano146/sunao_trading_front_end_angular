@@ -15,10 +15,10 @@ export class LiquidationService {
   getAll(offset: number, limit: number): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set('page', offset.toString()).set('limit', limit.toString());
-    return this.httpClient.get('locations', {headers});
+    return this.httpClient.get('liquidations', {headers});
   }
 
   liquidate(liquidation: Liquidation): Observable<any> {
-    return this.httpClient.post('liquidation', liquidation);
+    return this.httpClient.post('liquidation/', liquidation);
   }
 }

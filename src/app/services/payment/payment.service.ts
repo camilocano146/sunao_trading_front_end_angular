@@ -11,11 +11,11 @@ export class PaymentService {
     constructor(private http: HttpClient) { }
 
     getPretoken(): Observable<any> {
-        return this.http.get<any>('payments/pretoken', {observe: 'response'});
+        return this.http.get<any>('wompi/get_pretoken/', {observe: 'response'});
     }
 
     tokenCard(card: any): Observable<any> {
-        return this.http.post<any>('payments/card/token', Utilities.encrypt(card), {observe: 'response'});
+        return this.http.post<any>('wompi/get_card_token/', Utilities.encrypt(card), {observe: 'response'});
     }
 
     valueTotal(value: any): Observable<any> {
@@ -23,22 +23,25 @@ export class PaymentService {
     }
 
     transactionCard(transaction: any): Observable<any> {
-        return this.http.post<any>('payments/card/transaction', Utilities.encrypt(transaction), {observe: 'response'});
+        return this.http.post<any>('wompi/payment_card/', Utilities.encrypt(transaction), {observe: 'response'});
     }
 
     transactionNequi(transaction: any): Observable<any> {
-        return this.http.post<any>('payments/nequi/transaction', Utilities.encrypt(transaction), {observe: 'response'});
+        // return this.http.post<any>('wompi/payment_nequi/', Utilities.encrypt(transaction), {observe: 'response'});
+      return this.http.post<any>('wompi/payment_nequi/', Utilities.encrypt(transaction), {observe: 'response'});
     }
 
     transactionBancolombia(transaction: any): Observable<any> {
-        return this.http.post<any>('payments/bancolombia/transaction', Utilities.encrypt(transaction), {observe: 'response'});
+        // return this.http.post<any>('wompi/payment_bancolombia/', Utilities.encrypt(transaction), {observe: 'response'});
+      return this.http.post<any>('wompi/payment_bancolombia/', Utilities.encrypt(transaction), {observe: 'response'});
     }
 
     transactionPse(transaction: any): Observable<any> {
-        return this.http.post<any>('payments/pse/transaction', Utilities.encrypt(transaction), {observe: 'response'});
+        return this.http.post<any>('wompi/payment_pse/', Utilities.encrypt(transaction), {observe: 'response'});
+      // return this.http.post<any>('wompi/payment_pse/', Utilities.encrypt(transaction), {observe: 'response'});
     }
 
     getInstitutions(): Observable<any> {
-        return this.http.get<any>('payments/pse/institutions', {observe: 'response'});
+        return this.http.get<any>('wompi/get_pse_istructions/', {observe: 'response'});
     }
 }
