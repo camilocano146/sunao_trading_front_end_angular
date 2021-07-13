@@ -40,7 +40,7 @@ export class PlansComponent implements OnInit {
     this.matDialog.open(DialogCreateTransactionComponent, {
       width: '800px',
       maxWidth: '96vw',
-      height: '500px',
+      height: '700px',
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
       panelClass: 'div-without-padding',

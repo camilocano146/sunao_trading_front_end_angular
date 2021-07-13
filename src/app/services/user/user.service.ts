@@ -44,7 +44,7 @@ export class UserService {
   }
 
   getAll(offset: number, limit: number): Observable<any> {
-    
+
     return this.httpClient.get(`users/?offset=${offset}&limit=${limit}`);
   }
 
@@ -61,7 +61,7 @@ export class UserService {
   }
 
   getUser(): Observable<any> {
-    return this.httpClient.get(`users/my`);
+    return this.httpClient.get(`users/get_info_user/`);
   }
 
   activateDeactivateUser(user:User): Observable<any> {

@@ -1,0 +1,48 @@
+@import '../../../../../styles';
+
+.btn-not-verify {
+  background-color: $color-soft-red;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
+
+.btn-change {
+  background-color: $color-soft-blue;
+  color: white !important;
+  border-radius: 10px !important;
+}
+
+.btn-verify {
+  background-color: $color-soft-red;
+  color: white !important;
+  border-radius: 10px !important;
+}
+
+.div-info {
+  //box-shadow: 5px 0 30px black;
+  box-shadow: 5px 0 18px #888888;
+}
+
+#div-info-container img {
+  width: 40px;
+  //padding-right: 1em;
+}
+
+#div-info-container span {
+  padding-left: 1em;
+}
+
+.separator {
+  height: 3px;
+  background-color: $color-soft-blue;
+  border: none;
+}
+
+.div-info-package {
+  background-color: blue !important;
+  border-radius: 10px !important;
+  color: white !important;
+}

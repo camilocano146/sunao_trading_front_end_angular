@@ -84,13 +84,13 @@ export class DialogCreateTransactionComponent implements OnInit {
 
     // console.log(Utilities.encrypt('comer'));
     //
-    // const asd = {data: 'cePgn0THGl5wBvHEMM9ykbVWdxQGX8xYX2GrWl9Ecwe+f/a5T+0dC1OVPM3ovyaO1fbhigW48QhsbNwwGCWySraCGdKY5GXkzHN6dKu9S+H7p7+al3wexXgYt2X8mgaykUGzAxqlRounxp1QEmuZd3tC8sV0Gr2b5kU00apvSA3WrRdkbmXTPuY+jpJSydw32KY3/PU5n7DBp+THRHcrO6JVr5KqkSPwg65l//MUNDgEC9B7TW+FZeAXmDMb8jC2uGWBJsK9x4rUkVL24PVNU7o4tIezO8D90MQcNW9ZGA0jVZO9kabwEVaO77oKY7uEDQs0sUpLumWBmKdUWqL8BwMrb9tyQ/k7uEbHBFdQA3f4s9ywk7tt/d+r5RY9kcRbZbgZgF5jTe3AmXvRkuP6CCwwR0dd2rL9VZH6fJcUc/Y1Bi8sJD37P24S5YNKlDu9nwDAgN2JrdlZpuVXpJnUYpcDwO0dEOkKG0nn7ZtQcOXRDAG8Yy/uEM5x5rSeaL7HcbreD8CVtRw5QC/1shMEz+SOBj6I2nyBjU1lnVQsSBPgL5PrmB0GmoQYLbaCIeSVr2Jl6nTvwhR35sR2bxa1B3fOSrMcm8Sn3vWZxd2uBMYbA4lvxQfk4LH55xiibnPb7ax3TvAm7ufUAppQEWIOSSLOY/dAlXBDiyXSXZhEAEmE9MjkIWM2Njm/NRYrhNm987ys2MYz+7587z/czDdgZrNKtcdMTVew+ykC137R3Dqb7/y/WGOghCOKK8Bu85ws'};
-    // const data = Utilities.decrypt(asd);
+    // const asd = {data: 'FVIlIYDiYO4Y0uBYwoFPKG5aOiGqv9fYl9S/duuHJxG7XBwzFfoESgT+6XEnFQcteXdPtp704jrlORcE4/6Zc3z/vjyou5vj+jSY4UYGKAQcCoXtSPM5ClpsQ/ASNaV00Bzl64ShK7iUKCXctsqi0X/JNleLfoQkByDlaScL+1Jlr0ckb5Ke0vymkBqmbED3Gz6kChNzdy+W3NgKoEY0U2LzIgea6gyz0WNejju4q2iBqA51PL1qQC8GqgZ+MVRXIHIhbQKOInPxmhsck0b9Aw0NmrD1ROQoyHhTrqjNToMPY9Z63Bus/F6o3cphw4WsEkmAMjMk5QatpReGE8DptMYskzYg3Bos8Rx0eQABjHYRpGRQrnIzu/dz/rPsNeDVM6DkAeMC4Sm8hMyBay7uOG5ENb1C87zUzqJuZiHeD/aQRj48ZjwzlV779wT4h3UVo07bwTA6yM5K9PwSSUf1DUC0AbUChzVWoTyyVH70aiMSM5DiIkWlGoLtAtL3Rbh1CP5JhLzN7C0TWSHmPMpwakcVLowKUQIpSGb/gTFRi5aWz5LDGEL/mo9RuGiWTvI2jAeDnzNDuhdvrD548tWMXFf4o9d3LXcNRtB+/nLHhZj5YjNLzFqew52dJP4zAnxIayfoib5FaMQp9ej36L10o+YvsegjRPkfBSmF9Msgl8r9LWEOEanbOBoyV4kNsgyvoQsC4tCf1IcQ9oo3xOKOtJEjxkNxPgPapJt2CWShxYO+qyYLIPrjGGroU8PRUIHOkLxSbWTVftLXlZFyeymqpiyHFAzN/OLx45/u+58P1Bp7tWWrkptJ7pSDYYsi5cJ0pxpyINJjT3mwtceSHhoJRer66HDV+P3y4D2hE1vm9TM='};
+    // const data1 = Utilities.decrypt(asd);
+    // console.log(data1);
   }
 
   ngOnInit(): void {
     // this.getPaymenthMethodsAndPretoken();
-    console.log('poipeipowqewe');
     this.paymentService.getInstitutions().subscribe(resp => {
       // const bodyInstruction = resp.body;
       const bodyInstruction = Utilities.decrypt(resp.body);
@@ -174,7 +174,8 @@ export class DialogCreateTransactionComponent implements OnInit {
         payment_method: this.payment_method_selected,
         customer_email: this.card.value.customer_email,
         currency: 'COP',
-        redirect_url: this.URL_REDIRECT
+        redirect_url: this.URL_REDIRECT,
+        plan_id: this.data.id
       };
       this.paymentService.transactionCard(data).subscribe(res => {
         // this.notifyService.add({
@@ -216,7 +217,8 @@ export class DialogCreateTransactionComponent implements OnInit {
       payment_method: this.payment_method_selected,
       customer_email: this.nequi.value.customer_email,
       currency: 'COP',
-      phone_number: this.nequi.value.number, redirect_url: this.URL_REDIRECT
+      phone_number: this.nequi.value.number, redirect_url: this.URL_REDIRECT,
+      plan_id: this.data.id
     };
     this.paymentService.transactionNequi(transaction).subscribe(res => {
       // this.preload_pay = false;
@@ -258,7 +260,8 @@ export class DialogCreateTransactionComponent implements OnInit {
       currency: 'COP',
       user_type: this.bancolombia.value.user_type,
       payment_description: 'RECARGA JOBKII - BANCOLOMBIA',
-      redirect_url: this.URL_REDIRECT
+      redirect_url: this.URL_REDIRECT,
+      plan_id: this.data.id
     };
     this.paymentService.transactionBancolombia(transaction).subscribe(res => {
       // this.notifyService.add({
@@ -304,7 +307,8 @@ export class DialogCreateTransactionComponent implements OnInit {
       user_id: this.pse.value.user_id,
       institution: this.pse.value.institution,
       payment_description: 'RECARGA JOBKII - PSE',
-      redirect_url: this.URL_REDIRECT
+      redirect_url: this.URL_REDIRECT,
+      plan_id: this.data.id
     };
     this.paymentService.transactionPse(transaction).subscribe(res => {
       res = Utilities.decrypt(res.body);

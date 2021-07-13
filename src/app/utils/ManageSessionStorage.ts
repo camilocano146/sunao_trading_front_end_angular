@@ -1,4 +1,5 @@
 import {Location} from '../models/Location';
+import {Liquidation} from "../models/Liquidation";
 
 export class ManageSessionStorage {
 
@@ -8,6 +9,14 @@ export class ManageSessionStorage {
 
   static getCountrySelected(): Location {
     return JSON.parse(sessionStorage.getItem('lastCountry'));
+  }
+
+  static setLiquidationReuse(user: Liquidation): void {
+    sessionStorage.setItem('liquidationReuse', JSON.stringify(user));
+  }
+
+  static getLiquidationReuse(): Liquidation {
+    return JSON.parse(sessionStorage.getItem('liquidationReuse'));
   }
 
   static deleteCountrySelected(): void {

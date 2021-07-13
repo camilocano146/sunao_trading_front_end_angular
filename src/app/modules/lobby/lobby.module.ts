@@ -55,6 +55,7 @@ import { DialogCouponsCreateEditComponent } from './menu-components/coupons/dial
 import { NationalProvidersComponent } from './menu-components/national-providers/national-providers.component';
 import { DialogNationalProvidersCreateEditComponent } from './menu-components/national-providers/dialog-national-providers-create-edit/dialog-national-providers-create-edit.component';
 import {ImportModule} from "../import/import.module";
+import {TransactionsComponent} from "./menu-components/transactions/transactions.component";
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import {ImportModule} from "../import/import.module";
     CouponsComponent,
     DialogCouponsCreateEditComponent,
     NationalProvidersComponent,
-    DialogNationalProvidersCreateEditComponent
+    DialogNationalProvidersCreateEditComponent,
+    TransactionsComponent
   ],
   imports: [
     CommonModule,

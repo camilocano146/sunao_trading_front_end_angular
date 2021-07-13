@@ -20,8 +20,8 @@
   </div>
 
   <div class="row justify-content-center">
-    <div class="bc-white col-3 mx-4" [ngClass]="{'mt-5': i >= 3, 'mt-3': i < 3}" *ngFor="let plan of listPlans; let i = index">
-      <h3 class="pt-5 text-center color-blue">
+    <div class="bc-white col-xl-3 col-md-4 mx-4" [ngClass]="{'mt-5': i >= 3, 'mt-3': i < 3}" *ngFor="let plan of listPlans; let i = index">
+      <h3 class="pt-5 text-center color-blue" style="font-size: 22px">
         {{plan.name}}
       </h3>
       <img class="py-5" src="" alt="">
@@ -35,6 +35,9 @@
           {{plan.liquidation_quantity}} liquidaciones mensuales
         </h6>
       </div>
+      <h3 class="text-center color-blue" style="font-size: 22px">
+        {{(plan.cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+      </h3>
       <div class="text-center">
         <button mat-raised-button class="btn-soft-blue w-75 button-buy" (click)="showBuyDialog(plan)">
           <h3 class="mb-0">

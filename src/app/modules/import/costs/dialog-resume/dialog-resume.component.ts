@@ -29,7 +29,6 @@ export class DialogResumeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
   liquidate(): void {

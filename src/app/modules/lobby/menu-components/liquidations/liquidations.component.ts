@@ -9,6 +9,9 @@ import {LocationService} from '../../../../services/location/location.service';
 import {MatDialog} from '@angular/material/dialog';
 import {LiquidationService} from '../../../../services/liquidation/liquidation.service';
 import {FormControl, Validators} from '@angular/forms';
+import {Liquidation} from "../../../../models/Liquidation";
+import {ManageSessionStorage} from "../../../../utils/ManageSessionStorage";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-liquidation',
@@ -20,7 +23,7 @@ export class LiquidationsComponent implements OnInit {
   list: Location[];
   public displayedColumns: string[] = [
     'id',
-    'reference',
+    'product',
     'origin',
     'destination',
     'incoterm',
@@ -44,8 +47,9 @@ export class LiquidationsComponent implements OnInit {
     private notifyService: NotifyService,
     private liquidationService: LiquidationService,
     private matDialog: MatDialog,
+    private router: Router,
   ) {
-    // this.loadTable();
+    this.loadTable();
   }
 
   ngOnInit(): void {
@@ -59,12 +63,13 @@ export class LiquidationsComponent implements OnInit {
     this.preload = true;
     this.list = undefined;
     const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
+    const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
     this.liquidationService.getAll(page, limit).subscribe(
       value => {
         this.preload = false;
-        this.list = value.body.users;
-        this.resultsLength = value.body.total;
+        this.list = value.results;
+        console.log(this.list);
+        this.resultsLength = value.count;
       }, error => {
         this.preload = false;
         this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
@@ -72,11 +77,16 @@ export class LiquidationsComponent implements OnInit {
     );
   }
 
-  changeOriginAutocomplete() {
+  changeOriginAutocomplete(): void {
 
   }
 
-  onSelectOptionOrigin(option: any) {
+  onSelectOptionOrigin(option: any): void {
 
+  }
+
+  reuse(liquidation: Liquidation): void {
+    ManageSessionStorage.setLiquidationReuse(liquidation);
+    this.router.navigate(['import']);
   }
 }

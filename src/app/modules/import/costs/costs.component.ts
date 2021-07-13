@@ -18,6 +18,7 @@ import {Utilities} from '../../../utils/Utilities';
 import {Incoterm} from '../../../models/Incoterm';
 import {ProductsService} from '../../../services/products/products.service';
 import {Product} from '../../../models/Product';
+import {ManageSessionStorage} from '../../../utils/ManageSessionStorage';
 
 interface Step {
   imagePath: string;
@@ -81,6 +82,7 @@ export class CostsComponent implements OnInit {
   ];
   selectedIncoterm: Incoterm;
   private timer: number;
+  private timerProducts: number;
   private listSubscribesLocation: Subscription[] = [];
   defaultLatitude = 0;
   defaultLongitude = 0;
@@ -107,12 +109,45 @@ export class CostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCities(this.formControlOrigin, true);
-    this.getAllCities(this.formControlDestination, true);
-    this.getContaiters();
+    this.getContainers();
     this.getProducts();
+    this.loadReuseLiquidation();
   }
 
-  getContaiters(): void {
+  /**
+   * Se usa para reutilizar una liquidación si se seleccionó en la tabla liquidaciones esta opción
+   */
+  loadReuseLiquidation(): void {
+    const interval = setInterval(() => {
+      if (this.isReadyMinInit()) {
+        clearInterval(interval);
+        const liquidationReuse = ManageSessionStorage.getLiquidationReuse();
+        if (liquidationReuse) {
+          console.log(liquidationReuse);
+          this.lastOriginSelected = liquidationReuse.port_origin?.location;
+          this.formControlOrigin.setValue(this.lastOriginSelected.name);
+          this.lastPortOriginSelected = liquidationReuse.port_origin;
+          this.formControlOriginPort.setValue(this.lastPortOriginSelected.name);
+          this.lastDestinationSelected = liquidationReuse.port_destination?.location;
+          this.formControlDestination.setValue(this.lastDestinationSelected.name);
+          this.lastPortDestinationSelected = liquidationReuse.port_destination;
+          this.formControlDestinationPort.setValue(this.lastPortDestinationSelected.name);
+          this.selectedProduct = this.listProduct.find(p => p.id === liquidationReuse.product.id);
+          this.formControlValueFOB.setValue(liquidationReuse.fob_cost);
+          this.selectedCurrency = this.listCurrencies.find(c => c.abbreviation === liquidationReuse.badge);
+          this.selectedContainer = this.listContainers.find(c => c.id === liquidationReuse.container_type.id);
+          this.selectedIncoterm = this.listIncoterm.find(i => i.name === liquidationReuse.incoterm);
+          this.lastSelectedIcotermCity = liquidationReuse.city_destination;
+        }
+      }
+    }, 300);
+  }
+
+  isReadyMinInit(): boolean {
+    return this.listProduct?.length > 0 && this.listContainers.length > 0;
+  }
+
+  getContainers(): void {
     this.containerService.getAll(0, this.limitContainers).subscribe(value => {
       this.listContainers = value.results;
       this.listContainers[0].dimension = {long: 20, width: 8, height: 6};
@@ -131,10 +166,10 @@ export class CostsComponent implements OnInit {
   }
 
   getProducts(formControl?: FormControl): void {
-    if (this.timer) {
-      window.clearTimeout(this.timer);
+    if (this.timerProducts) {
+      window.clearTimeout(this.timerProducts);
     }
-    this.timer = window.setTimeout(() => {
+    this.timerProducts = window.setTimeout(() => {
       this.preloadProducts = true;
       this.listProduct?.splice(0, this.listProduct?.length);
       this.selectedProduct = undefined;
@@ -177,6 +212,13 @@ export class CostsComponent implements OnInit {
       const subscribeLocation = this.locationService.getPublicAllCities(0, this.limit, formControl.value);
       this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
         // console.log(res);
+        if (onInit) {
+          this.listLocationsOrigin = res.results;
+          this.listLocationsDestination = JSON.parse(JSON.stringify(res.results));
+          this.preloadCityOrigin = false;
+          this.preloadCityDestination = false;
+          return;
+        }
         if (formControl === this.formControlOrigin) {
           this.listLocationsOrigin = res.results;
         } else {
@@ -327,9 +369,9 @@ export class CostsComponent implements OnInit {
       dataImportConst.cityIcoterm = this.lastSelectedIcotermCity;
     }
     this.matDialog.open(DialogResumeComponent, {
-      width: '500px',
+      width: '600px',
       maxWidth: '96vw',
-      height: '500px',
+      height: 'max-content',
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
       panelClass: 'div-without-padding',

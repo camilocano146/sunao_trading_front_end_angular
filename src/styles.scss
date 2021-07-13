@@ -54,6 +54,10 @@ body {
   color: $color-soft-blue;
 }
 
+.color-dark-blue {
+  color: $color-dark-blue;
+}
+
 .bc-white {
   background-color: white;
 }
@@ -192,4 +196,20 @@ button h4 {
 .center-horizontal-vertical {
   display: flex !important;
   justify-content: center !important;
+}
+
+.color-green {
+  color: green !important;
+}
+
+.color-grey {
+  color: gray !important;
+}
+
+.font-size-10px {
+  font-size: 10px !important;
+}
+
+.color-black {
+  color: black !important;
 }

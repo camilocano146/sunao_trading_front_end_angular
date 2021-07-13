@@ -89,12 +89,9 @@
     <div class="div-parent-table">
       <table mat-table [dataSource]="list" class="w-100">
 
-
-
-        <!-- column id -->
+        <!-- Id Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>
-            
             Id
           </th>
           <td mat-cell *matCellDef="let row">
@@ -102,40 +99,40 @@
           </td>
         </ng-container>
 
-        <!-- Email Column -->
-        <ng-container matColumnDef="reference">
+        <!-- Referencia Column -->
+        <ng-container matColumnDef="product">
           <th mat-header-cell *matHeaderCellDef>
-            <img src="./assets/import/menu/referencia_white.svg" alt="">
-            Referencis
+            <img src="./assets/icons-menu/caja_24dp_white.svg" alt="">
+            Producto
           </th>
-          <td style="max-width: 150px;" mat-cell *matCellDef="let row">{{row.reference}}</td>
+          <td style="max-width: 150px;" mat-cell *matCellDef="let row">{{row.product?.code}}</td>
         </ng-container>
 
-        <!-- First Name Column -->
+        <!-- Origin Column -->
         <ng-container matColumnDef="origin">
           <th mat-header-cell *matHeaderCellDef>
             <img src="./assets/import/menu/location.svg" alt="">
             Origen
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.origin">{{row.origin}}</span>
-            <span *ngIf="!row.origin">N/A</span>
+            <span *ngIf="row.port_origin">{{row.port_origin?.name}}</span>
+            <span *ngIf="!row.port_origin">N/A</span>
           </td>
         </ng-container>
 
-        <!-- Document Column -->
+        <!-- Destination Column -->
         <ng-container matColumnDef="destination">
           <th mat-header-cell *matHeaderCellDef>
             <img src="./assets/import/menu/location.svg" alt="">
             Destino
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.destination">{{row.destination}}</span>
-            <span *ngIf="!row.destination">N/A</span>
+            <span *ngIf="row.port_destination">{{row.port_destination?.name}}</span>
+            <span *ngIf="!row.port_destination">N/A</span>
           </td>
         </ng-container>
 
-        <!-- User Column -->
+        <!-- Incoterm Column -->
         <ng-container matColumnDef="incoterm">
           <th mat-header-cell *matHeaderCellDef>
             <img src="./assets/import/menu/internet.svg" alt="">
@@ -147,7 +144,7 @@
           </td>
         </ng-container>
 
-        <!-- Fecha Column -->
+        <!-- Date Column -->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>
             <img src="./assets/icons/calendar.svg" alt="">
@@ -170,10 +167,14 @@
               <img src="./assets/icons/more_vert_black_24dp.svg" alt="">
             </button>
             <mat-menu #menu="matMenu">
-<!--              <button mat-menu-item (click)="openDialogEdit(row)">-->
-<!--                <img src="./assets/icons/edit_black_24dp.svg" alt="">-->
-<!--                Editar-->
-<!--              </button>-->
+              <button mat-menu-item>
+                <img src="./assets/icons/info_black_24dp.svg" alt="">
+                Ver Detalles
+              </button>
+              <button mat-menu-item (click)="reuse(row)">
+                <img src="./assets/icons/refresh_black_24dp.svg" alt="">
+                Reutilizar
+              </button>
             </mat-menu>
           </td>
         </ng-container>

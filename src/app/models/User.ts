@@ -19,6 +19,8 @@ export interface User {
   representante_legal_document?: string;
   send_emails?: boolean;
   digit_check?: string;
+  last_name?: string;
+  first_name?: string;
 }
 
 export interface UserLogin {

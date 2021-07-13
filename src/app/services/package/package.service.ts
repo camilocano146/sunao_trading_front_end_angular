@@ -21,4 +21,8 @@ export class PackageService {
   edit(id: number, body: Package): Observable<any> {
     return this.httpClient.put(`package/${id}/edit/`, body);
   }
+
+  getLastPackage(): Observable<any> {
+    return this.httpClient.get(`users/get_info_package/`);
+  }
 }

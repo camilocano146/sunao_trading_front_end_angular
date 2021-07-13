@@ -40,57 +40,61 @@
   <mat-sidenav-container id="mat-sidenav-app" class="example-sidenav-container">
     <mat-sidenav #snav [mode]="isMobileScreen() ? 'over' : 'side'" [fixedInViewport]="isMobileScreen()" fixedTopGap="56">
       <mat-nav-list class="mt-4">
-        <a [ngClass]="isSelectOption('/lobby') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="./" (click)="snav.toggle()">
+        <a [ngClass]="isSelectOption('/lobby') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="/" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center'}"></div>
           Mis Liquidaciones
         </a>
-        <a [ngClass]="isSelectOption('/locations') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="locations" (click)="snav.toggle()">
+        <a [ngClass]="isSelectOption('/transactions') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="transactions" (click)="snav.toggle()">
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/shopping_bag_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/shopping_bag_black_24dp.svg' + ') no-repeat center'}"></div>
+          Mis Transacciones
+        </a>
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/locations') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="locations" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/location_on_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/location_on_black_24dp.svg' + ') no-repeat center'}"></div>
           Ubicaciones
         </a>
-        <a [ngClass]="isSelectOption('/ports') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="ports" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/ports') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="ports" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/houseboat_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/houseboat_black_24dp.svg' + ') no-repeat center'}"></div>
           Puertos
         </a>
-        <a [ngClass]="isSelectOption('/products') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="products" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/products') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="products" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/caja_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/caja_24dp.svg' + ') no-repeat center'}"></div>
           Productos
         </a>
-        <a [ngClass]="isSelectOption('/providers') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="providers" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/providers') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="providers" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/manage_accounts_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/manage_accounts_black_24dp.svg' + ') no-repeat center'}"></div>
           Proveedores flete internacional
         </a>
-        <a [ngClass]="isSelectOption('/port-tarifs') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="port-tarifs" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/port-tarifs') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="port-tarifs" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/caja_entrega_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/caja_entrega_24dp.svg' + ') no-repeat center'}"></div>
           Flete Internacional
         </a>
 
-        <a [ngClass]="isSelectOption('/national-providers') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="national-providers" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/national-providers') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="national-providers" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/manage_accounts_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/manage_accounts_black_24dp.svg' + ') no-repeat center'}"></div>
           Proveedores flete nacional
         </a>
 
-        <a [ngClass]="isSelectOption('/port-tarifs-national') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="port-tarifs-national" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/port-tarifs-national') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="port-tarifs-national" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/caja_entrega_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/caja_entrega_24dp.svg' + ') no-repeat center'}"></div>
           Fletes Nacionales
         </a>
 
-        <a [ngClass]="isSelectOption('/users') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="users" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/users') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="users" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/account_circle_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/account_circle_black_24dp.svg' + ') no-repeat center'}"></div>
-          Users
+          Usuarios
         </a>
         <!-- --------------------------- -->
-        <a [ngClass]="isSelectOption('/chapters') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="chapters" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/chapters') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="chapters" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/message-24px.svg' + ') no-repeat center'}"></div>
           Capítulos
         </a>
 
-        <a [ngClass]="isSelectOption('/packages') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="packages" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/packages') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="packages" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/package_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/package_24dp.svg' + ') no-repeat center'}"></div>
           Planes
         </a>
 
-        <a [ngClass]="isSelectOption('/coupons') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="coupons" (click)="snav.toggle()">
+        <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/coupons') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="coupons" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/cupon_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/cupon_24dp.svg' + ') no-repeat center'}"></div>
           Cupones
         </a>

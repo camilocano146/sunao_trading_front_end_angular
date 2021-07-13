@@ -73,9 +73,9 @@ export class DialogLoginComponent implements OnInit {
         value => {
           // const user: User = value.body.user;
           this.userService.saveLocalStorageToken(value.access_token);
-          this.router.navigate(['lobby']);
           this.notifyService.clear();
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.sign_in.sign_ok'));
+          this.matDialogRef.close(value);
         }, (httpErrorResponse: HttpErrorResponse) => {
           this.preload = false;
           console.log(httpErrorResponse.error);
@@ -128,7 +128,7 @@ export class DialogLoginComponent implements OnInit {
           // this.router.navigate(['lobby']);
           this.userService.saveLocalStorageToken(value.access_token);
           this.userService.saveLocalStorageUser(value.user);
-          this.router.navigate(['lobby']);
+          this.matDialogRef.close(value);
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.register.create_ok'));
           // this.notifyService.showWarningSnapshot(this.translate.instant('auth.register.email_not_verifies'));
         }, (error: HttpErrorResponse) => {

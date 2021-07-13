@@ -1,1 +1,88 @@
-<p>my-plan works!</p>
+<div class="flex-box-middle h-100">
+  <div class="container">
+    <div class="div-info">
+      <div class="row pb-5">
+        <h2 class="col-11 text-center mt-4">
+          <img class="col-1 me-3" src="./assets/logos/logo-colors.png" alt="" style="width: 2em;">
+          Mi Plan
+        </h2>
+      </div>
+
+      <div *ngIf="this.preload" class="pb-5">
+        <mat-spinner diameter="80" class="m-auto"></mat-spinner>
+      </div>
+
+      <div *ngIf="!this.preload">
+        <div *ngIf="!userActivePackage">
+          <h4 class="text-center pb-5">
+            No tiene nigún paquete aún
+          </h4>
+        </div>
+
+        <div *ngIf="userActivePackage">
+          <div id="div-info-container">
+            <div class="row justify-content-evenly m-auto" style="width: 90%;">
+              <div class="col-6">
+                <h5>
+                  <img src="./assets/icons/shopping.svg" alt="">
+                  <span class="color-dark-blue">
+                    Nombre: {{userActivePackage?.package?.name}}
+                  </span>
+                </h5>
+              </div>
+              <div class="col-6 row">
+                <button mat-raised-button class="col-5" [ngClass]="{'btn-change': isActivePackage, 'btn-verify': !isActivePackage}">
+                  <h5 class="m-0 px-2 py-2">
+                    <img *ngIf="isActivePackage" src="./assets/icons/cheque.svg" alt="" class="mr-5" style="width: 25px">
+                    <img *ngIf="!isActivePackage" src="./assets/icons/close_white.svg" alt="" class="mr-5" style="width: 20px">
+                    <span *ngIf="isActivePackage">
+                      activo
+                    </span>
+                    <span *ngIf="!isActivePackage">
+                      vencido
+                    </span>
+                  </h5>
+                </button>
+                <h5 class="col-7 mb-0 flex-box-middle color-black text-decoration-underline cursor-pointer" (click)="goToRenewPackage()">
+                  Renovar Paquete
+                </h5>
+              </div>
+            </div>
+            <hr style="width: 85%;" class="m-auto mt-3 separator">
+          </div>
+
+          <div class="text-center mt-5 pb-4 row justify-content-around">
+            <div class="div-info-package col-5">
+              <div class="row">
+                <h5 class="col-11 text-center mt-4">
+                  <img class="col-1 me-3" src="./assets/icons/suministros.svg" alt="">
+                  Capacidad
+                </h5>
+              </div>
+              <h6>
+                Meses: {{userActivePackage?.package?.time}}
+              </h6>
+              <h6>
+                cantidad de liquidaciones: {{userActivePackage?.package?.cost | currency:'$ ':'symbol':'1.0'}}
+              </h6>
+            </div>
+            <div class="div-info-package col-5">
+              <div class="row">
+                <h5 class="col-11 text-center mt-4">
+                  <img class="col-1 me-3" src="./assets/icons/select.svg" alt="">
+                  Uso
+                </h5>
+              </div>
+              <h6>
+                Caduca en: {{userActivePackage?.finish_at | date}}
+              </h6>
+              <h6>
+                cantidad de liquidaciones: {{userActivePackage?.liquidation_balance}}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

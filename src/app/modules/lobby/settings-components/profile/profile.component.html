@@ -1,8 +1,25 @@
 <div class="container">
   <div class="text-right">
-    <button mat-raised-button [ngClass]="{'btn-verify': user?.isActive, 'btn-not-verify': !user?.isActive}">
+
+<!--    <button mat-raised-button class="col-5" [ngClass]="{'btn-change': isActivePackage, 'btn-verify': !isActivePackage}">-->
+<!--      <h5 class="m-0 px-2 py-2">-->
+<!--        <img *ngIf="isActivePackage" src="./assets/icons/cheque.svg" alt="" class="mr-5" style="width: 25px">-->
+<!--        <img *ngIf="!isActivePackage" src="./assets/icons/close_white.svg" alt="" class="mr-5" style="width: 20px">-->
+<!--        <span *ngIf="isActivePackage">-->
+<!--                      activo-->
+<!--                    </span>-->
+<!--        <span *ngIf="!isActivePackage">-->
+<!--                      vencido-->
+<!--                    </span>-->
+<!--      </h5>-->
+<!--    </button>-->
+
+    <button mat-raised-button
+            (click)="verifyAccount()"
+            [ngClass]="{'btn-verify': user?.isActive, 'btn-not-verify': !user?.isActive}">
       <h5 class="m-0">
-        <img src="./assets/icons/cheque.svg" alt="" width="25" class="mr-5">
+        <img *ngIf="user?.isActive" src="./assets/icons/cheque.svg" alt="" class="mr-5" style="width: 25px">
+        <img *ngIf="!user?.isActive" src="./assets/icons/close_white.svg" alt="" class="mr-5" style="width: 20px">
         <span style="margin-left: 1em">
           {{user?.isActive ? 'Verificada' : 'No Verificada'}}
         </span>
@@ -12,69 +29,77 @@
   <div class="div-info">
     <div class="row pb-5">
       <h2 class="col-11 text-center mt-4">
+        <img class="col-1 me-3" src="./assets/logos/logo-colors.png" alt="" style="width: 2em;">
         Mi Cuenta
       </h2>
       <img class="col-1" src="./assets/icons/editar.svg" alt="" style="width: 4em">
     </div>
-    <div id="div-info-container">
-      <div class="row justify-content-evenly">
-        <div class="col-3">
-          <h4>
-            <img src="./assets/icons/person_black_24dp.svg" alt="">
-            <span>
-              Nombre
-            </span>
-          </h4>
-        </div>
-        <div class="col-3">
-          <h4>
-            {{user?.name}}
-          </h4>
-        </div>
-      </div>
-      <div class="row justify-content-evenly">
-        <div class="col-3">
-          <h4>
-            <img src="./assets/icons/badge_black_24dp.svg" alt="">
-            <span>
-              Documento
-            </span>
-          </h4>
-        </div>
-        <div class="col-3">
-          <h4>
-            {{user?.document}} - {{user?.digit_check}}
-          </h4>
-        </div>
-      </div>
-      <div class="row justify-content-evenly">
-        <div class="col-3">
-          <h4>
-            <img src="./assets/icons/email_black_24dp%20(1).svg" alt="">
-            <span>
-              Correo
-            </span>
-          </h4>
-        </div>
-        <div class="col-3">
-          <h4>
-            {{user?.email}}
-          </h4>
-        </div>
-      </div>
+
+    <div *ngIf="this.preload" class="pb-5">
+      <mat-spinner diameter="80" class="m-auto"></mat-spinner>
     </div>
 
-    <div class="text-center mt-5 pb-4">
-      <button mat-raised-button class="btn-change me-3">
-        <h5 class="m-0 px-4 py-3">
+    <div *ngIf="!this.preload">
+      <div id="div-info-container">
+        <div class="row justify-content-evenly">
+          <div class="col-3">
+            <h4>
+              <img src="./assets/icons/person_black_24dp.svg" alt="">
+              <span>
+              Nombre
+            </span>
+            </h4>
+          </div>
+          <div class="col-3">
+            <h4>
+              {{user?.first_name}} {{user?.last_name}}
+            </h4>
+          </div>
+        </div>
+        <div class="row justify-content-evenly">
+          <div class="col-3">
+            <h4>
+              <img src="./assets/icons/badge_black_24dp.svg" alt="">
+              <span>
+              Documento
+            </span>
+            </h4>
+          </div>
+          <div class="col-3">
+            <h4>
+              {{user?.document}} - {{user?.digit_check}}
+            </h4>
+          </div>
+        </div>
+        <div class="row justify-content-evenly">
+          <div class="col-3">
+            <h4>
+              <img src="./assets/icons/email_black_24dp%20(1).svg" alt="">
+              <span>
+              Correo
+            </span>
+            </h4>
+          </div>
+          <div class="col-3">
+            <h4>
+              {{user?.email}}
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5 pb-4">
+        <button mat-raised-button class="btn-change me-3">
+          <h5 class="m-0 px-4 py-3">
             Cambiar correo
-        </h5>
-      </button>
-      <button mat-raised-button class="btn-change ms-3">
-        <h5 class="m-0 px-4 py-3">
+          </h5>
+        </button>
+        <button mat-raised-button class="btn-change ms-3">
+          <h5 class="m-0 px-4 py-3">
             Cambiar Contraseña
-        </h5>
-      </button>
+          </h5>
+        </button>
+      </div>
     </div>
   </div>
 </div>

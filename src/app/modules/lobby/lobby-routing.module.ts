@@ -17,6 +17,7 @@ import { PortTarifsNationalComponent } from './menu-components/port-tarifs-natio
 import { PackagesComponent } from './menu-components/packages/packages.component';
 import { CouponsComponent } from './menu-components/coupons/coupons.component';
 import { NationalProvidersComponent } from './menu-components/national-providers/national-providers.component';
+import {TransactionsComponent} from './menu-components/transactions/transactions.component';
 
 const routes: Routes = [
   {
@@ -24,20 +25,21 @@ const routes: Routes = [
     children: [
       {path: '', component: LiquidationsComponent},
       {path: 'liquidations-detail', component: LiquidationDetailsComponent},
+      {path: 'transactions', component: TransactionsComponent},
       {path: 'locations', component: CountriesComponent},
       {path: 'locations/cities/:idCountry', component: CitiesComponent},
       {path: 'providers', component: InternationalProvidersComponent},
       {path: 'my-plan', component: MyPlanComponent},
       {path: 'profile', component: ProfileComponent},
-      {path: 'port-tarifs', component:PortTarifsComponent},
-      {path: 'products', component:ProductsComponent},
-      {path: 'users', component:UsersComponent},
-      {path: 'ports', component:PortsComponent},
-      {path: 'chapters', component:ChaptersComponent},
-      {path: 'port-tarifs-national', component:PortTarifsNationalComponent},
-      {path: 'packages', component:PackagesComponent},
-      {path: 'coupons', component:CouponsComponent},
-      {path: 'national-providers', component:NationalProvidersComponent}
+      {path: 'port-tarifs', component: PortTarifsComponent},
+      {path: 'products', component: ProductsComponent},
+      {path: 'users', component: UsersComponent},
+      {path: 'ports', component: PortsComponent},
+      {path: 'chapters', component: ChaptersComponent},
+      {path: 'port-tarifs-national', component: PortTarifsNationalComponent},
+      {path: 'packages', component: PackagesComponent},
+      {path: 'coupons', component: CouponsComponent},
+      {path: 'national-providers', component: NationalProvidersComponent}
     ]
   },
 ];
