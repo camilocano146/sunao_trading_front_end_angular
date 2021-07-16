@@ -66,6 +66,7 @@ export class LiquidationDetailsComponent implements OnInit {
 
       this.productsService.getGravaments(this.liquidation.product.id, 0, 1000).subscribe(res => {
         this.listGravament = res.results;
+        console.log(this.listGravament);
       });
 
       this.productsService.getSupportDocument(this.liquidation.product.id, 0, 1000).subscribe(res => {

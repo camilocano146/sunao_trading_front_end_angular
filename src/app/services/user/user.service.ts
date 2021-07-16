@@ -60,11 +60,11 @@ export class UserService {
   }
 
   updateUser(body: any): Observable<any> {
-    return this.httpClient.patch(`users/change_email/`, body);
+    return this.httpClient.patch(`edit/`, body);
   }
 
   updateUserPassword(body: any): Observable<any> {
-    return this.httpClient.patch(`users/change_password/`, body);
+    return this.httpClient.post(`users/change_password/`, body);
   }
 
   getUser(): Observable<any> {

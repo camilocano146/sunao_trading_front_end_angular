@@ -13,7 +13,7 @@ export class LiquidationService {
   ) { }
 
   getAll(offset: number, limit: number, regex: string): Observable<any> {
-    return this.httpClient.get(`liquidation/?offset=${offset}&limit=${limit}&regex=${regex}`);
+    return this.httpClient.get(`liquidation/?offset=${offset}&limit=${limit}${regex}`);
   }
 
   liquidate(liquidation: Liquidation): Observable<any> {

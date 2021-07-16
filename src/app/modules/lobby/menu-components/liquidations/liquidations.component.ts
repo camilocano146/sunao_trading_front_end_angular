@@ -9,7 +9,7 @@ import {LocationService} from '../../../../services/location/location.service';
 import {MatDialog} from '@angular/material/dialog';
 import {LiquidationService} from '../../../../services/liquidation/liquidation.service';
 import {FormControl, Validators} from '@angular/forms';
-import {Liquidation} from '../../../../models/Liquidation';
+import {IncotermType, Liquidation} from '../../../../models/Liquidation';
 import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
 import {Router} from '@angular/router';
 import {ProductsService} from "../../../../services/products/products.service";
@@ -42,7 +42,7 @@ export class LiquidationsComponent implements OnInit {
   formControlProduct: FormControl = new FormControl('');
   formControlDate: FormControl = new FormControl('');
   filterSelectedValue: any;
-  values: any[] = ['Incoterm'];
+  values: any[] = ['CFR', 'CIF', 'DDP'];
   private timer: number;
 
   constructor(
@@ -74,12 +74,33 @@ export class LiquidationsComponent implements OnInit {
       if (this.formControlDate.value) {
         const date = new Date(this.formControlDate.value);
       }
-      this.liquidationService.getAll(page, limit, this.formControlReference.value).subscribe(
+      let textRegex = '';
+      if (this.formControlReference.value) {
+        textRegex += '&reference=' + this.formControlReference.value;
+      }
+      if (this.formControlOrigin.value) {
+        textRegex += '&location_origin=' + this.formControlOrigin.value;
+      }
+      if (this.formControlDestination.value) {
+        textRegex += '&location_destination=' + this.formControlDestination.value;
+      }
+      if (this.formControlProduct.value) {
+        textRegex += '&incoterm=' + this.formControlProduct.value;
+      }
+      if (this.filterSelectedValue) {
+        textRegex += '&incoterm=' + this.filterSelectedValue;
+      }
+      if (this.formControlDate.value) {
+        const date = new Date(this.formControlDate.value);
+        textRegex += '&date=' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate());
+      }
+      this.liquidationService.getAll(page, limit, textRegex).subscribe(
         value => {
           this.preload = false;
           this.list = value.results;
           console.log(this.list);
           this.resultsLength = value.count;
+          console.log(this.list);
         }, error => {
           this.preload = false;
           this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));

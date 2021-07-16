@@ -72,7 +72,7 @@
         <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/icons/calendar.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/calendar.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            Fecha: {{liquidation?.created_at | date}}
+            Fecha: {{liquidation?.create_at | date}}
           </h6>
         </div>
 
@@ -180,12 +180,14 @@
           </mat-expansion-panel-header>
 
           <div class="row">
-            <h5 class="col-8 ps-5">
-              quien es el proveedor, de donde a donde y cual es el valor
+            <h5 class="col-9 ps-5" style="text-align: justify">
+              El producto viaja de {{liquidation?.port_origin?.location?.name | titlecase}} a {{liquidation?.port_destination?.name | titlecase}}
+              y tiene un costo de = {{(liquidation?.data?.international_freight_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+<!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
-            <h5 class="col-4">
-              {{1200 | currency}}
-            </h5>
+<!--            <h5 class="col-4">-->
+<!--              {{1200 | currency}}-->
+<!--            </h5>-->
           </div>
 
         </mat-expansion-panel>
@@ -265,7 +267,29 @@
 
           <div class="row">
             <h5 class="col-8 ps-5">
-              Mostrar todos los Trados y Gravamen
+<!--              Mostrar todos los Trados y Gravamen-->
+              Tratados:
+              <div *ngIf="!listInternationalAgreement || listInternationalAgreement?.length === 0" style="text-indent: 30px">
+                No hay tratados.
+              </div>
+              <ul *ngIf="listInternationalAgreement?.length > 0">
+                <li *ngFor="let item of listInternationalAgreement">
+                  {{item}}.
+                </li>
+              </ul>
+
+              <br>
+              <div>
+                Gravamen:
+              </div>
+              <div *ngIf="!listGravament || listGravament?.length === 0" style="text-indent: 30px">
+                No hay gramaven.
+              </div>
+              <ul *ngIf="listGravament?.length > 0">
+                <li *ngFor="let item of listGravament">
+                  Fecha = {{item.date | date}}, tarifa: {{item.tarif}}%.
+                </li>
+              </ul>
             </h5>
             <h5 class="col-4">
               {{1200 | currency}}
@@ -291,12 +315,14 @@
           </mat-expansion-panel-header>
 
           <div class="row">
-            <h5 class="col-8 ps-5">
-              quien es el proveedor, de donde a donde y cual es el valor
+            <h5 class="col-8 ps-5" style="text-align: justify">
+              El producto viaja de {{liquidation?.port_destination?.location?.name | titlecase}} a {{liquidation?.city_destination?.name | titlecase}}
+              y tiene un costo de = {{(liquidation?.data?.national_freight_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+<!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
-            <h5 class="col-4">
-              {{1200 | currency}}
-            </h5>
+<!--            <h5 class="col-4">-->
+<!--              {{1200 | currency}}-->
+<!--            </h5>-->
           </div>
 
         </mat-expansion-panel>

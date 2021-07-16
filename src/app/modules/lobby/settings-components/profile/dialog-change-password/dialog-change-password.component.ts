@@ -51,8 +51,8 @@ export class DialogChangePasswordComponent implements OnInit {
         pass_new: sha1(passNew)
       };
       this.userService.updateUserPassword(body).subscribe(res => {
-        this.notifyService.showSuccessSnapshot('Contrasela modificada');
-        this.matDialogRef.close(res.email);
+        this.notifyService.showSuccessSnapshot('Contraseña modificada');
+        this.matDialogRef.close(res);
         this.preload = false;
       }, error => {
         this.notifyService.showErrorSnapshot('No fué posible actualizar la contraseña, por favor intente nuevamente');
