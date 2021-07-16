@@ -3,21 +3,31 @@
       <h3 class="w-100">Fletes nacionales</h3>
     </div>
 
-    <div class="container col-12  text-right" style="max-width: 1050px; min-width: 200px;">
-        <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogImportData()" style="width: 250px !important;">
-            <h4>
-                <img src="./assets/icons/add_white.svg" alt="" width="18" class="mr-5">
-                <span style="margin-left: 1em">
+  <div class="container row m-auto">
+    <div class="col-md-6 col-12">
+      <mat-form-field class="w-75 m-auto" appearance="outline">
+        <input [formControl]="formControlFilter"
+               (ngModelChange)="loadTable()"
+               matInput
+               placeholder="Ingrese origen, destino o proveedor">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 col-12 text-right" style="max-width: 1250px; min-width: 200px;">
+      <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogImportData()" style="width: 250px !important;">
+        <h4>
+          <img src="./assets/icons/add_white.svg" alt="" width="18" class="mr-5">
+          <span style="margin-left: 1em">
                 Importar datos
                 </span>
-            </h4>
-        </button>
+        </h4>
+      </button>
+    </div>
     </div>
 
     <div class="mat-elevation-z8 container" style="max-width: max-content">
       <div class="div-parent-table">
         <table mat-table [dataSource]="list" class="w-100">
-  
+
           <!-- Position Column -->
           <ng-container matColumnDef="index">
             <th mat-header-cell *matHeaderCellDef>
@@ -39,7 +49,7 @@
                 <span *ngIf="!row.location_origin.name">N/A</span>
               </td>
           </ng-container>
-  
+
           <!-- location destination Column -->
           <ng-container matColumnDef="location_destination">
             <th mat-header-cell *matHeaderCellDef>
@@ -51,7 +61,7 @@
                 <span *ngIf="!row.location_destination.name">N/A</span>
               </td>
           </ng-container>
-          
+
           <!-- Provider Column -->
           <ng-container matColumnDef="provider">
             <th mat-header-cell *matHeaderCellDef>
@@ -63,7 +73,7 @@
                 <span *ngIf="!row.provider.name">N/A</span>
               </td>
           </ng-container>
-          
+
           <!-- transist_days Column -->
           <ng-container matColumnDef="transist_days">
             <th mat-header-cell *matHeaderCellDef>
@@ -80,7 +90,7 @@
           <ng-container matColumnDef="validity">
             <th mat-header-cell *matHeaderCellDef>
                 <img src="./assets/icons/calendar.svg" alt="">
-                Validez 
+                Validez
               </th>
               <td mat-cell *matCellDef="let row">
                 <span *ngIf="row.validity">{{row.validity}}</span>
@@ -107,4 +117,3 @@
       <mat-paginator (page)="loadTable()" [pageSizeOptions]="pageSizeOptions" [length]="resultsLength"></mat-paginator>
     </div>
 </div>
-  

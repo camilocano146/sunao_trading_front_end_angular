@@ -1,4 +1,3 @@
-
 <!--<div *ngIf="preload" class="w-100 text-center">-->
 <!--  <img src="./assets//gifs//loading.gif" alt="">-->
 <!--</div>-->
@@ -13,10 +12,10 @@
 <div class="container">
   <div class="div-info container pb-3">
     <div class="row">
-      <h4 class="col-7 mt-1 color-blue m-0 flex-box-vertical-center">
+      <h4 class="col-12 col-lg-7 mt-1 color-blue m-0 flex-box-vertical-center">
         Detalle de liquidación
       </h4>
-      <div class="div-info-buttons col-5 row justify-content-end m-0">
+      <div class="div-info-buttons col-12 col-lg-5 row justify-content-end m-0">
         <button mat-raised-button class="btn-very-soft-blue col-5 me-4">
           <h6 class="m-0">
             <img src="../../../../../../assets/icons/cheque.svg" alt="" width="25" class="mr-5">
@@ -35,54 +34,66 @@
         </button>
       </div>
     </div>
-    <div id="div-info-container">
+
+    <div *ngIf="preload">
+      <mat-spinner class="m-auto" diameter="80"></mat-spinner>
+    </div>
+
+    <div id="div-info-container" *ngIf="!preload">
       <div class="row div-header-info">
-        <div class="row col-3">
+        <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            Origen:
+            Origen: {{liquidation?.port_origin?.location?.name | titlecase}}({{liquidation?.port_origin?.location?.father_location?.name | titlecase}})
           </h6>
         </div>
 
-        <div class="row col-3">
+        <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            Destino:
+            Destino: {{liquidation?.port_destination?.location?.name | titlecase}}({{liquidation?.port_destination?.location?.father_location?.name | titlecase}})
           </h6>
         </div>
 
-        <div class="row col-3">
-          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
+        <div class="row col-lg-3 col-sm-6 col-12">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/caja_24dp_white.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/caja_24dp_white.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            Producto:
+            Producto: {{liquidation?.product?.name | titlecase}}
           </h6>
         </div>
 
-        <div class="row col-3">
-          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center'}"></div>
-          <h6 class="col-10">
-            Divisa:
-          </h6>
-        </div>
-
-        <div class="row col-3">
-          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center'}"></div>
-          <h6 class="col-10">
-            Contenedor:
-          </h6>
-        </div>
-
-        <div class="row col-3">
+        <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            Valor FOB:
+            Partida arancelaria: {{liquidation?.product?.code}}
           </h6>
         </div>
 
-        <div class="row col-3">
+        <div class="row col-lg-3 col-sm-6 col-12">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/icons/calendar.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/calendar.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Fecha: {{liquidation?.created_at | date}}
+          </h6>
+        </div>
+
+        <div class="row col-lg-3 col-sm-6 col-12">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Contenedor: {{liquidation?.container_type?.name | uppercase}}
+          </h6>
+        </div>
+
+        <div class="row col-lg-3 col-sm-6 col-12">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center'}"></div>
+          <h6 class="col-10">
+            Divisa: {{liquidation?.currency?.acronym | uppercase}}
+          </h6>
+        </div>
+
+        <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            INCOTERM:
+            INCOTERM: {{liquidation?.incoterm | uppercase}}
           </h6>
         </div>
       </div>
@@ -91,59 +102,212 @@
         Para activar el filtro de infromación, ñpor favor activa las casillas de las que quieres visualizar
       </h6>
 
-      <div class="row div-menu-options">
-        <div class="col div-option">
-          Valor FOB
+      <div class="row div-menu-options mb-2">
+        <div (click)="clickFilterButtons(0)" class="col-lg-2 col-sm-4 col-6">
+          <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(0)}">
+            Valor FOB
+          </div>
         </div>
-        <div class="col div-option">
-          Flete internacional
+        <div (click)="clickFilterButtons(1)" class="col-lg-2 col-sm-4 col-6">
+          <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(1)}">
+            Flete internacional
+          </div>
         </div>
-        <div class="col div-option">
-          Seguro internacional
+        <div (click)="clickFilterButtons(2)" class="col-lg-2 col-sm-4 col-6" *ngIf="!isIncotermCFR() || isIncotermCIF()">
+          <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(2)}">
+            Seguro internacional
+          </div>
         </div>
-        <div class="col div-option">
-          Aduana y postuarios
+        <div (click)="clickFilterButtons(3)" class="col-lg-2 col-sm-4 col-6" *ngIf="isIncotermDDP()">
+          <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(3)}">
+            Aduana y portuarios
+          </div>
         </div>
-        <div class="col div-option">
-          Arancel
+        <div (click)="clickFilterButtons(4)" class="col-lg-2 col-sm-4 col-6" *ngIf="isIncotermDDP()">
+          <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(4)}">
+            Arancel
+          </div>
         </div>
-        <div class="col div-option">
-          Flete local
+        <div (click)="clickFilterButtons(5)" class="col-lg-2 col-sm-4 col-6" *ngIf="isIncotermDDP()">
+          <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(5)}">
+            Flete local
+          </div>
         </div>
       </div>
 
-      <div class="div-table pt-2">
-        <div class="row div-table-row">
-          <div class="col-9">
-            Valor
+      <mat-accordion class="mat-accordion-yellow">
+        <mat-expansion-panel #matExpansionPanel1 *ngIf="selectedFilterButton(0)">
+          <mat-expansion-panel-header>
+
+            <div class="col-2 div-table-price me-3">
+              <h4>
+                {{(liquidation?.fob_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+              </h4>
+            </div>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel1.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Valor FOB
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              Divisa
+            </h5>
+            <h5 class="col-4">
+              {{liquidation?.currency?.acronym | uppercase}}
+            </h5>
           </div>
-          <div class="col-2 div-table-price">
-            <h4>
-              {{1200 | currency : 'USD' : 'symbol' : '1.0-0' }}
-            </h4>
-          </div>
-          <div class="col-1 div-table-img">
-            <img src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
-          </div>
-        </div>
-        <div class="row div-table-row">
-          <div class="col-9">
-            Valor
-          </div>
-          <div class="col-2 div-table-price">
-            <h4>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel #matExpansionPanel2 *ngIf="selectedFilterButton(1)">
+          <mat-expansion-panel-header>
+
+            <div class="col-2 div-table-price me-3">
+              <h4>
+                {{(liquidation?.data?.international_freight_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+              </h4>
+            </div>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel2.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Flete internacional
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              quien es el proveedor, de donde a donde y cual es el valor
+            </h5>
+            <h5 class="col-4">
               {{1200 | currency}}
-            </h4>
+            </h5>
           </div>
-          <div class="col-1 div-table-img">
-            <img src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
-          </div>
-        </div>
-      </div>
 
-      <div class="div-total">
-        <h4>
-          Total DDP:
+        </mat-expansion-panel>
+
+        <mat-expansion-panel #matExpansionPanel3 *ngIf="(isIncotermCIF() || isIncotermDDP()) && selectedFilterButton(2)">
+          <mat-expansion-panel-header>
+
+            <div class="col-2 div-table-price me-3">
+              <h4>
+                {{(liquidation?.data?.insurance_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+              </h4>
+            </div>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel3.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Seguro internacional
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              (Valor FOB + Flete Internacional) x 0.4% = {{liquidation?.data?.insurance_cost}}
+            </h5>
+          </div>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              {{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}} x 0.04 = {{liquidation?.data?.insurance_cost}}
+            </h5>
+          </div>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel #matExpansionPanel4 *ngIf="isIncotermDDP() && selectedFilterButton(3)">
+          <mat-expansion-panel-header>
+
+            <div class="col-2 div-table-price me-3">
+              <h4>
+                {{(liquidation?.data?.insurance_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+              </h4>
+            </div>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel4.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Aduana y portuarios
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              Clave
+            </h5>
+            <h5 class="col-4">
+              {{1200 | currency}}
+            </h5>
+          </div>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel #matExpansionPanel5 *ngIf="isIncotermDDP() && selectedFilterButton(4)">
+          <mat-expansion-panel-header>
+
+            <div class="col-2 div-table-price me-3">
+              <h4>
+                {{(liquidation?.data?.gravamen_tarif | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+              </h4>
+            </div>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel5.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Arancel
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              Mostrar todos los Trados y Gravamen
+            </h5>
+            <h5 class="col-4">
+              {{1200 | currency}}
+            </h5>
+          </div>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel #matExpansionPanel6 *ngIf="isIncotermDDP() && selectedFilterButton(5)">
+          <mat-expansion-panel-header>
+
+            <div class="col-2 div-table-price me-3">
+              <h4>
+                {{(liquidation?.data?.national_freight_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+              </h4>
+            </div>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel6.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_yellow_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Flete local
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              quien es el proveedor, de donde a donde y cual es el valor
+            </h5>
+            <h5 class="col-4">
+              {{1200 | currency}}
+            </h5>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div class="div-total row">
+        <h4 class="col-6">
+          Total {{liquidation.incoterm}}:
+        </h4>
+        <h4 class="col-6 text-right">
+          USD {{((calculateTotalValue() | currency:'$ ':'symbol':'1.0') + '')?.replace(',', '.')}}
         </h4>
       </div>
 
@@ -152,26 +316,72 @@
           Este valor es solo para efectos de flujo de caja y no está incluido en el total de la liquidación.
         </h6>
 
-        <mat-checkbox class="col-2">
+        <mat-checkbox [(ngModel)]="seeIVA" (click)="showIVA()" class="col-2">
           Visualizar IVA
         </mat-checkbox>
       </div>
 
-      <div class="pt-2">
-        <div class="row div-iva-row">
-          <div class="col-9">
-            IVA
+      <mat-accordion *ngIf="seeIVA" class="mat-accordion-blue">
+        <mat-expansion-panel #matExpansionFiles>
+          <mat-expansion-panel-header>
+
+            <div class="col-2 div-table-price me-3">
+              <h4>
+                {{liquidation?.data?.iva_tarif | currency : 'USD' : 'symbol' : '1.0-0' }}
+              </h4>
+            </div>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionFiles.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_blue_24dp.svg" alt="">
+
+            <mat-panel-title>
+              IVA
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              Porcentaje = {{liquidation?.data?.iva_percentage}}%
+            </h5>
           </div>
-          <div class="col-2 div-table-price">
-            <h4>
-              {{1200 | currency : 'USD' : 'symbol' : '1.0-0' }}
-            </h4>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion class="mat-accordion-blue">
+        <mat-expansion-panel #matExpansionFiles>
+          <mat-expansion-panel-header>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionFiles.expanded ? 180 : 0) + 'deg)'}" src="../../../../../../assets/icons/arrow_drop_down_blue_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Documentos Soporte
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row my-2">
+            <h5 class="col-7 text-center">
+              Documento
+            </h5>
+            <h5 class="col-4 text-center">
+              Entidad
+            </h5>
           </div>
-          <div class="col-1 div-table-img">
-            <img src="../../../../../../assets/icons/arrow_drop_down_blue_24dp.svg" alt="">
-          </div>
-        </div>
-      </div>
+
+          <ul *ngFor="let document of listSupportDocuments">
+            <li>
+              <div class="row">
+                <h5 class="col-7">
+                  {{document?.document}}
+                </h5>
+                <h5 class="col-4">
+                  {{document?.entity}}
+                </h5>
+              </div>
+            </li>
+          </ul>
+
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
   </div>
 </div>

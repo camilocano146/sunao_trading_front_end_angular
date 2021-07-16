@@ -3,6 +3,51 @@ import * as CryptoJS from 'crypto-js';
 export class Utilities {
   static key = CryptoJS.enc.Utf8.parse('((23((!#48//4))/'); // TODO change to something with more entropy
 
+  static listAux: Array<number> = [
+    3,
+    7,
+    13,
+    17,
+    19,
+    23,
+    29,
+    37,
+    41,
+    43,
+    47,
+    53,
+    59,
+    67,
+    71
+  ];
+
+  static getDigitVerification(nit: number): number {
+    if (nit) {
+      const nitText = nit.toString();
+      const nuevo = nitText.split('');
+      const reverseArray = nuevo.reverse();
+      const joinArray = reverseArray.join('');
+      let sum = 0;
+      this.listAux.forEach((element, pos) => {
+        if (pos < nitText.length) {
+          sum += element * parseInt(joinArray.charAt(pos));
+        }
+      });
+      const mod = sum % 11;
+      if (mod === 0) {
+        return 0;
+      }
+      if (mod === 1) {
+        return 1;
+      }
+      if (mod > 1) {
+        return 11 - mod;
+      }
+    } else {
+      return NaN;
+    }
+  }
+
   static convertKgToLib(value: number): number {
     return +((value * 2.20462).toFixed(1));
   }

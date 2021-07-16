@@ -26,8 +26,8 @@ export class LocationService {
     return this.httpClient.put(`location/${id}/edit_municipality/`, body);
   }
 
-  getAllCountries(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`location/list_country/?offset=${offset}&limit=${limit}`);
+  getAllCountries(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`location/list_country/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   getAllCitiesOfCountry(idCountry: number, offset: number, limit: number): Observable<any> {

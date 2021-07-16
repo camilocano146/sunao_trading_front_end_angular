@@ -1,0 +1,26 @@
+<div class="row dialog-title m-0">
+  <h5 class="col-10">
+    Cambio de Correo
+  </h5>
+  <div class="col-2 text-right">
+    <img class="img-close-dialog" src="./assets/icons/close_white.svg" alt="" (click)="matDialogRef.close()">
+  </div>
+</div>
+
+<div class="div-content text-center mt-3">
+  <mat-form-field class="w-75 m-auto" appearance="outline">
+    <input type="email" matInput placeholder="Ingrese nuevo e-mail" [formControl]="formControlEmail" required>
+    <mat-error *ngIf="formControlEmail.invalid">{{getErrorMessageEmail()}}</mat-error>
+  </mat-form-field>
+</div>
+
+<div class="text-center">
+  <button *ngIf="!preload" mat-raised-button class="btn-soft-blue" (click)="changeEmail()">
+    <h5 class="m-0">
+      Guardar
+    </h5>
+  </button>
+  <div *ngIf="preload">
+    <mat-spinner diameter="50" class="m-auto"></mat-spinner>
+  </div>
+</div>

@@ -73,7 +73,7 @@ export class DialogResumeComponent implements OnInit {
 
   private buildLiquidate(): Liquidation {
     return {
-      badge: this.data.currency.abbreviation,
+      currency: this.data.currency.abbreviation,
       city_destination_id: this.data.cityIcoterm ? this.data.cityIcoterm.id : null,
       container_type_id: this.data.container.id,
       fob_cost: this.data.fobValue,

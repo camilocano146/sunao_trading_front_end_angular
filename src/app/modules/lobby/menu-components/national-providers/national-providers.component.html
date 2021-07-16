@@ -1,10 +1,18 @@
 <div class="full-width mt-3">
     <div class="row margin-mobile-top-orgs my-2 text-center" style="margin-left: 0px !important; margin-right: 0px !important;">
-      <h3 class="w-100">Lista de proveedores</h3>
+      <h3 class="w-100">Lista de Proveedores Nacionales</h3>
     </div>
-  
-    <div class="container col-12  text-right" style="max-width: 1050px; min-width: 200px;">
-      
+
+  <div class="container row m-auto">
+    <div class="col-md-6 col-12">
+      <mat-form-field class="w-75 m-auto" appearance="outline">
+        <input [formControl]="formControlFilter"
+               (ngModelChange)="loadTable()"
+               matInput
+               placeholder="Ingrese nombre">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 col-12 text-right" style="max-width: 1250px; min-width: 200px;">
       <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 230px !important;">
         <h4 class="my-2">
           <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
@@ -13,13 +21,14 @@
           </span>
         </h4>
       </button>
-      
     </div>
-  
+
+    </div>
+
     <div class="mat-elevation-z8 container" style="max-width: max-content">
       <div class="div-parent-table">
         <table mat-table [dataSource]="list" class="w-100">
-  
+
           <!-- column id -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>
@@ -29,7 +38,7 @@
               <span >{{row.id}}</span>
             </td>
           </ng-container>
-  
+
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>
@@ -41,7 +50,7 @@
               <span *ngIf="!row.name">N/A</span>
             </td>
           </ng-container>
-  
+
           <!-- Address Column -->
           <ng-container matColumnDef="address">
             <th mat-header-cell *matHeaderCellDef>
@@ -53,7 +62,7 @@
               <span *ngIf="!row.address">N/A</span>
             </td>
           </ng-container>
-  
+
           <!-- Email Column -->
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef>
@@ -62,7 +71,7 @@
             </th>
             <td style="max-width: 150px;" mat-cell *matCellDef="let row">{{row.email}}</td>
           </ng-container>
-  
+
           <!-- Phone Column -->
           <ng-container matColumnDef="phone">
             <th mat-header-cell *matHeaderCellDef>
@@ -74,7 +83,7 @@
               <span *ngIf="!row.phone">N/A</span>
             </td>
           </ng-container>
-  
+
           <!-- Actions Column -->
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>
@@ -97,7 +106,7 @@
               </mat-menu>
             </td>
           </ng-container>
-  
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
@@ -107,4 +116,3 @@
       <mat-paginator (page)="loadTable()" [pageSizeOptions]="pageSizeOptions" [length]="resultsLength"></mat-paginator>
     </div>
   </div>
-  

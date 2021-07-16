@@ -10,8 +10,8 @@ export class ProductsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getListProducts(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`product/?offset=${offset}&limit=${limit}`);
+  getListProducts(offset: number, limit: number, regex = ''): Observable<any> {
+    return this.httpClient.get(`product/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   getListProductsNoAuth(offset: number, limit: number, regex: string): Observable<any> {
@@ -26,23 +26,27 @@ export class ProductsService {
     return this.httpClient.put(`product/${id}/edit/`, body);
   }
 
-  getIvas(id: number,offset: number, limit: number): Observable<any>{
+  getIvas(id: number, offset: number, limit: number): Observable<any>{
     return this.httpClient.get(`product/${id}/get_ivas/?offset=${offset}&limit=${limit}`);
   }
 
-  getGravaments(id: number,offset: number, limit: number): Observable<any>{
+  getGravaments(id: number, offset: number, limit: number): Observable<any>{
     return this.httpClient.get(`product/${id}/get_gravaments/?offset=${offset}&limit=${limit}`);
   }
 
-  getSupportDocument(id: number,offset: number, limit: number): Observable<any>{
+  getSupportDocument(id: number, offset: number, limit: number): Observable<any>{
     return this.httpClient.get(`product/${id}/get_support_document/?offset=${offset}&limit=${limit}`);
   }
 
-  getInternationalAgreement(id: number,offset: number, limit: number): Observable<any>{
+  getInternationalAgreement(id: number, offset: number, limit: number): Observable<any>{
     return this.httpClient.get(`product/${id}/get_international_agreement/?offset=${offset}&limit=${limit}`);
   }
 
-  getTradeRegimen(id: number,offset: number, limit: number): Observable<any>{
+  getInternationalAgreementByLocation(id: number, idLocation: number, offset: number, limit: number): Observable<any>{
+    return this.httpClient.get(`product/${id}/get_international_agreement/?offset=${offset}&limit=${limit}&location=${idLocation}`);
+  }
+
+  getTradeRegimen(id: number, offset: number, limit: number): Observable<any>{
     return this.httpClient.get(`product/${id}/get_trade_regimen/?offset=${offset}&limit=${limit}`);
   }
 }

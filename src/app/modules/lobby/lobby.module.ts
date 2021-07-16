@@ -56,6 +56,11 @@ import { NationalProvidersComponent } from './menu-components/national-providers
 import { DialogNationalProvidersCreateEditComponent } from './menu-components/national-providers/dialog-national-providers-create-edit/dialog-national-providers-create-edit.component';
 import {ImportModule} from "../import/import.module";
 import {TransactionsComponent} from "./menu-components/transactions/transactions.component";
+import { DialogChangeEmailComponent } from './settings-components/profile/dialog-change-email/dialog-change-email.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatIconModule} from "@angular/material/icon";
+import {DialogChangePasswordComponent} from "./settings-components/profile/dialog-change-password/dialog-change-password.component";
+import {DialogChangeNameDocumentComponent} from "./settings-components/profile/dialog-change-name-document/dialog-change-name-document.component";
 
 @NgModule({
   declarations: [
@@ -89,7 +94,10 @@ import {TransactionsComponent} from "./menu-components/transactions/transactions
     DialogCouponsCreateEditComponent,
     NationalProvidersComponent,
     DialogNationalProvidersCreateEditComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    DialogChangeEmailComponent,
+    DialogChangePasswordComponent,
+    DialogChangeNameDocumentComponent,
   ],
   imports: [
     CommonModule,
@@ -116,7 +124,9 @@ import {TransactionsComponent} from "./menu-components/transactions/transactions
     MatAutocompleteModule,
     MatDatepickerModule,
     MatTabsModule,
-    ImportModule
+    ImportModule,
+    MatExpansionModule,
+    MatIconModule
   ],
   providers: [
     {

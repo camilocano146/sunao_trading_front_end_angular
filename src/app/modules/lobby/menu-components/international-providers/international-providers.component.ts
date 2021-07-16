@@ -10,6 +10,7 @@ import {Location} from '../../../../models/Location';
 import {ProviderService} from '../../../../services/provider/provider.service';
 import {Provider} from '../../../../models/Provider';
 import Swal from 'sweetalert2';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-international-providers',
@@ -31,6 +32,8 @@ export class InternationalProvidersComponent implements OnInit, AfterViewInit {
   resultsLength: number;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
 
   constructor(
     private translate: TranslateService,
@@ -49,20 +52,25 @@ export class InternationalProvidersComponent implements OnInit, AfterViewInit {
   }
 
   loadTable(): void {
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.providerService.getListInternational(page, limit).subscribe(
-      value => {
-        this.preload = false;
-        this.list = value.results;
-        this.resultsLength = value.count;
-      }, error => {
-        this.preload = false;
-        this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
-      }
-    );
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.providerService.getListInternational(page, limit, this.formControlFilter.value).subscribe(
+        value => {
+          this.preload = false;
+          this.list = value.results;
+          this.resultsLength = value.count;
+        }, error => {
+          this.preload = false;
+          this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
+        }
+      );
+    }, AppComponent.timeMillisDelayFilter);
   }
 
   openDialogEdit(provider: Provider): void {

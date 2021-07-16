@@ -10,9 +10,9 @@ export class ChapterService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getListChapters(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`chapter/?offset=${offset}&limit=${limit}`);
-  } 
+  getListChapters(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`chapter/?offset=${offset}&limit=${limit}&regex=${regex}`);
+  }
 
   register(chapter: Chapter): Observable<any> {
     return this.httpClient.post('chapter/', chapter);

@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/User';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
+import {FormControl} from '@angular/forms';
 // import {DialogImportPortTarifsComponent} from './dialog-import-port-tarifs/dialog-import-port-tarifs.component';
 
 @Component({
@@ -16,12 +17,12 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  
-  preload:boolean=false;
-  list:User[];
+
+  preload = false;
+  list: User[];
   pageSizeOptions = AppComponent.pageSizeOptions;
-  resultsLength:number=0;
-  @ViewChild(MatPaginator) paginator: MatPaginator;  
+  resultsLength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public displayedColumns: string[] = [
     'index',
@@ -31,6 +32,8 @@ export class UsersComponent implements OnInit {
     'is_active',
     'actions'
   ];
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
 
   constructor(
     private userService: UserService,
@@ -43,42 +46,46 @@ export class UsersComponent implements OnInit {
   }
 
 
-  loadTable(){
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.userService.getAll(page, limit).subscribe(res=>{
-      this.list=res.results;
-      this.resultsLength = res.count;
-      this.preload=false;
-    })
-
+  loadTable(): void {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.userService.getAll(page, limit, this.formControlFilter.value).subscribe(res => {
+        this.list = res.results;
+        this.resultsLength = res.count;
+        this.preload = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
 
 
   openDialogImportData(){}
 
-  activateDeactivate(user:any){
-    console.log(user )
+  activateDeactivate(user: any){
+    console.log(user );
 
     Swal.fire({
-      title: user.is_active? "¿Deseas desactivar el usuario?":"¿Deseas activar el usuario?",
+      title: user.is_active ? '¿Deseas desactivar el usuario?' : '¿Deseas activar el usuario?',
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: user.is_active? "Desactivar":"Activar",
+      confirmButtonText: user.is_active ? 'Desactivar' : 'Activar',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.list=[];
-        this.preload=true;
-        this.userService.activateDeactivateUser(user).subscribe(res=>{
-          Swal.fire(user.is_active? "Usuario desactivado.":"Usuario activado.", '', 'success')
+        this.list = [];
+        this.preload = true;
+        this.userService.activateDeactivateUser(user).subscribe(res => {
+          Swal.fire(user.is_active ? 'Usuario desactivado.' : 'Usuario activado.', '', 'success');
           this.loadTable();
         });
       } else if (result.isDenied) {
       }
-    })
+    });
 
   }
 }

@@ -5,6 +5,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {AppComponent} from '../../../../app.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogImportPortTarifsComponent} from './dialog-import-port-tarifs/dialog-import-port-tarifs.component';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-port-tarifs',
@@ -13,10 +14,10 @@ import {DialogImportPortTarifsComponent} from './dialog-import-port-tarifs/dialo
 })
 export class PortTarifsComponent implements OnInit {
 
-  preload:boolean=false;
-  list:Port_tarif[];
+  preload = false;
+  list: Port_tarif[];
   pageSizeOptions = AppComponent.pageSizeOptions;
-  resultsLength:number=0;
+  resultsLength = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public displayedColumns: string[] = [
@@ -28,6 +29,8 @@ export class PortTarifsComponent implements OnInit {
     'validity',
     'cost'
   ];
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
 
   constructor(
     private portTarifService: PortTarifService,
@@ -35,21 +38,24 @@ export class PortTarifsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadTable()
-    
+    this.loadTable();
   }
 
-  loadTable(){
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.portTarifService.getPortTarifs(page, limit).subscribe(res=>{
-      this.list=res.results;
-      this.resultsLength = res.count;
-      this.preload=false;
-    })
-
+  loadTable(): void {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.portTarifService.getPortTarifs(page, limit, this.formControlFilter.value).subscribe(res => {
+        this.list = res.results;
+        this.resultsLength = res.count;
+        this.preload = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
 
 
@@ -61,6 +67,5 @@ export class PortTarifsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.loadTable();
     });
-
   }
 }

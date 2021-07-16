@@ -38,7 +38,8 @@ import {MatSelectModule} from "@angular/material/select";
     DialogCreateTransactionComponent,
   ],
   exports: [
-    AgmCoreModule
+    AgmCoreModule,
+    ReplaceTextPipe
   ],
   imports: [
     CommonModule,

@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogPortCreateEditComponent } from './dialog-port-create-edit/dialog-port-create-edit.component';
 import { Port } from 'src/app/models/Port';
 import { PortsService } from 'src/app/services/ports/ports.service';
+import {FormControl} from "@angular/forms";
 
 export interface DataDialogPort {
   dataEdit: Port;
@@ -32,6 +33,8 @@ export class PortsComponent implements OnInit {
     'city',
     'actions'
   ];
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
 
   constructor(
     private portsService: PortsService ,
@@ -43,17 +46,21 @@ export class PortsComponent implements OnInit {
   }
 
 
-  loadTable(){
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
-    this.portsService.getListPorts(page, limit).subscribe(res => {
-      this.list = res.results;
-      this.resultsLength = res.count;
-      this.preload = false;
-    });
-
+  loadTable(): void {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.portsService.getListPorts(page, limit, this.formControlFilter.value).subscribe(res => {
+        this.list = res.results;
+        this.resultsLength = res.count;
+        this.preload = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
 
   openDialogCreate(): void {

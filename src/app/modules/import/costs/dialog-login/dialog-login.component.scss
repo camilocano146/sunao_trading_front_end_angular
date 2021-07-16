@@ -5,12 +5,14 @@
   margin-top: unset;
 }
 
-::ng-deep .mat-form-field-outline {
-  border-radius: 10px !important;
-}
+.div-dialog-main-auth {
+  ::ng-deep .mat-form-field-outline {
+    border-radius: 10px !important;
+  }
 
-::ng-deep .mat-form-field-infix {
-  display: flex !important;
+  ::ng-deep .mat-form-field-infix {
+    display: flex !important;
+  }
 }
 
 .div-content {

@@ -5,6 +5,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {AppComponent} from '../../../../app.component';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogImportPortTarifsNationalComponent } from './dialog-import-port-tarifs-national/dialog-import-port-tarifs-national.component';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-port-tarifs-national',
@@ -13,10 +14,10 @@ import { DialogImportPortTarifsNationalComponent } from './dialog-import-port-ta
 })
 export class PortTarifsNationalComponent implements OnInit {
 
-  preload:boolean=false;
-  list:Port_tarif[];
+  preload = false;
+  list: Port_tarif[];
   pageSizeOptions = AppComponent.pageSizeOptions;
-  resultsLength:number=0;
+  resultsLength = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public displayedColumns: string[] = [
@@ -27,28 +28,34 @@ export class PortTarifsNationalComponent implements OnInit {
     'transist_days',
     'validity',
     'cost'
-  ]; 
+  ];
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
+
   constructor(
     private portTarifService: PortTarifService,
     private matDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.loadTable()
-    
+    this.loadTable();
   }
 
-  loadTable(){
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.portTarifService.getPortTarifsNational(page, limit).subscribe(res=>{
-      this.list=res.results;
-      this.resultsLength = res.count;
-      this.preload=false;
-    })
-
+  loadTable(): void {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.portTarifService.getPortTarifsNational(page, limit, this.formControlFilter.value).subscribe(res => {
+        this.list = res.results;
+        this.resultsLength = res.count;
+        this.preload = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
 
 

@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import * as sha1 from 'js-sha1';
 import {Credential} from '../../../models/Credential';
-import {DialogTermsAndConditionsUserComponent} from "../dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component";
+import {DialogTermsAndConditionsUserComponent} from '../dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
 
 @Component({
   selector: 'app-register',

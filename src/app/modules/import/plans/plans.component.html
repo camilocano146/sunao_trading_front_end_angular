@@ -20,7 +20,7 @@
   </div>
 
   <div class="row justify-content-center">
-    <div class="bc-white col-xl-3 col-md-4 mx-4" [ngClass]="{'mt-5': i >= 3, 'mt-3': i < 3}" *ngFor="let plan of listPlans; let i = index">
+    <div class="bc-white col-xl-3 col-md-4 mx-4 mb-3" *ngFor="let plan of listPlans; let i = index">
       <h3 class="pt-5 text-center color-blue" style="font-size: 22px">
         {{plan.name}}
       </h3>

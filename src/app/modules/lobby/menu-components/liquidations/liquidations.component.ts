@@ -9,9 +9,10 @@ import {LocationService} from '../../../../services/location/location.service';
 import {MatDialog} from '@angular/material/dialog';
 import {LiquidationService} from '../../../../services/liquidation/liquidation.service';
 import {FormControl, Validators} from '@angular/forms';
-import {Liquidation} from "../../../../models/Liquidation";
-import {ManageSessionStorage} from "../../../../utils/ManageSessionStorage";
-import {Router} from "@angular/router";
+import {Liquidation} from '../../../../models/Liquidation';
+import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
+import {Router} from '@angular/router';
+import {ProductsService} from "../../../../services/products/products.service";
 
 @Component({
   selector: 'app-liquidation',
@@ -35,12 +36,14 @@ export class LiquidationsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   listLocations: Location[];
-  formControlReference: FormControl = new FormControl();
-  formControlOrigin: FormControl = new FormControl();
-  formControlDestination: FormControl = new FormControl();
-  formControlProduct: FormControl = new FormControl();
+  formControlReference: FormControl = new FormControl('');
+  formControlOrigin: FormControl = new FormControl('');
+  formControlDestination: FormControl = new FormControl('');
+  formControlProduct: FormControl = new FormControl('');
+  formControlDate: FormControl = new FormControl('');
   filterSelectedValue: any;
   values: any[] = ['Incoterm'];
+  private timer: number;
 
   constructor(
     private translate: TranslateService,
@@ -60,21 +63,29 @@ export class LiquidationsComponent implements OnInit {
   }
 
   loadTable(): void {
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
-    this.liquidationService.getAll(page, limit).subscribe(
-      value => {
-        this.preload = false;
-        this.list = value.results;
-        console.log(this.list);
-        this.resultsLength = value.count;
-      }, error => {
-        this.preload = false;
-        this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      if (this.formControlDate.value) {
+        const date = new Date(this.formControlDate.value);
       }
-    );
+      this.liquidationService.getAll(page, limit, this.formControlReference.value).subscribe(
+        value => {
+          this.preload = false;
+          this.list = value.results;
+          console.log(this.list);
+          this.resultsLength = value.count;
+        }, error => {
+          this.preload = false;
+          this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
+        }
+      );
+    }, AppComponent.timeMillisDelayFilter);
   }
 
   changeOriginAutocomplete(): void {
@@ -86,7 +97,11 @@ export class LiquidationsComponent implements OnInit {
   }
 
   reuse(liquidation: Liquidation): void {
-    ManageSessionStorage.setLiquidationReuse(liquidation);
-    this.router.navigate(['import']);
+    // ManageSessionStorage.setLiquidationReuse(liquidation);
+    this.router.navigate(['import'], {queryParams: {id_liquidation: liquidation.id}});
+  }
+
+  goToSeeDetails(row: Liquidation): void {
+    this.router.navigate([`lobby/liquidations-detail/${row.id}`]);
   }
 }

@@ -24,7 +24,7 @@ const routes: Routes = [
     path: '', component: LobbyComponent,
     children: [
       {path: '', component: LiquidationsComponent},
-      {path: 'liquidations-detail', component: LiquidationDetailsComponent},
+      {path: 'liquidations-detail/:idLiquidation', component: LiquidationDetailsComponent},
       {path: 'transactions', component: TransactionsComponent},
       {path: 'locations', component: CountriesComponent},
       {path: 'locations/cities/:idCountry', component: CitiesComponent},

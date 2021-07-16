@@ -10,8 +10,8 @@ export class PackageService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getListPackages(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`package/?offset=${offset}&limit=${limit}`);
+  getListPackages(offset: number, limit: number, regex = ''): Observable<any> {
+    return this.httpClient.get(`package/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   register(body: Package): Observable<any> {

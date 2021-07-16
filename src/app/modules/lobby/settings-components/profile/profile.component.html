@@ -27,12 +27,16 @@
     </button>
   </div>
   <div class="div-info">
-    <div class="row pb-5">
-      <h2 class="col-11 text-center mt-4">
-        <img class="col-1 me-3" src="./assets/logos/logo-colors.png" alt="" style="width: 2em;">
-        Mi Cuenta
-      </h2>
-      <img class="col-1" src="./assets/icons/editar.svg" alt="" style="width: 4em">
+    <div class="row pb-5 m-0">
+      <div class="col-10 p-0">
+        <h2 class="text-center mt-4">
+          <img class="col-1 me-3" src="./assets/logos/logo-colors.png" alt="" style="width: 3em;">
+          Mi Cuenta
+        </h2>
+      </div>
+      <div class="col-2 p-0 text-right">
+        <img (click)="openDialogChangeNameDocument()" class="cursor-pointer" src="./assets/icons/editar.svg" alt="" style="width: 3em">
+      </div>
     </div>
 
     <div *ngIf="this.preload" class="pb-5">
@@ -42,7 +46,7 @@
     <div *ngIf="!this.preload">
       <div id="div-info-container">
         <div class="row justify-content-evenly">
-          <div class="col-3">
+          <div class="col-7 col-lg-3 text-center text-lg-start">
             <h4>
               <img src="./assets/icons/person_black_24dp.svg" alt="">
               <span>
@@ -50,14 +54,19 @@
             </span>
             </h4>
           </div>
-          <div class="col-3">
-            <h4>
+          <div class="col-7 col-lg-3 text-center text-lg-start">
+            <h4 *ngIf="user?.first_name || user?.last_name; else notName">
               {{user?.first_name}} {{user?.last_name}}
             </h4>
+            <ng-template #notName>
+              <h4>
+                Sin asignar
+              </h4>
+            </ng-template>
           </div>
         </div>
-        <div class="row justify-content-evenly">
-          <div class="col-3">
+        <div class="row justify-content-evenly mt-3 mt-lg-0">
+          <div class="col-7 col-lg-3 text-center text-lg-start">
             <h4>
               <img src="./assets/icons/badge_black_24dp.svg" alt="">
               <span>
@@ -65,14 +74,19 @@
             </span>
             </h4>
           </div>
-          <div class="col-3">
-            <h4>
+          <div class="col-7 col-lg-3 text-center text-lg-start">
+            <h4 *ngIf="user?.document; else notDocument">
               {{user?.document}} - {{user?.digit_check}}
             </h4>
+            <ng-template #notDocument>
+              <h4>
+                Sin asignar
+              </h4>
+            </ng-template>
           </div>
         </div>
-        <div class="row justify-content-evenly">
-          <div class="col-3">
+        <div class="row justify-content-evenly mt-3 mt-lg-0">
+          <div class="col-7 col-lg-3 text-center text-lg-start">
             <h4>
               <img src="./assets/icons/email_black_24dp%20(1).svg" alt="">
               <span>
@@ -80,7 +94,7 @@
             </span>
             </h4>
           </div>
-          <div class="col-3">
+          <div class="col-7 col-lg-3 text-center text-lg-start">
             <h4>
               {{user?.email}}
             </h4>
@@ -89,14 +103,14 @@
       </div>
 
       <div class="text-center mt-5 pb-4">
-        <button mat-raised-button class="btn-change me-3">
+        <button mat-raised-button class="btn-change me-3" (click)="openDialogChangeEmail()">
           <h5 class="m-0 px-4 py-3">
             Cambiar correo
           </h5>
         </button>
-        <button mat-raised-button class="btn-change ms-3">
+        <button mat-raised-button class="btn-change ms-3" (click)="openDialogChangePassword()">
           <h5 class="m-0 px-4 py-3">
-            Cambiar Contraseña
+            Cambiar contraseña
           </h5>
         </button>
       </div>

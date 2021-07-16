@@ -2,23 +2,32 @@
     <div class="row margin-mobile-top-orgs my-2 text-center" style="margin-left: 0px !important; margin-right: 0px !important;">
       <h3 class="w-100">Lista de productos</h3>
     </div>
-  
-    <div class="container col-12  text-right" style="max-width: 1250px; min-width: 200px;">
-      <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 200px !important;">
-        <h4>
-          <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
-          <span style="margin-left: 1em">
+
+    <div class="container row">
+      <div class="col-md-6 col-12">
+        <mat-form-field class="w-75 m-auto" appearance="outline">
+          <input [formControl]="formControlName"
+                 (ngModelChange)="loadTable()"
+                 matInput
+                 placeholder="Ingrese nombre, código o subcategoría">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-12 text-right" style="max-width: 1250px; min-width: 200px;">
+        <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 200px !important;">
+          <h4>
+            <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
+            <span style="margin-left: 1em">
             Crear
           </span>
-        </h4>
-      </button>
+          </h4>
+        </button>
+      </div>
     </div>
 
     <div class="mat-elevation-z8 container" style="max-width: 1225px !important">
       <div class="div-parent-table">
         <table mat-table [dataSource]="list" class="w-100">
-            
-          
+
           <!-- column id -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef style="width: 10% !important;">
@@ -40,31 +49,31 @@
                 <span *ngIf="!row.name ">N/A</span>
               </td>
           </ng-container>
-  
+
           <!-- code Column -->
           <ng-container matColumnDef="code" style="width: 20% !important;">
             <th mat-header-cell *matHeaderCellDef>
               <img src="./assets/icons/codigo.svg" alt="">
-                Codigo
+                Código
               </th>
               <td mat-cell *matCellDef="let row">
                 <span *ngIf="row.code">{{row.code}}</span>
                 <span *ngIf="!row.code">N/A</span>
               </td>
           </ng-container>
-          
+
           <!-- subcategory Column -->
           <ng-container matColumnDef="subcategory">
             <th mat-header-cell *matHeaderCellDef style="width: 15% !important;">
                 <img src="./assets/icons/category.svg" alt="">
-                Subcategoria 
+                Subcategoria
               </th>
               <td mat-cell *matCellDef="let row">
                 <span *ngIf="row.subcategory">{{row.subcategory}}</span>
                 <span *ngIf="!row.subcategory">N/A</span>
               </td>
           </ng-container>
-          
+
            <!-- Actions Column -->
            <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="width: 15% !important;">
@@ -85,7 +94,7 @@
                   Detalles
                 </button>
               </mat-menu>
-              
+
             </td>
           </ng-container>
 
@@ -98,4 +107,4 @@
       <mat-paginator (page)="loadTable()" [pageSizeOptions]="pageSizeOptions" [length]="resultsLength"></mat-paginator>
     </div>
   </div>
-  
+

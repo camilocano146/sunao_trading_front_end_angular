@@ -9,6 +9,7 @@ $color-very-soft-blue: #6ba2b9;
 $color-dark-blue: #00303c;
 $color-yellow: #ffbf3b;
 $color-soft-red: #ff5959;
+$color-gray: #f2f1f1;
 
 html, body {
   height: 100%;
@@ -75,9 +76,33 @@ body {
   width: 20%;
 }
 
+@media (min-width: 768px) {
+  .col-md-25 {
+    flex: 0 0 auto;
+    width: 20%;
+  }
+}
+
 .col-35 {
   flex: 0 0 auto;
   width: 31%;
+}
+
+@media (min-width: 992px) {
+  .col-lg-35 {
+    flex: 0 0 auto;
+    width: 31%;
+  }
+}
+
+@media (min-width: 415px) {
+  .ms-sm-2-415px {
+    margin-left: 0.5em;
+  }
+
+  .me-sm-2-415px {
+    margin-right: 0.5em;
+  }
 }
 
 .flex-box-middle {

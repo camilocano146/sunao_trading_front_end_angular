@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {Location} from '../../../models/Location';
 import {Container} from '../../../models/Container';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogResumeComponent} from './dialog-resume/dialog-resume.component';
 import {DialogHelpComponent} from './dialog-help/dialog-help.component';
-import {DialogLoginComponent} from './dialog-login/dialog-login.component';
 import {Port} from '../../../models/Port';
 import {LocationService} from '../../../services/location/location.service';
 import {PortsService} from '../../../services/ports/ports.service';
 import {AppComponent} from '../../../app.component';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {ContainerService} from '../../../services/container/container.service';
 import {ImportCost} from '../../../models/ImportCost';
 import {Currency} from '../../../models/Currency';
@@ -18,7 +17,8 @@ import {Utilities} from '../../../utils/Utilities';
 import {Incoterm} from '../../../models/Incoterm';
 import {ProductsService} from '../../../services/products/products.service';
 import {Product} from '../../../models/Product';
-import {ManageSessionStorage} from '../../../utils/ManageSessionStorage';
+import {ActivatedRoute} from '@angular/router';
+import {LiquidationService} from '../../../services/liquidation/liquidation.service';
 
 interface Step {
   imagePath: string;
@@ -98,6 +98,7 @@ export class CostsComponent implements OnInit {
   preloadCityPortDestination: boolean;
   preloadCityIncoterm: boolean;
   preloadProducts: boolean;
+  preloadLiquidation: boolean;
 
   constructor(
     public matDialog: MatDialog,
@@ -105,6 +106,8 @@ export class CostsComponent implements OnInit {
     public portsService: PortsService,
     public containerService: ContainerService,
     public productsService: ProductsService,
+    public activatedRoute: ActivatedRoute,
+    public liquidationService: LiquidationService,
   ) { }
 
   ngOnInit(): void {
@@ -118,27 +121,39 @@ export class CostsComponent implements OnInit {
    * Se usa para reutilizar una liquidación si se seleccionó en la tabla liquidaciones esta opción
    */
   loadReuseLiquidation(): void {
+    this.preloadLiquidation = true;
     const interval = setInterval(() => {
       if (this.isReadyMinInit()) {
         clearInterval(interval);
-        const liquidationReuse = ManageSessionStorage.getLiquidationReuse();
-        if (liquidationReuse) {
-          console.log(liquidationReuse);
-          this.lastOriginSelected = liquidationReuse.port_origin?.location;
-          this.formControlOrigin.setValue(this.lastOriginSelected.name);
-          this.lastPortOriginSelected = liquidationReuse.port_origin;
-          this.formControlOriginPort.setValue(this.lastPortOriginSelected.name);
-          this.lastDestinationSelected = liquidationReuse.port_destination?.location;
-          this.formControlDestination.setValue(this.lastDestinationSelected.name);
-          this.lastPortDestinationSelected = liquidationReuse.port_destination;
-          this.formControlDestinationPort.setValue(this.lastPortDestinationSelected.name);
-          this.selectedProduct = this.listProduct.find(p => p.id === liquidationReuse.product.id);
-          this.formControlValueFOB.setValue(liquidationReuse.fob_cost);
-          this.selectedCurrency = this.listCurrencies.find(c => c.abbreviation === liquidationReuse.badge);
-          this.selectedContainer = this.listContainers.find(c => c.id === liquidationReuse.container_type.id);
-          this.selectedIncoterm = this.listIncoterm.find(i => i.name === liquidationReuse.incoterm);
-          this.lastSelectedIcotermCity = liquidationReuse.city_destination;
-        }
+        // const liquidationReuse = ManageSessionStorage.getLiquidationReuse();
+        this.activatedRoute.queryParams.subscribe(res => {
+          const idLiquidation = res.id_liquidation;
+          if (idLiquidation) {
+            this.liquidationService.getById(idLiquidation).subscribe(res => {
+              const liquidationReuse = res;
+              this.lastOriginSelected = liquidationReuse.port_origin?.location;
+              this.formControlOrigin.setValue(this.lastOriginSelected.name);
+              this.lastPortOriginSelected = liquidationReuse.port_origin;
+              this.formControlOriginPort.setValue(this.lastPortOriginSelected.name);
+              this.lastDestinationSelected = liquidationReuse.port_destination?.location;
+              this.formControlDestination.setValue(this.lastDestinationSelected.name);
+              this.lastPortDestinationSelected = liquidationReuse.port_destination;
+              this.formControlDestinationPort.setValue(this.lastPortDestinationSelected.name);
+              this.selectedProduct = this.listProduct.find(p => p.id === liquidationReuse.product.id);
+              this.formControlValueFOB.setValue(liquidationReuse.fob_cost);
+              this.selectedCurrency = this.listCurrencies.find(c => c.abbreviation === liquidationReuse.currency?.acronym);
+              this.selectedContainer = this.listContainers.find(c => c.id === liquidationReuse.container_type.id);
+              this.selectedIncoterm = this.listIncoterm.find(i => i.name === liquidationReuse.incoterm);
+              this.lastSelectedIcotermCity = liquidationReuse.city_destination;
+              this.formControlCityIcoterm.setValue(this.lastSelectedIcotermCity?.name);
+              this.preloadLiquidation = false;
+            }, err => {
+              this.preloadLiquidation = false;
+            });
+          } else {
+            this.preloadLiquidation = false;
+          }
+        });
       }
     }, 300);
   }

@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PackageService} from '../../../services/package/package.service';
 import {Package} from '../../../models/Package';
-import {DialogResumeComponent} from "../costs/dialog-resume/dialog-resume.component";
-import {MatDialog} from "@angular/material/dialog";
-import {DialogCreateTransactionComponent} from "../../common-components/create-transaction/dialog-create-transaction.component";
+import {MatDialog} from '@angular/material/dialog';
+import {DialogCreateTransactionComponent} from '../../common-components/create-transaction/dialog-create-transaction.component';
+import {ManageSessionStorage} from '../../../utils/ManageSessionStorage';
 
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.scss']
 })
-export class PlansComponent implements OnInit {
+export class PlansComponent implements OnInit, OnDestroy {
   listPlans: Package[];
   preload: boolean;
   errorGetPlans: boolean;
@@ -23,6 +23,11 @@ export class PlansComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    ManageSessionStorage.deleteCountrySelected();
+    console.log('qweqweqweqwei');
   }
 
   getAllPlans(): void {

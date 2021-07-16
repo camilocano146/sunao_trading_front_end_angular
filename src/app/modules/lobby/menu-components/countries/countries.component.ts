@@ -11,6 +11,7 @@ import {DialogCountryCreateEditComponent} from './dialog-country-create-edit/dia
 import {Location} from '../../../../models/Location';
 import {Router} from '@angular/router';
 import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-locations',
@@ -29,6 +30,8 @@ export class CountriesComponent implements OnInit, AfterViewInit {
   resultsLength: number;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
 
   constructor(
     private translate: TranslateService,
@@ -48,20 +51,24 @@ export class CountriesComponent implements OnInit, AfterViewInit {
   }
 
   loadTable(): void {
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.locationService.getAllCountries(page, limit).subscribe(
-      value => {
-        this.preload = false;
-        this.list = value.results;
-        this.resultsLength = value.count;
-      }, error => {
-        this.preload = false;
-        this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
-      }
-    );
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.locationService.getAllCountries(page, limit, this.formControlFilter.value).subscribe(
+        value => {
+          this.preload = false;
+          this.list = value.results;
+          this.resultsLength = value.count;
+        }, error => {
+          this.preload = false;
+          this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
+        });
+    }, AppComponent.timeMillisDelayFilter);
   }
 
   openDialogCreate(): void {

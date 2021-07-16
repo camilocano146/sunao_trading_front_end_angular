@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChapterService } from 'src/app/services/chapter/chapter.service';
 import { DialogChapterCreateEditComponent } from './dialog-chapter-create-edit/dialog-chapter-create-edit.component';
 import { Chapter } from 'src/app/models/Chapter';
+import {FormControl} from '@angular/forms';
 
 export interface DataDialogChapter {
   dataEdit: Chapter;
@@ -17,18 +18,20 @@ export interface DataDialogChapter {
 })
 export class ChaptersComponent implements OnInit {
 
-  preload:boolean=false;
-  list:Chapter[];
+  preload = false;
+  list: Chapter[];
   pageSizeOptions = AppComponent.pageSizeOptions;
-  resultsLength:number=0;
-  @ViewChild(MatPaginator) paginator: MatPaginator;  
+  resultsLength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public displayedColumns: string[] = [
     'id',
-    "name",
-    "code",
-    "actions"
+    'name',
+    'code',
+    'actions'
   ];
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
 
   constructor(
     private chapterService: ChapterService ,
@@ -40,26 +43,29 @@ export class ChaptersComponent implements OnInit {
     this.loadTable();
   }
 
-  loadTable(){
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.chapterService.getListChapters(page, limit).subscribe(res=>{
-      this.list=res.results;
-      this.resultsLength = res.count;
-      this.preload=false;
-    })
-
+  loadTable(): void {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.chapterService.getListChapters(page, limit, this.formControlFilter.value).subscribe(res => {
+        this.list = res.results;
+        this.resultsLength = res.count;
+        this.preload = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
-  
 
   openDialogCreate(): void {
     const dialogRef = this.matDialog.open(DialogChapterCreateEditComponent, {
       width: '100vw',
       maxWidth: '400px',
       data: {
-        
+
       }
     });
     dialogRef.afterClosed().subscribe(result => {

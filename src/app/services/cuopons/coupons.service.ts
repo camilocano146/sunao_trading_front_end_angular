@@ -10,9 +10,9 @@ export class CouponsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getListCoupon(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`coupon/?offset=${offset}&limit=${limit}`);
-  } 
+  getListCoupon(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`coupon/?offset=${offset}&limit=${limit}&regex=${regex}`);
+  }
 
   register(coupon: Coupon): Observable<any> {
     return this.httpClient.post('coupon/', coupon);

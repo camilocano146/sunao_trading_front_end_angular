@@ -13,6 +13,7 @@ import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
 import { CouponsService } from 'src/app/services/cuopons/coupons.service';
 import { DialogCouponsCreateEditComponent } from './dialog-coupons-create-edit/dialog-coupons-create-edit.component';
 import { Coupon } from 'src/app/models/Coupon';
+import {FormControl} from '@angular/forms';
 
 export interface DataDialogCoupon {
   dataEdit: Coupon;
@@ -22,25 +23,27 @@ export interface DataDialogCoupon {
   templateUrl: './coupons.component.html',
   styleUrls: ['./coupons.component.scss']
 })
-export class CouponsComponent implements OnInit {
+export class CouponsComponent implements OnInit, AfterViewInit {
 
   preload: boolean;
   list: Coupon[];
   public displayedColumns: string[] = [
     'id',
     'code',
-    "discount_percent",
+    'discount_percent',
     'created_at',
     'created_by',
     'used_by',
     'actions'
   ];
 
-  
+
   pageSizeOptions = AppComponent.pageSizeOptions;
   resultsLength: number;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  formControlFilter: FormControl = new FormControl('');
+  private timer: number;
 
   constructor(
     private translate: TranslateService,
@@ -60,28 +63,33 @@ export class CouponsComponent implements OnInit {
   }
 
   loadTable(): void {
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.cuoponsService.getListCoupon(page, limit).subscribe(
-      value => {
-        this.preload = false;
-        this.list = value.results;
-        this.resultsLength = value.count;
-        console.log(this.list)
-      }, error => {
-        this.preload = false;
-        this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
-      }
-    );
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.cuoponsService.getListCoupon(page, limit, this.formControlFilter.value).subscribe(
+        value => {
+          this.preload = false;
+          this.list = value.results;
+          this.resultsLength = value.count;
+          console.log(this.list);
+        }, error => {
+          this.preload = false;
+          this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
+        }
+      );
+    }, AppComponent.timeMillisDelayFilter);
   }
 
   openDialogCreate(): void {
     const dialogRef = this.matDialog.open(DialogCouponsCreateEditComponent, {
       width: '100vw',
       maxWidth: '400px',
-      data:{}
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.loadTable();

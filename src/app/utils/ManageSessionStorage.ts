@@ -19,6 +19,10 @@ export class ManageSessionStorage {
     return JSON.parse(sessionStorage.getItem('liquidationReuse'));
   }
 
+  static deleteLiquidationReuse(user: Liquidation): void {
+    sessionStorage.removeItem('liquidationReuse');
+  }
+
   static deleteCountrySelected(): void {
     sessionStorage.removeItem('lastCountry');
   }

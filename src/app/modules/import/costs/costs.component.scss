@@ -39,6 +39,14 @@ p {
   margin-bottom: 2em !important;
 }
 
+.btn-back-next-m-0 {
+  background-color: $color-dark-blue;
+  color: white !important;
+  //height: 3em !important;
+  padding: 1em 3em;
+  border-radius: 0 !important;
+}
+
 #div-menu {
   color: white !important;
   background-color: $color-yellow;
@@ -91,37 +99,46 @@ p {
 //}
 
 .div-content {
-  background-color: lightgray;
+  background-color: $color-gray;
 }
 
 .div-content-info {
-  margin-left: 5em;
-  margin-right: 5em;
+  margin-left: 2em;
+  margin-right: 2em;
 }
 
-::ng-deep {
-  .mat-form-field-flex {
-    height: 50px !important;
+@media (min-width: 576px) {
+  .div-content-info {
+    margin-left: 5em;
+    margin-right: 5em;
   }
+}
 
-  .mat-form-field-outline {
-    background-color: white;
-  }
+.div-main-costs {
+  ::ng-deep {
+    .mat-form-field-flex {
+      height: 50px !important;
+    }
 
-  .mat-form-field-outline-start, .mat-form-field-outline-end {
-    border-radius: 0 !important;
-  }
+    .mat-form-field-outline {
+      background-color: white;
+    }
 
-  .mat-form-field-infix {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-  }
+    .mat-form-field-outline-start, .mat-form-field-outline-end {
+      border-radius: 0 !important;
+    }
 
-  .mat-form-field-flex {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+    .mat-form-field-infix {
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+    }
+
+    .mat-form-field-flex {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
   }
 }
 
@@ -174,13 +191,13 @@ p {
 .div-incoterm-costs {
   background-color: white !important;
   height: fit-content !important;
-  margin-bottom: 1.5em !important;
+  margin-bottom: 2.5em !important;
   cursor: pointer;
 }
 
 .div-incoterm-costs-selected {
   background-color: $color-yellow !important;
-  margin-bottom: 1.5em !important;
+  margin-bottom: 2.5em !important;
   height: fit-content !important;
   cursor: pointer;
 

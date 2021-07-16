@@ -3,6 +3,11 @@ import {User} from '../../../../models/User';
 import {ManageLocalStorage} from '../../../../utils/ManageLocalStorage';
 import {UserService} from '../../../../services/user/user.service';
 import {Router} from "@angular/router";
+import {DialogCountryCreateEditComponent} from "../../menu-components/countries/dialog-country-create-edit/dialog-country-create-edit.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogChangeEmailComponent} from "./dialog-change-email/dialog-change-email.component";
+import {DialogChangePasswordComponent} from "./dialog-change-password/dialog-change-password.component";
+import {DialogChangeNameDocumentComponent} from "./dialog-change-name-document/dialog-change-name-document.component";
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
+    private matDialog: MatDialog
   ) {
     this.user = ManageLocalStorage.getUser();
 
@@ -36,5 +42,44 @@ export class ProfileComponent implements OnInit {
       window.open('/#/activate-account');
       // this.router.navigate(['']);
     }
+  }
+
+  openDialogChangeEmail(): void {
+    const dialogRef = this.matDialog.open(DialogChangeEmailComponent, {
+      width: '400px',
+      maxWidth: '96vw',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.user.email = result;
+      }
+    });
+  }
+
+  openDialogChangePassword(): void {
+    const dialogRef = this.matDialog.open(DialogChangePasswordComponent, {
+      width: '400px',
+      maxWidth: '96vw',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+    });
+  }
+
+  openDialogChangeNameDocument(): void {
+    const dialogRef = this.matDialog.open(DialogChangeNameDocumentComponent, {
+      width: '400px',
+      maxWidth: '96vw',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.user.first_name = result?.first_name;
+        this.user.last_name = result?.last_name;
+        this.user.document = result?.document;
+      }
+    });
   }
 }

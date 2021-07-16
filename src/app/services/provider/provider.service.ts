@@ -12,7 +12,7 @@ export class ProviderService {
 
   /**
    * Intencacionales
-   */ 
+   */
   registerIntenational(body: Provider): Observable<any> {
     return this.httpClient.post('provider/', body);
   }
@@ -21,13 +21,13 @@ export class ProviderService {
     return this.httpClient.put(`provider/${id}/edit/`, body);
   }
 
-  getListInternational(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`provider/?offset=${offset}&limit=${limit}`);
+  getListInternational(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`provider/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   /**
-   * Nationals 
-   */ 
+   * Nationals
+   */
   registerNational(body: Provider): Observable<any> {
     return this.httpClient.post('provider/create_national/', body);
   }
@@ -36,8 +36,8 @@ export class ProviderService {
     return this.httpClient.put(`provider/${id}/edit_national/`, body);
   }
 
-  getListNational(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`provider/list_nationals/?offset=${offset}&limit=${limit}`);
+  getListNational(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`provider/list_nationals/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   /**

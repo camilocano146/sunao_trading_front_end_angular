@@ -10,8 +10,8 @@ export class PortsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getListPorts(offset: number, limit: number): Observable<any> {
-    return this.httpClient.get(`port/?offset=${offset}&limit=${limit}`);
+  getListPorts(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`port/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   getPublicListPorts(idCity: number, offset: number, limit: number, regex?: string): Observable<any> {

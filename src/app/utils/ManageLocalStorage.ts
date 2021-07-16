@@ -19,7 +19,11 @@ export class ManageLocalStorage {
   }
 
   static getUser(): User {
-    return JSON.parse(localStorage.getItem('user'));
+    try {
+      return JSON.parse(localStorage.getItem('user'));
+    } catch (e) {
+      return null;
+    }
   }
 
   static deleteApplyAlaido(): void {

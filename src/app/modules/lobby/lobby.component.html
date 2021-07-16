@@ -4,21 +4,21 @@
     <button mat-icon-button (click)="snav.toggle()">
       <img src="./assets/icons-menu/lista.svg">
     </button>
-    <img id="img-logo" (click)="goToDashboard()" src="./assets/logos/logo-white.png" width="70" height="35" style="margin-left: 1em !important;" alt="Logo">
+    <img id="img-logo" (click)="goToDashboard()" src="./assets/logos/logo-white.png" width="80" height="30" style="margin-left: 1em !important;" alt="Logo">
     <h6 class="ml-3 color-white">
 
     </h6>
     <div class="w-100 text-right div-menu-right">
       <mat-menu #menuNotification="matMenu">
       </mat-menu>
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <img src="./assets/icons-menu/notifications_fill_24dp.svg">
-      </button>
+<!--      <button mat-icon-button [matMenuTriggerFor]="menu">-->
+<!--        <img src="./assets/icons-menu/notifications_fill_24dp.svg">-->
+<!--      </button>-->
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <img src="./assets/icons-menu/settings_fill_24dp.svg">
       </button>
       <mat-menu #menu="matMenu">
-        <button [routerLink]="['my-transactions']" class="button-menu-right" mat-menu-item>
+        <button [routerLink]="['/lobby/transactions']" class="button-menu-right" mat-menu-item>
           <img src="./assets/icons-menu/point_of_sale_black_24dp.svg" class="mr-2">
           <span>Mis Transacciones</span>
         </button>
@@ -98,7 +98,6 @@
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/cupon_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/cupon_24dp.svg' + ') no-repeat center'}"></div>
           Cupones
         </a>
-
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content style="overflow-x: hidden">

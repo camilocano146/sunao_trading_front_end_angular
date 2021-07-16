@@ -6,6 +6,7 @@ import { Product } from 'src/app/models/Product';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { DialogProductCreateEditComponent } from './dialog-product-create-edit/dialog-product-create-edit.component';
 import { DialogProductDetailsComponent } from './dialog-product-details/dialog-product-details.component';
+import {FormControl} from '@angular/forms';
 
 export interface DataDialogProduct {
   dataEdit: Product;
@@ -17,19 +18,21 @@ export interface DataDialogProduct {
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  preload:boolean=false;
-  list:Product[];
+  preload = false;
+  list: Product[];
   pageSizeOptions = AppComponent.pageSizeOptions;
-  resultsLength:number=0;
-  @ViewChild(MatPaginator) paginator: MatPaginator;  
+  resultsLength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  private timer: number;
 
   public displayedColumns: string[] = [
     'id',
-    "name",
-    "code",
-    "subcategory",
-    "actions"
+    'name',
+    'code',
+    'subcategory',
+    'actions'
   ];
+  formControlName: FormControl = new FormControl('', []);
 
   constructor(
     private productService: ProductsService ,
@@ -41,25 +44,29 @@ export class ProductsComponent implements OnInit {
     this.loadTable();
   }
 
-  loadTable(){
-    this.preload = true;
-    this.list = undefined;
-    const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
-    const page = this.paginator?.pageIndex ? this.paginator.pageIndex*limit : 0;
-    this.productService.getListProducts(page, limit).subscribe(res=>{
-      this.list=res.results;
-      this.resultsLength = res.count;
-      this.preload=false;
-    })
-
+  loadTable(): void {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.timer = window.setTimeout(() => {
+      this.preload = true;
+      this.list = undefined;
+      const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
+      const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
+      this.productService.getListProducts(page, limit, this.formControlName.value).subscribe(res => {
+        this.list = res.results;
+        this.resultsLength = res.count;
+        this.preload = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
-  
+
   openDialogCreate(): void {
     const dialogRef = this.matDialog.open(DialogProductCreateEditComponent, {
       width: '100vw',
       maxWidth: '400px',
       data: {
-        
+
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -89,7 +96,7 @@ export class ProductsComponent implements OnInit {
         dataEdit: product
       }
     });
-    
+
 
   }
 

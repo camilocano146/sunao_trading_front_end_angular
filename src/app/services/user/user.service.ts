@@ -43,9 +43,8 @@ export class UserService {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  getAll(offset: number, limit: number): Observable<any> {
-
-    return this.httpClient.get(`users/?offset=${offset}&limit=${limit}`);
+  getAll(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`users/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   registerToOrganization(body: User): Observable<any> {
@@ -56,15 +55,23 @@ export class UserService {
     return this.httpClient.get('check_token/');
   }
 
-  updateUser(idUser: string, body: any): Observable<any> {
-    return this.httpClient.patch(`users/${idUser}`, body);
+  updateUserEmail(body: any): Observable<any> {
+    return this.httpClient.patch(`users/change_email/`, body);
+  }
+
+  updateUser(body: any): Observable<any> {
+    return this.httpClient.patch(`users/change_email/`, body);
+  }
+
+  updateUserPassword(body: any): Observable<any> {
+    return this.httpClient.patch(`users/change_password/`, body);
   }
 
   getUser(): Observable<any> {
     return this.httpClient.get(`users/get_info_user/`);
   }
 
-  activateDeactivateUser(user:User): Observable<any> {
+  activateDeactivateUser(user: User): Observable<any> {
     return this.httpClient.post(`users/${user.id}/acivate_desactivate_user/`, user);
   }
 }
