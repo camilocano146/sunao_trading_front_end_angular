@@ -16,6 +16,7 @@ export type IncotermType = 'CFR' | 'CIF' | 'DDP';
 
 export interface Liquidation {
   id?: number;
+  status?: string;
   create_at?: string;
   data?: any;
   port_origin_id: number;

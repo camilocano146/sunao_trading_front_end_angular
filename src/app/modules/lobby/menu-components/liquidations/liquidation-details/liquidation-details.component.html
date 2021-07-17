@@ -227,7 +227,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.insurance_cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
+                {{(liquidation?.data?.port_charge | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
               </h4>
             </div>
 
@@ -240,10 +240,17 @@
 
           <div class="row">
             <h5 class="col-8 ps-5">
-              Clave
-            </h5>
-            <h5 class="col-4">
-              {{1200 | currency}}
+              <div>
+                Portuarios:
+              </div>
+              <div *ngIf="!listPortCharge || listPortCharge?.length === 0" style="text-indent: 30px">
+                No hay valores portuarios.
+              </div>
+              <ul *ngIf="listPortCharge?.length > 0">
+                <li *ngFor="let item of listPortCharge">
+                  Concepto = {{item.concept}}, valor = {{(item.value | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}.
+                </li>
+              </ul>
             </h5>
           </div>
 
@@ -274,7 +281,7 @@
               </div>
               <ul *ngIf="listInternationalAgreement?.length > 0">
                 <li *ngFor="let item of listInternationalAgreement">
-                  {{item}}.
+                  País = {{item.location}}, Título = {{item.title}}, Fecha = {{item.date | date}}, Título = {{item.title}}, Gravamen = {{item.gravamen}}%.
                 </li>
               </ul>
 
@@ -287,7 +294,7 @@
               </div>
               <ul *ngIf="listGravament?.length > 0">
                 <li *ngFor="let item of listGravament">
-                  Fecha = {{item.date | date}}, tarifa: {{item.tarif}}%.
+                  Fecha = {{item.date | date}}, tarifa = {{(item.tarif | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}%.
                 </li>
               </ul>
             </h5>

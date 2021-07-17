@@ -67,8 +67,6 @@ export class UsersComponent implements OnInit {
   openDialogImportData(){}
 
   activateDeactivate(user: any){
-    console.log(user );
-
     Swal.fire({
       title: user.is_active ? '¿Deseas desactivar el usuario?' : '¿Deseas activar el usuario?',
       showDenyButton: true,

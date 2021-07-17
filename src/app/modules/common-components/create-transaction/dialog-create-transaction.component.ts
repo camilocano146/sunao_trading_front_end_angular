@@ -163,7 +163,6 @@ export class DialogCreateTransactionComponent implements OnInit {
     };
     this.paymentService.tokenCard(infocard).subscribe(response => {
       // const token_card = response.body.body.data.id;
-      console.log(response);
       response = Utilities.decrypt(response.body);
       const token_card = response.data.id;
       const data = {
@@ -327,7 +326,6 @@ export class DialogCreateTransactionComponent implements OnInit {
       case 'APPROVED':
         if (redirectToInvoice) {
           this.notifyService.showSuccess('Aviso', 'En seguida serás redigirido a la página de tu banco.');
-          console.log(transactionBank);
           setTimeout(() => {
             window.open(transactionBank?.payment_method?.extra.async_payment_url, '_blank');
             this.router.navigate(['lobby']);

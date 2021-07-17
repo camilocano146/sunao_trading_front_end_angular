@@ -60,7 +60,7 @@ export class UserService {
   }
 
   updateUser(body: any): Observable<any> {
-    return this.httpClient.patch(`edit/`, body);
+    return this.httpClient.patch(`users/edit/`, body);
   }
 
   updateUserPassword(body: any): Observable<any> {

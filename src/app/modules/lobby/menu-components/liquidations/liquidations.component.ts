@@ -98,9 +98,7 @@ export class LiquidationsComponent implements OnInit {
         value => {
           this.preload = false;
           this.list = value.results;
-          console.log(this.list);
           this.resultsLength = value.count;
-          console.log(this.list);
         }, error => {
           this.preload = false;
           this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));
@@ -123,6 +121,11 @@ export class LiquidationsComponent implements OnInit {
   }
 
   goToSeeDetails(row: Liquidation): void {
-    this.router.navigate([`lobby/liquidations-detail/${row.id}`]);
+    if (row.status === 'PENDIENT') {
+      this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
+      this.router.navigate(['import/plans']);
+    } else {
+      this.router.navigate([`lobby/liquidations-detail/${row.id}`]);
+    }
   }
 }

@@ -73,12 +73,14 @@ export class ProfileComponent implements OnInit {
       maxWidth: '96vw',
       backdropClass: 'backdrop-dark',
       panelClass: 'div-without-padding',
+      data: this.user
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.user.first_name = result?.first_name;
         this.user.last_name = result?.last_name;
         this.user.document = result?.document;
+        this.user.digit_check = result?.digit_check;
       }
     });
   }

@@ -62,9 +62,8 @@ export class DialogCountryCreateEditComponent implements OnInit {
         this.notifyService.showSuccessCreateOrEdit(!!this.dataEdit);
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
-        
+
         const errors = error.error.non_field_errors[0];
-        console.log(errors)
         if (errors.toString()?.toUpperCase()?.includes('name country must be unique.'.toUpperCase())) {
           this.notifyService.showErrorSnapshot(this.translate.instant('locations.errors.unique_name'));
         } else {

@@ -27,7 +27,6 @@ export class PlansComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     ManageSessionStorage.deleteCountrySelected();
-    console.log('qweqweqweqwei');
   }
 
   getAllPlans(): void {

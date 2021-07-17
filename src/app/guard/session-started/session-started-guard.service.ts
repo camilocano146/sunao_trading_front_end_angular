@@ -14,7 +14,6 @@ export class SessionStartedGuard implements CanLoad {
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('alsjdlaksd');
     if (ManageLocalStorage.getUser() && ManageLocalStorage.getToken()) {
       this.router.navigate(['lobby/operations-list']);
       return true;

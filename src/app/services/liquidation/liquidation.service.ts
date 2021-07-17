@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Liquidation} from '../../models/Liquidation';
+import {IncotermType, Liquidation} from '../../models/Liquidation';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,9 @@ export class LiquidationService {
 
   getById(id: number): Observable<any> {
     return this.httpClient.get(`liquidation/${id}/get_liquidation_info/`);
+  }
+
+  validateInfoPortTarif(body: {port_origin_id: number, port_destination_id: number, city_destination_id: number, container_type_id: number, incoterm: IncotermType}): Observable<any> {
+    return this.httpClient.post(`liquidation_no_auth/validate_info_port_tarif/`, body);
   }
 }

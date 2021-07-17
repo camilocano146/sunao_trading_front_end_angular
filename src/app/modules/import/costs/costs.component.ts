@@ -19,6 +19,8 @@ import {ProductsService} from '../../../services/products/products.service';
 import {Product} from '../../../models/Product';
 import {ActivatedRoute} from '@angular/router';
 import {LiquidationService} from '../../../services/liquidation/liquidation.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {NotifyService} from "../../../services/notify/notify.service";
 
 interface Step {
   imagePath: string;
@@ -82,8 +84,10 @@ export class CostsComponent implements OnInit {
   ];
   selectedIncoterm: Incoterm;
   private timer: number;
+  private timerCityIncoterm: number;
   private timerProducts: number;
   private listSubscribesLocation: Subscription[] = [];
+  private listSubscribesLocationIncoterm: Subscription[] = [];
   defaultLatitude = 0;
   defaultLongitude = 0;
   selectedCurrency: Currency;
@@ -99,6 +103,7 @@ export class CostsComponent implements OnInit {
   preloadCityIncoterm: boolean;
   preloadProducts: boolean;
   preloadLiquidation: boolean;
+  preloadFinalization: boolean;
 
   constructor(
     public matDialog: MatDialog,
@@ -108,6 +113,7 @@ export class CostsComponent implements OnInit {
     public productsService: ProductsService,
     public activatedRoute: ActivatedRoute,
     public liquidationService: LiquidationService,
+    public notifyService: NotifyService,
   ) { }
 
   ngOnInit(): void {
@@ -248,26 +254,25 @@ export class CostsComponent implements OnInit {
     }, AppComponent.timeMillisDelayFilter);
   }
 
-  getAllCitiesIcotermStep(): void {
+  getAllCitiesIncotermStep(): void {
     if (this.lastSelectedIcotermCity?.name?.toUpperCase() !== this.formControlCityIcoterm?.value?.toUpperCase()) {
       this.lastSelectedIcotermCity = undefined;
     }
     if (this.lastSelectedIcotermCity) {
       return;
     }
-    if (this.timer) {
-      window.clearTimeout(this.timer);
+    if (this.timerCityIncoterm) {
+      window.clearTimeout(this.timerCityIncoterm);
     }
-    this.timer = window.setTimeout(() => {
-      for (const subscribeL of this.listSubscribesLocation) {
+    this.timerCityIncoterm = window.setTimeout(() => {
+      for (const subscribeL of this.listSubscribesLocationIncoterm) {
         subscribeL.unsubscribe();
       }
       this.preloadCityIncoterm = true;
       this.listLocationsIcoterm?.splice(0, this.listLocationsIcoterm?.length);
-      this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
+      this.listSubscribesLocationIncoterm.splice(0, this.listSubscribesLocationIncoterm.length);
       const subscribeLocation = this.locationService.getPublicAllCitiesByCountry(this.lastDestinationSelected.father_location?.id, 0, this.limit, this.formControlCityIcoterm.value);
-      this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
-        // console.log(res);
+      this.listSubscribesLocationIncoterm.push(subscribeLocation.subscribe(res => {
         this.listLocationsIcoterm = res.results;
         this.preloadCityIncoterm = false;
       }, error => {
@@ -327,6 +332,7 @@ export class CostsComponent implements OnInit {
 
   onSelectOptionDestination(option: Location): void {
     this.lastDestinationSelected = option;
+    this.getAllCitiesIncotermStep();
     this.getAllPorts(option, this.formControlDestinationPort);
   }
 
@@ -336,7 +342,6 @@ export class CostsComponent implements OnInit {
 
   onSelectOptionDestinationPort(option: Port): void {
     this.lastPortDestinationSelected = option;
-    console.log(this.lastPortDestinationSelected);
   }
 
   changeCityIcotermAutocomplete() {
@@ -363,6 +368,26 @@ export class CostsComponent implements OnInit {
         this.currentStep += 1;
       }
     }
+  }
+
+  verifyCorrectLiquidation(): void {
+    this.preloadFinalization = true;
+    const body = {
+      container_type_id: this.selectedContainer?.id,
+      port_origin_id: this.lastOriginSelected?.id,
+      port_destination_id: this.lastDestinationSelected?.id,
+      city_destination_id: this.lastSelectedIcotermCity?.id,
+      incoterm: this.selectedIncoterm.name
+    };
+    this.liquidationService.validateInfoPortTarif(body).subscribe(res => {
+      this.preloadFinalization = false;
+      this.openDialogResume();
+    }, (error: HttpErrorResponse) => {
+      this.preloadFinalization = false;
+      if (error.status === 400) {
+        this.notifyService.showErrorSnapshot('La liquidación no se puede crear debido a que la información sumistrada (ciudad origen, destino, contenedor, incoterm) no dispone de fletes.');
+      }
+    });
   }
 
   openDialogResume(): void {
@@ -408,7 +433,7 @@ export class CostsComponent implements OnInit {
   changeStepOption(i: number): void {
     if (this.canGoToNextStep()) {
       if (i === this.listStepper.length - 1) {
-        this.openDialogResume();
+        this.verifyCorrectLiquidation();
       } else {
         this.currentStep = i;
       }

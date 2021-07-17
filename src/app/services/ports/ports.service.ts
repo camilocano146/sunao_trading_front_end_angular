@@ -27,4 +27,8 @@ export class PortsService {
   edit(id: number, body: Port): Observable<any> {
     return this.httpClient.put(`port/${id}/edit/`, body);
   }
+
+  getPortCharge(id: number, offset: number, limit: number, idPort: number, idContainerType: number): Observable<any> {
+    return this.httpClient.get(`port_charge/?offset=${offset}&limit=${limit}&port_id=${idPort}&container_type_id=${idContainerType}`);
+  }
 }

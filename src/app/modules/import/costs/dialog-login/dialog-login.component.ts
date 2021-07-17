@@ -78,7 +78,6 @@ export class DialogLoginComponent implements OnInit {
           this.matDialogRef.close(value);
         }, (httpErrorResponse: HttpErrorResponse) => {
           this.preload = false;
-          console.log(httpErrorResponse.error);
           const errorMessage = httpErrorResponse.error?.error?.toUpperCase();
           if (httpErrorResponse.status === 400) {
             if (errorMessage?.includes('invalid_grant'.toUpperCase())) {

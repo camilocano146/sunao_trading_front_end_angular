@@ -32,7 +32,6 @@ export class DialogChangeEmailComponent implements OnInit {
     const email = this.formControlEmail.value?.trim();
     if (this.formControlEmail.valid) {
       this.userService.updateUserEmail({email}).subscribe(res => {
-        console.log(res);
         this.notifyService.showSuccessSnapshot('Email modificado');
         this.matDialogRef.close(res.email);
         this.preload = false;

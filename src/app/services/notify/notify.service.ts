@@ -9,6 +9,7 @@ export class NotifyService {
   configSuccess = {timeout: 3000, titleMaxLength: 50, position: SnotifyPosition.rightTop, showProgressBar: false};
   configWarning = {timeout: 3000, titleMaxLength: 50, position: SnotifyPosition.rightTop, showProgressBar: false};
   configError = {timeout: 3000, titleMaxLength: 50, showProgressBar: false, position: SnotifyPosition.rightTop};
+  configErrorLong = {timeout: 7000, titleMaxLength: 50, showProgressBar: false, position: SnotifyPosition.rightTop};
   configErrorSnapshot = {timeout: 4000, showProgressBar: false, titleMaxLength: 200, position: SnotifyPosition.rightTop};
   configErrorSnapshotLong = {timeout: 5000, showProgressBar: false, titleMaxLength: 200, position: SnotifyPosition.rightTop};
   configWarningSnapshotLong = {timeout: 5000, showProgressBar: false, titleMaxLength: 200, position: SnotifyPosition.rightTop};
@@ -23,6 +24,10 @@ export class NotifyService {
 
   showError(title, body): void {
     this.snotifyService.error(body, title, this.configError);
+  }
+
+  showErrorLong(title, body): void {
+    this.snotifyService.error(body, title, this.configErrorLong);
   }
 
   showErrorSnapshot(body, title?): void {

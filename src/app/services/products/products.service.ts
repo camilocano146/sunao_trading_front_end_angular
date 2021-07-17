@@ -43,7 +43,7 @@ export class ProductsService {
   }
 
   getInternationalAgreementByLocation(id: number, idLocation: number, offset: number, limit: number): Observable<any>{
-    return this.httpClient.get(`product/${id}/get_international_agreement/?offset=${offset}&limit=${limit}&location=${idLocation}`);
+      return this.httpClient.get(`product/${id}/get_international_agreement/?offset=${offset}&limit=${limit}&location=${idLocation}`);
   }
 
   getTradeRegimen(id: number, offset: number, limit: number): Observable<any>{

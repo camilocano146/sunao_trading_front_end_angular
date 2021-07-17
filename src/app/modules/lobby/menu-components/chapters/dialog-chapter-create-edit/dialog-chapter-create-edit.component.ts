@@ -22,7 +22,7 @@ export class DialogChapterCreateEditComponent implements OnInit {
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
-  
+
   public formControlCode: FormControl = new FormControl(
     null, [Validators.required,  Validators.maxLength(5)]
   );
@@ -33,7 +33,7 @@ export class DialogChapterCreateEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DataDialogChapter,
     private translate: TranslateService,
     private notifyService: NotifyService,
-  ) { 
+  ) {
     if (this.data.dataEdit) {
       this.formControlName.setValue(data.dataEdit.name);
       this.formControlCode.setValue(data.dataEdit.code);
@@ -63,9 +63,7 @@ export class DialogChapterCreateEditComponent implements OnInit {
         this.notifyService.showSuccessCreateOrEdit(!!this.data.dataEdit);
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
-        console.log(error)
         const errors_code = error.error?.code;
-        console.log(errors_code)
         if (errors_code?.toString()?.toUpperCase()?.includes('chapter with this code already exists.'.toUpperCase())) {
           this.notifyService.showErrorSnapshot(this.translate.instant('chapter.errors.code_unique'));
         } else {

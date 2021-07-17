@@ -23,7 +23,7 @@ export class DialogImportPortTarifsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogImportPortTarifsComponent>,
     private translate: TranslateService,
-    private portTarifService:PortTarifService,
+    private portTarifService: PortTarifService,
     private notifyService: NotifyService,
   ) { }
 
@@ -32,20 +32,17 @@ export class DialogImportPortTarifsComponent implements OnInit {
 
   save(): void {
     if (this.formControlFile.valid) {
-      console.log("save")
       this.preloadSave = true;
       this.portTarifService.importFilePortTarifsInternational(this.formControlFile.value).subscribe(res => {
         this.preloadSave = false;
         this.notifyService.showSuccessCreateOrEdit(null);
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
-        console.log(error)
-        
-        if(error.status ==400){
+        if (error.status == 400){
           const errors = error.error?.detail;
 
-          let messageError= "";
-          
+          let messageError = '';
+
           for (const e of errors) {
             messageError += `<h3> Fila: ${e.row} Column: ${e.column}</h3>  ${e.detail} <br><br> `;
           }
@@ -54,7 +51,7 @@ export class DialogImportPortTarifsComponent implements OnInit {
             'Errores en el archivo',
             messageError,
             'error'
-          )
+          );
           this.dialogRef.close('created');
         }
         this.preloadSave = false;

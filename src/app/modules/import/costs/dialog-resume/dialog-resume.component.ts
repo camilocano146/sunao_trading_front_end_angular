@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {LiquidationService} from '../../../../services/liquidation/liquidation.service';
 import {Liquidation} from '../../../../models/Liquidation';
 import {NotifyService} from "../../../../services/notify/notify.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-dialog-resume',
@@ -57,17 +58,27 @@ export class DialogResumeComponent implements OnInit {
     this.preload = true;
     const liquidate = this.buildLiquidate();
     this.liquidationService.liquidate(liquidate).subscribe(res => {
-      const userHastActivePackage = res.User_has_active_package;
-      if (!userHastActivePackage) {
+      const userHastActivePackage = res.USER_HAS_ACTIVE_PACKAGE;
+      if (userHastActivePackage === false) {
+        this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
         this.router.navigate(['import/plans']);
       } else {
         this.router.navigate(['lobby']);
       }
       this.matDialogRef.close();
       this.preload = false;
-    }, error => {
+    }, (error: HttpErrorResponse) => {
       this.preload = false;
-      this.notifyService.showError('', 'No fué posible registrar la liquidación, por favor intente nuevamente.');
+      if (error.status === 400) {
+        const listMessageError = error.error;
+        if (listMessageError.USER_HAS_ACTIVE_PACKAGE === false) {
+          this.notifyService.showErrorLong('', 'Ya tiene una liquidación pendiente, no puede realizar otra hasta que realice la compra de un paquete');
+          this.router.navigate(['import/plans']);
+          this.matDialogRef.close();
+        }
+      } else {
+        this.notifyService.showError('', 'No fué posible registrar la liquidación, por favor intente nuevamente.');
+      }
     });
   }
 

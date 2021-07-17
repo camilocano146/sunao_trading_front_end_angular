@@ -76,7 +76,6 @@ export class CouponsComponent implements OnInit, AfterViewInit {
           this.preload = false;
           this.list = value.results;
           this.resultsLength = value.count;
-          console.log(this.list);
         }, error => {
           this.preload = false;
           this.notifyService.showErrorSnapshotLong(this.translate.instant('errors.connection_error'));

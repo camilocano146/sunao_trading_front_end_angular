@@ -113,7 +113,6 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
           this.router.navigate(['']);
         }, error => {
           this.preload = false;
-          console.log(error.error);
           if (error.status === 400 || error.status === 404 || error.status === 422) {
             const errorMessage = error.error.detail?.toString().toUpperCase();
             if (errorMessage?.includes('unknown code'.toUpperCase())) {

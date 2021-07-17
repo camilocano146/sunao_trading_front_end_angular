@@ -68,7 +68,6 @@ export class DialogCityCreateEditComponent implements OnInit {
         this.notifyService.showSuccessCreateOrEdit(!!this.data.dataEdit);
         this.dialogRef.close('created');
       }, (error: HttpErrorResponse) => {
-        console.log(error)
         const errors = error.error.body?.mensaje?.errors;
         if (errors?.name?.message?.toString()?.toUpperCase()?.includes('name must be unique'.toUpperCase())) {
           this.notifyService.showErrorSnapshot(this.translate.instant('errors.unique_name'));

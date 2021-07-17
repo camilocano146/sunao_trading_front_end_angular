@@ -85,7 +85,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.sign_in.sign_ok'));
         }, (httpErrorResponse: HttpErrorResponse) => {
           this.preload = false;
-          console.log(httpErrorResponse.error);
           const errorMessage = httpErrorResponse.error?.error?.toUpperCase();
           if (httpErrorResponse.status === 400) {
             if (errorMessage?.includes('invalid_grant'.toUpperCase())) {

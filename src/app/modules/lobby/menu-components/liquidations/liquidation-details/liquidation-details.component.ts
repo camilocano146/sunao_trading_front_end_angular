@@ -4,9 +4,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LiquidationService} from '../../../../../services/liquidation/liquidation.service';
 import {Liquidation} from '../../../../../models/Liquidation';
-import {ProductsService} from "../../../../../services/products/products.service";
-import {Gravamen} from "../../../../../models/Gravamen";
-import {SupportDocument} from "../../../../../models/SupportDocument";
+import {ProductsService} from '../../../../../services/products/products.service';
+import {Gravamen} from '../../../../../models/Gravamen';
+import {SupportDocument} from '../../../../../models/SupportDocument';
+import {PortsService} from '../../../../../services/ports/ports.service';
 
 @Component({
   selector: 'app-dashboards',
@@ -23,6 +24,7 @@ export class LiquidationDetailsComponent implements OnInit {
   listGravament: Gravamen[];
   listInternationalAgreement: any;
   listSupportDocuments: SupportDocument[];
+  listPortCharge: any;
 
   constructor(
     private translate: TranslateService,
@@ -31,6 +33,7 @@ export class LiquidationDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private liquidationService: LiquidationService,
     private productsService: ProductsService,
+    private portsService: PortsService
   ) {
     activatedRoute.params.subscribe(params => {
       this.idLiquidation = params.idLiquidation;
@@ -45,7 +48,6 @@ export class LiquidationDetailsComponent implements OnInit {
     this.preload = true;
     this.liquidationService.getById(this.idLiquidation).subscribe(res => {
       this.liquidation = res;
-      console.log(this.liquidation);
       this.preload = false;
       switch (this.liquidation.incoterm) {
         case 'CFR':
@@ -59,19 +61,20 @@ export class LiquidationDetailsComponent implements OnInit {
           break;
       }
 
-      this.productsService.getInternationalAgreementByLocation(this.liquidation.product.id, this.liquidation?.port_destination?.location?.id, 0, 1000).subscribe(res => {
+      this.productsService.getInternationalAgreementByLocation(this.liquidation.product.id, this.liquidation?.port_origin?.location?.id, 0, 1000).subscribe(res => {
         this.listInternationalAgreement = res.results;
-        console.log(res);
       });
 
       this.productsService.getGravaments(this.liquidation.product.id, 0, 1000).subscribe(res => {
         this.listGravament = res.results;
-        console.log(this.listGravament);
       });
 
       this.productsService.getSupportDocument(this.liquidation.product.id, 0, 1000).subscribe(res => {
         this.listSupportDocuments = res.results;
-        console.log(res);
+      });
+
+      this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.port_destination?.id, this.liquidation.container_type?.id).subscribe(res => {
+        this.listPortCharge = res.results;
       });
     }, error => {
       this.preload = false;

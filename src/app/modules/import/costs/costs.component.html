@@ -66,7 +66,7 @@
                   Puerto Origen
                 </h6>
                 <mat-error style="font-size: 10px" *ngIf="formControlOriginPort.value && !lastPortOriginSelected; else emptyValueText10px">
-                  Debe oprimir sobre una ciudad para seleccionarla
+                  Debe oprimir sobre un puerto para seleccionarla
                 </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
                   <input type="text" matInput (ngModelChange)="this.getAllPorts(lastOriginSelected, formControlOriginPort)"
@@ -116,7 +116,7 @@
                   Puerto Detino
                 </h6>
                 <mat-error style="font-size: 10px" *ngIf="formControlDestinationPort.value && !lastPortDestinationSelected; else emptyValueText10px">
-                  Debe oprimir sobre una puerto para seleccionarlo
+                  Debe oprimir sobre un puerto para seleccionarlo
                 </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
                   <input type="text" matInput (ngModelChange)="this.getAllPorts(lastDestinationSelected, formControlDestinationPort)"
@@ -359,7 +359,7 @@
                   <input type="text"
                          name="cityIncoterm"
                          matInput
-                         (ngModelChange)="this.getAllCitiesIcotermStep()"
+                         (ngModelChange)="this.getAllCitiesIncotermStep()"
                          [formControl]="formControlCityIcoterm"
                          [matAutocomplete]="autoLocations">
                   <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">
@@ -386,7 +386,7 @@
           </div>
         </div>
 
-        <div class="text-center div-buttons">
+        <div class="text-center div-buttons" *ngIf="!this.preloadFinalization">
           <button *ngIf="currentStep === 0" mat-raised-button class="btn-back-next" (click)="actionButtonNext()">
             <h5 class="m-0">
               Continuar
@@ -414,7 +414,7 @@
           <button *ngIf="currentStep >= listStepper.length - 2"
                   mat-raised-button
                   class="btn-back-next-m-0 ms-sm-2-415pxms-2 ms-sm-3 mb-4 mt-1"
-                  (click)="openDialogResume()">
+                  (click)="verifyCorrectLiquidation()">
             <h5 class="m-0">
             <span style="margin-right: 1em">
               Finalizar
@@ -422,6 +422,10 @@
               <img src="./assets/icons/arrow_right_24dp.svg" alt="">
             </h5>
           </button>
+        </div>
+
+        <div *ngIf="preloadFinalization" class="pb-4">
+          <mat-spinner diameter="50" class="m-auto"></mat-spinner>
         </div>
       </div>
     </div>

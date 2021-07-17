@@ -69,7 +69,6 @@ export class DialogPortCreateEditComponent implements OnInit {
         this.latitude = +data.dataEdit.latitude;
         this.longitude = +data.dataEdit.longitude;
       }
-      console.log(this.latitude, this.longitude);
       this.preload = false;
     });
   }
