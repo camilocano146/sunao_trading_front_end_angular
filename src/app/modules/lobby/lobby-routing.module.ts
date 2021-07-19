@@ -21,6 +21,7 @@ import {TransactionsComponent} from './menu-components/transactions/transactions
 import { CurrenciesComponent } from './menu-components/currencies/currencies.component';
 import { PortChargeComponent } from './menu-components/port-charge/port-charge.component';
 import { ContainersTypeComponent } from './menu-components/containers-type/containers-type.component';
+import {GuardRoleGuard} from "../../guard/guard-role-admin/guard-role.guard";
 
 const routes: Routes = [
   {
@@ -29,23 +30,23 @@ const routes: Routes = [
       {path: '', component: LiquidationsComponent},
       {path: 'liquidations-detail/:idLiquidation', component: LiquidationDetailsComponent},
       {path: 'transactions', component: TransactionsComponent},
-      {path: 'locations', component: CountriesComponent},
-      {path: 'locations/cities/:idCountry', component: CitiesComponent},
-      {path: 'providers', component: InternationalProvidersComponent},
-      {path: 'my-plan', component: MyPlanComponent},
-      {path: 'profile', component: ProfileComponent},
-      {path: 'port-tarifs', component: PortTarifsComponent},
-      {path: 'products', component: ProductsComponent},
-      {path: 'users', component: UsersComponent},
-      {path: 'ports', component: PortsComponent},
-      {path: 'chapters', component: ChaptersComponent},
-      {path: 'port-tarifs-national', component: PortTarifsNationalComponent},
-      {path: 'packages', component: PackagesComponent},
-      {path: 'coupons', component: CouponsComponent},
-      {path: 'national-providers', component: NationalProvidersComponent},
-      {path: 'currencies', component: CurrenciesComponent},
-      {path: 'port_charges', component: PortChargeComponent},
-      {path: 'containers', component: ContainersTypeComponent},
+      {path: 'locations', component: CountriesComponent, canActivate: [GuardRoleGuard] },
+      {path: 'locations/cities/:idCountry', component: CitiesComponent, canActivate: [GuardRoleGuard] },
+      {path: 'providers', component: InternationalProvidersComponent, canActivate: [GuardRoleGuard] },
+      {path: 'my-plan', component: MyPlanComponent, canActivate: [GuardRoleGuard] },
+      {path: 'profile', component: ProfileComponent, canActivate: [GuardRoleGuard] },
+      {path: 'port-tarifs', component: PortTarifsComponent, canActivate: [GuardRoleGuard] },
+      {path: 'products', component: ProductsComponent, canActivate: [GuardRoleGuard] },
+      {path: 'users', component: UsersComponent, canActivate: [GuardRoleGuard] },
+      {path: 'ports', component: PortsComponent, canActivate: [GuardRoleGuard] },
+      {path: 'chapters', component: ChaptersComponent, canActivate: [GuardRoleGuard] },
+      {path: 'port-tarifs-national', component: PortTarifsNationalComponent, canActivate: [GuardRoleGuard] },
+      {path: 'packages', component: PackagesComponent, canActivate: [GuardRoleGuard] },
+      {path: 'coupons', component: CouponsComponent, canActivate: [GuardRoleGuard] },
+      {path: 'national-providers', component: NationalProvidersComponent, canActivate: [GuardRoleGuard] },
+      {path: 'currencies', component: CurrenciesComponent, canActivate: [GuardRoleGuard] },
+      {path: 'port_charges', component: PortChargeComponent, canActivate: [GuardRoleGuard] },
+      {path: 'containers', component: ContainersTypeComponent, canActivate: [GuardRoleGuard] },
     ]
   },
 ];

@@ -68,7 +68,10 @@
             <img src="./assets/icons/email_white.svg" alt="">
             Email
           </th>
-          <td style="max-width: 150px;" mat-cell *matCellDef="let row">{{row.email}}</td>
+          <td style="max-width: 150px;" mat-cell *matCellDef="let row">
+            <span *ngIf="row.email">{{row.email}}</span>
+            <span *ngIf="!row.email">N/A</span>
+          </td>
         </ng-container>
 
         <!-- Phone Column -->

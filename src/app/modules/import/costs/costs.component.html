@@ -42,13 +42,13 @@
             <div class="row">
               <div class="col-sm-6">
                 <h6 class="mb-1">
-                  Ciudad Origen
+                  País Origen
                 </h6>
                 <mat-error style="font-size: 10px" *ngIf="formControlOrigin.value && !lastOriginSelected; else emptyValueText10px">
-                  Debe oprimir sobre una ciudad para seleccionarla
+                  Debe oprimir sobre un país para seleccionarlo
                 </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
-                  <input type="text" matInput (ngModelChange)="this.getAllCities(formControlOrigin)"
+                  <input type="text" matInput (ngModelChange)="this.getAllCountries(formControlOrigin)"
                          [formControl]="formControlOrigin" [matAutocomplete]="autoLocations1" name="origin">
                   <mat-autocomplete autoActiveFirstOption #autoLocations1="matAutocomplete">
                     <mat-option *ngIf="preloadCityOrigin">
@@ -56,7 +56,7 @@
                     </mat-option>
                     <mat-option *ngFor="let option of listLocationsOrigin" (onSelectionChange)="onSelectOptionOrigin(option)"
                                 [value]="option.name">
-                      <span>{{option.name | titlecase}} ({{option.father_location.name | titlecase}})</span>
+                      <span>{{option.name | titlecase}}</span>
                     </mat-option>
                   </mat-autocomplete>
                   <mat-error>{{getErrorMessageRequired(formControlOrigin)}}</mat-error>
@@ -69,17 +69,25 @@
                   Debe oprimir sobre un puerto para seleccionarla
                 </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
-                  <input type="text" matInput (ngModelChange)="this.getAllPorts(lastOriginSelected, formControlOriginPort)"
-                         [formControl]="formControlOriginPort" [matAutocomplete]="autoLocations2" name="portOrigin">
-                  <mat-autocomplete autoActiveFirstOption #autoLocations2="matAutocomplete">
+<!--                  <input type="text" matInput (ngModelChange)="this.getAllPorts(lastOriginSelected, formControlOriginPort)"-->
+<!--                         [formControl]="formControlOriginPort" [matAutocomplete]="autoLocations2" name="portOrigin">-->
+<!--                  <mat-autocomplete autoActiveFirstOption #autoLocations2="matAutocomplete">-->
+<!--                    <mat-option *ngIf="preloadCityPortOrigin">-->
+<!--                      <mat-spinner diameter="40" class="m-auto"></mat-spinner>-->
+<!--                    </mat-option>-->
+<!--                    <mat-option *ngFor="let option of listPortsOrigin" (onSelectionChange)="onSelectOptionOrigenPort(option)"-->
+<!--                                [value]="option.name">-->
+<!--                      <span>{{option.name}}</span>-->
+<!--                    </mat-option>-->
+<!--                  </mat-autocomplete>-->
+                  <mat-select [formControl]="formControlOriginPort">
                     <mat-option *ngIf="preloadCityPortOrigin">
                       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
                     </mat-option>
-                    <mat-option *ngFor="let option of listPortsOrigin" (onSelectionChange)="onSelectOptionOrigenPort(option)"
-                                [value]="option.name">
-                      <span>{{option.name}}</span>
+                    <mat-option *ngFor="let option of listPortsOrigin" [value]="option.name" (onSelectionChange)="onSelectOptionOrigenPort(option)">
+                      {{option.name}}
                     </mat-option>
-                  </mat-autocomplete>
+                  </mat-select>
                   <mat-error>{{getErrorMessageRequired(formControlOriginPort)}}</mat-error>
                 </mat-form-field>
 
@@ -92,13 +100,13 @@
               </div>
               <div class="col-sm-6 mt-4 mt-sm-0">
                 <h6 class="mb-1">
-                  Ciudad Destino
+                  País Destino
                 </h6>
                 <mat-error style="font-size: 10px" *ngIf="formControlDestination.value && !lastDestinationSelected; else emptyValueText10px">
-                  Debe oprimir sobre una ciudad para seleccionarla
+                  Debe oprimir sobre un país para seleccionarlo
                 </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
-                  <input type="text" matInput (ngModelChange)="this.getAllCities(formControlDestination)"
+                  <input type="text" matInput (ngModelChange)="this.getAllCountries(formControlDestination)"
                          [formControl]="formControlDestination" [matAutocomplete]="autoLocations3" name="destination">
                   <mat-autocomplete autoActiveFirstOption #autoLocations3="matAutocomplete">
                     <mat-option *ngIf="preloadCityDestination">
@@ -106,7 +114,7 @@
                     </mat-option>
                     <mat-option *ngFor="let option of listLocationsDestination" (onSelectionChange)="onSelectOptionDestination(option)"
                                 [value]="option.name | titlecase">
-                      <span>{{option.name | titlecase}} ({{option.father_location.name | titlecase}})</span>
+                      <span>{{option.name | titlecase}}</span>
                     </mat-option>
                   </mat-autocomplete>
                   <mat-error>{{getErrorMessageRequired(formControlDestination)}}</mat-error>
@@ -119,17 +127,25 @@
                   Debe oprimir sobre un puerto para seleccionarlo
                 </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
-                  <input type="text" matInput (ngModelChange)="this.getAllPorts(lastDestinationSelected, formControlDestinationPort)"
-                         [formControl]="formControlDestinationPort" [matAutocomplete]="autoLocations4" name="portDestination">
-                  <mat-autocomplete autoActiveFirstOption #autoLocations4="matAutocomplete">
+<!--                  <input type="text" matInput (ngModelChange)="this.getAllPorts(lastDestinationSelected, formControlDestinationPort)"-->
+<!--                         [formControl]="formControlDestinationPort" [matAutocomplete]="autoLocations4" name="portDestination">-->
+<!--                  <mat-autocomplete autoActiveFirstOption #autoLocations4="matAutocomplete">-->
+<!--                    <mat-option *ngIf="preloadCityPortDestination">-->
+<!--                      <mat-spinner diameter="40" class="m-auto"></mat-spinner>-->
+<!--                    </mat-option>-->
+<!--                    <mat-option *ngFor="let option of listPortsDestination" (onSelectionChange)="onSelectOptionDestinationPort(option)"-->
+<!--                                [value]="option.name">-->
+<!--                      <span>{{option.name}}</span>-->
+<!--                    </mat-option>-->
+<!--                  </mat-autocomplete>-->
+                  <mat-select [formControl]="formControlDestinationPort">
                     <mat-option *ngIf="preloadCityPortDestination">
                       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
                     </mat-option>
-                    <mat-option *ngFor="let option of listPortsDestination" (onSelectionChange)="onSelectOptionDestinationPort(option)"
-                                [value]="option.name">
-                      <span>{{option.name}}</span>
+                    <mat-option *ngFor="let option of listPortsDestination" [value]="option.name" (onSelectionChange)="onSelectOptionDestinationPort(option)">
+                      {{option.name}}
                     </mat-option>
-                  </mat-autocomplete>
+                  </mat-select>
                   <mat-error>{{getErrorMessageRequired(formControlDestinationPort)}}</mat-error>
                 </mat-form-field>
 

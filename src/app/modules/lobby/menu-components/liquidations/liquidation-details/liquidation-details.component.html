@@ -298,9 +298,6 @@
                 </li>
               </ul>
             </h5>
-            <h5 class="col-4">
-              {{1200 | currency}}
-            </h5>
           </div>
 
         </mat-expansion-panel>
@@ -337,7 +334,7 @@
 
       <div class="div-total row">
         <h4 class="col-6">
-          Total {{liquidation.incoterm}}:
+          Total {{getCalculateIcoterm()}}:
         </h4>
         <h4 class="col-6 text-right">
           USD {{((calculateTotalValue() | currency:'$ ':'symbol':'1.0') + '')?.replace(',', '.')}}

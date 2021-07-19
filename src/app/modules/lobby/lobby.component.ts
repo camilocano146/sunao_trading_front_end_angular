@@ -26,12 +26,13 @@ export class LobbyComponent implements OnInit {
     private matDialog: MatDialog,
     private userService: UserService,
   ) {
-    // this.getUser();
+    this.verifyUserAdmin();
   }
 
-  getUser(): void {
-    this.userService.getUser().subscribe(value => {
-      this.isAdminUser = value.isAdminUser;
+  verifyUserAdmin(): void {
+    this.userService.getUserAdmin().subscribe(value => {
+      this.isAdminUser = value.result;
+      // this.isAdminUser = value.isAdminUser;
     }, error => {});
   }
 

@@ -59,8 +59,7 @@
 
     <div class="col-12" style="margin-bottom: 10px;">
       <mat-form-field class="w-100">
-        <mat-select [disableOptionCentering]="true" placeholder="Seleccione una locacion" [formControl]="formControlLocation">
-
+        <mat-select [disableOptionCentering]="true" placeholder="Seleccione un país" [formControl]="formControlLocation">
           <mat-option  disabled>
             <input type="search"
                    placeholder="Buscar"
@@ -68,16 +67,17 @@
                    (keyup)= "searchSelectorCities($event)"
             >
           </mat-option>
-          <mat-option *ngIf="!list_cities.length===0">
+          <mat-option *ngIf="!list_countries.length===0">
             -------
           </mat-option>
-          <mat-option *ngFor="let city of list_cities" [value]="city.id">
-            {{city.name}} ({{city.father_location.name}})
+          <mat-option *ngFor="let country of list_countries" [value]="country.id">
+            {{country.name}}
           </mat-option>
-          <mat-option disabled *ngIf="list_cities.length === 0">
+          <mat-option disabled *ngIf="list_countries.length === 0">
             Buscando ...
           </mat-option>
         </mat-select>
+        <mat-error>Campo requerido</mat-error>
       </mat-form-field>
     </div>
 

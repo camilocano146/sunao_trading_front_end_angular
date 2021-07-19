@@ -117,7 +117,7 @@ export class CostsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getAllCities(this.formControlOrigin, true);
+    this.getAllCountries(this.formControlOrigin, true);
     this.getContainers();
     this.getProducts();
     this.loadReuseLiquidation();
@@ -204,7 +204,7 @@ export class CostsComponent implements OnInit {
     }, AppComponent.timeMillisDelayFilter);
   }
 
-  getAllCities(formControl: FormControl, onInit?: boolean): void {
+  getAllCountries(formControl: FormControl, onInit?: boolean): void {
     if (formControl === this.formControlOrigin && this.lastOriginSelected?.name?.toUpperCase() !== this.formControlOrigin?.value?.toUpperCase()) {
       this.lastOriginSelected = undefined;
     } else if (formControl === this.formControlDestination && this.lastDestinationSelected?.name?.toUpperCase() !== this.formControlDestination?.value?.toUpperCase()) {
@@ -230,7 +230,7 @@ export class CostsComponent implements OnInit {
         this.listLocationsDestination?.splice(0, this.listLocationsDestination?.length);
       }
       this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
-      const subscribeLocation = this.locationService.getPublicAllCities(0, this.limit, formControl.value);
+      const subscribeLocation = this.locationService.getAllCountries(0, this.limit, formControl.value);
       this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
         // console.log(res);
         if (onInit) {
@@ -271,7 +271,7 @@ export class CostsComponent implements OnInit {
       this.preloadCityIncoterm = true;
       this.listLocationsIcoterm?.splice(0, this.listLocationsIcoterm?.length);
       this.listSubscribesLocationIncoterm.splice(0, this.listSubscribesLocationIncoterm.length);
-      const subscribeLocation = this.locationService.getPublicAllCitiesByCountry(this.lastDestinationSelected.father_location?.id, 0, this.limit, this.formControlCityIcoterm.value);
+      const subscribeLocation = this.locationService.getPublicAllCitiesByCountry(this.lastDestinationSelected.id, 0, this.limit, this.formControlCityIcoterm.value);
       this.listSubscribesLocationIncoterm.push(subscribeLocation.subscribe(res => {
         this.listLocationsIcoterm = res.results;
         this.preloadCityIncoterm = false;

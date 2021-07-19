@@ -71,6 +71,10 @@ export class UserService {
     return this.httpClient.get(`users/get_info_user/`);
   }
 
+  getUserAdmin(): Observable<any> {
+    return this.httpClient.get(`users/user_is_admin/`);
+  }
+
   activateDeactivateUser(user: User): Observable<any> {
     return this.httpClient.post(`users/${user.id}/acivate_desactivate_user/`, user);
   }

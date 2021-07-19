@@ -13,6 +13,7 @@ import { Port } from 'src/app/models/Port';
 import { PortsService } from 'src/app/services/ports/ports.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { Location } from 'src/app/models/Location';
+import {AppComponent} from '../../../../../app.component';
 
 @Component({
   selector: 'app-dialog-port-create-edit',
@@ -26,7 +27,7 @@ export class DialogPortCreateEditComponent implements OnInit {
   public preloadSave: boolean;
   maxLengthName = 100;
 
-  public list_cities : Location[]=[]
+  public list_countries: Location[] = [];
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
@@ -43,11 +44,12 @@ export class DialogPortCreateEditComponent implements OnInit {
   // );
   //
   public formControlLocation: FormControl = new FormControl(
-    null, [  Validators.maxLength(this.maxLengthName)]
+    null, [Validators.required, Validators.maxLength(this.maxLengthName)]
   );
   longitude = 0;
   latitude = 0;
   constants = ConstantsApp;
+  private timer: any;
 
   constructor(
     private portsService: PortsService,
@@ -57,9 +59,9 @@ export class DialogPortCreateEditComponent implements OnInit {
     private translate: TranslateService,
     private notifyService: NotifyService,
   ) {
-    this.preload=true;
-    this.locationService.getAllCities(0, 30).subscribe(res => {
-      this.list_cities = res.results;
+    this.preload = true;
+    this.locationService.getAllCountries(0, 30, '').subscribe(res => {
+      this.list_countries = res.results;
       if (this.data.dataEdit) {
         this.formControlName.setValue(data.dataEdit.name);
         this.formControlAddress.setValue(data.dataEdit.address);
@@ -74,12 +76,12 @@ export class DialogPortCreateEditComponent implements OnInit {
   }
 
   saveOrEdit(): void {
-    if (this.formControlName.valid && this.havePosition()) {
+    if (this.formControlName.valid && this.formControlAddress.valid && this.formControlLocation.valid && this.havePosition()) {
       this.preloadSave = true;
       const body: Port = {
         name: this.formControlName.value,
         address: this.formControlAddress.value,
-        location_id : this.formControlLocation.value.id,
+        location_id : this.formControlLocation.value,
         latitude: +this.latitude,
         longitude : +this.longitude,
       };
@@ -104,6 +106,8 @@ export class DialogPortCreateEditComponent implements OnInit {
       });
     } else {
       this.formControlName.markAsTouched();
+      this.formControlAddress.markAsTouched();
+      this.formControlLocation.markAsTouched();
     }
   }
 
@@ -112,12 +116,15 @@ export class DialogPortCreateEditComponent implements OnInit {
   }
 
   searchSelectorCities(event): void {
-    if(event.path[0].value.length > 5){
-      this.list_cities = [];
-      this.locationService.getAllCities(0, 10, event.path[0].value).subscribe(res=>{
-        this.list_cities = res.results;
-      })
+    if (this.timer) {
+      window.clearTimeout(this.timer);
     }
+    this.timer = window.setTimeout(() => {
+      this.list_countries = [];
+      this.locationService.getAllCountries(0, 10, event.path[0].value).subscribe(res => {
+        this.list_countries = res.results;
+      });
+    }, AppComponent.timeMillisDelayFilter);
   }
 
   onNoClick(): void {

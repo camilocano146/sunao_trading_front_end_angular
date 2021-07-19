@@ -25,16 +25,16 @@ export class DialogProviderCreateEditComponent implements OnInit {
   maxLengthEmail = 40;
   maxLengthPhone = 25;
   public formControlEmail: FormControl = new FormControl('',
-    [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(40)]
+    [Validators.email, Validators.minLength(5), Validators.maxLength(40)]
   );
   public formControlName: FormControl = new FormControl(
     null, [Validators.required, Validators.minLength(5), Validators.maxLength(this.maxLengthName)]
   );
   public formControlAddress: FormControl = new FormControl(
-    null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthPhone)]
+    null, [Validators.minLength(3), Validators.maxLength(this.maxLengthPhone)]
   );
   public formControlPhone: FormControl = new FormControl('',
-    [Validators.required, Validators.minLength(8), Validators.maxLength(25)]
+    [Validators.minLength(8), Validators.maxLength(25)]
   );
 
   constructor(

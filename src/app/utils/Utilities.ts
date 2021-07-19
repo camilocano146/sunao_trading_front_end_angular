@@ -2,6 +2,7 @@ import * as CryptoJS from 'crypto-js';
 
 export class Utilities {
   static key = CryptoJS.enc.Utf8.parse('((23((!#48//4))/'); // TODO change to something with more entropy
+  static generateNumbers = (length) => Array.from({length}, (_, i) => i);
 
   static listAux: Array<number> = [
     3,
@@ -103,5 +104,22 @@ export class Utilities {
   static getCommissionCardPseNequi(value: number): number {
     const commission = value * 0.0285 + 800;
     return Math.round(commission + (commission * 0.19));
+  }
+
+  static arrayIncludesArray(arraySource: any[], arrayFrom: any[]): boolean {
+    for (const element of arrayFrom) {
+      if (!arraySource.includes(element)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  static sumArray(listSelectedItems: number[]): number {
+    try {
+      return listSelectedItems.reduce((a, b) => a + b);
+    } catch (e) {
+      return 0;
+    }
   }
 }

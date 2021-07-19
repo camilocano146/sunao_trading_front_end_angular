@@ -3,11 +3,12 @@ import {NotifyService} from '../../../../../services/notify/notify.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LiquidationService} from '../../../../../services/liquidation/liquidation.service';
-import {Liquidation} from '../../../../../models/Liquidation';
+import {IncotermType, Liquidation} from '../../../../../models/Liquidation';
 import {ProductsService} from '../../../../../services/products/products.service';
 import {Gravamen} from '../../../../../models/Gravamen';
 import {SupportDocument} from '../../../../../models/SupportDocument';
 import {PortsService} from '../../../../../services/ports/ports.service';
+import {Utilities} from "../../../../../utils/Utilities";
 
 @Component({
   selector: 'app-dashboards',
@@ -136,5 +137,22 @@ export class LiquidationDetailsComponent implements OnInit {
       }
     }
     return result;
+  }
+
+  getCalculateIcoterm(): string {
+    const sumSelected = Utilities.sumArray(this.listSelectedItems);
+    const numbersCFR = Utilities.sumArray(Utilities.generateNumbers(2));
+    if (sumSelected <= numbersCFR) {
+      return 'CFR';
+    }
+    const numbersCIF = Utilities.sumArray(Utilities.generateNumbers(3));
+    if (sumSelected <= numbersCIF) {
+      return 'CIF';
+    }
+    const numbersDDP = Utilities.sumArray(Utilities.generateNumbers(6));
+    if (sumSelected <= numbersDDP) {
+      return 'DDP';
+    }
+    return '';
   }
 }

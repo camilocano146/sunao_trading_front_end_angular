@@ -25,18 +25,18 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
    maxLengthEmail = 40;
    maxLengthPhone = 25;
    public formControlEmail: FormControl = new FormControl('',
-     [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(40)]
+     [Validators.email, Validators.minLength(5), Validators.maxLength(40)]
    );
    public formControlName: FormControl = new FormControl(
      null, [Validators.required, Validators.minLength(5), Validators.maxLength(this.maxLengthName)]
    );
    public formControlAddress: FormControl = new FormControl(
-     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthPhone)]
+     null, [Validators.minLength(3), Validators.maxLength(this.maxLengthPhone)]
    );
    public formControlPhone: FormControl = new FormControl('',
-     [Validators.required, Validators.minLength(8), Validators.maxLength(25)]
+     [Validators.minLength(8), Validators.maxLength(25)]
    );
- 
+
    constructor(
      private userService: UserService,
      private providerService: ProviderService,
@@ -52,10 +52,10 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
        this.formControlPhone.setValue(dataEdit.phone);
      }
    }
- 
+
    ngOnInit(): void {
    }
- 
+
    saveOrEdit(): void {
      if (this.formControlEmail.value) {
        this.formControlEmail.setValue(this.formControlEmail.value.toString().toLowerCase().trim());
@@ -96,7 +96,7 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
        this.formControlPhone.markAsTouched();
      }
    }
- 
+
    getErrorMessageEmail(): string {
      return this.formControlEmail.hasError('required')
        ? this.translate.instant('fields.required')
@@ -108,7 +108,7 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
              ? this.translate.instant('fields.max_40')
              : '';
    }
- 
+
    /**
     * Mensaje de error nombre
     */
@@ -121,7 +121,7 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
            ? this.translate.instant('fields.max_50')
            : '';
    }
- 
+
    getErrorMessageAddress(): string {
      return this.formControlAddress.hasError('required')
        ? this.translate.instant('fields.required')
@@ -131,7 +131,7 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
            ? this.translate.instant('fields.max_50')
            : '';
    }
- 
+
    getErrorMessagePhone(): string {
      return this.formControlPhone.hasError('required')
        ? this.translate.instant('fields.required')
@@ -141,11 +141,11 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
            ? this.translate.instant('fields.max_25')
            : '';
    }
- 
+
    onNoClick(): void {
      this.dialogRef.close();
    }
- 
+
    private showSuccessMessage(): void {
      if (this.dataEdit) {
        this.notifyService.showSuccessSnapshot(this.translate.instant('success.element_updated'));
