@@ -18,6 +18,9 @@ import { PackagesComponent } from './menu-components/packages/packages.component
 import { CouponsComponent } from './menu-components/coupons/coupons.component';
 import { NationalProvidersComponent } from './menu-components/national-providers/national-providers.component';
 import {TransactionsComponent} from './menu-components/transactions/transactions.component';
+import { CurrenciesComponent } from './menu-components/currencies/currencies.component';
+import { PortChargeComponent } from './menu-components/port-charge/port-charge.component';
+import { ContainersTypeComponent } from './menu-components/containers-type/containers-type.component';
 
 const routes: Routes = [
   {
@@ -39,7 +42,10 @@ const routes: Routes = [
       {path: 'port-tarifs-national', component: PortTarifsNationalComponent},
       {path: 'packages', component: PackagesComponent},
       {path: 'coupons', component: CouponsComponent},
-      {path: 'national-providers', component: NationalProvidersComponent}
+      {path: 'national-providers', component: NationalProvidersComponent},
+      {path: 'currencies', component: CurrenciesComponent},
+      {path: 'port_charges', component: PortChargeComponent},
+      {path: 'containers', component: ContainersTypeComponent},
     ]
   },
 ];

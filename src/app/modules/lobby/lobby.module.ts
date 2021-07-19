@@ -61,6 +61,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {DialogChangePasswordComponent} from "./settings-components/profile/dialog-change-password/dialog-change-password.component";
 import {DialogChangeNameDocumentComponent} from "./settings-components/profile/dialog-change-name-document/dialog-change-name-document.component";
+import { PortChargeComponent } from './menu-components/port-charge/port-charge.component';
+import { CurrenciesComponent } from './menu-components/currencies/currencies.component';
+import { ContainersTypeComponent } from './menu-components/containers-type/containers-type.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +101,9 @@ import {DialogChangeNameDocumentComponent} from "./settings-components/profile/d
     DialogChangeEmailComponent,
     DialogChangePasswordComponent,
     DialogChangeNameDocumentComponent,
+    PortChargeComponent,
+    CurrenciesComponent,
+    ContainersTypeComponent,
   ],
   imports: [
     CommonModule,
