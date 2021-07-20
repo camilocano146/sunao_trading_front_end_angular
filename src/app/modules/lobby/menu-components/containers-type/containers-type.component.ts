@@ -25,7 +25,7 @@ export class ContainersTypeComponent implements OnInit {
   ];
   private timer: number;
   constructor(
-    private containerService:ContainerService
+    private containerService: ContainerService
   ) { }
 
   ngOnInit(): void {

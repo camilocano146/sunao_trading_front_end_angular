@@ -1,0 +1,68 @@
+@import "../../../../styles";
+
+.card-payment-method {
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid $color-soft-blue;
+    margin-bottom: 15px;
+    background-color: white;
+    color: $color-soft-blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-payment-method:hover {
+    background-color: $color-soft-blue;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid $color-soft-blue;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.card-form-pay-method{
+    border: 1px solid $color-soft-blue;
+    border-radius: 30px;
+    padding: 25px;
+}
+
+.label-form-pay-methods {
+    color: $color-yellow;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.label-comission {
+    color: #828282;
+}
+
+.label-totalvalue {
+    color: $color-soft-blue;;
+}
+
+.btn-back-to-contracts {
+    background-color: white;
+    border: 1px solid $color-soft-blue;
+    color: $color-soft-blue;
+    margin-bottom: 15px;
+    padding: 7px 13px;
+    border-radius: 30px;
+}
+
+.btn-back-to-contracts:hover {
+    border: 1px solid $color-soft-blue;
+    background-color: $color-soft-blue;
+    color: white;
+    margin-bottom: 15px;
+    padding: 7px 13px;
+    border-radius: 30px;
+}

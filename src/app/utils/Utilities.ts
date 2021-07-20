@@ -1,4 +1,5 @@
 import * as CryptoJS from 'crypto-js';
+import {ConstantsApp} from "./ConstantsApp";
 
 export class Utilities {
   static key = CryptoJS.enc.Utf8.parse('((23((!#48//4))/'); // TODO change to something with more entropy
@@ -121,5 +122,31 @@ export class Utilities {
     } catch (e) {
       return 0;
     }
+  }
+
+  static isWrongDatesReports(dateStringOne, dateStringTwo, Swal): boolean {
+    if (dateStringOne && dateStringTwo) {
+      const dateSince = new Date(dateStringOne);
+      const dateUntil = new Date(dateStringTwo);
+      if (dateUntil.getTime() < dateSince.getTime()) {
+        Swal.fire({
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#106690',
+          text: 'La fecha final debe ser menor a la fecha inicio'
+        });
+        return true;
+      }
+      if ((dateUntil.getTime() - dateSince.getTime()) > ConstantsApp.maxTimeExportReportsInMillis) {
+        Swal.fire({
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#106690',
+          text: 'La máxima diferencia de tiempo permitido entre ambas fechas es de 6 Meses'
+        });
+        return true;
+      }
+    }
+    return false;
   }
 }

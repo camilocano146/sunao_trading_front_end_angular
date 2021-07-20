@@ -7,4 +7,5 @@ export class ConstantsApp {
   static maxFixedCoordinates = 10;
   static readonly defaultZoom = 10;
   static readonly minZoom = 1;
+  static maxTimeExportReportsInMillis = 1000 * 60 * 60 * 24 * 30 * 6; // 6 meses
 }

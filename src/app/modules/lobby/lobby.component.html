@@ -102,14 +102,15 @@
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/cupon_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/cupon_24dp.svg' + ') no-repeat center'}"></div>
           Cupones
         </a>
-        
+
         <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/currencies') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="currencies" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/billete_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/billete_24dp.svg' + ') no-repeat center'}"></div>
           Divisas
         </a>
+
         <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/containers') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="containers" (click)="snav.toggle()">
-          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center'}"></div>
-          Tipos de contenedor 
+          <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/calendar_view_week_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/calendar_view_week_black_24dp.svg' + ') no-repeat center'}"></div>
+          Tipos de contenedor
         </a>
 
       </mat-nav-list>

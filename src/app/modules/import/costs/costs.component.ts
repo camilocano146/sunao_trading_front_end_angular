@@ -135,17 +135,25 @@ export class CostsComponent implements OnInit {
         this.activatedRoute.queryParams.subscribe(res => {
           const idLiquidation = res.id_liquidation;
           if (idLiquidation) {
-            this.liquidationService.getById(idLiquidation).subscribe(res => {
+            this.liquidationService.getById(idLiquidation).subscribe(async res => {
               const liquidationReuse = res;
               this.lastOriginSelected = liquidationReuse.port_origin?.location;
               this.formControlOrigin.setValue(this.lastOriginSelected.name);
               // this.lastPortOriginSelected = liquidationReuse.port_origin;
-              this.formControlOriginPort.setValue(liquidationReuse.port_origin);
               this.lastDestinationSelected = liquidationReuse.port_destination?.location;
               this.formControlDestination.setValue(this.lastDestinationSelected.name);
+              const res1 = await this.getPorts(this.lastOriginSelected, this.formControlOriginPort);
+              this.formControlOriginPort.setValue(res1.find(p => p.id === liquidationReuse.port_origin.id));
+              const res2 = await this.getPorts(this.lastDestinationSelected, this.formControlDestinationPort);
               // this.lastPortDestinationSelected = liquidationReuse.port_destination;
-              this.formControlDestinationPort.setValue(liquidationReuse.port_destination);
-              this.selectedProduct = this.listProduct.find(p => p.id === liquidationReuse.product.id);
+              this.formControlDestinationPort.setValue(res2.find(p => p.id === liquidationReuse.port_destination.id));
+              const productFound = this.listProduct.find(p => p.id === liquidationReuse.product.id);
+              if (productFound) {
+                this.selectedProduct = productFound;
+              } else {
+                this.selectedProduct = liquidationReuse.product;
+                this.listProduct.unshift(liquidationReuse.product);
+              }
               this.formControlValueFOB.setValue(liquidationReuse.fob_cost);
               this.selectedCurrency = this.listCurrencies.find(c => c.abbreviation === liquidationReuse.currency?.acronym);
               this.selectedContainer = this.listContainers.find(c => c.id === liquidationReuse.container_type.id);
@@ -195,7 +203,7 @@ export class CostsComponent implements OnInit {
       this.listProduct?.splice(0, this.listProduct?.length);
       this.selectedProduct = undefined;
       const text = formControl?.value || '';
-      this.productsService.getListProductsNoAuth(0, 10, text).subscribe(res => {
+      this.productsService.getListProductsNoAuth(0, 30, text).subscribe(res => {
         this.listProduct = res.results;
         this.preloadProducts = false;
       }, error => {
@@ -304,7 +312,6 @@ export class CostsComponent implements OnInit {
       this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
       const subscribeLocation = this.portsService.getPublicListPorts(city.id, 0, this.limit, formControl.value);
       this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
-        // console.log(res);
         if (formControl === this.formControlOriginPort) {
           this.listPortsOrigin = res.results;
         } else {
@@ -317,6 +324,29 @@ export class CostsComponent implements OnInit {
         this.preloadCityPortDestination = false;
       }));
     }, AppComponent.timeMillisDelayFilter);
+  }
+
+  async getPorts(city: Location, formControl: FormControl): Promise<any> {
+    if (formControl === this.formControlOriginPort) {
+      this.preloadCityPortOrigin = true;
+      this.listPortsOrigin?.splice(0, this.listPortsOrigin?.length);
+    } else {
+      this.preloadCityPortDestination = true;
+      this.listPortsDestination?.splice(0, this.listPortsDestination?.length);
+    }
+    try {
+      const res = await this.portsService.getPublicListPorts(city.id, 0, this.limit, formControl.value).toPromise();
+      if (formControl === this.formControlOriginPort) {
+        this.listPortsOrigin = res.results;
+      } else {
+        this.listPortsDestination = res.results;
+      }
+      this.preloadCityPortOrigin = false;
+      this.preloadCityPortDestination = false;
+      return res.results;
+    } catch (e) {
+      return null;
+    }
   }
 
   // changeOriginAutocomplete(formControl: FormControl): void {
@@ -371,8 +401,8 @@ export class CostsComponent implements OnInit {
     this.preloadFinalization = true;
     const body = {
       container_type_id: this.selectedContainer?.id,
-      port_origin_id: this.lastOriginSelected?.id,
-      port_destination_id: this.lastDestinationSelected?.id,
+      port_origin_id: this.formControlOriginPort?.value?.id,
+      port_destination_id: this.formControlDestinationPort?.value?.id,
       city_destination_id: this.lastSelectedIcotermCity?.id,
       incoterm: this.selectedIncoterm.name
     };

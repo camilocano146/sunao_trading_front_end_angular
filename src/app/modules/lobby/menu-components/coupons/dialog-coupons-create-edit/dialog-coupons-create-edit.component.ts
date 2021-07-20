@@ -10,8 +10,6 @@ import {DataDialogCoupon} from '../coupons.component';
 import { Coupon } from 'src/app/models/Coupon';
 import { CouponsService } from 'src/app/services/cuopons/coupons.service';
 
-
-
 @Component({
   selector: 'app-dialog-coupons-create-edit',
   templateUrl: './dialog-coupons-create-edit.component.html',
@@ -22,7 +20,7 @@ export class DialogCouponsCreateEditComponent implements OnInit {
   public preload: boolean;
   public preloadSave: boolean;
   public formControlDiscountPercent: FormControl = new FormControl(
-    null, [Validators.required, Validators.minLength(1), Validators.maxLength(2)]
+    null, [Validators.required, Validators.min(1), Validators.max(100)]
   );
 
   constructor(
@@ -31,11 +29,9 @@ export class DialogCouponsCreateEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DataDialogCoupon,
     private translate: TranslateService,
     private notifyService: NotifyService,
-  ) { 
-
-    if(data.dataEdit){
+  ) {
+    if (data.dataEdit){
       this.formControlDiscountPercent.setValue(data.dataEdit.discount_percent);
-      
     }
   }
 
@@ -47,7 +43,7 @@ export class DialogCouponsCreateEditComponent implements OnInit {
       this.preloadSave = true;
       const body: Coupon = {
         discount_percent: this.formControlDiscountPercent.value,
-        
+
       };
       let observable;
 
@@ -68,11 +64,13 @@ export class DialogCouponsCreateEditComponent implements OnInit {
     }
   }
 
-  validate_data($event){
-    if($event.path[0].value>99){
-      this.formControlDiscountPercent.setValue(99);
+  validate_data($event): void {
+    if ($event.path[0].value > 100){
+      this.formControlDiscountPercent.setValue(100);
     }
-    
   }
 
+  getErrorDiscount(): string {
+    return 'Debe ingresar un número válido entre 1 y 100';
+  }
 }

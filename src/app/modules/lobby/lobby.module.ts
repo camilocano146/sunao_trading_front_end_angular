@@ -54,16 +54,17 @@ import { CouponsComponent } from './menu-components/coupons/coupons.component';
 import { DialogCouponsCreateEditComponent } from './menu-components/coupons/dialog-coupons-create-edit/dialog-coupons-create-edit.component';
 import { NationalProvidersComponent } from './menu-components/national-providers/national-providers.component';
 import { DialogNationalProvidersCreateEditComponent } from './menu-components/national-providers/dialog-national-providers-create-edit/dialog-national-providers-create-edit.component';
-import {ImportModule} from "../import/import.module";
-import {TransactionsComponent} from "./menu-components/transactions/transactions.component";
+import {ImportModule} from '../import/import.module';
+import {TransactionsComponent} from './menu-components/transactions/transactions.component';
 import { DialogChangeEmailComponent } from './settings-components/profile/dialog-change-email/dialog-change-email.component';
-import {MatExpansionModule} from "@angular/material/expansion";
-import {MatIconModule} from "@angular/material/icon";
-import {DialogChangePasswordComponent} from "./settings-components/profile/dialog-change-password/dialog-change-password.component";
-import {DialogChangeNameDocumentComponent} from "./settings-components/profile/dialog-change-name-document/dialog-change-name-document.component";
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatIconModule} from '@angular/material/icon';
+import {DialogChangePasswordComponent} from './settings-components/profile/dialog-change-password/dialog-change-password.component';
+import {DialogChangeNameDocumentComponent} from './settings-components/profile/dialog-change-name-document/dialog-change-name-document.component';
 import { PortChargeComponent } from './menu-components/port-charge/port-charge.component';
 import { CurrenciesComponent } from './menu-components/currencies/currencies.component';
 import { ContainersTypeComponent } from './menu-components/containers-type/containers-type.component';
+import {DialogExportReportComponent} from "../common-components/dialog-export-report/dialog-export-report.component";
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { ContainersTypeComponent } from './menu-components/containers-type/conta
     PortChargeComponent,
     CurrenciesComponent,
     ContainersTypeComponent,
+    DialogExportReportComponent,
   ],
   imports: [
     CommonModule,

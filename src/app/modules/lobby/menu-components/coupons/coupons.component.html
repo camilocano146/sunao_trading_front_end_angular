@@ -1,122 +1,126 @@
 <div class="full-width mt-3">
-    <div class="row margin-mobile-top-orgs my-2 text-center" style="margin-left: 0px !important; margin-right: 0px !important;">
-      <h3 class="w-100">Lista de cupones</h3>
-    </div>
+  <div class="row margin-mobile-top-orgs my-2 text-center" style="margin-left: 0px !important; margin-right: 0px !important;">
+    <h3 class="w-100">Lista de cupones</h3>
+  </div>
 
-
-  <div class="container row m-auto">
-    <div class="col-md-6 col-12">
-      <mat-form-field class="w-75 m-auto" appearance="outline">
-        <input [formControl]="formControlFilter"
-               (ngModelChange)="loadTable()"
-               matInput
-               placeholder="Ingrese nombre o código">
-      </mat-form-field>
-    </div>
-    <div class="col-md-6 col-12 text-right" style="max-width: 1250px; min-width: 200px;">
-      <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 200px !important;">
-        <h4>
-          <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
-          <span style="margin-left: 1em">
-            {{'buttons.create' | translate}}
-          </span>
-        </h4>
-      </button>
-    </div>
-    </div>
-
-    <div class="mat-elevation-z8 container" style="max-width: max-content">
-      <div class="div-parent-table">
-        <table mat-table [dataSource]="list" class="w-100">
-
-          <!-- column id -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>
-              Id
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <span >{{row.id}}</span>
-            </td>
-          </ng-container>
-
-          <!-- Code Column -->
-          <ng-container matColumnDef="code">
-            <th mat-header-cell *matHeaderCellDef>
-              Codigo
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <span *ngIf="row.code">{{row.code}}</span>
-              <span *ngIf="!row.code">N/A</span>
-            </td>
-          </ng-container>
-
-          <!-- discount_percent Column -->
-          <ng-container matColumnDef="discount_percent">
-            <th mat-header-cell *matHeaderCellDef>
-                <img src="./assets/icons/nota.svg" alt="">
-                % Descuento
-              </th>
-              <td mat-cell *matCellDef="let row">
-                <span *ngIf="row.discount_percent  ">{{row.discount_percent}} </span>
-                <span *ngIf="!row.discount_percent ">N/A</span>
-              </td>
-          </ng-container>
-
-          <ng-container matColumnDef="created_at">
-            <th mat-header-cell *matHeaderCellDef>
-              <img src="./assets/icons/calendar.svg" alt="">
-              Fecha de creacion
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <span *ngIf="row.created_at">{{row.created_at}}</span>
-              <span *ngIf="!row.created_at">N/A</span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="created_by">
-            <th mat-header-cell *matHeaderCellDef>
-              Creado por
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <span *ngIf="row.created_by">{{row.created_by.name}}</span>
-              <span *ngIf="!row.created_by">N/A</span>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="used_by">
-            <th mat-header-cell *matHeaderCellDef>
-              Usado por
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <span *ngIf="row.used_by">{{row.used_by.name}}</span>
-              <span *ngIf="!row.used_by">N/A</span>
-            </td>
-          </ng-container>
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>
-              <img src="./assets/icons/nota.svg" alt="">
-              Acciones
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <img src="./assets/icons/more_vert_black_24dp.svg" alt="">
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openDialogEdit(row)">
-                  <img src="./assets/icons/edit_black_24dp.svg" alt="">
-                  Editar cupon
-                </button>
-              </mat-menu>
-            </td>
-          </ng-container>
-
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+  <div class="container">
+    <div class="row m-auto">
+      <div class="col-md-6 col-12 p-0">
+        <mat-form-field class="m-auto mt-3 mat-form-field-filter-table" appearance="fill">
+          <input [formControl]="formControlFilter"
+                 (ngModelChange)="loadTable()"
+                 matInput
+                 placeholder="Ingrese nombre o código">
+        </mat-form-field>
       </div>
-      <mat-spinner *ngIf="preload" class="m-auto">Cargando</mat-spinner>
-      <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
-      <mat-paginator (page)="loadTable()" [pageSizeOptions]="pageSizeOptions" [length]="resultsLength"></mat-paginator>
+      <div class="col-md-6 col-12 text-right p-0" style="max-width: 1250px; min-width: 200px;">
+        <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 200px !important;">
+          <h4>
+            <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
+            <span style="margin-left: 1em">
+              {{'buttons.create' | translate}}
+            </span>
+          </h4>
+        </button>
+      </div>
     </div>
   </div>
+
+  <div class="mat-elevation-z8 container">
+    <div class="div-parent-table">
+      <table mat-table [dataSource]="list" class="w-100">
+
+        <!-- column id -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>
+            Id
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span >{{row.id}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Code Column -->
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/codigo.svg" alt="">
+            Código
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.code">{{row.code}}</span>
+            <span *ngIf="!row.code">N/A</span>
+          </td>
+        </ng-container>
+
+        <!-- discount_percent Column -->
+        <ng-container matColumnDef="discount_percent">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/nota.svg" alt="">
+            % Descuento
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.discount_percent  ">{{row.discount_percent}} </span>
+            <span *ngIf="!row.discount_percent ">N/A</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/calendar.svg" alt="">
+            Fecha de creacion
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.created_at">{{row.created_at | date : 'short'}}</span>
+            <span *ngIf="!row.created_at">N/A</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_by">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/pencil.svg" alt="" style="transform: scale(1.2)">
+            Creado por
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.created_by">{{row.created_by.email}}</span>
+            <span *ngIf="!row.created_by">N/A</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="used_by">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/easy-use.svg" alt="">
+            Usado por
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.used_by">{{row.used_by.email}}</span>
+            <span *ngIf="!row.used_by">N/A</span>
+          </td>
+        </ng-container>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/nota.svg" alt="">
+            Acciones
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <img src="./assets/icons/more_vert_black_24dp.svg" alt="">
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialogEdit(row)">
+                <img src="./assets/icons/edit_black_24dp.svg" alt="">
+                Editar cupón
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-spinner *ngIf="preload" class="m-auto">Cargando</mat-spinner>
+    <!--          [ngStyle]="{'display':preload == false ? 'block' : 'none'}"-->
+    <mat-paginator (page)="loadTable()" [pageSizeOptions]="pageSizeOptions" [length]="resultsLength"></mat-paginator>
+  </div>
+</div>

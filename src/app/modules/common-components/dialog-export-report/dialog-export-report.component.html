@@ -1,0 +1,35 @@
+<div class="row dialog-title">
+  <h5 class="col-10">
+    Reporte {{title}}
+  </h5>
+  <div class="col-2 text-right">
+    <img class="img-close-dialog" src="./assets/icons/close_white.svg" alt="" (click)="matDialogRef.close()">
+  </div>
+</div>
+<div class="full-width mt-3" style="padding: 10px;">
+  <div class="w-100 text-center">
+    <mat-form-field class="w-75" appearance="fill">
+      <mat-label>Fecha Inicial</mat-label>
+      <input matInput [formControl]="formControlInitDate" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="w-75" appearance="fill">
+      <mat-label>Fecha Final</mat-label>
+      <input matInput [formControl]="formControlFinishDate" [matDatepicker]="picker1">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="text-center">
+  <button *ngIf="!this.preloadExport" mat-raised-button class="btn-blue" (click)="export()">
+    <h5 class="m-0">
+      Descargar
+    </h5>
+  </button>
+  <div *ngIf="this.preloadExport" class="mb-3">
+    <mat-spinner class="m-auto" diameter="50"></mat-spinner>
+  </div>
+</div>

@@ -5,14 +5,14 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import {NotifyService} from '../../../../services/notify/notify.service';
-import {LocationService} from '../../../../services/location/location.service';
 import {MatDialog} from '@angular/material/dialog';
 import {LiquidationService} from '../../../../services/liquidation/liquidation.service';
-import {FormControl, Validators} from '@angular/forms';
-import {IncotermType, Liquidation} from '../../../../models/Liquidation';
-import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
+import {FormControl} from '@angular/forms';
+import {Liquidation} from '../../../../models/Liquidation';
 import {Router} from '@angular/router';
-import {ProductsService} from "../../../../services/products/products.service";
+import {DialogExportReportComponent} from "../../../common-components/dialog-export-report/dialog-export-report.component";
+import {DialogChapterCreateEditComponent} from "../chapters/dialog-chapter-create-edit/dialog-chapter-create-edit.component";
+import {ReportsEnum} from "../../../../enums/Reports.enum";
 
 @Component({
   selector: 'app-liquidation',
@@ -127,5 +127,19 @@ export class LiquidationsComponent implements OnInit {
     } else {
       this.router.navigate([`lobby/liquidations-detail/${row.id}`]);
     }
+  }
+
+  exportDate(): void {
+    const dialogRef = this.matDialog.open(DialogExportReportComponent, {
+      width: '600px',
+      maxWidth: '96vw',
+      height: 'max-content',
+      maxHeight: '96vh',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+      data: ReportsEnum.LIQUIDATIONS
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

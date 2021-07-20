@@ -116,6 +116,12 @@ body {
   align-items: center !important;
 }
 
+.flex-box-vertical-center {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
 .backdrop-dark {
   background-color: rgba(0, 0, 0, 0.7) !important;
 }
@@ -194,6 +200,13 @@ body {
   margin-bottom: 1em !important;
 }
 
+.btn-yellow-m-0 {
+  background-color: $color-yellow;
+  color: white !important;
+  height: 3em !important;
+  border-radius: 0 !important;
+}
+
 .color-yellow {
   color: $color-yellow !important;
 }
@@ -244,4 +257,8 @@ button h4 {
 
 .color-black {
   color: black !important;
+}
+
+.mat-form-field-filter-table {
+  width: 320px !important;
 }

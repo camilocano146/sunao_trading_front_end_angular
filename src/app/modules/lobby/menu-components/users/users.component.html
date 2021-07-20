@@ -17,18 +17,20 @@
       </div>
     </div> -->
 
-  <div class="container row m-auto">
-    <div class="col-md-6 col-12">
-      <mat-form-field class="w-75 m-auto" appearance="outline">
-        <input [formControl]="formControlFilter"
-               (ngModelChange)="loadTable()"
-               matInput
-               placeholder="Ingrese nombre o email">
-      </mat-form-field>
+  <div class="container">
+    <div class="row m-auto">
+      <div class="col-md-6 col-12 p-0">
+        <mat-form-field class="m-auto mt-3 mat-form-field-filter-table" appearance="fill">
+          <input [formControl]="formControlFilter"
+                 (ngModelChange)="loadTable()"
+                 matInput
+                 placeholder="Ingrese nombre o email">
+        </mat-form-field>
+      </div>
     </div>
   </div>
 
-  <div class="mat-elevation-z8 container" style="max-width: max-content">
+  <div class="mat-elevation-z8 container">
     <div class="div-parent-table">
       <table mat-table [dataSource]="list" class="w-100">
 
@@ -49,8 +51,8 @@
             {{'table.fields.names' | translate}}
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.name && row.last_name ">{{row.name}} {{row.last_name}}</span>
-            <span *ngIf="!row.name && row.last_name">N/A</span>
+            <span *ngIf="row.first_name">{{row.first_name}} {{row.last_name}}</span>
+            <span *ngIf="!row.first_name">N/A</span>
           </td>
         </ng-container>
 

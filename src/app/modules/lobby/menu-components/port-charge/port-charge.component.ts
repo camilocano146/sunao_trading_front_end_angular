@@ -5,6 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { AppComponent } from 'src/app/app.component';
 import { CurrencyService } from 'src/app/services/currency/currency.service';
 import { PortChargeService } from 'src/app/services/portCharge/port-charge.service';
+import {DialogExportReportComponent} from '../../../common-components/dialog-export-report/dialog-export-report.component';
+import {ReportsEnum} from '../../../../enums/Reports.enum';
 
 @Component({
   selector: 'app-port-charge',
@@ -23,12 +25,14 @@ export class PortChargeComponent implements OnInit {
     'id',
     'concept',
     'port',
-    'container_type'
+    'container_type',
+    'crete_at'
   ];
-  private timer: number; 
-  
+  private timer: number;
+
   constructor(
-    private portChargeService: PortChargeService
+    private portChargeService: PortChargeService,
+    private matDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -47,9 +51,24 @@ export class PortChargeComponent implements OnInit {
       const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
       this.portChargeService.getListCharges(0, 10).subscribe(res => {
         this.list = res.results;
+        console.log(this.list);
         this.resultsLength = res.count;
         this.preload = false;
       });
     }, AppComponent.timeMillisDelayFilter);
+  }
+
+  exportDate(): void {
+    const dialogRef = this.matDialog.open(DialogExportReportComponent, {
+      width: '600px',
+      maxWidth: '96vw',
+      height: 'max-content',
+      maxHeight: '96vh',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+      data: ReportsEnum.PORT_CHARGE
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

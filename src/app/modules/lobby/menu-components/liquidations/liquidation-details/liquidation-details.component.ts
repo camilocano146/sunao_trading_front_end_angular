@@ -8,7 +8,7 @@ import {ProductsService} from '../../../../../services/products/products.service
 import {Gravamen} from '../../../../../models/Gravamen';
 import {SupportDocument} from '../../../../../models/SupportDocument';
 import {PortsService} from '../../../../../services/ports/ports.service';
-import {Utilities} from "../../../../../utils/Utilities";
+import {Utilities} from '../../../../../utils/Utilities';
 
 @Component({
   selector: 'app-dashboards',

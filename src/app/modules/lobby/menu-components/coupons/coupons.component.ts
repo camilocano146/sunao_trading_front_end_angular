@@ -86,8 +86,8 @@ export class CouponsComponent implements OnInit, AfterViewInit {
 
   openDialogCreate(): void {
     const dialogRef = this.matDialog.open(DialogCouponsCreateEditComponent, {
-      width: '100vw',
-      maxWidth: '400px',
+      width: '400px',
+      maxWidth: '96vw',
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -97,8 +97,8 @@ export class CouponsComponent implements OnInit, AfterViewInit {
 
   openDialogEdit(coupon: Coupon): void {
     const dialogRef = this.matDialog.open(DialogCouponsCreateEditComponent, {
-      width: '100vw',
-      maxWidth: '400px',
+      width: '400px',
+      maxWidth: '96vw',
       data: {
         dataEdit: coupon
       }

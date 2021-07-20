@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,11 +11,13 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {InterceptorService} from './services/interceptor/iterceptor-interceptor.service';
+import localeEsCo from '@angular/common/locales/es-CO';
 
+registerLocaleData(localeEsCo, 'es-Co');
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import {InterceptorService} from './services/interceptor/iterceptor-interceptor.
     MatDialogModule,
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'es-Co' },
     {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
     SnotifyService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -9,12 +9,12 @@ export class PortTarifService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPortTarifs(offset: number, limit: number, regex: string): Observable<any> {
-    return this.httpClient.get(`port_tarif/?offset=${offset}&limit=${limit}&regex=${regex}`);
+  getPortTarifsInternational(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`port_tarif_international/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   getPortTarifsNational(offset: number, limit: number, regex: string): Observable<any> {
-    return this.httpClient.get(`port_tarif/list_port_tarif_national/?offset=${offset}&limit=${limit}&regex=${regex}`);
+    return this.httpClient.get(`port_tarif_national/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
   importFilePortTarifsInternational(file: any): Observable<any>{
@@ -32,5 +32,11 @@ export class PortTarifService {
     return this.httpClient.post<any>('port_tarif/import_ports_tarif_national/', formData);
   }
 
+  downloadNationalReport(body: any): Observable<any> {
+    return this.httpClient.post(`port_tarif_national/export_data/`, body, { responseType: 'blob' });
+  }
 
+  downloadInternationalReport(body: any): Observable<any> {
+    return this.httpClient.post(`port_tarif_international/export_data/`, body, { responseType: 'blob' });
+  }
 }

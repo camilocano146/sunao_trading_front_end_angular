@@ -3,37 +3,41 @@
       <h3 class="w-100">Flete Internacional</h3>
     </div>
 
-  <div class="container row m-auto">
-    <div class="col-md-6 col-12">
-      <mat-form-field class="w-75 m-auto" appearance="outline">
-        <input [formControl]="formControlFilter"
-               (ngModelChange)="loadTable()"
-               matInput
-               placeholder="Ingrese origen, destino o proveedor">
-      </mat-form-field>
-    </div>
-    <div class="col-md-6 col-12 text-right" style="max-width: 1250px; min-width: 200px;">
-      <button mat-raised-button
-              class="col-12 w-75 btn-soft-blue-m-0" style="width: 200px !important;">
-        <h4>
-          <img src="./assets/icons/download_white_24dp.svg" alt="" class="mr-5">
-          <span style="margin-left: 1em">
-            Exportar
-          </span>
-        </h4>
-      </button>
-      <button mat-raised-button class="col-12 w-75 btn-yellow" (click)="openDialogImportData()" style="width: 250px !important;">
-        <h4>
-          <img src="./assets/icons/add_white.svg" alt="" width="18" class="mr-5">
-          <span style="margin-left: 1em">
-            Importar datos
-          </span>
-        </h4>
-      </button>
+  <div class="container">
+    <div class="row m-auto">
+      <div class="col-md-6 col-12 p-0">
+        <mat-form-field class="m-auto mt-3 mat-form-field-filter-table" appearance="fill">
+          <input [formControl]="formControlFilter"
+                 (ngModelChange)="loadTable()"
+                 matInput
+                 placeholder="Ingrese origen, destino o proveedor">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 col-12 text-right p-0" style="max-width: 1250px; min-width: 200px;">
+        <button mat-raised-button
+                (click)="exportDate()"
+                class="col-12 w-75 btn-soft-blue-m-0" style="width: 200px !important;">
+          <h4>
+            <img src="./assets/icons/download_white_24dp.svg" alt="" class="mr-5">
+            <span style="margin-left: 1em">
+              Reporte
+            </span>
+          </h4>
+        </button>
+        <br>
+        <button mat-raised-button class="col-12 w-75 btn-yellow" (click)="openDialogImportData()" style="width: 250px !important;">
+          <h4>
+            <img src="./assets/icons/add_white.svg" alt="" width="18" class="mr-5">
+            <span style="margin-left: 1em">
+              Importar datos
+            </span>
+          </h4>
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="mat-elevation-z8 container" style="max-width: max-content">
+  <div class="mat-elevation-z8 container">
     <div class="div-parent-table">
       <table mat-table [dataSource]="list" class="w-100">
 
@@ -44,7 +48,7 @@
             Id
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.location_origin.name">{{row.id}}</span>
+            <span *ngIf="row.id">{{row.id}}</span>
           </td>
         </ng-container>
         <!-- location origen Column -->
@@ -54,8 +58,8 @@
             Origen
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.location_origin.name">{{row.location_origin.name}}</span>
-            <span *ngIf="!row.location_origin.name">N/A</span>
+            <span *ngIf="row.port_origin?.location?.name">{{row.port_origin?.location?.name}}</span>
+            <span *ngIf="!row.port_origin?.location?.name">N/A</span>
           </td>
         </ng-container>
 
@@ -66,8 +70,8 @@
             Destino
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.location_destination.name">{{row.location_destination.name}}</span>
-            <span *ngIf="!row.location_destination.name">N/A</span>
+            <span *ngIf="row.port_destination?.location?.name">{{row.port_destination?.location?.name}}</span>
+            <span *ngIf="!row.port_destination?.location?.name">N/A</span>
           </td>
         </ng-container>
 

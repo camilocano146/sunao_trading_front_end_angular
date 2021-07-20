@@ -6,6 +6,8 @@ import {AppComponent} from '../../../../app.component';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogImportPortTarifsNationalComponent } from './dialog-import-port-tarifs-national/dialog-import-port-tarifs-national.component';
 import {FormControl} from '@angular/forms';
+import {DialogExportReportComponent} from "../../../common-components/dialog-export-report/dialog-export-report.component";
+import {ReportsEnum} from "../../../../enums/Reports.enum";
 
 @Component({
   selector: 'app-port-tarifs-national',
@@ -52,6 +54,7 @@ export class PortTarifsNationalComponent implements OnInit {
       const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
       this.portTarifService.getPortTarifsNational(page, limit, this.formControlFilter.value).subscribe(res => {
         this.list = res.results;
+        console.log(this.list);
         this.resultsLength = res.count;
         this.preload = false;
       });
@@ -67,7 +70,19 @@ export class PortTarifsNationalComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.loadTable();
     });
-
   }
 
+  exportDate(): void {
+    const dialogRef = this.matDialog.open(DialogExportReportComponent, {
+      width: '600px',
+      maxWidth: '96vw',
+      height: 'max-content',
+      maxHeight: '96vh',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+      data: ReportsEnum.NATIONAL_TARIFF
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 }
