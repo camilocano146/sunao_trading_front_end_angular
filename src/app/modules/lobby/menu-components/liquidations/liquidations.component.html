@@ -1,14 +1,8 @@
 <div class="full-width mt-3 div-main">
-  <div class="div-buttons row justify-content-between">
-    <div class="btn-yellow col-3 flex-box-middle" style="width: fit-content">
-      <h5 class="m-0">
-        <img src="./assets/icons/inventory_2_black_24dp.svg" alt="" width="25" class="mr-5">
-        <span style="margin-left: 1em">
-          Mis Liquidaciones
-        </span>
-      </h5>
-    </div>
-    <button mat-raised-button class="btn-yellow col-3" routerLink="/import">
+
+  <div class="row justify-content-between mx-3">
+    <div class="col-3"></div>
+    <button mat-raised-button class="col-4 btn-yellow" routerLink="/import" style="width: 150px !important;">
       <h5 class="m-0">
         <img src="./assets/import/menu/worldwide-shipping.svg" alt="" width="25" class="mr-5">
         <span style="margin-left: 1em">
@@ -18,8 +12,30 @@
     </button>
   </div>
 
+  <div class="div-buttons row justify-content-between mx-3">
+    <div class="btn-yellow col-md-3 col-12 flex-box-middle" style="width: fit-content">
+      <h5 class="m-0">
+        <img src="./assets/icons/inventory_2_black_24dp.svg" alt="" width="25" class="mr-5">
+        <span style="margin-left: 1em">
+          Mis Liquidaciones
+        </span>
+      </h5>
+    </div>
+    <div class="col-md-2 col-12 row">
+      <button mat-raised-button
+              class="col-12 w-75 btn-soft-blue" style="width: 200px !important;">
+        <h4>
+          <img src="./assets/icons/download_white_24dp.svg" alt="" class="mr-5">
+          <span style="margin-left: 1em">
+            Exportar
+          </span>
+        </h4>
+      </button>
+    </div>
+  </div>
+
   <div class="row m-0 div-filter mb-3">
-    <div class="row col-8 m-0">
+    <div class="row col-md-8 col-12 m-0">
       <div class="col-lg-3">
         <mat-form-field class="w-100" appearance="outline">
           <input placeholder="Referencia"
@@ -94,7 +110,7 @@
 <!--        </mat-form-field>-->
       </div>
     </div>
-    <div class="row col-4 m-0 div-filter-right">
+    <div class="row col-md-4 col-12 m-0 div-filter-right">
       <div class="col-lg-6">
         <mat-form-field appearance="fill">
           <mat-label>Incoterm</mat-label>

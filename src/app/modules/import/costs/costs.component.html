@@ -37,7 +37,7 @@
         <div id="step-origin-destination" *ngIf="currentStep === 0">
           <div class="div-content-info">
             <h6 class="color-blue pt-5 pb-3 text-title-blue">
-              Por favor seleccione la ciudad de origen y destino para listar sus puertos y seleccionar el indicado
+              Por favor seleccione el país de origen y destino para listar sus puertos y seleccionar el indicado
             </h6>
             <div class="row">
               <div class="col-sm-6">
@@ -56,7 +56,7 @@
                     </mat-option>
                     <mat-option *ngFor="let option of listLocationsOrigin" (onSelectionChange)="onSelectOptionOrigin(option)"
                                 [value]="option.name">
-                      <span>{{option.name | titlecase}}</span>
+                      <span>{{option.name}}</span>
                     </mat-option>
                   </mat-autocomplete>
                   <mat-error>{{getErrorMessageRequired(formControlOrigin)}}</mat-error>
@@ -65,9 +65,6 @@
                 <h6 class="mb-1">
                   Puerto Origen
                 </h6>
-                <mat-error style="font-size: 10px" *ngIf="formControlOriginPort.value && !lastPortOriginSelected; else emptyValueText10px">
-                  Debe oprimir sobre un puerto para seleccionarla
-                </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
 <!--                  <input type="text" matInput (ngModelChange)="this.getAllPorts(lastOriginSelected, formControlOriginPort)"-->
 <!--                         [formControl]="formControlOriginPort" [matAutocomplete]="autoLocations2" name="portOrigin">-->
@@ -84,17 +81,17 @@
                     <mat-option *ngIf="preloadCityPortOrigin">
                       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
                     </mat-option>
-                    <mat-option *ngFor="let option of listPortsOrigin" [value]="option.name" (onSelectionChange)="onSelectOptionOrigenPort(option)">
+                    <mat-option *ngFor="let option of listPortsOrigin" [value]="option">
                       {{option.name}}
                     </mat-option>
                   </mat-select>
                   <mat-error>{{getErrorMessageRequired(formControlOriginPort)}}</mat-error>
                 </mat-form-field>
 
-                <agm-map [latitude]="+this.lastPortOriginSelected?.latitude || defaultLatitude" [longitude]="+this.lastPortOriginSelected?.longitude || defaultLongitude">
+                <agm-map [latitude]="+this.formControlOriginPort?.value?.latitude || defaultLatitude" [longitude]="+this.formControlOriginPort?.value?.longitude || defaultLongitude">
                   <agm-marker [iconUrl]="{url: './assets/icons/grua.svg', scaledSize: {height: 40,width: 40}}"
-                              [latitude]="+this.lastPortOriginSelected?.latitude || defaultLatitude"
-                              [longitude]="+this.lastPortOriginSelected?.longitude || defaultLongitude">
+                              [latitude]="+this.formControlOriginPort?.value?.latitude || defaultLatitude"
+                              [longitude]="+this.formControlOriginPort?.value?.longitude || defaultLongitude">
                   </agm-marker>
                 </agm-map>
               </div>
@@ -123,9 +120,6 @@
                 <h6 class="mb-1">
                   Puerto Detino
                 </h6>
-                <mat-error style="font-size: 10px" *ngIf="formControlDestinationPort.value && !lastPortDestinationSelected; else emptyValueText10px">
-                  Debe oprimir sobre un puerto para seleccionarlo
-                </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
 <!--                  <input type="text" matInput (ngModelChange)="this.getAllPorts(lastDestinationSelected, formControlDestinationPort)"-->
 <!--                         [formControl]="formControlDestinationPort" [matAutocomplete]="autoLocations4" name="portDestination">-->
@@ -142,17 +136,17 @@
                     <mat-option *ngIf="preloadCityPortDestination">
                       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
                     </mat-option>
-                    <mat-option *ngFor="let option of listPortsDestination" [value]="option.name" (onSelectionChange)="onSelectOptionDestinationPort(option)">
+                    <mat-option *ngFor="let option of listPortsDestination" [value]="option">
                       {{option.name}}
                     </mat-option>
                   </mat-select>
                   <mat-error>{{getErrorMessageRequired(formControlDestinationPort)}}</mat-error>
                 </mat-form-field>
 
-                <agm-map [latitude]="+this.lastPortDestinationSelected?.latitude || defaultLatitude" [longitude]="+this.lastPortDestinationSelected?.longitude || defaultLongitude">
+                <agm-map [latitude]="+this.formControlDestinationPort?.value?.latitude || defaultLatitude" [longitude]="+this.formControlDestinationPort?.value?.longitude || defaultLongitude">
                   <agm-marker [iconUrl]="{url: './assets/icons/grua.svg', scaledSize: {height: 40,width: 40}}"
-                              [latitude]="+this.lastPortDestinationSelected?.latitude || defaultLatitude"
-                              [longitude]="+this.lastPortDestinationSelected?.longitude || defaultLongitude"></agm-marker>
+                              [latitude]="+this.formControlDestinationPort?.value?.latitude || defaultLatitude"
+                              [longitude]="+this.formControlDestinationPort?.value?.longitude || defaultLongitude"></agm-marker>
                 </agm-map>
               </div>
             </div>

@@ -20,7 +20,7 @@ import {Product} from '../../../models/Product';
 import {ActivatedRoute} from '@angular/router';
 import {LiquidationService} from '../../../services/liquidation/liquidation.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {NotifyService} from "../../../services/notify/notify.service";
+import {NotifyService} from '../../../services/notify/notify.service';
 
 interface Step {
   imagePath: string;
@@ -49,8 +49,8 @@ export class CostsComponent implements OnInit {
   formControlDestinationPort: FormControl = new FormControl('', [Validators.required]);
   lastOriginSelected: Location;
   lastDestinationSelected: Location;
-  lastPortOriginSelected: Port;
-  lastPortDestinationSelected: Port;
+  // lastPortOriginSelected: Port;
+  // lastPortDestinationSelected: Port;
   listLocationsOrigin: Location[] = [
     // {name: 'Malaga', type: '1', father_location: undefined},
     // {name: 'Pontevedra', type: '1', father_location: undefined},
@@ -139,12 +139,12 @@ export class CostsComponent implements OnInit {
               const liquidationReuse = res;
               this.lastOriginSelected = liquidationReuse.port_origin?.location;
               this.formControlOrigin.setValue(this.lastOriginSelected.name);
-              this.lastPortOriginSelected = liquidationReuse.port_origin;
-              this.formControlOriginPort.setValue(this.lastPortOriginSelected.name);
+              // this.lastPortOriginSelected = liquidationReuse.port_origin;
+              this.formControlOriginPort.setValue(liquidationReuse.port_origin);
               this.lastDestinationSelected = liquidationReuse.port_destination?.location;
               this.formControlDestination.setValue(this.lastDestinationSelected.name);
-              this.lastPortDestinationSelected = liquidationReuse.port_destination;
-              this.formControlDestinationPort.setValue(this.lastPortDestinationSelected.name);
+              // this.lastPortDestinationSelected = liquidationReuse.port_destination;
+              this.formControlDestinationPort.setValue(liquidationReuse.port_destination);
               this.selectedProduct = this.listProduct.find(p => p.id === liquidationReuse.product.id);
               this.formControlValueFOB.setValue(liquidationReuse.fob_cost);
               this.selectedCurrency = this.listCurrencies.find(c => c.abbreviation === liquidationReuse.currency?.acronym);
@@ -282,13 +282,10 @@ export class CostsComponent implements OnInit {
   }
 
   getAllPorts(city: Location, formControl: FormControl): void {
-    if (formControl === this.formControlOriginPort && this.lastPortOriginSelected?.name?.toUpperCase() !== this.formControlOriginPort?.value?.toUpperCase()) {
-      this.lastPortOriginSelected = undefined;
-    } else if (formControl === this.formControlDestinationPort && this.lastPortDestinationSelected?.name?.toUpperCase() !== this.formControlDestinationPort?.value?.toUpperCase()) {
-      this.lastPortDestinationSelected = undefined;
-    }
-    if (formControl === this.formControlOriginPort && this.lastPortOriginSelected || formControl === this.formControlDestinationPort && this.lastPortDestinationSelected) {
-      return;
+    if (formControl === this.formControlOriginPort) {
+      this.formControlOriginPort.reset();
+    } else if (formControl === this.formControlDestinationPort) {
+      this.formControlDestinationPort.reset();
     }
     if (this.timer) {
       window.clearTimeout(this.timer);
@@ -336,13 +333,13 @@ export class CostsComponent implements OnInit {
     this.getAllPorts(option, this.formControlDestinationPort);
   }
 
-  onSelectOptionOrigenPort(option: Port): void {
-    this.lastPortOriginSelected = option;
-  }
+  // onSelectOptionOrigenPort(option: Port): void {
+  //   this.lastPortOriginSelected = option;
+  // }
 
-  onSelectOptionDestinationPort(option: Port): void {
-    this.lastPortDestinationSelected = option;
-  }
+  // onSelectOptionDestinationPort(option: Port): void {
+  //   this.lastPortDestinationSelected = option;
+  // }
 
   changeCityIcotermAutocomplete() {
 
@@ -401,8 +398,8 @@ export class CostsComponent implements OnInit {
       container: this.selectedContainer,
       fobValue: this.formControlValueFOB.value,
       incoterm: this.selectedIncoterm,
-      portOrigin: this.lastPortOriginSelected,
-      portDestination: this.lastPortDestinationSelected,
+      portOrigin: this.formControlOriginPort.value,
+      portDestination: this.formControlDestinationPort.value,
       product: this.selectedProduct,
     };
     if (!this.disabledFormIcotermType()) {
@@ -470,7 +467,7 @@ export class CostsComponent implements OnInit {
   }
 
   canGoToNextStep(): boolean {
-    if (this.currentStep === 0 && (!this.lastOriginSelected || !this.lastDestinationSelected || !this.lastPortOriginSelected || !this.lastPortDestinationSelected)) {
+    if (this.currentStep === 0 && (!this.lastOriginSelected || !this.lastDestinationSelected || this.formControlOriginPort.invalid || this.formControlDestinationPort.invalid)) {
       this.formControlOrigin.markAsTouched();
       this.formControlDestination.markAsTouched();
       this.formControlOriginPort.markAsTouched();
