@@ -18,18 +18,17 @@ export class PortTarifService {
   }
 
   importFilePortTarifsInternational(file: any): Observable<any>{
-
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.httpClient.post<any>('port_tarif/import_ports_tarif_international/', formData);
+    return this.httpClient.post<any>('port_tarif_international/import_ports_tarif_international/', formData);
   }
 
   importFilePortTarifsNational(file: any): Observable<any>{
-
+    
     const formData = new FormData();
     formData.append('file', file);
-    return this.httpClient.post<any>('port_tarif/import_ports_tarif_national/', formData);
+    return this.httpClient.post<any>('port_tarif_national/import_ports_tarif_national/', formData);
   }
 
   downloadNationalReport(body: any): Observable<any> {

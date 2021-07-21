@@ -29,11 +29,11 @@ export class InterceptorService implements HttpInterceptor {
       });
     }
 
-    if (!request.headers.has('Content-Type')) {
-      request = request.clone({
-        headers: request.headers.set('Content-Type', 'application/json'),
-      });
-    }
+    // if (!request.headers.has('Content-Type')) {
+    //   request = request.clone({
+    //     headers: request.headers.set('Content-Type', 'application/json'),
+    //   });
+    // }
 
     return next.handle(request).pipe(catchError(error => {
       if (error instanceof HttpErrorResponse && error.status === 401) {

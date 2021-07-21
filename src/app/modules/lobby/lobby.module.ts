@@ -65,6 +65,7 @@ import { PortChargeComponent } from './menu-components/port-charge/port-charge.c
 import { CurrenciesComponent } from './menu-components/currencies/currencies.component';
 import { ContainersTypeComponent } from './menu-components/containers-type/containers-type.component';
 import {DialogExportReportComponent} from "../common-components/dialog-export-report/dialog-export-report.component";
+import { DialogImportPortChargesComponent } from './menu-components/port-charge/dialog-import-port-charges/dialog-import-port-charges.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import {DialogExportReportComponent} from "../common-components/dialog-export-re
     CurrenciesComponent,
     ContainersTypeComponent,
     DialogExportReportComponent,
+    DialogImportPortChargesComponent,
   ],
   imports: [
     CommonModule,

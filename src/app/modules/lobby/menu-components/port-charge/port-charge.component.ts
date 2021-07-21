@@ -7,6 +7,7 @@ import { CurrencyService } from 'src/app/services/currency/currency.service';
 import { PortChargeService } from 'src/app/services/portCharge/port-charge.service';
 import {DialogExportReportComponent} from '../../../common-components/dialog-export-report/dialog-export-report.component';
 import {ReportsEnum} from '../../../../enums/Reports.enum';
+import { DialogImportPortChargesComponent } from './dialog-import-port-charges/dialog-import-port-charges.component';
 
 @Component({
   selector: 'app-port-charge',
@@ -26,7 +27,8 @@ export class PortChargeComponent implements OnInit {
     'concept',
     'port',
     'container_type',
-    'crete_at'
+    'crete_at',
+    'value'
   ];
   private timer: number;
 
@@ -69,6 +71,16 @@ export class PortChargeComponent implements OnInit {
       data: ReportsEnum.PORT_CHARGE
     });
     dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  openDialogImportData(): void {
+    const dialogRef = this.matDialog.open(DialogImportPortChargesComponent, {
+      width: '100vw',
+      maxWidth: '400px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadTable();
     });
   }
 }

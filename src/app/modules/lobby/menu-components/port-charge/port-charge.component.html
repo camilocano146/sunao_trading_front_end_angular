@@ -5,7 +5,9 @@
 
   <div class="container">
     <div class="row m-auto mb-3">
-      <div class="col-md-6 col-12 p-0"></div>
+      <div class="col-md-6 col-12 p-0">
+
+      </div>
       <div class="col-md-6 col-12 text-right p-0" style="max-width: 1250px; min-width: 200px;">
         <button mat-raised-button
                 (click)="exportDate()"
@@ -13,11 +15,22 @@
           <h4>
             <img src="./assets/icons/download_white_24dp.svg" alt="" class="mr-5">
             <span style="margin-left: 1em">
-            Reporte
-          </span>
+              Reporte
+            </span>
+          </h4>
+        </button>
+        <br>
+        <button mat-raised-button class="col-12 w-75 btn-yellow" (click)="openDialogImportData()" style="width: 250px !important;">
+          <h4>
+            <img src="./assets/icons/add_white.svg" alt="" width="18" class="mr-5">
+            <span style="margin-left: 1em">
+              Importar datos
+            </span>
           </h4>
         </button>
       </div>
+
+      
     </div>
   </div>
 
@@ -75,13 +88,26 @@
         <ng-container matColumnDef="crete_at">
           <th mat-header-cell *matHeaderCellDef>
             <img src="./assets/icons/nota.svg" alt="">
-            Tipo de container
+            Fecha de creacion
           </th>
           <td mat-cell *matCellDef="let row">
             <span *ngIf="row.create_at">{{row.create_at}}</span>
             <span *ngIf="!row.create_at">N/A</span>
           </td>
         </ng-container>
+
+        <!-- value port -->
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/nota.svg" alt="">
+            Valor
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.value">{{row.value}}</span>
+            <span *ngIf="!row.value">N/A</span>
+          </td>
+        </ng-container>
+        
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

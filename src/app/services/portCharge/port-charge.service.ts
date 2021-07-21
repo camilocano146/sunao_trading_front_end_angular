@@ -19,4 +19,10 @@ export class PortChargeService {
   downloadReport(body: any): Observable<any> {
     return this.httpClient.post(`port_charge/export_data/`, body, { responseType: 'blob' });
   }
+  importFilePortCharges(file: any): Observable<any>{
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post<any>('port_charge/import_ports_charges/', formData);
+  }
 }
