@@ -238,7 +238,7 @@ export class CostsComponent implements OnInit {
         this.listLocationsDestination?.splice(0, this.listLocationsDestination?.length);
       }
       this.listSubscribesLocation.splice(0, this.listSubscribesLocation.length);
-      const subscribeLocation = this.locationService.getAllCountries(0, this.limit, formControl.value);
+      const subscribeLocation = this.locationService.getAllPublicCountries(0, this.limit, formControl.value);
       this.listSubscribesLocation.push(subscribeLocation.subscribe(res => {
         // console.log(res);
         if (onInit) {

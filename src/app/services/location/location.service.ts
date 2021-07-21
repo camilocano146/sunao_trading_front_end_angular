@@ -30,6 +30,10 @@ export class LocationService {
     return this.httpClient.get(`location/list_country/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
+  getAllPublicCountries(offset: number, limit: number, regex: string): Observable<any> {
+    return this.httpClient.get(`location_no_auth/list_country/?offset=${offset}&limit=${limit}&regex=${regex}`);
+  }
+
   getAllCitiesOfCountry(idCountry: number, offset: number, limit: number): Observable<any> {
     return this.httpClient.get(`location/${idCountry}/list_municipality_country/?offset=${offset}&limit=${limit}`);
   }
