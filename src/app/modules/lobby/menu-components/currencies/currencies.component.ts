@@ -20,7 +20,8 @@ export class CurrenciesComponent implements OnInit {
   public displayedColumns: string[] = [
     'id',
     'name',
-    'acronym'
+    'acronym',
+    'value'
   ];
   private timer: number;
 

@@ -27,7 +27,6 @@ export class PortsComponent implements OnInit {
   public displayedColumns: string[] = [
     'id',
     'name',
-    'address',
     'latitud',
     'longitud',
     'city',

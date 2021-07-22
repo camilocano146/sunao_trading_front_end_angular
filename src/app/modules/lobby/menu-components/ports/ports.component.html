@@ -66,18 +66,6 @@
           </td>
         </ng-container>
 
-        <!-- address Column -->
-        <ng-container matColumnDef="address">
-          <th mat-header-cell *matHeaderCellDef>
-            <img src="./assets/icons/email_white.svg" alt="">
-            Address
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.address">{{row.address}}</span>
-            <span *ngIf="!row.address">N/A</span>
-          </td>
-        </ng-container>
-
         <!-- latitud Column -->
         <ng-container matColumnDef="latitud">
           <th mat-header-cell *matHeaderCellDef>

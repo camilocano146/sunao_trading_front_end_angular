@@ -32,9 +32,6 @@ export class DialogPortCreateEditComponent implements OnInit {
     null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
   );
 
-  public formControlAddress: FormControl = new FormControl(
-    null, [Validators.required, Validators.minLength(3), Validators.maxLength(this.maxLengthName)]
-  );
 
   // public formControlLatitud: FormControl = new FormControl(
   //   null, [Validators.required,  Validators.maxLength(this.maxLengthName)]
@@ -64,7 +61,6 @@ export class DialogPortCreateEditComponent implements OnInit {
       this.list_countries = res.results;
       if (this.data.dataEdit) {
         this.formControlName.setValue(data.dataEdit.name);
-        this.formControlAddress.setValue(data.dataEdit.address);
         // this.formControlLatitud.setValue(data.dataEdit.latitude);
         // this.formControlLongitud.setValue(data.dataEdit.longitude);
         this.formControlLocation.setValue(data.dataEdit.location.id);
@@ -76,11 +72,10 @@ export class DialogPortCreateEditComponent implements OnInit {
   }
 
   saveOrEdit(): void {
-    if (this.formControlName.valid && this.formControlAddress.valid && this.formControlLocation.valid && this.havePosition()) {
+    if (this.formControlName.valid && this.formControlLocation.valid && this.havePosition()) {
       this.preloadSave = true;
       const body: Port = {
         name: this.formControlName.value,
-        address: this.formControlAddress.value,
         location_id : this.formControlLocation.value,
         latitude: +this.latitude,
         longitude : +this.longitude,
@@ -106,7 +101,6 @@ export class DialogPortCreateEditComponent implements OnInit {
       });
     } else {
       this.formControlName.markAsTouched();
-      this.formControlAddress.markAsTouched();
       this.formControlLocation.markAsTouched();
     }
   }

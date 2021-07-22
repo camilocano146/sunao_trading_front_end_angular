@@ -1,38 +1,34 @@
 <div class="full-width mt-3">
-  <div class="row margin-mobile-top-orgs my-2 text-center" style="margin-left: 0px !important; margin-right: 0px !important;">
+  <div class="row margin-mobile-top-orgs my-2 text-center"
+    style="margin-left: 0px !important; margin-right: 0px !important;">
     <h3 class="w-100">Lista de gastos portuarios</h3>
   </div>
 
-  <div class="container">
-    <div class="row m-auto mb-3">
-      <div class="col-md-6 col-12 p-0">
-
-      </div>
-      <div class="col-md-6 col-12 text-right p-0" style="max-width: 1250px; min-width: 200px;">
-        <button mat-raised-button
-                (click)="exportDate()"
-                class="col-12 w-75 btn-soft-blue-m-0" style="width: 200px !important;">
-          <h4>
-            <img src="./assets/icons/download_white_24dp.svg" alt="" class="mr-5">
-            <span style="margin-left: 1em">
-              Reporte
-            </span>
-          </h4>
-        </button>
-        <br>
-        <button mat-raised-button class="col-12 w-75 btn-yellow" (click)="openDialogImportData()" style="width: 250px !important;">
-          <h4>
-            <img src="./assets/icons/add_white.svg" alt="" width="18" class="mr-5">
-            <span style="margin-left: 1em">
-              Importar datos
-            </span>
-          </h4>
-        </button>
-      </div>
-
-      
+  <div class="row" style=" width: 100%;">
+    <div style="max-width:  1250px;">
+      <button mat-raised-button
+              (click)="exportDate()"
+              class="col-12 w-75 btn-soft-blue" style="width: 200px !important; float: right;">
+        <h4>
+          <img src="./assets/icons/download_white_24dp.svg" alt="" class="mr-5">
+          <span style="margin-left: 1em">
+            Reporte
+          </span>
+        </h4>
+      </button>
+      <button mat-raised-button class="col-12 w-75 btn-yellow" (click)="openDialogImportData()"
+        style="width: 250px !important; float: right;">
+        <h4>
+          <img src="./assets/icons/add_white.svg" alt="" width="18" class="mr-5">
+          <span style="margin-left: 1em">
+            Importar datos
+          </span>
+        </h4>
+      </button>
     </div>
   </div>
+
+
 
   <div class="mat-elevation-z8 container">
     <div class="div-parent-table">
@@ -44,7 +40,7 @@
             Id
           </th>
           <td mat-cell *matCellDef="let row">
-            <span >{{row.id}}</span>
+            <span>{{row.id}}</span>
           </td>
         </ng-container>
 
@@ -107,7 +103,7 @@
             <span *ngIf="!row.value">N/A</span>
           </td>
         </ng-container>
-        
+
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

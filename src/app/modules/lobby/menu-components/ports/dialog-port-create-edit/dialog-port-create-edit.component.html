@@ -30,14 +30,6 @@
         <mat-error *ngIf="formControlName.invalid">Campo requerido</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-12" style="margin-bottom: 10px;">
-      <mat-form-field class="w-100">
-        <mat-label>Address</mat-label>
-        <input matInput [formControl]="formControlAddress">
-        <!-- <mat-hint align="end">{{formControlName.value?.length || 0}}/{{maxLengthName}}</mat-hint> -->
-        <mat-error *ngIf="formControlAddress.invalid">Campo requerido</mat-error>
-      </mat-form-field>
-    </div>
 
     <!--      <div class="col-12" style="margin-bottom: 10px;">-->
     <!--        <mat-form-field class="w-100">-->
