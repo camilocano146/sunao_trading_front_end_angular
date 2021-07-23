@@ -144,7 +144,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.fob_cost | currency:'$ ':'symbol':'1.0')}}
+                {{(liquidation?.fob_cost | currency:' ':'symbol':'1.0')}} USD
               </h4>
             </div>
 
@@ -171,7 +171,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.international_freight_cost | currency:'$ ':'symbol':'1.0')}}
+                {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
               </h4>
             </div>
 
@@ -185,7 +185,7 @@
           <div class="row">
             <h5 class="col-9 ps-5" style="text-align: justify">
               El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} ({{liquidation?.port_origin?.location?.name | titlecase}}) al puerto {{liquidation?.port_destination?.name | titlecase}} ({{liquidation?.port_destination?.location?.name | titlecase}})
-              y tiene un costo de = {{(liquidation?.data?.international_freight_cost | currency:'$ ':'symbol':'1.0')}}
+              y tiene un costo de = {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
 <!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
 <!--            <h5 class="col-4">-->
@@ -200,7 +200,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.insurance_cost | currency:'$ ':'symbol':'1.0')}}
+                {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.0')}} USD
               </h4>
             </div>
 
@@ -219,7 +219,7 @@
 
           <div class="row">
             <h5 class="col-8 ps-5">
-              ({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{liquidation?.data?.insurance_cost}}
+              ({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.0')}} USD
             </h5>
           </div>
 
@@ -234,7 +234,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.port_charge | currency:'$ ':'symbol':'1.0')}}
+                {{(liquidation?.data?.port_charge | currency:' ':'symbol':'1.0')}} USD
               </h4>
             </div>
 
@@ -246,7 +246,7 @@
           </mat-expansion-panel-header>
 
           <div class="row">
-            <h5 class="col-8 ps-5">
+            <h5 class="col-10 ps-5">
               <div>
                 Portuarios:
               </div>
@@ -255,7 +255,7 @@
               </div>
               <ul *ngIf="listPortCharge?.length > 0">
                 <li *ngFor="let item of listPortCharge">
-                  Concepto = {{item.concept}}, valor = {{(item.value | currency:'$ ':'symbol':'1.0')}}.
+                  Concepto = {{item.concept}}, valor = {{(item.value | currency:' ':'symbol':'1.0')}} USD.
                 </li>
               </ul>
             </h5>
@@ -268,7 +268,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.gravamen_tarif | currency:'$ ':'symbol':'1.0')}}
+                {{(liquidation?.data?.gravamen_tarif | currency:' ':'symbol':'1.0')}} USD
               </h4>
             </div>
 
@@ -314,7 +314,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.national_freight_cost | currency:'$ ':'symbol':'1.0')}}
+                {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
               </h4>
             </div>
 
@@ -327,8 +327,8 @@
 
           <div class="row">
             <h5 class="col-8 ps-5" style="text-align: justify">
-              El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} en {{liquidation?.port_origin?.location?.name | titlecase}}  al puerto {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}}
-              y tiene un costo de {{(liquidation?.data?.international_freight_cost | currency:'$ ':'symbol':'1.0')}}
+              El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} en {{liquidation?.port_origin?.location?.name | titlecase}} al puerto {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}}
+              y tiene un costo de {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
 <!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
 <!--            <h5 class="col-4">-->
@@ -344,7 +344,7 @@
           Total {{getCalculateIcoterm()}}:
         </h4>
         <h4 class="col-6 text-right">
-          USD {{((calculateTotalValue() | currency:'$ ':'symbol':'1.0') + '')?.replace(',', '.')}}
+          {{((calculateTotalValue() | currency:' ':'symbol':'1.0') + '')?.replace(',', '.')}} USD
         </h4>
       </div>
 
@@ -364,7 +364,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4 *ngIf="liquidation?.data?.iva_tarif">
-                {{liquidation?.data?.iva_tarif | currency : 'USD' : 'symbol' : '1.0-0' }}
+                {{liquidation?.data?.iva_tarif | currency : ' ' : 'symbol' : '1.0-0' }} USD
               </h4>
               <h4 *ngIf="!liquidation?.data?.iva_tarif">
                 0

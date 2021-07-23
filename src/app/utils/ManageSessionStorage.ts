@@ -26,4 +26,13 @@ export class ManageSessionStorage {
   static deleteCountrySelected(): void {
     sessionStorage.removeItem('lastCountry');
   }
+
+  static setLastSavedLiquidationId(liquidationId: number): void {
+    sessionStorage.setItem('lastLiquidationSaved', liquidationId + '');
+  }
+
+  static getLastSavedLiquidationId(): number {
+    const value = sessionStorage.getItem('lastLiquidationSaved');
+    return value ? +value : undefined;
+  }
 }
