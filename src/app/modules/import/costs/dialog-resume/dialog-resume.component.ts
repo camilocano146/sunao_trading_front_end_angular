@@ -10,6 +10,7 @@ import {LiquidationService} from '../../../../services/liquidation/liquidation.s
 import {Liquidation} from '../../../../models/Liquidation';
 import {NotifyService} from "../../../../services/notify/notify.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ManageSessionStorage} from "../../../../utils/ManageSessionStorage";
 
 @Component({
   selector: 'app-dialog-resume',
@@ -59,11 +60,13 @@ export class DialogResumeComponent implements OnInit {
     const liquidate = this.buildLiquidate();
     this.liquidationService.liquidate(liquidate).subscribe(res => {
       const userHastActivePackage = res.USER_HAS_ACTIVE_PACKAGE;
+      const liquidationId = res.id_liquidation;
+      ManageSessionStorage.setLastSavedLiquidationId(liquidationId);
       if (userHastActivePackage === false) {
         this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
         this.router.navigate(['import/plans']);
       } else {
-        this.router.navigate(['lobby']);
+        this.router.navigate([`lobby/liquidations-detail/${liquidationId}`]);
       }
       this.matDialogRef.close();
       this.preload = false;

@@ -214,11 +214,13 @@ export class CostsComponent implements OnInit {
   }
 
   getAllCountries(formControl: FormControl, onInit?: boolean): void {
+    console.log(this.lastOriginSelected?.name, this.formControlOrigin?.value);
     if (formControl === this.formControlOrigin && this.lastOriginSelected?.name?.toUpperCase() !== this.formControlOrigin?.value?.toUpperCase()) {
       this.lastOriginSelected = undefined;
     } else if (formControl === this.formControlDestination && this.lastDestinationSelected?.name?.toUpperCase() !== this.formControlDestination?.value?.toUpperCase()) {
       this.lastDestinationSelected = undefined;
     }
+    console.log(this.lastOriginSelected);
     if (formControl === this.formControlOrigin && this.lastOriginSelected || formControl === this.formControlDestination && this.lastDestinationSelected) {
       return;
     }
@@ -552,12 +554,12 @@ export class CostsComponent implements OnInit {
     }
 
   }
-  getDescriptionToltip(incoterm){
-    if(incoterm.name==='DDP'){
-      return 'Entregado con derechos pagados';  
+  getDescriptionToltip(incoterm): string {
+    if(incoterm.name === 'DDP'){
+      return 'Entregado con derechos pagados';
     }
-    else if(incoterm.name==='CIF'){
-      return 'Costo seguro y flete.';  
+    else if(incoterm.name === 'CIF'){
+      return 'Costo seguro y flete.';
     }
     else{
       return 'Costo y flete'

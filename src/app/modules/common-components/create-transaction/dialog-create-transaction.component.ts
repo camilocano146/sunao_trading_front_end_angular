@@ -9,6 +9,7 @@ import {NotifyService} from '../../../services/notify/notify.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ImportCost} from "../../../models/ImportCost";
 import {Package} from "../../../models/Package";
+import {ManageSessionStorage} from "../../../utils/ManageSessionStorage";
 
 @Component({
   selector: 'app-create-transaction',
@@ -324,18 +325,27 @@ export class DialogCreateTransactionComponent implements OnInit {
   showTransactionMessage(status, transactionBank, redirectToInvoice?: boolean): void {
     switch (status) {
       case 'APPROVED':
+        const liquidationId = ManageSessionStorage.getLastSavedLiquidationId();
         if (redirectToInvoice) {
           this.notifyService.showSuccess('Aviso', 'En seguida serás redigirido a la página de tu banco.');
           setTimeout(() => {
             window.open(transactionBank?.payment_method?.extra.async_payment_url, '_blank');
-            this.router.navigate(['lobby']);
+            if (liquidationId) {
+              this.router.navigate([`lobby/liquidations-detail/${liquidationId}`]);
+            } else {
+              this.router.navigate(['lobby']);
+            }
             this.preload_pay = false;
             this.matDialogRef.close();
           }, 1500);
         } else {
           this.notifyService.showSuccess('Aviso', 'Transaccion realizada exitosamente.');
           setTimeout(() => {
-            this.router.navigate(['lobby']);
+            if (liquidationId) {
+              this.router.navigate([`lobby/liquidations-detail/${liquidationId}`]);
+            } else {
+              this.router.navigate(['lobby']);
+            }
             this.matDialogRef.close();
             this.preload_pay = false;
           }, 1000);
