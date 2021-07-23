@@ -9,6 +9,7 @@ import {Gravamen} from '../../../../../models/Gravamen';
 import {SupportDocument} from '../../../../../models/SupportDocument';
 import {PortsService} from '../../../../../services/ports/ports.service';
 import {Utilities} from '../../../../../utils/Utilities';
+import { TradeRegimen } from 'src/app/models/TradeRegimen';
 
 @Component({
   selector: 'app-dashboards',
@@ -26,6 +27,7 @@ export class LiquidationDetailsComponent implements OnInit {
   listInternationalAgreement: any;
   listSupportDocuments: SupportDocument[];
   listPortCharge: any;
+  listTradeRegimes: TradeRegimen[];
 
   constructor(
     private translate: TranslateService,
@@ -76,6 +78,10 @@ export class LiquidationDetailsComponent implements OnInit {
 
       this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.port_destination?.id, this.liquidation.container_type?.id).subscribe(res => {
         this.listPortCharge = res.results;
+      });
+
+      this.productsService.getTradeRegimen(this.liquidation.product.id, 0, 1000).subscribe(res=>{
+        this.listTradeRegimes = res.results;
       });
     }, error => {
       this.preload = false;

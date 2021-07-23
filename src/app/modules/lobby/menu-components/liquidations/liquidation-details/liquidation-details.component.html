@@ -382,6 +382,11 @@
             <h5 class="col-8 ps-5">
               Porcentaje = {{liquidation?.data?.iva_percentage ? liquidation?.data?.iva_percentage : 0}}%
             </h5>
+            <br>
+            <h5 class="col-9 ps-5">
+              Total iva = (FOB + valor flete internacional + seguro flete internacional + aranceles ) * porcentaje iva
+            </h5>
+
           </div>
 
         </mat-expansion-panel>
@@ -415,6 +420,42 @@
                 </h5>
                 <h5 class="col-4">
                   {{document?.entity}}
+                </h5>
+              </div>
+            </li>
+          </ul>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion class="mat-accordion-blue">
+        <mat-expansion-panel #matExpansionFiles>
+          <mat-expansion-panel-header>
+
+            <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionFiles.expanded ? 180 : 0) + 'deg)'}" src="./assets/icons/arrow_drop_down_blue_24dp.svg" alt="">
+
+            <mat-panel-title>
+              Regimenes de comercio
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="row my-2">
+            <h5 class="col-7 ">
+              Concepto
+            </h5>
+            <h5 class="col-4 ">
+              Fecha
+            </h5>
+          </div>
+
+          <ul *ngFor="let tradeRegimen of listTradeRegimes">
+            <li>
+              <div class="row">
+                <h5 class="col-7">
+                  {{tradeRegimen?.concept}}
+                </h5>
+                <h5 class="col-4">
+                  {{tradeRegimen?.date}}
                 </h5>
               </div>
             </li>

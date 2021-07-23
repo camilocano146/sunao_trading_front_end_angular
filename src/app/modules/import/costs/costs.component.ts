@@ -546,9 +546,9 @@ export class CostsComponent implements OnInit {
     }
     else{
       Swal.fire(
-        'Error',
-        'No se puede seleccionar este producto.',
-        'error')
+        'Advertencia',
+        'Solo se pueden seleccionar productos que tengan codigo con 13 o mas caracteres.',
+        'warning')
     }
 
   }
