@@ -105,6 +105,8 @@ export class CostsComponent implements OnInit {
   preloadProducts: boolean;
   preloadLiquidation: boolean;
   preloadFinalization: boolean;
+  private changeSelectedOrigin: boolean;
+  private changeSelectedDestination: boolean;
 
   constructor(
     public matDialog: MatDialog,
@@ -214,13 +216,16 @@ export class CostsComponent implements OnInit {
   }
 
   getAllCountries(formControl: FormControl, onInit?: boolean): void {
-    console.log(this.lastOriginSelected?.name, this.formControlOrigin?.value);
+    if (this.changeSelectedOrigin || this.changeSelectedDestination) {
+      this.changeSelectedOrigin = false;
+      this.changeSelectedDestination = false;
+      return;
+    }
     if (formControl === this.formControlOrigin && this.lastOriginSelected?.name?.toUpperCase() !== this.formControlOrigin?.value?.toUpperCase()) {
       this.lastOriginSelected = undefined;
-    } else if (formControl === this.formControlDestination && this.lastDestinationSelected?.name?.toUpperCase() !== this.formControlDestination?.value?.toUpperCase()) {
+    } else if (!this.changeSelectedDestination && formControl === this.formControlDestination && this.lastDestinationSelected?.name?.toUpperCase() !== this.formControlDestination?.value?.toUpperCase()) {
       this.lastDestinationSelected = undefined;
     }
-    console.log(this.lastOriginSelected);
     if (formControl === this.formControlOrigin && this.lastOriginSelected || formControl === this.formControlDestination && this.lastDestinationSelected) {
       return;
     }
@@ -356,14 +361,18 @@ export class CostsComponent implements OnInit {
   // }
 
   onSelectOptionOrigin(option: Location): void {
+    this.changeSelectedOrigin = true;
     this.lastOriginSelected = option;
     this.getAllPorts(option, this.formControlOriginPort);
+    this.listLocationsOrigin = [];
   }
 
   onSelectOptionDestination(option: Location): void {
+    this.changeSelectedDestination = true;
     this.lastDestinationSelected = option;
     this.getAllCitiesIncotermStep();
     this.getAllPorts(option, this.formControlDestinationPort);
+    this.listLocationsDestination = [];
   }
 
   // onSelectOptionOrigenPort(option: Port): void {
