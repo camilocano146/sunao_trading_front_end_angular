@@ -55,7 +55,7 @@ import {MatSelectModule} from "@angular/material/select";
     MatIconModule,
     MatProgressSpinnerModule,
     AgmCoreModule.forRoot({
-      apiKey: ''
+      apiKey: 'AIzaSyBpJftMytXyvYq6k2qQsy5s39VG1aguvsE'
     }),
     FormsModule,
     MatCheckboxModule,
