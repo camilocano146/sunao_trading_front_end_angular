@@ -10,7 +10,7 @@
       </h5>
       <div class="pt-3 pb-1 mx-2">
         <mat-form-field class="w-100" appearance="outline">
-          <input type="email" matInput placeholder="Usuario" [formControl]="formControlUser" required>
+          <input type="email" matInput placeholder="Email" [formControl]="formControlUser" required>
           <mat-error *ngIf="formControlUser.invalid">{{getErrorMessageUser()}}</mat-error>
         </mat-form-field>
         <mat-form-field (keyup.enter)="signIn()" class="w-100" appearance="outline">

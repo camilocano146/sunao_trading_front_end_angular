@@ -349,7 +349,7 @@
                     {{incoterm.description}}
                   </div>
                   <div class="col-2 div-parent-icoterm-icon-info">
-                    <div class="div-icoterm-icon-info" matTooltip="{{incoterm.description}}"
+                    <div class="div-icoterm-icon-info" matTooltip="{{getDescriptionToltip(incoterm)}}"
                          matTooltipPosition="left"
                          [matTooltipClass]="{'icoterm-tooltip-icons-selected': selectedIncoterm === incoterm, 'icoterm-tooltip-icons': selectedIncoterm !== incoterm}"
                          [ngStyle]="{'mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center'}"></div>

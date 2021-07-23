@@ -184,8 +184,8 @@
 
           <div class="row">
             <h5 class="col-9 ps-5" style="text-align: justify">
-              El producto viaja de {{liquidation?.port_origin?.location?.name | titlecase}} a {{liquidation?.port_destination?.name | titlecase}}
-              y tiene un costo de = {{(liquidation?.data?.international_freight_cost | currency:'$ ':'symbol':'1.0')}}
+              El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} en {{liquidation?.port_origin?.location?.name | titlecase}}  al puerto {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}}
+              y tiene un costo de {{(liquidation?.data?.international_freight_cost | currency:'$ ':'symbol':'1.0')}}
 <!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
 <!--            <h5 class="col-4">-->
@@ -213,16 +213,20 @@
 
           <div class="row">
             <h5 class="col-8 ps-5">
-              (Valor FOB + Flete Internacional) x 0.4% = {{liquidation?.data?.insurance_cost}}
+              (Valor FOB + Flete Internacional) x 0.4% = Valor seguro internacional
             </h5>
           </div>
 
           <div class="row">
             <h5 class="col-8 ps-5">
-              {{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}} x 0.04 = {{liquidation?.data?.insurance_cost}}
+              ({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{liquidation?.data?.insurance_cost}}
             </h5>
           </div>
+          
+          <div class="row">
+            <h3>Nota: El valor minimo del seguro internacional es igual a 50 USD</h3>
 
+          </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel #matExpansionPanel4 *ngIf="isIncotermDDP() && selectedFilterButton(3)">

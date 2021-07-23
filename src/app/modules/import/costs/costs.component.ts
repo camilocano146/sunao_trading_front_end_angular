@@ -552,4 +552,15 @@ export class CostsComponent implements OnInit {
     }
 
   }
+  getDescriptionToltip(incoterm){
+    if(incoterm.name==='DDP'){
+      return 'Entregado con derechos pagados';  
+    }
+    else if(incoterm.name==='CIF'){
+      return 'Costo seguro y flete.';  
+    }
+    else{
+      return 'Costo y flete'
+    }
+  }
 }
