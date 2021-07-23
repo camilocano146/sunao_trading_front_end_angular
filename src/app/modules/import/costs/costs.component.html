@@ -216,7 +216,6 @@
                 <mat-form-field class="w-100" appearance="outline">
                   <input type="number" aria-label="Number" matInput
                          placeholder="Digite Valor FOB de la mercancía"
-                         (keypress)="util.validateOnlyNumberPress($event)"
                          [formControl]="formControlValueFOB">
                   <mat-error style="font-size: 11px" *ngIf="formControlValueFOB.invalid">{{getErrorMessageFOB()}}</mat-error>
                 </mat-form-field>
