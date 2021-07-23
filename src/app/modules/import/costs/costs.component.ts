@@ -21,6 +21,7 @@ import {ActivatedRoute} from '@angular/router';
 import {LiquidationService} from '../../../services/liquidation/liquidation.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotifyService} from '../../../services/notify/notify.service';
+import Swal from 'sweetalert2';
 
 interface Step {
   imagePath: string;
@@ -173,7 +174,7 @@ export class CostsComponent implements OnInit {
   }
 
   isReadyMinInit(): boolean {
-    return this.listProduct?.length > 0 && this.listContainers.length > 0;
+    return  this.listContainers.length > 0;
   }
 
   getContainers(): void {
@@ -391,8 +392,25 @@ export class CostsComponent implements OnInit {
 
   actionButtonNext(): void {
     if (this.canGoToNextStep()) {
-      if (this.currentStep < this.listStepper.length) {
+      if (this.currentStep < this.listStepper.length && this.currentStep!=3) {
         this.currentStep += 1;
+      }
+      else if (this.currentStep < this.listStepper.length && this.currentStep==3){
+        let body = {
+          container_type_id: this.selectedContainer?.id,
+          port_origin_id: this.formControlOriginPort?.value?.id,
+          port_destination_id: this.formControlDestinationPort?.value?.id
+        }
+        this.preloadFinalization=true;
+        this.liquidationService.validatePortTarifInternational(body).subscribe(res=>{
+          this.currentStep += 1;
+          this.preloadFinalization=false;
+        }, (error: HttpErrorResponse) => {
+          if (error.status===400){
+            this.notifyService.showErrorSnapshot('No hay informacion de fletes internacionales con los dos puertos y el tipo de contenedor seleccionados.');
+          }
+          this.preloadFinalization=false;
+        })
       }
     }
   }
@@ -406,13 +424,13 @@ export class CostsComponent implements OnInit {
       city_destination_id: this.lastSelectedIcotermCity?.id,
       incoterm: this.selectedIncoterm.name
     };
-    this.liquidationService.validateInfoPortTarif(body).subscribe(res => {
+    this.liquidationService.validateInfoPortTarifNational(body).subscribe(res => {
       this.preloadFinalization = false;
       this.openDialogResume();
     }, (error: HttpErrorResponse) => {
       this.preloadFinalization = false;
       if (error.status === 400) {
-        this.notifyService.showErrorSnapshot('La liquidación no se puede crear debido a que la información sumistrada (ciudad origen, destino, contenedor, incoterm) no dispone de fletes.');
+        this.notifyService.showErrorSnapshot('La liquidación no se puede crear porque no hay informacion de fletes nacionales con la ciudad seleccionada.');
       }
     });
   }
@@ -520,5 +538,18 @@ export class CostsComponent implements OnInit {
 
   private isInvalidIncotermStep(): boolean {
     return (this.selectedIncoterm && !this.disabledFormIcotermType() && !this.lastSelectedIcotermCity) || !this.selectedIncoterm;
+  }
+
+  selectProduct(product){
+    if (product.code.length>=13){
+      this.selectedProduct = product;
+    }
+    else{
+      Swal.fire(
+        'Error',
+        'No se puede seleccionar este producto.',
+        'error')
+    }
+
   }
 }

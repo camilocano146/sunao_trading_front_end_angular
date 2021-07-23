@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 import {DialogExportReportComponent} from "../../../common-components/dialog-export-report/dialog-export-report.component";
 import {DialogChapterCreateEditComponent} from "../chapters/dialog-chapter-create-edit/dialog-chapter-create-edit.component";
 import {ReportsEnum} from "../../../../enums/Reports.enum";
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-liquidation',
@@ -45,20 +46,30 @@ export class LiquidationsComponent implements OnInit {
   values: any[] = ['CFR', 'CIF', 'DDP'];
   private timer: number;
 
+  userPackage:boolean;
   constructor(
     private translate: TranslateService,
     private notifyService: NotifyService,
     private liquidationService: LiquidationService,
     private matDialog: MatDialog,
     private router: Router,
+    private userService: UserService
   ) {
-    this.loadTable();
+    this.userHasActivePackage();  
   }
 
   ngOnInit(): void {
   }
 
   openDialogCreate(): void {
+
+  }
+
+  userHasActivePackage(){
+    this.userService.userHasActivePackage().subscribe(res=>{
+      this.userPackage=res.result;
+      this.loadTable();
+    })
 
   }
 
@@ -121,7 +132,8 @@ export class LiquidationsComponent implements OnInit {
   }
 
   goToSeeDetails(row: Liquidation): void {
-    if (row.status === 'PENDIENT') {
+    
+    if (this.userPackage==false) {
       this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
       this.router.navigate(['import/plans']);
     } else {

@@ -24,11 +24,15 @@ export class LiquidationService {
     return this.httpClient.get(`liquidation/${id}/get_liquidation_info/`);
   }
 
-  validateInfoPortTarif(body: {port_origin_id: number, port_destination_id: number, city_destination_id: number, container_type_id: number, incoterm: IncotermType}): Observable<any> {
-    return this.httpClient.post(`liquidation_no_auth/validate_info_port_tarif/`, body);
+  validateInfoPortTarifNational(body: {port_origin_id: number, port_destination_id: number, city_destination_id: number, container_type_id: number, incoterm: IncotermType}): Observable<any> {
+    return this.httpClient.post(`liquidation_no_auth/validate_info_port_tarif_national/`, body);
   }
 
   downloadReport(body: any): Observable<any> {
     return this.httpClient.post(`liquidation/export_data/`, body, { responseType: 'blob' });
+  }
+
+  validatePortTarifInternational(body){
+    return this.httpClient.post(`liquidation_no_auth/validate_info_port_tarif_international/`, body);
   }
 }

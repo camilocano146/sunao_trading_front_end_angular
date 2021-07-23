@@ -78,4 +78,8 @@ export class UserService {
   activateDeactivateUser(user: User): Observable<any> {
     return this.httpClient.post(`users/${user.id}/acivate_desactivate_user/`, user);
   }
+  
+  userHasActivePackage():Observable<any>{
+    return this.httpClient.get(`users/user_has_active_package/`);
+  }
 }

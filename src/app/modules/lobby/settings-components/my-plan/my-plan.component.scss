@@ -10,13 +10,13 @@
 }
 
 .btn-change {
-  background-color: $color-soft-blue;
+  background-color: $color-dark-blue;
   color: white !important;
   border-radius: 10px !important;
 }
 
 .btn-verify {
-  background-color: $color-soft-red;
+  background-color: $color-dark-blue;
   color: white !important;
   border-radius: 10px !important;
 }
@@ -42,7 +42,13 @@
 }
 
 .div-info-package {
-  background-color: blue !important;
+  background-color: $color-dark-blue !important;
+  border-radius: 10px !important;
+  color: white !important;
+}
+
+.div-info-package-usage {
+  background-color: $color-soft-blue !important;
   border-radius: 10px !important;
   color: white !important;
 }

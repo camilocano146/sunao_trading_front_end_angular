@@ -10,7 +10,7 @@
       <h6 class="m-0">
         <img src="./assets/icons/help_white_24dp.svg" alt="" width="35" class="mr-5">
         <span style="margin-left: 1em">
-        Guia De Usuario
+        Guía De Usuario
       </span>
       </h6>
     </button>
@@ -55,8 +55,8 @@
                       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
                     </mat-option>
                     <mat-option *ngFor="let option of listLocationsOrigin" (onSelectionChange)="onSelectOptionOrigin(option)"
-                                [value]="option.name">
-                      <span>{{option.name}}</span>
+                                [value]="option.name | titlecase">
+                      <span>{{option.name | titlecase}}</span>
                     </mat-option>
                   </mat-autocomplete>
                   <mat-error>{{getErrorMessageRequired(formControlOrigin)}}</mat-error>
@@ -118,7 +118,7 @@
                 </mat-form-field>
 
                 <h6 class="mb-1">
-                  Puerto Detino
+                  Puerto Destino
                 </h6>
                 <mat-form-field class="w-100" appearance="outline">
 <!--                  <input type="text" matInput (ngModelChange)="this.getAllPorts(lastDestinationSelected, formControlDestinationPort)"-->
@@ -183,14 +183,14 @@
               </mat-list-item>
               <mat-list-item class="cursor-pointer py-2"
                              style="height: fit-content;"
-                             (click)="selectedProduct = product"
+                             (click)="selectProduct(product)"
                              [ngClass]="{'div-border-selected': selectedProduct === product, 'bc-very-soft-blue': (i % 2) !== 0}"
                              *ngFor="let product of listProduct; let i = index">
                 <div class="row col-12">
-                <span class="col-9" style="text-align: justify">
+                <span class="col-8" style="text-align: justify">
                   {{product.name}}
                 </span>
-                  <span class="col-3 text-right">
+                  <span class="col-4 text-right">
                   {{product.code}}
                 </span>
                 </div>
@@ -209,7 +209,7 @@
         <div *ngIf="currentStep === 2">
           <div class="div-content-info">
             <h6 class="color-blue pt-5 pb-2 text-title-blue">
-              Por favor ingrese el valor FOB de la mercancia y la divisa en la que se encuentra
+              Por favor ingrese el valor FOB de la mercancía y la divisa en la que se encuentra
             </h6>
             <div class="row">
               <div class="col-sm-10 col-md-6">
@@ -350,7 +350,7 @@
                     {{incoterm.description}}
                   </div>
                   <div class="col-2 div-parent-icoterm-icon-info">
-                    <div class="div-icoterm-icon-info" matTooltip="Costo y Flete"
+                    <div class="div-icoterm-icon-info" matTooltip="{{incoterm.description}}"
                          matTooltipPosition="left"
                          [matTooltipClass]="{'icoterm-tooltip-icons-selected': selectedIncoterm === incoterm, 'icoterm-tooltip-icons': selectedIncoterm !== incoterm}"
                          [ngStyle]="{'mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/icons/info.svg' + ') no-repeat center'}"></div>
@@ -377,7 +377,7 @@
                       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
                     </mat-option>
                     <mat-option *ngFor="let option of listLocationsIcoterm" (onSelectionChange)="onSelectOptionIncotermCity(option)"
-                                [value]="option.name">
+                                [value]="option.name | titlecase">
                       <span>{{option.name | titlecase}}</span>
                     </mat-option>
                   </mat-autocomplete>
