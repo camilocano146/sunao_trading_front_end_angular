@@ -31,8 +31,12 @@ export class ManageSessionStorage {
     sessionStorage.setItem('lastLiquidationSaved', liquidationId + '');
   }
 
-  static getLastSavedLiquidationId(): number {
+  static getAndRemoveLastSavedLiquidationId(): number {
     const value = sessionStorage.getItem('lastLiquidationSaved');
-    return value ? +value : undefined;
+    if (value) {
+      sessionStorage.removeItem('lastLiquidationSaved');
+      return +value;
+    }
+    return undefined;
   }
 }

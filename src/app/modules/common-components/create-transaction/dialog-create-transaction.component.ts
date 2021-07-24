@@ -325,7 +325,7 @@ export class DialogCreateTransactionComponent implements OnInit {
   showTransactionMessage(status, transactionBank, redirectToInvoice?: boolean): void {
     switch (status) {
       case 'APPROVED':
-        const liquidationId = ManageSessionStorage.getLastSavedLiquidationId();
+        const liquidationId = ManageSessionStorage.getAndRemoveLastSavedLiquidationId();
         if (redirectToInvoice) {
           this.notifyService.showSuccess('Aviso', 'En seguida serás redigirido a la página de tu banco.');
           setTimeout(() => {

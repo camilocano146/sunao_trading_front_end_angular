@@ -67,7 +67,7 @@ export class CostsComponent implements OnInit {
   currentStep = 0;
   formControlProductName: FormControl = new FormControl('', []);
   formControlTariffHeading: FormControl = new FormControl('', []);
-  formControlValueFOB: FormControl = new FormControl('', [Validators.required]);
+  formControlValueFOB: FormControl = new FormControl('', [Validators.required, Validators.max(999999999999999.999999)]);
   listProduct: Product[];
   listCurrencies: Currency[] = [
     {name: 'Euro', abbreviation: 'EUR', imageCountry: './assets/flags/union-europea.svg'},
@@ -94,9 +94,9 @@ export class CostsComponent implements OnInit {
   selectedCurrency: Currency;
   selectedContainer: Container;
   util = Utilities;
-  lastSelectedIcotermCity: Location;
+  lastSelectedIncotermCity: Location;
   selectedProduct: Product;
-  listLocationsIcoterm: Location[];
+  listLocationsIncoterm: Location[];
   preloadCityOrigin: boolean;
   preloadCityDestination: boolean;
   preloadCityPortOrigin: any;
@@ -107,6 +107,7 @@ export class CostsComponent implements OnInit {
   preloadFinalization: boolean;
   private changeSelectedOrigin: boolean;
   private changeSelectedDestination: boolean;
+  tempNextStep: number;
 
   constructor(
     public matDialog: MatDialog,
@@ -157,12 +158,12 @@ export class CostsComponent implements OnInit {
                 this.selectedProduct = liquidationReuse.product;
                 this.listProduct.unshift(liquidationReuse.product);
               }
-              this.formControlValueFOB.setValue(liquidationReuse.fob_cost);
+              this.formControlValueFOB.setValue(liquidationReuse.fob_cost / 1);
               this.selectedCurrency = this.listCurrencies.find(c => c.abbreviation === liquidationReuse.currency?.acronym);
               this.selectedContainer = this.listContainers.find(c => c.id === liquidationReuse.container_type.id);
               this.selectedIncoterm = this.listIncoterm.find(i => i.name === liquidationReuse.incoterm);
-              this.lastSelectedIcotermCity = liquidationReuse.city_destination;
-              this.formControlCityIcoterm.setValue(this.lastSelectedIcotermCity?.name);
+              this.lastSelectedIncotermCity = liquidationReuse.city_destination;
+              this.formControlCityIcoterm.setValue(this.lastSelectedIncotermCity?.name);
               this.preloadLiquidation = false;
             }, err => {
               this.preloadLiquidation = false;
@@ -182,17 +183,17 @@ export class CostsComponent implements OnInit {
   getContainers(): void {
     this.containerService.getAll(0, this.limitContainers).subscribe(value => {
       this.listContainers = value.results;
-      this.listContainers[0].dimension = {long: 20, width: 8, height: 6};
+      this.listContainers[0].dimension = {long: 6, width: 2.4, height: 2.6};
       this.listContainers[0].weight = 2300;
-      this.listContainers[0].capacity = 25000;
+      this.listContainers[0].capacity = 21680;
       this.listContainers[0].img = {width: 70, color: '#ffbf3b'};
-      this.listContainers[1].dimension = {long: 40, width: 8, height: 6};
-      this.listContainers[1].weight = 3570;
-      this.listContainers[1].capacity = 8268.8;
+      this.listContainers[1].dimension = {long: 12, width: 2.4, height: 2.6};
+      this.listContainers[1].weight = 3750;
+      this.listContainers[1].capacity = 26680;
       this.listContainers[1].img = {width: 80, color: '#007b8a'};
-      this.listContainers[2].dimension = {long: 11.575, width: 2.285, height: 2.250};
+      this.listContainers[2].dimension = {long: 12, width: 2.4, height: 2.6};
       this.listContainers[2].weight = 4800;
-      this.listContainers[2].capacity = 10584;
+      this.listContainers[2].capacity = 26680;
       this.listContainers[2].img = {width: 80, color: '#ffbf3b'};
     });
   }
@@ -271,10 +272,10 @@ export class CostsComponent implements OnInit {
   }
 
   getAllCitiesIncotermStep(): void {
-    if (this.lastSelectedIcotermCity?.name?.toUpperCase() !== this.formControlCityIcoterm?.value?.toUpperCase()) {
-      this.lastSelectedIcotermCity = undefined;
+    if (this.lastSelectedIncotermCity?.name?.toUpperCase() !== this.formControlCityIcoterm?.value?.toUpperCase()) {
+      this.lastSelectedIncotermCity = undefined;
     }
-    if (this.lastSelectedIcotermCity) {
+    if (this.lastSelectedIncotermCity) {
       return;
     }
     if (this.timerCityIncoterm) {
@@ -285,11 +286,11 @@ export class CostsComponent implements OnInit {
         subscribeL.unsubscribe();
       }
       this.preloadCityIncoterm = true;
-      this.listLocationsIcoterm?.splice(0, this.listLocationsIcoterm?.length);
+      this.listLocationsIncoterm?.splice(0, this.listLocationsIncoterm?.length);
       this.listSubscribesLocationIncoterm.splice(0, this.listSubscribesLocationIncoterm.length);
       const subscribeLocation = this.locationService.getPublicAllCitiesByCountry(this.lastDestinationSelected.id, 0, this.limit, this.formControlCityIcoterm.value);
       this.listSubscribesLocationIncoterm.push(subscribeLocation.subscribe(res => {
-        this.listLocationsIcoterm = res.results;
+        this.listLocationsIncoterm = res.results;
         this.preloadCityIncoterm = false;
       }, error => {
         this.preloadCityIncoterm = false;
@@ -403,36 +404,46 @@ export class CostsComponent implements OnInit {
 
   actionButtonNext(): void {
     if (this.canGoToNextStep()) {
-      if (this.currentStep < this.listStepper.length && this.currentStep!=3) {
+      if (this.currentStep < this.listStepper.length && this.currentStep != 3) {
         this.currentStep += 1;
-      }
-      else if (this.currentStep < this.listStepper.length && this.currentStep==3){
-        let body = {
-          container_type_id: this.selectedContainer?.id,
-          port_origin_id: this.formControlOriginPort?.value?.id,
-          port_destination_id: this.formControlDestinationPort?.value?.id
-        }
-        this.preloadFinalization=true;
-        this.liquidationService.validatePortTarifInternational(body).subscribe(res=>{
-          this.currentStep += 1;
-          this.preloadFinalization=false;
-        }, (error: HttpErrorResponse) => {
-          if (error.status===400){
-            this.notifyService.showErrorSnapshot('No hay informacion de fletes internacionales con los dos puertos y el tipo de contenedor seleccionados.');
-          }
-          this.preloadFinalization=false;
-        })
+      } else if (this.currentStep < this.listStepper.length && this.currentStep == 3){
+        this.verifyGoToIncoterm();
       }
     }
   }
 
+  verifyGoToIncoterm(): void {
+    const body = {
+      container_type_id: this.selectedContainer?.id,
+      port_origin_id: this.formControlOriginPort?.value?.id,
+      port_destination_id: this.formControlDestinationPort?.value?.id
+    };
+    this.preloadFinalization = true;
+    this.liquidationService.validatePortTarifInternational(body).subscribe(res => {
+      this.currentStep = 4;
+      this.preloadFinalization = false;
+      if (this.tempNextStep === this.listStepper.length - 1) {
+        this.verifyCorrectLiquidation();
+        this.tempNextStep = undefined;
+      }
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 400){
+        this.notifyService.showErrorSnapshot('No hay informacion de fletes internacionales con los dos puertos y el tipo de contenedor seleccionados.');
+      }
+      this.preloadFinalization = false;
+    });
+  }
+
   verifyCorrectLiquidation(): void {
+    if (!this.selectedIncoterm || this.selectedIncoterm.name === 'DDP' && !this.lastSelectedIncotermCity) {
+      return;
+    }
     this.preloadFinalization = true;
     const body = {
       container_type_id: this.selectedContainer?.id,
       port_origin_id: this.formControlOriginPort?.value?.id,
       port_destination_id: this.formControlDestinationPort?.value?.id,
-      city_destination_id: this.lastSelectedIcotermCity?.id,
+      city_destination_id: this.lastSelectedIncotermCity?.id,
       incoterm: this.selectedIncoterm.name
     };
     this.liquidationService.validateInfoPortTarifNational(body).subscribe(res => {
@@ -462,7 +473,7 @@ export class CostsComponent implements OnInit {
       product: this.selectedProduct,
     };
     if (!this.disabledFormIcotermType()) {
-      dataImportConst.cityIcoterm = this.lastSelectedIcotermCity;
+      dataImportConst.cityIcoterm = this.lastSelectedIncotermCity;
     }
     this.matDialog.open(DialogResumeComponent, {
       width: '600px',
@@ -489,7 +500,14 @@ export class CostsComponent implements OnInit {
   changeStepOption(i: number): void {
     if (this.canGoToNextStep()) {
       if (i === this.listStepper.length - 1) {
-        this.verifyCorrectLiquidation();
+        if (this.currentStep < 4) {
+          this.verifyGoToIncoterm();
+          this.tempNextStep = i;
+        } else {
+          this.verifyCorrectLiquidation();
+        }
+      } else if (i === 4) {
+        this.verifyGoToIncoterm();
       } else {
         this.currentStep = i;
       }
@@ -501,8 +519,8 @@ export class CostsComponent implements OnInit {
       ? 'Este campo es obligatorio'
       : this.formControlValueFOB.hasError('pattern')
         ? 'Solo números positivos'
-        : this.formControlValueFOB.hasError('min')
-          ? 'Mínimo 1'
+        : this.formControlValueFOB.hasError('max')
+          ? 'Máximo 15 dígitos'
           : '';
   }
 
@@ -522,7 +540,8 @@ export class CostsComponent implements OnInit {
   }
 
   onSelectOptionIncotermCity(option: Location): void {
-    this.lastSelectedIcotermCity = option;
+    this.lastSelectedIncotermCity = option;
+    this.listLocationsIncoterm = [];
   }
 
   canGoToNextStep(): boolean {
@@ -548,30 +567,28 @@ export class CostsComponent implements OnInit {
   }
 
   private isInvalidIncotermStep(): boolean {
-    return (this.selectedIncoterm && !this.disabledFormIcotermType() && !this.lastSelectedIcotermCity) || !this.selectedIncoterm;
+    return (this.selectedIncoterm && !this.disabledFormIcotermType() && !this.lastSelectedIncotermCity) || !this.selectedIncoterm;
   }
 
-  selectProduct(product){
-    if (product.code.length>=13){
+  selectProduct(product): void {
+    if (product.code.length >= 13){
       this.selectedProduct = product;
-    }
-    else{
+    } else{
       Swal.fire(
         'Advertencia',
-        'Solo se pueden seleccionar productos que tengan codigo con 13 o mas caracteres.',
-        'warning')
+        'Solo se pueden seleccionar productos que tengan código de 13 o más caracteres.',
+        'warning');
     }
-
   }
   getDescriptionToltip(incoterm): string {
-    if(incoterm.name === 'DDP'){
+    if (incoterm.name === 'DDP'){
       return 'Entregado con derechos pagados';
     }
-    else if(incoterm.name === 'CIF'){
+    else if (incoterm.name === 'CIF'){
       return 'Costo seguro y flete.';
     }
     else{
-      return 'Costo y flete'
+      return 'Costo y flete';
     }
   }
 }

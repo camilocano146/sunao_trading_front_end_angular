@@ -159,7 +159,7 @@
               Por favor selecciona la partida arancelaria o el nombre del producto
             </h6>
             <div class="row">
-              <p style="font-size: x-small; font-family: Arial;">
+              <p class="color-dark-blue" style="font-size: x-small; font-family: Arial;">
                 Se deben tener en cuenta los signos de puntuacion y las tildes.
               </p>
               <div class="col-sm-6">
@@ -215,13 +215,22 @@
               Por favor ingrese el valor FOB de la mercancía y la divisa en la que se encuentra
             </h6>
             <div class="row">
-              <div class="col-sm-10 col-md-6">
+              <div class="col-sm-7 col-md-6">
                 <mat-form-field class="w-100" appearance="outline">
                   <input type="number" aria-label="Number" matInput
                          placeholder="Digite Valor FOB de la mercancía"
+                         (keypress)="util.validateOnlyNumberPress($event)"
                          [formControl]="formControlValueFOB">
                   <mat-error style="font-size: 11px" *ngIf="formControlValueFOB.invalid">{{getErrorMessageFOB()}}</mat-error>
                 </mat-form-field>
+              </div>
+              <div *ngIf="formControlValueFOB.value" class="col-sm-1 col-md-1 d-flex mt-3 justify-content-center d-none d-sm-block text-center" style="height: fit-content">
+                <img src="./assets/icons/arrow_forward_black_24dp.svg" alt="">
+              </div>
+              <div class="col-sm-4 col-md-5 mt-3 p-0 text-center text-sm-start mb-4 mb-sm-0" *ngIf="formControlValueFOB.value">
+                <h3 class="font-price" style="font-size: 20px">
+                  {{formControlValueFOB.value | currency:' ':'symbol':'1.0'}} {{selectedCurrency?.abbreviation}}
+                </h3>
               </div>
             </div>
 
@@ -364,7 +373,7 @@
                 <h6 class="mb-1">
                   Ciudad de Llegada
                 </h6>
-                <mat-error style="font-size: 10px" *ngIf="formControlCityIcoterm.value && !lastSelectedIcotermCity; else emptyValueText10px">
+                <mat-error style="font-size: 10px" *ngIf="formControlCityIcoterm.value && !lastSelectedIncotermCity; else emptyValueText10px">
                   Debe oprimir sobre una ciudad para seleccionarla
                 </mat-error>
                 <mat-form-field class="w-100" appearance="outline">
@@ -378,7 +387,7 @@
                     <mat-option *ngIf="preloadCityIncoterm">
                       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
                     </mat-option>
-                    <mat-option *ngFor="let option of listLocationsIcoterm" (onSelectionChange)="onSelectOptionIncotermCity(option)"
+                    <mat-option *ngFor="let option of listLocationsIncoterm" (onSelectionChange)="onSelectOptionIncotermCity(option)"
                                 [value]="option.name | titlecase">
                       <span>{{option.name | titlecase}}</span>
                     </mat-option>
@@ -388,10 +397,10 @@
 
                 <agm-map style="height: 180px;"
                          [mapDraggable]="!disabledFormIcotermType()"
-                         [latitude]="+this.lastSelectedIcotermCity?.latitude || defaultLatitude"
-                         [longitude]="+this.lastSelectedIcotermCity?.longitude || defaultLatitude">
-                  <agm-marker [latitude]="+this.lastSelectedIcotermCity?.latitude || defaultLatitude"
-                              [longitude]="+this.lastSelectedIcotermCity?.longitude || defaultLatitude"></agm-marker>
+                         [latitude]="+this.lastSelectedIncotermCity?.latitude || defaultLatitude"
+                         [longitude]="+this.lastSelectedIncotermCity?.longitude || defaultLatitude">
+                  <agm-marker [latitude]="+this.lastSelectedIncotermCity?.latitude || defaultLatitude"
+                              [longitude]="+this.lastSelectedIncotermCity?.longitude || defaultLatitude"></agm-marker>
                 </agm-map>
               </div>
             </div>
