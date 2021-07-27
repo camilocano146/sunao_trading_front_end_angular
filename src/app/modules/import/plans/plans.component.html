@@ -1,9 +1,9 @@
 <div class="div-main-costs">
   <p id="title" class="color-white text-center">
-    Elige la opción ideal para tu negocio
+    Escoge el plan ideal para tu negocio
   </p>
   <p id="sub-title" class="text-center">
-    Tenemos la mejor solución para tus necesidades, escoge el plan y comienza a importar ya!
+    Somos la mejor solución para tu empresa, escoge el plan y comienza a liquidar ya!
   </p>
 
   <div *ngIf="preload" class="w-100 mt-5">
@@ -28,11 +28,11 @@
       <div class="mx-3 div-plan-info">
         <h6 class="pb-3 color-dark-blue m-0">
           <img src="./assets/icons/check_green_24dp.svg" alt="">
-          {{plan.time}} {{plan.time === 1 ? 'mes' : 'meses'}} de vigencia
+          {{plan.time}} {{plan.time === 1 ? 'dia' : 'dias'}} de vigencia
         </h6>
         <h6 class="pb-3 color-dark-blue m-0">
           <img src="./assets/icons/check_green_24dp.svg" alt="">
-          {{plan.liquidation_quantity}} liquidaciones mensuales
+          {{plan.liquidation_quantity}} liquidaciones
         </h6>
       </div>
       <h3 class="text-center color-dark-blue" style="font-size: 22px">

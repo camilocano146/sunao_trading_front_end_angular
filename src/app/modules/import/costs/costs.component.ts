@@ -17,7 +17,7 @@ import {Utilities} from '../../../utils/Utilities';
 import {Incoterm} from '../../../models/Incoterm';
 import {ProductsService} from '../../../services/products/products.service';
 import {Product} from '../../../models/Product';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LiquidationService} from '../../../services/liquidation/liquidation.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotifyService} from '../../../services/notify/notify.service';
@@ -118,6 +118,7 @@ export class CostsComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public liquidationService: LiquidationService,
     public notifyService: NotifyService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -185,7 +186,7 @@ export class CostsComponent implements OnInit {
       this.listContainers = value.results;
       this.listContainers[0].dimension = {long: 6, width: 2.4, height: 2.6};
       this.listContainers[0].weight = 2300;
-      this.listContainers[0].capacity = 21680;
+      this.listContainers[0].capacity = 21800;
       this.listContainers[0].img = {width: 70, color: '#ffbf3b'};
       this.listContainers[1].dimension = {long: 12, width: 2.4, height: 2.6};
       this.listContainers[1].weight = 3750;
@@ -193,11 +194,46 @@ export class CostsComponent implements OnInit {
       this.listContainers[1].img = {width: 80, color: '#007b8a'};
       this.listContainers[2].dimension = {long: 12, width: 2.4, height: 2.6};
       this.listContainers[2].weight = 4800;
-      this.listContainers[2].capacity = 26680;
+      this.listContainers[2].capacity = 27965;
       this.listContainers[2].img = {width: 80, color: '#ffbf3b'};
     });
   }
 
+  validateNumber(event){
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
+  getProductsByPartida(formControl?: FormControl){
+    let text= "";
+    for(let i=0; i<formControl.value.length ; i++){
+      text +=formControl.value.charAt(i);
+      
+      if(i>=3 && (i % 2 != 0)) {
+        text +='.'
+      }
+    }
+    if (this.timerProducts) {
+      window.clearTimeout(this.timerProducts);
+    }
+    this.timerProducts = window.setTimeout(() => {
+      this.preloadProducts = true;
+      this.listProduct?.splice(0, this.listProduct?.length);
+      this.selectedProduct = undefined;
+      this.productsService.getListProductsNoAuth(0, 30, text).subscribe(res => {
+        this.listProduct = res.results;
+        this.preloadProducts = false;
+      }, error => {
+        this.preloadProducts = false;
+      });
+    }, AppComponent.timeMillisDelayFilter);
+
+  }
   getProducts(formControl?: FormControl): void {
     if (this.timerProducts) {
       window.clearTimeout(this.timerProducts);
@@ -590,5 +626,10 @@ export class CostsComponent implements OnInit {
     else{
       return 'Costo y flete';
     }
+  }
+
+
+  goToLiquidations(): void {
+    this.router.navigate(['']);
   }
 }

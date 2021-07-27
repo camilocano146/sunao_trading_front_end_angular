@@ -19,7 +19,7 @@ export class PortChargeComponent implements OnInit {
   preload = false;
   list: any[];
   pageSizeOptions = AppComponent.pageSizeOptions;
-  resultsLength = 10;
+  resultsLength:number;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public displayedColumns: string[] = [
@@ -51,7 +51,7 @@ export class PortChargeComponent implements OnInit {
       this.list = undefined;
       const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
       const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
-      this.portChargeService.getListCharges(0, 10).subscribe(res => {
+      this.portChargeService.getListCharges(page, limit).subscribe(res => {
         this.list = res.results;
         console.log(this.list);
         this.resultsLength = res.count;

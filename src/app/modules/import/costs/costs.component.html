@@ -1,3 +1,9 @@
+<div class="div-back-to-liquidation" (click)="goToLiquidations()">
+  <img class="ms-3" src="./assets/icons/arrow_left_yellow_24dp.svg" alt="">
+  <h6 class="color-white py-3 mb-0">
+    Volver a mis liquidaciones
+  </h6>
+</div>
 <div class="div-main-costs">
   <p id="title" class="color-white text-center">
     Conoce los costos de tu importación ahora mismo
@@ -173,8 +179,9 @@
               <div class="col-sm-6">
                 <mat-form-field class="w-100" appearance="outline">
                   <input type="text" aria-label="Number" matInput
-                         placeholder="Por partida arancelaria"
-                         (ngModelChange)="this.getProducts(formControlTariffHeading)"
+                          placeholder="Por partida arancelaria"
+                         (keypress)="this.validateNumber($event)"
+                         (ngModelChange)="this.getProductsByPartida(formControlTariffHeading)"
                          [formControl]="formControlTariffHeading">
                 </mat-form-field>
               </div>
@@ -198,6 +205,11 @@
                 </span>
                 </div>
               </mat-list-item>
+              <mat-list-item *ngIf="!this.preloadProducts && listProduct.length==0 ">
+                <span class="col-12" style="text-align: justify">
+                  No hay registros que cohincidan con la búsqueda
+                </span>
+              </mat-list-item>
             </mat-list>
 
             <h6 class="color-red mt-3 text-center mb-0">
@@ -219,7 +231,6 @@
                 <mat-form-field class="w-100" appearance="outline">
                   <input type="number" aria-label="Number" matInput
                          placeholder="Digite Valor FOB de la mercancía"
-                         (keypress)="util.validateOnlyNumberPress($event)"
                          [formControl]="formControlValueFOB">
                   <mat-error style="font-size: 11px" *ngIf="formControlValueFOB.invalid">{{getErrorMessageFOB()}}</mat-error>
                 </mat-form-field>
@@ -241,7 +252,7 @@
                    class="col-5 col-md-25 div-currency cursor-pointer">
                 <div class="row bc-white p-3">
                   <h6 class="col-6 currency-name">
-                    {{currency.name}}
+                    {{currency.name === 'Dolar'? 'Dolár' : currency.name}} 
                   </h6>
                   <div class="col-6 text-right">
                     <img [src]="currency.imageCountry" alt="" width="30">
@@ -268,7 +279,7 @@
                    [ngClass]="{'div-border-selected': selectedContainer === container}"
                    class="col-sm-10 col-md-5 col-lg-35 col-sm div-container cursor-pointer mb-3">
                 <div class="row bc-white pt-3">
-                  <h5 class="text-center">
+                  <h5 class="text-center" style="font-size: medium;">
                     {{container.name}}
                   </h5>
                   <div class="text-center my-3">
@@ -290,7 +301,7 @@
                           Largo
                         </span>
                           <span class="col-12 p-0">
-                          {{container.dimension?.long}}
+                          {{container.dimension?.long}} Mt
                         </span>
                         </div>
                         <div class="row col-4 p-0 m-0 text-center">
@@ -298,7 +309,7 @@
                           Ancho
                         </span>
                           <span class="col-12 p-0">
-                          {{container.dimension?.width}}
+                          {{container.dimension?.width}} Mt
                         </span>
                         </div>
                         <div class="row col-4 p-0 m-0 text-center">
@@ -306,7 +317,7 @@
                           Alto
                         </span>
                           <span class="col-12 p-0">
-                          {{container.dimension?.height}}
+                          {{container.dimension?.height}} Mt
                         </span>
                         </div>
                       </div>
@@ -326,7 +337,7 @@
 
                     <div class="row m-0 div-bc-container">
                       <div class="col-4">
-                        Capacidad de carga
+                        Capacidad carga max
                       </div>
                       <div class="col-4 p-0">
                         {{container.capacity}} Kg

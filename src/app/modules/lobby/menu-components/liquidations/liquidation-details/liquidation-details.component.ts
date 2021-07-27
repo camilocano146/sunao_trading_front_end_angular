@@ -134,8 +134,8 @@ export class LiquidationDetailsComponent implements OnInit {
         result += +this.liquidation?.data?.international_freight_cost;
       } else if (item === 2 && this.liquidation?.data?.insurance_cost) {
         result += +this.liquidation?.data?.insurance_cost;
-      } else if (item === 3 && this.liquidation?.data?.insurance_cost) {
-        result += +this.liquidation?.data?.insurance_cost;
+      } else if (item === 3 && this.liquidation?.data?.port_charge) {
+        result += +this.liquidation?.data?.port_charge;
       } else if (item === 4 && this.liquidation?.data?.gravamen_tarif) {
         result += +this.liquidation?.data?.gravamen_tarif;
       } else if (item === 5 && this.liquidation?.data?.national_freight_cost) {

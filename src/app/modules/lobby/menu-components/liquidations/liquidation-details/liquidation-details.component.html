@@ -333,7 +333,7 @@
 
           <div class="row">
             <h5 class="col-8 ps-5" style="text-align: justify">
-              El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} en {{liquidation?.port_origin?.location?.name | titlecase}} al puerto {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}}
+              El producto viaja del puerto destino {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}} a la ciudad {{liquidation?.city_destination?.name | titlecase}}
               y tiene un costo de {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
 <!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
@@ -449,9 +449,6 @@
             <h5 class="col-7 ">
               Concepto
             </h5>
-            <h5 class="col-4 ">
-              Fecha
-            </h5>
           </div>
 
           <ul *ngFor="let tradeRegimen of listTradeRegimes">
@@ -459,9 +456,6 @@
               <div class="row">
                 <h5 class="col-7">
                   {{tradeRegimen?.concept}}
-                </h5>
-                <h5 class="col-4">
-                  {{tradeRegimen?.date}}
                 </h5>
               </div>
             </li>
