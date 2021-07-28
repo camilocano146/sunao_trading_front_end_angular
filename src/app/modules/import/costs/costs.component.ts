@@ -17,7 +17,7 @@ import {Utilities} from '../../../utils/Utilities';
 import {Incoterm} from '../../../models/Incoterm';
 import {ProductsService} from '../../../services/products/products.service';
 import {Product} from '../../../models/Product';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {LiquidationService} from '../../../services/liquidation/liquidation.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotifyService} from '../../../services/notify/notify.service';
@@ -118,7 +118,6 @@ export class CostsComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public liquidationService: LiquidationService,
     public notifyService: NotifyService,
-    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -524,8 +523,8 @@ export class CostsComponent implements OnInit {
 
   openDialogHelp(): void {
     this.matDialog.open(DialogHelpComponent, {
-      width: '500px',
-      maxWidth: '96vw',
+      width: '1000px',
+      maxWidth: '150vw',
       height: '500px',
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
@@ -612,7 +611,7 @@ export class CostsComponent implements OnInit {
     } else{
       Swal.fire(
         'Advertencia',
-        'Solo se pueden seleccionar productos que tengan código de 13 o más caracteres.',
+        'Debes seleccionar partida arancelaria a 10 dígitos.',
         'warning');
     }
   }
@@ -628,8 +627,4 @@ export class CostsComponent implements OnInit {
     }
   }
 
-
-  goToLiquidations(): void {
-    this.router.navigate(['']);
-  }
 }

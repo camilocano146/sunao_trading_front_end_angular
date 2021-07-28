@@ -1,9 +1,3 @@
-<div class="div-back-to-liquidation" (click)="goToLiquidations()">
-  <img class="ms-3" src="./assets/icons/arrow_left_yellow_24dp.svg" alt="">
-  <h6 class="color-white py-3 mb-0">
-    Volver a mis liquidaciones
-  </h6>
-</div>
 <div class="div-main-costs">
   <p id="title" class="color-white text-center">
     Conoce los costos de tu importación ahora mismo
@@ -200,7 +194,7 @@
                 <span class="col-8" style="text-align: justify">
                   {{product.name}}
                 </span>
-                  <span class="col-4 text-right">
+                  <span class="col-4 text-right number-field-text">
                   {{product.code}}
                 </span>
                 </div>
@@ -227,7 +221,7 @@
               Por favor ingrese el valor FOB de la mercancía y la divisa en la que se encuentra
             </h6>
             <div class="row">
-              <div class="col-sm-7 col-md-6">
+              <div class="col-sm-7 col-md-6 number-field-text">
                 <mat-form-field class="w-100" appearance="outline">
                   <input type="number" aria-label="Number" matInput
                          placeholder="Digite Valor FOB de la mercancía"

@@ -40,6 +40,30 @@
                 <span *ngIf="!row.acronym">N/A</span>
               </td>
           </ng-container>
+
+          <!--  -->
+          <ng-container matColumnDef="from_date">
+            <th mat-header-cell *matHeaderCellDef>
+              <img src="./assets/icons/nota.svg" alt="">
+                Vigente desde
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.from_date" class="number-field-text">{{row.from_date}}</span>
+                <span *ngIf="!row.from_date">N/A</span>
+              </td>
+          </ng-container>
+
+          <!--  -->
+          <ng-container matColumnDef="to_date">
+            <th mat-header-cell *matHeaderCellDef>
+              <img src="./assets/icons/nota.svg" alt="">
+              Vigente hasta 
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.to_date" class="number-field-text">{{row.to_date}}</span>
+                <span *ngIf="!row.to_date">N/A</span>
+              </td>
+          </ng-container>
           
           <!-- value  Column -->
           <ng-container matColumnDef="value">
@@ -48,8 +72,8 @@
                 Valor
               </th>
               <td mat-cell *matCellDef="let row">
-                <span *ngIf="row.acronym == 'USD'">{{row.value | number:"1.5" }} COP</span>
-                <span *ngIf="row.acronym != 'USD'">{{row.value | number:"1.5" }} USD</span>
+                <span *ngIf="row.acronym == 'USD'" class="number-field-text">{{row.value | number:"1.2" }} COP</span>
+                <span *ngIf="row.acronym != 'USD'" class="number-field-text">{{row.value | number:"1.2" }} USD</span>
               </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

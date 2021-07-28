@@ -43,8 +43,12 @@ body {
 }
 
 @font-face {
-  font-family: 'Arial';
+  font-family: 'Raleway_Regular';
   src: url(../src/assets/fonts/Raleway-Regular.ttf);
+}
+
+.number-field-text{
+  font-family: 'Arial';
 }
 
 *:not(mat-icon) {

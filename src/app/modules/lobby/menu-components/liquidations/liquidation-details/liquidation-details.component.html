@@ -99,9 +99,42 @@
         <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            INCOTERM: {{liquidation?.incoterm | uppercase}}
+            INCOTERM: {{liquidation?.incoterm}}
           </h6>
         </div>
+
+        <div class="row col-lg-3 col-sm-6 col-12" *ngIf="liquidation?.incoterm=='DDP'">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
+          <span class="col-10">
+            <h6>
+              Ciudad destino: {{liquidation?.city_destination?.name }}
+            </h6>
+          </span>
+        </div>
+        
+        <div class="row col-lg-3 col-sm-6 col-12" *ngIf="liquidation?.incoterm=='DDP'">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
+          <span class="col-10">
+            <h6>
+              Dias de transito: {{liquidation?.data?.total_days}}
+            </h6>
+          </span>
+        </div>
+
+        <div class="row col-lg-3 col-sm-6 col-12" *ngIf="liquidation?.incoterm=='DDP'">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/icons/check_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/check_black_24dp.svg' + ') no-repeat center'}"></div>
+          <span class="col-10" *ngIf="liquidation?.data?.total_days">
+            <h6>
+              Incluye Devolucion del Contenedor: Sí
+            </h6>
+          </span>
+          <span class="col-10" *ngIf="!liquidation?.data?.total_days">
+            <h6>
+              Incluye Devolucion del Contenedor: No
+            </h6>
+          </span>
+        </div>
+
       </div>
 
       <h6 class="color-blue py-3 mb-0">

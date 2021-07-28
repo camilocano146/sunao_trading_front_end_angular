@@ -21,7 +21,9 @@ export class CurrenciesComponent implements OnInit {
     'id',
     'name',
     'acronym',
-    'value'
+    'value',
+    'from_date',
+    'to_date'
   ];
   private timer: number;
 

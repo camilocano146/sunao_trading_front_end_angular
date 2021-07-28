@@ -11,4 +11,5 @@ export interface Port_tarif {
     transist_days: number;
     validity: Date;
     cost:number;
+    return_cost?:boolean; 
   }

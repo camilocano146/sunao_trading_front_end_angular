@@ -2,8 +2,18 @@
   <img class="img-background" src="./assets/backgrounds/background-one.jpg" alt="">
 </div>
 <div style="position: relative">
-  <div class="text-right pt-4 pe-4">
-    <img class="cursor-pointer" src="./assets/logos/logo-white.png" alt="" width="150" (click)="goToHome()">
+  <div class="row justify-content-between m-0">
+    <div class="col-12 col-sm-8">
+      <div class="div-back-to-liquidation" *ngIf="tokenActive" (click)="goToLiquidations()">
+        <img class="" src="./assets/icons/arrow_left_yellow_24dp.svg" alt="">
+        <h6 class="color-white py-3 ">
+          Volver a mis liquidaciones
+        </h6>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4" style="text-align: right;">
+      <img class="cursor-pointer" src="./assets/logos/logo-white.png" alt="" width="150" style="padding: 1em;" (click)="goToHome()"> 
+    </div>
   </div>
   <router-outlet></router-outlet>
 </div>
