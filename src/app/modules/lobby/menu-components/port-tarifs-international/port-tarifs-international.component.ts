@@ -28,7 +28,7 @@ export class PortTarifsComponent implements OnInit {
     'location_destination',
     'provider',
     'transist_days',
-    'validity',
+    'container',
     'cost',
     'return_cost'
   ];

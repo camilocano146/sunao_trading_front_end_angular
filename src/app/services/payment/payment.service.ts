@@ -44,4 +44,9 @@ export class PaymentService {
     getInstitutions(): Observable<any> {
         return this.http.get<any>('wompi/get_pse_istructions/', {observe: 'response'});
     }
+
+    paymentFreeCoupon(transaction:any): Observable<any> {
+        return this.http.post<any>('wompi/payment_free/', Utilities.encrypt(transaction), {observe: 'response'});
+
+    }
 }

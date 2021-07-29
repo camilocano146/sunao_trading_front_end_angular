@@ -148,15 +148,15 @@ export class LiquidationDetailsComponent implements OnInit {
   getCalculateIcoterm(): string {
     const sumSelected = Utilities.sumArray(this.listSelectedItems);
     const numbersCFR = Utilities.sumArray(Utilities.generateNumbers(2));
-    if (sumSelected <= numbersCFR) {
+    if (sumSelected == numbersCFR) {
       return 'CFR';
     }
     const numbersCIF = Utilities.sumArray(Utilities.generateNumbers(3));
-    if (sumSelected <= numbersCIF) {
+    if (sumSelected == numbersCIF) {
       return 'CIF';
     }
     const numbersDDP = Utilities.sumArray(Utilities.generateNumbers(6));
-    if (sumSelected <= numbersDDP) {
+    if (sumSelected == numbersDDP) {
       return 'DDP';
     }
     return '';

@@ -10,6 +10,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ImportCost} from "../../../models/ImportCost";
 import {Package} from "../../../models/Package";
 import {ManageSessionStorage} from "../../../utils/ManageSessionStorage";
+import { CouponsService } from 'src/app/services/cuopons/coupons.service';
+import { Coupon } from 'src/app/models/Coupon';
 
 @Component({
   selector: 'app-create-transaction',
@@ -27,6 +29,7 @@ export class DialogCreateTransactionComponent implements OnInit {
 
   is_valid = true;
   card: FormGroup;
+  coupon: FormGroup;
   nequi: FormGroup;
   pse: FormGroup;
   bancolombia: FormGroup;
@@ -38,8 +41,11 @@ export class DialogCreateTransactionComponent implements OnInit {
   pse_institutions = [];
   public constants = ConstantsApp;
 
+  public coupon_user:Coupon;
   public preload: boolean;
   public preload_pay: boolean;
+  public preload_coupon:boolean;
+  public show_coupon:boolean = false;
   public terms: FormControl;
   public link = 'https://wompi.co/wp-content/uploads/2019/09/TERMINOS-Y-CONDICIONES-DE-USO-USUARIOS-WOMPI.pdf';
   public hideCVC = true;
@@ -51,6 +57,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     private formBuilder: FormBuilder,
     public matDialogRef: MatDialogRef<DialogCreateTransactionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Package,
+    private couponsService: CouponsService
   ) {
     this.terms = new FormControl(false, Validators.required);
     this.preload_pay = false;
@@ -64,7 +71,7 @@ export class DialogCreateTransactionComponent implements OnInit {
       installments: [1, [Validators.required, Validators.min(1), Validators.max(36)]],
     });
     this.nequi = this.formBuilder.group({
-      number: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
+      number: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10)]],
       customer_email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(ConstantsApp.patternEmail)]],
     });
     this.bancolombia = this.formBuilder.group({
@@ -79,6 +86,10 @@ export class DialogCreateTransactionComponent implements OnInit {
       institution: ['', Validators.required],
       customer_email: ['', [Validators.required, Validators.email, Validators.pattern(ConstantsApp.patternEmail)]],
       payment_description: ['RECARGA JOBKII - PSE', [Validators.required]]
+    });
+
+    this.coupon = this.formBuilder.group({
+      coupon_code: ['', Validators.required]
     });
 
     this.getPaymenthMethodsAndPretoken();
@@ -128,7 +139,12 @@ export class DialogCreateTransactionComponent implements OnInit {
 
   calculateCommissionAndTotalValue(): void {
     let commission = 0;
-    const value = this.data.cost;
+    let value = this.data.cost;
+    if(this.coupon_user){
+      let discount = (100 - this.coupon_user.discount_percent)/100;
+      value = (this.data.cost*discount); 
+    }
+    
     if (this.payment_method_selected == 'CARD') {
       commission = Utilities.getCommissionCardPseNequi(value);
     } else if (this.payment_method_selected == 'NEQUI') {
@@ -140,6 +156,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     }
     this.commission = commission;
     this.value_total = value + this.commission;
+    this.value_total = this.value_total>1500 ? this.value_total: 1500;
   }
 
   async onSubmit(): Promise<any> {
@@ -175,7 +192,9 @@ export class DialogCreateTransactionComponent implements OnInit {
         customer_email: this.card.value.customer_email,
         currency: 'COP',
         redirect_url: this.URL_REDIRECT,
-        plan_id: this.data.id
+        plan_id: this.data.id,
+        coupon_code:this.coupon_user==null?null: this.coupon_user.code,
+        commission:this.commission
       };
       this.paymentService.transactionCard(data).subscribe(res => {
         // this.notifyService.add({
@@ -218,7 +237,9 @@ export class DialogCreateTransactionComponent implements OnInit {
       customer_email: this.nequi.value.customer_email,
       currency: 'COP',
       phone_number: this.nequi.value.number, redirect_url: this.URL_REDIRECT,
-      plan_id: this.data.id
+      plan_id: this.data.id,
+      coupon_code:this.coupon_user==null?null: this.coupon_user.code,
+      commission:this.commission
     };
     this.paymentService.transactionNequi(transaction).subscribe(res => {
       // this.preload_pay = false;
@@ -261,7 +282,9 @@ export class DialogCreateTransactionComponent implements OnInit {
       user_type: this.bancolombia.value.user_type,
       payment_description: 'RECARGA JOBKII - BANCOLOMBIA',
       redirect_url: this.URL_REDIRECT,
-      plan_id: this.data.id
+      plan_id: this.data.id,
+      coupon_code:this.coupon_user==null?null: this.coupon_user.code,
+      commission:this.commission
     };
     this.paymentService.transactionBancolombia(transaction).subscribe(res => {
       // this.notifyService.add({
@@ -308,7 +331,9 @@ export class DialogCreateTransactionComponent implements OnInit {
       institution: this.pse.value.institution,
       payment_description: 'RECARGA JOBKII - PSE',
       redirect_url: this.URL_REDIRECT,
-      plan_id: this.data.id
+      plan_id: this.data.id,
+      coupon_code:this.coupon_user==null?null: this.coupon_user.code,
+      commission:this.commission
     };
     this.paymentService.transactionPse(transaction).subscribe(res => {
       res = Utilities.decrypt(res.body);
@@ -561,5 +586,59 @@ export class DialogCreateTransactionComponent implements OnInit {
     } else if (this.pse.get('user_id').hasError('maxlength')) {
       return 'Máximo 15 digitos';
     }
+  }
+
+  getCoupon(){
+    this.coupon.markAllAsTouched();
+    if(this.coupon.valid){
+      this.preload_coupon= true;
+      let code = this.coupon.get('coupon_code').value;
+      this.couponsService.getCouponByCode(code).subscribe(res=>{
+        this.coupon_user=res;
+        this.preload_coupon= false;
+        
+        // let discount = (100 - this.coupon_user.discount_percent)/100;
+        // this.value_total = (this.data.cost*discount) + this.commission
+        
+        this.calculateCommissionAndTotalValue();
+        this.notifyService.showSuccess('Aviso', 'El codigo ingresado fue correcto');
+      }, err => {
+        if(err.status==404){
+          this.coupon_user=null;
+          this.notifyService.showError('Aviso', 'El cupon con el codigo ingresado no existe.');
+        }
+        this.preload_coupon= false;
+      });
+    }
+  }
+
+  showCoupon(){
+    this.show_coupon= !this.show_coupon;
+    this.coupon.get('coupon_code').setValue('');
+    this.coupon_user= null;
+    this.calculateCommissionAndTotalValue();
+  }
+
+  async payFreeCuopon(): Promise<any> {
+    this.preload_coupon= true;
+    let transacction={
+      coupon_code: this.coupon_user?.code,
+      plan_id: this.data.id
+    }
+    const liquidationId = ManageSessionStorage.getAndRemoveLastSavedLiquidationId();
+    this.paymentService.paymentFreeCoupon(transacction).subscribe(res=>{
+      this.preload_coupon= false;
+      if (liquidationId) {
+        this.router.navigate([`lobby/liquidations-detail/${liquidationId}`]);
+      } else {
+        this.router.navigate(['lobby']);
+      }
+      this.matDialogRef.close();
+      this.notifyService.showSuccess('Aviso', 'Transaccion realizada exitosamente.');
+    },err=>{
+      this.preload_coupon= false;
+      this.notifyService.showError('Aviso', 'Error al hacer el pago.');
+    })
+
   }
 }

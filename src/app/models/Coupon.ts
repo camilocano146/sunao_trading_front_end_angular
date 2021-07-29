@@ -5,7 +5,7 @@ export interface Coupon {
     code?: string;
     created_at?: Date;
     used_at?: Date;
-    discount_percent?:Number;
+    discount_percent?:number;
     created_by?:User;
     used_by?:User;
     user_has_package?:any;

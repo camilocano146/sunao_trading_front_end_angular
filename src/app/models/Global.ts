@@ -10,7 +10,7 @@ export const Global = {
     client_secret: 'x39M8pm4iHOOo4P32wX3IyKD6Nd4i7GJ0mJBmffssFiB5Jeg7aWltufoJNmqGVIAH3LAjgpr0wkTuLNljGtKlAVQThF6lMwA6WXZ1JUFBVdC0nrZ4zZmwjb7VLnb1db7',
 
     // end point página web
-    endPointWeb: 'http://localhost:4220/#/'
-    // endPointWeb: 'http://sunao.com/app/#/'
+    // endPointWeb: 'http://localhost:4220/#/'
+    endPointWeb: 'http://sunao.com/app/#/'
   }
 };

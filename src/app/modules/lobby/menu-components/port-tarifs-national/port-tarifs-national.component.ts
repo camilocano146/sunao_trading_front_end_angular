@@ -28,7 +28,7 @@ export class PortTarifsNationalComponent implements OnInit {
     'location_destination',
     'provider',
     'transist_days',
-    'validity',
+    'container',
     'cost'
   ];
   formControlFilter: FormControl = new FormControl('');
