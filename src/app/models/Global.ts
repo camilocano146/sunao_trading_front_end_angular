@@ -11,6 +11,6 @@ export const Global = {
 
     // end point página web
     // endPointWeb: 'http://localhost:4220/#/'
-    endPointWeb: 'http://sunao.com/app-main/#/'
+    endPointWeb: 'https://www.sunaotrading.com/app-main/#/'
   }
 };
