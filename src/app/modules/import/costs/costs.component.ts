@@ -212,7 +212,7 @@ export class CostsComponent implements OnInit {
     let text= "";
     for(let i=0; i<formControl.value.length ; i++){
       text +=formControl.value.charAt(i);
-      
+
       if(i>=3 && (i % 2 != 0)) {
         text +='.'
       }
@@ -528,7 +528,8 @@ export class CostsComponent implements OnInit {
       height: '500px',
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
-      panelClass: 'div-without-padding'
+      panelClass: 'div-without-padding',
+      autoFocus: false,
     });
   }
 
