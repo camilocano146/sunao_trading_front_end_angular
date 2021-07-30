@@ -22,7 +22,7 @@ export class CouponsService {
     return this.httpClient.put(`coupon/${id}/edit/`, body);
   }
 
-  getCouponByCode(code:string){
-    return this.httpClient.get(`coupon/get_coupon_by_code/?coupon_code=${code}`);
+  getCouponByCode(code:string, package_id){
+    return this.httpClient.get(`coupon/get_coupon_by_code/?coupon_code=${code}&package_id=${package_id}`);
   }
 }

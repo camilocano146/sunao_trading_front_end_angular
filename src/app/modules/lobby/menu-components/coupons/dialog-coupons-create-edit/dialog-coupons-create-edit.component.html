@@ -33,6 +33,23 @@
             </mat-form-field>
         </div>
 
+        <div class="col-12" style="margin-bottom: 10px;" *ngIf="!preloadSelectPackage">
+            <mat-form-field class="w-100">
+              <mat-select [disableOptionCentering]="true" placeholder="Seleccione un paquete" [formControl]="formControlPackage">
+                
+                <mat-option *ngIf="!listPackages.length===0">
+                  -------
+                </mat-option>
+                <mat-option *ngFor="let package of listPackages" [value]="package.id">
+                  {{package.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>Campo requerido</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-12" style="margin-bottom: 10px;" *ngIf="preloadSelectPackage">
+            <mat-spinner diameter="40" class="m-auto"></mat-spinner>    
+        </div>
     </div>
 </div>
 <div *ngIf="!preload" class="text-center" mat-dialog-actions style="margin-top: 10px;">

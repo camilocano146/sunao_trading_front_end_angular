@@ -9,4 +9,6 @@ export interface Coupon {
     created_by?:User;
     used_by?:User;
     user_has_package?:any;
+    package?:any;
+    package_id?: any;
 }

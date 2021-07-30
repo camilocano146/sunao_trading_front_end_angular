@@ -593,7 +593,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     if(this.coupon.valid){
       this.preload_coupon= true;
       let code = this.coupon.get('coupon_code').value;
-      this.couponsService.getCouponByCode(code).subscribe(res=>{
+      this.couponsService.getCouponByCode(code, this.data.id).subscribe(res=>{
         this.coupon_user=res;
         this.preload_coupon= false;
         
@@ -606,6 +606,9 @@ export class DialogCreateTransactionComponent implements OnInit {
         if(err.status==404){
           this.coupon_user=null;
           this.notifyService.showError('Aviso', 'El cupon con el codigo ingresado no existe.');
+        }else if(err.status==400){
+          this.coupon_user=null;
+          this.notifyService.showError('Aviso', 'El cupon con el codigo ingresado no sirve para este paquete.');
         }
         this.preload_coupon= false;
       });

@@ -158,7 +158,7 @@ export class CostsComponent implements OnInit {
                 this.selectedProduct = liquidationReuse.product;
                 this.listProduct.unshift(liquidationReuse.product);
               }
-              this.formControlValueFOB.setValue(liquidationReuse.fob_cost / 1);
+              this.formControlValueFOB.setValue(liquidationReuse.fob_cost_user / 1);
               this.selectedCurrency = this.listCurrencies.find(c => c.abbreviation === liquidationReuse.currency?.acronym);
               this.selectedContainer = this.listContainers.find(c => c.id === liquidationReuse.container_type.id);
               this.selectedIncoterm = this.listIncoterm.find(i => i.name === liquidationReuse.incoterm);

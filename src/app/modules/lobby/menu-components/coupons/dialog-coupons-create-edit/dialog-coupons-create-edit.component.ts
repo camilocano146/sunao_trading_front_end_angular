@@ -9,6 +9,8 @@ import {DataDialogCoupon} from '../coupons.component';
 
 import { Coupon } from 'src/app/models/Coupon';
 import { CouponsService } from 'src/app/services/cuopons/coupons.service';
+import { Package } from 'src/app/models/Package';
+import { PackageService } from 'src/app/services/package/package.service';
 
 @Component({
   selector: 'app-dialog-coupons-create-edit',
@@ -19,8 +21,14 @@ export class DialogCouponsCreateEditComponent implements OnInit {
 
   public preload: boolean;
   public preloadSave: boolean;
+  public preloadSelectPackage: boolean;
+
+  public listPackages:Package[]=[];
   public formControlDiscountPercent: FormControl = new FormControl(
     null, [Validators.required, Validators.min(1), Validators.max(100)]
+  );
+  public formControlPackage: FormControl = new FormControl(
+    null, [Validators.required]
   );
 
   constructor(
@@ -29,21 +37,23 @@ export class DialogCouponsCreateEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DataDialogCoupon,
     private translate: TranslateService,
     private notifyService: NotifyService,
+    private packageService: PackageService,
   ) {
     if (data.dataEdit){
       this.formControlDiscountPercent.setValue(data.dataEdit.discount_percent);
     }
+    this.getListPackages()
   }
 
   ngOnInit(): void {
   }
 
   saveOrEdit(): void {
-    if (this.formControlDiscountPercent.valid ) {
+    if (this.formControlDiscountPercent.valid && this.formControlPackage.valid) {
       this.preloadSave = true;
       const body: Coupon = {
         discount_percent: this.formControlDiscountPercent.value,
-
+        package_id:this.formControlPackage.value
       };
       let observable;
 
@@ -62,6 +72,18 @@ export class DialogCouponsCreateEditComponent implements OnInit {
     } else {
       this.formControlDiscountPercent.markAsTouched();
     }
+  }
+
+  getListPackages(): void{
+    this.preloadSelectPackage=true;
+    this.packageService.getListPackages(0, 100).subscribe(res=>{
+      this.listPackages=res.results;
+      this.preloadSelectPackage=false;
+      if (this.data.dataEdit){
+        this.formControlPackage.setValue(this.data.dataEdit.package.id);
+      }
+    })
+
   }
 
   validate_data($event): void {
