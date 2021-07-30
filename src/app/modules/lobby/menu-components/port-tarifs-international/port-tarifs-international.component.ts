@@ -30,7 +30,7 @@ export class PortTarifsComponent implements OnInit {
     'transist_days',
     'container',
     'cost',
-    'return_cost'
+    'free_days'
   ];
   formControlFilter: FormControl = new FormControl('');
   private timer: number;

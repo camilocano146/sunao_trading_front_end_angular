@@ -201,7 +201,7 @@
               </mat-list-item>
               <mat-list-item *ngIf="!this.preloadProducts && listProduct.length==0 ">
                 <span class="col-12" style="text-align: justify">
-                  No hay registros que cohincidan con la búsqueda
+                  No hay registros que coincidan con la búsqueda (Valide ortografia, tildes, escritura, palabra clave coincidencia con arancel)
                 </span>
               </mat-list-item>
             </mat-list>
@@ -246,7 +246,7 @@
                    class="col-5 col-md-25 div-currency cursor-pointer">
                 <div class="row bc-white p-3">
                   <h6 class="col-6 currency-name">
-                    {{currency.name === 'Dolar'? 'Dolár' : currency.name}} 
+                    {{currency.name === 'Dolar'? 'Dólar' : currency.name}} 
                   </h6>
                   <div class="col-6 text-right">
                     <img [src]="currency.imageCountry" alt="" width="30">

@@ -6,6 +6,7 @@ import { PackageService } from 'src/app/services/package/package.service';
 import { DialogPackageCreateEditComponent } from './dialog-package-create-edit/dialog-package-create-edit.component';
 import { Package } from 'src/app/models/Package';
 import {FormControl} from "@angular/forms";
+import Swal from 'sweetalert2';
 
 export interface DataDialogPackage {
   dataEdit: Package;
@@ -30,6 +31,7 @@ export class PackagesComponent implements OnInit {
     'time',
     'cost',
     'liquidations',
+    'status',
     'actions'
   ];
   formControlFilter: FormControl = new FormControl('');
@@ -89,4 +91,25 @@ export class PackagesComponent implements OnInit {
     });
   }
 
+
+  activateDeactivate(package_object: any){
+    Swal.fire({
+      title: package_object.status=='1' ? '¿Deseas desactivar el plan?' : '¿Deseas activar el plan?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: package_object.status=='1' ? 'Desactivar' : 'Activar',
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.list = [];
+        this.preload = true;
+        this.packageService.activateDeactivatePackage(package_object.id).subscribe(res => {
+          Swal.fire(package_object.status=='1' ? 'Paquete desactivado.' : 'Paquete activado.', '', 'success');
+          this.loadTable();
+        });
+      } else if (result.isDenied) {
+      }
+    });
+
+  }
 }

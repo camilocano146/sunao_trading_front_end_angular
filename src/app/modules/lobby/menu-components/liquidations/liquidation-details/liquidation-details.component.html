@@ -116,30 +116,34 @@
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
           <span class="col-10">
             <h6>
-              Dias de transito: {{liquidation?.data?.total_days}}
+              Total lead time: {{liquidation?.data?.total_days}} días
             </h6>
           </span>
         </div>
 
         <div class="row col-lg-3 col-sm-6 col-12" *ngIf="liquidation?.incoterm=='DDP'">
-          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/icons/check_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/check_black_24dp.svg' + ') no-repeat center'}"></div>
-          <span class="col-10" *ngIf="liquidation?.data?.total_days">
+          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center'}"></div>
+          <span class="col-10">
             <h6>
-              Incluye Devolucion del Contenedor: Sí
-            </h6>
-          </span>
-          <span class="col-10" *ngIf="!liquidation?.data?.total_days">
-            <h6>
-              Incluye Devolucion del Contenedor: No
+              Valor Fob en moneda seleccionada por el usuario ({{liquidation?.currency?.name}}): {{liquidation?.fob_cost_user | currency:' ':'symbol':'1.0'}} 
             </h6>
           </span>
         </div>
-
       </div>
 
       <h6 class="color-blue py-3 mb-0">
-        Por favor selecciona los costos que desea visualizar.
+        El valor del Dólar entre {{liquidation?.currency_usd?.from_date}} y {{liquidation?.currency_usd?.to_date}} es de {{liquidation?.currency_usd?.value | currency:' ':'symbol':'1.0'}} COP 
+        <div class="color-blue py-3 mb-0" *ngIf="liquidation?.currency?.acronym=='EUR'"> 
+          El valor del euro entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}} es de {{liquidation?.currency?.value | currency:' ':'symbol':'1.0'}} USD 
+        </div>
+        <div class="color-blue py-3 mb-0" *ngIf="liquidation?.currency?.acronym=='GBP'"> 
+          El valor de la libra esterlina entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}} es de {{liquidation?.currency?.value | currency:' ':'symbol':'1.0'}} USD 
+        </div>
+        <div class="color-blue py-3 mb-0">
+          Por favor selecciona los costos que desea visualizar.
+        </div>
       </h6>
+      
       <div style="background-color:#ffbf3b; width: 140px; color: aliceblue; text-align: center;">Seleccionada</div>
       <div style="background-color:#00303c; width: 140px; color: aliceblue; text-align: center;">No seleccionada</div>
       <br>
@@ -225,11 +229,11 @@
             <h5 class="col-9 ps-5" style="text-align: justify">
               El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} ({{liquidation?.port_origin?.location?.name | titlecase}}) al puerto {{liquidation?.port_destination?.name | titlecase}} ({{liquidation?.port_destination?.location?.name | titlecase}})
               y tiene un costo de = {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
-<!--              quien es el proveedor, de donde a donde y cual es el valor-->
+
             </h5>
-<!--            <h5 class="col-4">-->
-<!--              {{1200 | currency}}-->
-<!--            </h5>-->
+            <h5 class="col-9 ps-5" style="text-align: justify">
+              Dias Libres: {{liquidation?.data?.free_days}} dias
+            </h5>
           </div>
 
         </mat-expansion-panel>
@@ -370,6 +374,14 @@
               y tiene un costo de {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
 <!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
+
+            <h5 class="col-9 ps-5" *ngIf='liquidation?.data?.return_cost==true' style="text-align: justify">
+              Incluye costo de retorno: Sí
+            </h5>
+            <h5 class="col-9 ps-5" *ngIf='liquidation?.data?.return_cost==false' style="text-align: justify">
+              Incluye costo de retorno: No
+            </h5>
+
 <!--            <h5 class="col-4">-->
 <!--              {{1200 | currency}}-->
 <!--            </h5>-->

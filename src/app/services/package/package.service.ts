@@ -13,6 +13,9 @@ export class PackageService {
   getListPackages(offset: number, limit: number, regex = ''): Observable<any> {
     return this.httpClient.get(`package/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
+  getListActivesPackages(offset: number, limit: number, regex = ''): Observable<any> {
+    return this.httpClient.get(`package/list_actives_packages/?offset=${offset}&limit=${limit}&regex=${regex}`);
+  }
 
   register(body: Package): Observable<any> {
     return this.httpClient.post('package/', body);
@@ -24,5 +27,9 @@ export class PackageService {
 
   getLastPackage(): Observable<any> {
     return this.httpClient.get(`users/get_info_package/`);
+  }
+
+  activateDeactivatePackage(package_id: number): Observable<any> {
+    return this.httpClient.post(`package/${package_id}/activate_deactivate_package/`,{});
   }
 }

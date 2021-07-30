@@ -51,6 +51,7 @@ export class LiquidationDetailsComponent implements OnInit {
     this.preload = true;
     this.liquidationService.getById(this.idLiquidation).subscribe(res => {
       this.liquidation = res;
+      console.log(this.liquidation);
       this.preload = false;
       switch (this.liquidation.incoterm) {
         case 'CFR':

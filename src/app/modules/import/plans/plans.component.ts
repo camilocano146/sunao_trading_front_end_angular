@@ -32,7 +32,7 @@ export class PlansComponent implements OnInit, OnDestroy {
   getAllPlans(): void {
     this.preload = true;
     this.errorGetPlans = false;
-    this.plans.getListPackages(0, 10).subscribe(res => {
+    this.plans.getListActivesPackages(0, 10).subscribe(res => {
       this.listPlans = res.results;
       this.preload = false;
     }, error => {

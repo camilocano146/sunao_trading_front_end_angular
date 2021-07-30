@@ -33,4 +33,7 @@ export interface Liquidation {
   city_destination_id: number;
   container_type?: Container;
   city_destination?: Location;
+  fob_cost_user?: number;
+  currency_usd?:BadgeType | any;
+
 }

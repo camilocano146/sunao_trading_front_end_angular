@@ -121,15 +121,15 @@
           </td>
         </ng-container>
 
-        <!-- return_cost column -->
-        <ng-container matColumnDef="return_cost">
+        <!-- free_days Column -->
+        <ng-container matColumnDef="free_days">
           <th mat-header-cell *matHeaderCellDef>
-            <img src="./assets/icons/check_black_24dp.svg" alt="">
-            Costo de retorno 
+            <img src="./assets/icons/today_black_24dp.svg" alt="">
+            Dias libres
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.return_cost">Si</span>
-            <span *ngIf="!row.return_cost">No</span>
+            <span *ngIf="row.free_days">{{row.free_days}}</span>
+            <span *ngIf="!row.free_days">N/A</span>
           </td>
         </ng-container>
 

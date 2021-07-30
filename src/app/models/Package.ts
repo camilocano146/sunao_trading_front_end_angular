@@ -8,4 +8,5 @@ export interface Package {
     time: number;
     cost: number;
     name: string;
+    status?:string;
 }

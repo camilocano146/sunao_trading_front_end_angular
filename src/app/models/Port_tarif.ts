@@ -12,4 +12,5 @@ export interface Port_tarif {
     validity: Date;
     cost:number;
     return_cost?:boolean; 
+    free_days?: number;
   }
