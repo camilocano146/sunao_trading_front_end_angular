@@ -95,7 +95,7 @@ export class DialogExportReportComponent implements OnInit {
       observable.subscribe(res => {
         this.preloadExport = false;
         this.notifyService.showSuccess('Documento Generado');
-        FileSaver.saveAs(res, 'reporte generado el ' + new Date().toLocaleString() + '.xlsx');
+        FileSaver.saveAs(res, 'reporte generado el ' + new Date().toLocaleString() + '.xls');
       }, (error: HttpErrorResponse) => {
         this.preloadExport = false;
       });
