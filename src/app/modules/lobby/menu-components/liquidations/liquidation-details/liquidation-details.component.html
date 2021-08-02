@@ -132,7 +132,9 @@
       </div>
 
       <h6 class="color-blue py-3 mb-0">
-        El valor del Dólar entre {{liquidation?.currency_usd?.from_date}} y {{liquidation?.currency_usd?.to_date}} es de {{liquidation?.currency_usd?.value | currency:' ':'symbol':'1.0'}} COP 
+
+
+        TRM: Semana para levantes del {{liquidation?.currency_usd?.from_date}} al {{liquidation?.currency_usd?.to_date}}. {{liquidation?.currency_usd?.value | currency:' ':'symbol':'1.0'}} COP, Fuente DIAN   
         <div class="color-blue py-3 mb-0" *ngIf="liquidation?.currency?.acronym=='EUR'"> 
           El valor del euro entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}} es de {{liquidation?.currency?.value | currency:' ':'symbol':'1.0'}} USD 
         </div>
