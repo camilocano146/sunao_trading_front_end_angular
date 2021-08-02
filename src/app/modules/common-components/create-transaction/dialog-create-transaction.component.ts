@@ -46,7 +46,7 @@ export class DialogCreateTransactionComponent implements OnInit {
   public preload_pay: boolean;
   public preload_coupon:boolean;
   public show_coupon:boolean = false;
-  public terms: FormControl;
+  // public terms: FormControl;
   public link = 'https://wompi.co/wp-content/uploads/2019/09/TERMINOS-Y-CONDICIONES-DE-USO-USUARIOS-WOMPI.pdf';
   public hideCVC = true;
 
@@ -59,7 +59,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Package,
     private couponsService: CouponsService
   ) {
-    this.terms = new FormControl(false, Validators.required);
+    // this.terms = new FormControl(false, Validators.required);
     this.preload_pay = false;
     this.card = this.formBuilder.group({
       number: ['', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
@@ -67,16 +67,16 @@ export class DialogCreateTransactionComponent implements OnInit {
       exp_month: ['', [Validators.required, Validators.min(1), Validators.max(12)]],
       exp_year: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2), Validators.min(21), Validators.max(50)]],
       card_holder: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
-      customer_email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(ConstantsApp.patternEmail)]],
+      // customer_email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(ConstantsApp.patternEmail)]],
       installments: [1, [Validators.required, Validators.min(1), Validators.max(36)]],
     });
     this.nequi = this.formBuilder.group({
       number: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(10)]],
-      customer_email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(ConstantsApp.patternEmail)]],
+      // customer_email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(ConstantsApp.patternEmail)]],
     });
     this.bancolombia = this.formBuilder.group({
       user_type: ['', Validators.required],
-      customer_email: ['', [Validators.required, Validators.email, Validators.pattern(ConstantsApp.patternEmail)]],
+      // customer_email: ['', [Validators.required, Validators.email, Validators.pattern(ConstantsApp.patternEmail)]],
       payment_description: ['RECARGA JOBKII - BANCOLOMBIA', [Validators.required]]
     });
     this.pse = this.formBuilder.group({
@@ -84,7 +84,7 @@ export class DialogCreateTransactionComponent implements OnInit {
       user_doc: ['', Validators.required],
       user_id: ['', Validators.required],
       institution: ['', Validators.required],
-      customer_email: ['', [Validators.required, Validators.email, Validators.pattern(ConstantsApp.patternEmail)]],
+      // customer_email: ['', [Validators.required, Validators.email, Validators.pattern(ConstantsApp.patternEmail)]],
       payment_description: ['RECARGA JOBKII - PSE', [Validators.required]]
     });
 
@@ -161,15 +161,15 @@ export class DialogCreateTransactionComponent implements OnInit {
 
   async onSubmit(): Promise<any> {
     this.submitted = true;
-    if (this.card.invalid) {
-      this.card.markAllAsTouched();
-      this.terms.markAsTouched();
-      return;
-    }
-    if (this.terms.value == false) {
-      this.terms.markAsTouched();
-      return;
-    }
+    // if (this.card.invalid) {
+    //   this.card.markAllAsTouched();
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
+    // if (this.terms.value == false) {
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const infocard = {
@@ -189,7 +189,7 @@ export class DialogCreateTransactionComponent implements OnInit {
         token: token_card,
         installments: +this.card.value.installments,
         payment_method: this.payment_method_selected,
-        customer_email: this.card.value.customer_email,
+        // customer_email: this.card.value.customer_email,
         currency: 'COP',
         redirect_url: this.URL_REDIRECT,
         plan_id: this.data.id,
@@ -219,22 +219,22 @@ export class DialogCreateTransactionComponent implements OnInit {
 
   async paymentNequi(): Promise<any> {
     this.submitted = true;
-    if (this.nequi.invalid) {
-      this.nequi.markAllAsTouched();
-      this.terms.markAsTouched();
-      return;
-    }
-    if (this.terms.value == false) {
-      this.terms.markAsTouched();
-      return;
-    }
+    // if (this.nequi.invalid) {
+    //   this.nequi.markAllAsTouched();
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
+    // if (this.terms.value == false) {
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const transaction = {
       value: this.value_total,
       acceptance_token: this.pre_token,
       payment_method: this.payment_method_selected,
-      customer_email: this.nequi.value.customer_email,
+      // customer_email: this.nequi.value.customer_email,
       currency: 'COP',
       phone_number: this.nequi.value.number, redirect_url: this.URL_REDIRECT,
       plan_id: this.data.id,
@@ -242,7 +242,7 @@ export class DialogCreateTransactionComponent implements OnInit {
       commission:this.commission
     };
     this.paymentService.transactionNequi(transaction).subscribe(res => {
-      // this.preload_pay = false;
+      this.preload_pay = false;
       // this.notifyService.add({
       //     severity: 'error',
       //     summary: 'Operación exitosa!',
@@ -262,15 +262,15 @@ export class DialogCreateTransactionComponent implements OnInit {
 
   async paymentBancolombia(): Promise<any> {
     this.submitted = true;
-    if (this.bancolombia.invalid) {
-      this.bancolombia.markAllAsTouched();
-      this.terms.markAsTouched();
-      return;
-    }
-    if (this.terms.value == false) {
-      this.terms.markAsTouched();
-      return;
-    }
+    // if (this.bancolombia.invalid) {
+    //   this.bancolombia.markAllAsTouched();
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
+    // if (this.terms.value == false) {
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const transaction = {
@@ -308,22 +308,22 @@ export class DialogCreateTransactionComponent implements OnInit {
 
   async paymentPse(): Promise<any> {
     this.submitted = true;
-    if (this.pse.invalid) {
-      this.pse.markAllAsTouched();
-      this.terms.markAsTouched();
-      return;
-    }
-    if (this.terms.value == false) {
-      this.terms.markAsTouched();
-      return;
-    }
+    // if (this.pse.invalid) {
+    //   this.pse.markAllAsTouched();
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
+    // if (this.terms.value == false) {
+    //   this.terms.markAsTouched();
+    //   return;
+    // }
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const transaction = {
       value: this.value_total,
       acceptance_token: this.pre_token,
       payment_method: this.payment_method_selected,
-      customer_email: this.pse.value.customer_email,
+      // customer_email: this.pse.value.customer_email,
       currency: 'COP',
       user_type: +this.pse.value.user_type,
       user_doc: this.pse.value.user_doc,
@@ -415,19 +415,19 @@ export class DialogCreateTransactionComponent implements OnInit {
   /**
    * Mensaje de error del nombre
    */
-  getErrorMessageEmailCard(): string {
-    if (this.card.get('customer_email').hasError('required')) {
-      return 'Campo obligatorio';
-    } else if (this.card.get('customer_email').hasError('minlength')) {
-      return 'Mínimo 3 dígitos';
-    } else if (this.card.get('customer_email').hasError('maxlength')) {
-      return 'Máximo 150 dígitos';
-    } else if (this.card.get('customer_email').hasError('email')) {
-      return 'Correo no valido';
-    } else if (this.card.get('customer_email').hasError('pattern')) {
-      return 'Correo no valido';
-    }
-  }
+  // getErrorMessageEmailCard(): string {
+  //   if (this.card.get('customer_email').hasError('required')) {
+  //     return 'Campo obligatorio';
+  //   } else if (this.card.get('customer_email').hasError('minlength')) {
+  //     return 'Mínimo 3 dígitos';
+  //   } else if (this.card.get('customer_email').hasError('maxlength')) {
+  //     return 'Máximo 150 dígitos';
+  //   } else if (this.card.get('customer_email').hasError('email')) {
+  //     return 'Correo no valido';
+  //   } else if (this.card.get('customer_email').hasError('pattern')) {
+  //     return 'Correo no valido';
+  //   }
+  // }
 
   /**
    * Mensaje de error del nombre

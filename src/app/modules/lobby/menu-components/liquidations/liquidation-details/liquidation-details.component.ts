@@ -77,7 +77,7 @@ export class LiquidationDetailsComponent implements OnInit {
         this.listSupportDocuments = res.results;
       });
 
-      this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.port_destination?.id, this.liquidation.container_type?.id).subscribe(res => {
+      this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.id).subscribe(res => {
         this.listPortCharge = res.results;
       });
 
