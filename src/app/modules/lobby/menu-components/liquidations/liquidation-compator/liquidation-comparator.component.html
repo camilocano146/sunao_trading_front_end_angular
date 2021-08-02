@@ -1,0 +1,286 @@
+<!--<div *ngIf="preload" class="w-100 text-center">-->
+<!--  <img src="./assets//gifs//loading.gif" alt="">-->
+<!--</div>-->
+
+<div class="div-back-to-liquidation" (click)="goToLiquidations()">
+  <img class="ms-3" src="./assets/icons/arrow_left_yellow_24dp.svg" alt="">
+  <h6 class="color-blue py-3 mb-0">
+    Volver a mis liquidaciones
+  </h6>
+</div>
+
+<div class="container mt-3 mb-5">
+
+  <div *ngIf="showError" class="text-center">
+    <div class="color-red m-auto">
+      <h6>
+        No fué posible cargar los datos, por for intente nuevamente.
+      </h6>
+
+      <button (click)="getLiquidations()" mat-raised-button class="col-4 btn-blue" style="width: 250px !important;">
+        <h5 class="m-0">
+          Reintentar
+        </h5>
+      </button>
+    </div>
+  </div>
+
+  <mat-spinner *ngIf="preload" diameter="50" style="margin: auto"></mat-spinner>
+
+  <div *ngIf="!preload" class="div-info container px-0">
+    <table>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/event_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/event_black_24dp.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Fecha
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation.create_at | date:'longDate'}}
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-blue">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/save-money.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/save-money.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Valor FOB
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{(liquidation?.fob_cost | currency:' ':'symbol':'1.0')}} USD
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/pin_drop_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/pin_drop_black_24dp.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Origen
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation?.port_origin?.location?.name | titlecase}} ({{liquidation?.port_origin?.name | titlecase}})
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-blue">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/pin_drop_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/pin_drop_black_24dp.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Destino
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation?.port_destination?.location?.name | titlecase}} ({{liquidation?.port_destination?.name | titlecase}})
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons-menu/caja_24dp_white.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/caja_24dp_white.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Producto
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation.product?.name}}
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-blue">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Partida arancelaria
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation.product?.code}}
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/worldwide-shipping-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/worldwide-shipping-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Contenedor
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation.container_type?.name}}
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-blue">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/money-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/money-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Divisa
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation.currency?.acronym}}
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Incoterm
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          {{liquidation.incoterm}}
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-blue">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Flete Internacional
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          <span *ngIf="liquidation?.data?.international_freight_cost">
+            {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
+          </span>
+          <span *ngIf="!liquidation?.data?.international_freight_cost">
+            N/A
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Seguro internacional
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          <span *ngIf="liquidation?.data?.insurance_cost">
+            {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.0')}} USD
+          </span>
+          <span *ngIf="!liquidation?.data?.insurance_cost">
+            N/A
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-blue">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Aduana y portuarios
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          <span *ngIf="liquidation?.data?.port_charge">
+            {{(liquidation?.data?.port_charge | currency:' ':'symbol':'1.0')}} USD
+          </span>
+          <span *ngIf="!liquidation?.data?.port_charge">
+            N/A
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Arancel
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          <span *ngIf="liquidation?.data?.gravamen_tarif">
+            {{(liquidation?.data?.gravamen_tarif | currency:' ':'symbol':'1.0')}} USD
+          </span>
+          <span *ngIf="!liquidation?.data?.gravamen_tarif">
+            N/A
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-blue">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Flete local
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          <span *ngIf="liquidation?.data?.national_freight_cost">
+            {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
+          </span>
+          <span *ngIf="!liquidation?.data?.national_freight_cost">
+            N/A
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th class="row m-0 th-yellow">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/internet-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Total
+          </span>
+        </th>
+        <td *ngFor="let liquidation of liquidations">
+          <span>
+            {{((calculateTotalValue(liquidation) | currency:' ':'symbol':'1.0') + '')?.replace(',', '.')}} USD
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

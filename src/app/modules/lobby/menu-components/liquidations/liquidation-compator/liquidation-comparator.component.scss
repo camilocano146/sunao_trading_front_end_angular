@@ -1,0 +1,275 @@
+@import '../../../../../../styles';
+
+.text-title {
+  color: $color-soft-blue;
+}
+
+::ng-deep .mat-drawer-content {
+  background-color: #f3eeee !important;
+}
+
+.div-info {
+  //box-shadow: 5px 0 30px black;
+  box-shadow: 15px 15px 18px -15px #888888;
+  background-color: white !important;
+}
+
+.div-info-buttons {
+  text-align: right;
+}
+
+.div-header-info {
+  padding: 15px;
+  background-color: $color-dark-blue;
+  margin: 0;
+}
+
+.div-header-info div {
+  margin: 2px 0;
+}
+
+.div-header-info div div {
+  background-color: white;
+  width: 1.2em;
+  height: 1.2em;
+  mask-size: 1.2em !important;
+  -webkit-mask-size: 1.2em !important;
+}
+
+.div-header-info div h6 {
+  color: white !important;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.div-menu-options {
+  margin: 0;
+}
+
+.div-option {
+  cursor: pointer !important;
+}
+
+@media (min-width: 992px) {
+  .col-lg-2 {
+    flex: 0 0 auto;
+    width: 16.6666666667%;
+    padding: 0;
+  }
+
+  .div-menu-options div:not(:first-child):not(:last-child) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .div-menu-options div:first-child {
+    padding-right: 10px;
+  }
+
+  .div-menu-options div:last-child {
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .div-option {
+    margin-bottom: 10px;
+  }
+}
+
+.div-option {
+  background-color: $color-yellow;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+}
+
+.div-option-to-show {
+  background-color: $color-yellow;
+}
+
+.div-option-to-hide {
+  background-color: $color-dark-blue;
+}
+
+.div-table-row {
+  border: 1px solid $color-yellow;
+  margin: 10px 0;
+  padding: 7px;
+}
+
+.div-iva-row {
+  border: 1px solid $color-soft-blue;
+  margin: 10px 0;
+  padding: 7px;
+}
+
+.div-table-price {
+  text-align: center;
+}
+
+.div-table-price h4 {
+  margin-bottom: 0;
+}
+
+.div-table-img img {
+  transform: scale(2);
+}
+
+.div-table-img {
+  text-align: center;
+}
+
+.div-total {
+  background-color: $color-yellow;
+  padding: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.div-total h4 {
+  margin: 0;
+}
+
+.div-bottom-info {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.div-back-to-liquidation {
+  display: flex;
+  width: max-content;
+  cursor: pointer;
+}
+
+.div-back-to-liquidation img {
+  width: 50px;
+  height: 50px;
+}
+
+.mat-accordion-yellow {
+  .mat-expansion-panel {
+    border: 1px solid $color-yellow;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 0 !important;
+    box-shadow: unset !important;
+  }
+}
+
+.mat-accordion-blue {
+  .mat-expansion-panel {
+    border: 1px solid $color-soft-blue;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 0 !important;
+    box-shadow: unset !important;
+  }
+}
+
+::ng-deep .mat-expansion-indicator {
+  display: none !important;
+}
+
+.div-data-concept {
+}
+
+mat-panel-title {
+  display: flex;
+  align-items: center;
+  font-family: Arial;
+  font-size: medium;
+}
+
+h4{
+  font-family: Arial;
+  font-size: medium;
+}
+
+h5{
+  font-family: Arial;
+  font-size: medium;
+}
+h3{
+  font-family: Arial;
+  font-size: x-small;
+}
+
+.div-info {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 1000px;
+}
+
+th img {
+  width: 20px;
+  height: 20px;
+}
+
+th div {
+  text-align: right;
+  //display: flex;
+  //justify-content: flex-end;
+}
+
+th div div {
+  //display: block;
+  //padding-right: 3em;
+  margin: auto;
+}
+
+th {
+  display: flex;
+  align-items: center;
+}
+
+th span {
+  text-align: left;
+  font-size: 14px;
+}
+
+tr, th {
+  height: 50px !important;
+  text-align: center !important;
+}
+
+tr:nth-child(odd) {
+  background-color: #e7faff !important;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  transform: scale(0.9) !important;
+  //margin-right: 1em;
+}
+
+.th-yellow {
+  background-color: $color-yellow !important;
+}
+
+.th-yellow .icon {
+  background-color: $color-dark-blue;
+}
+
+.th-yellow span {
+  color: $color-dark-blue;
+}
+
+.th-blue {
+  background-color: $color-dark-blue !important;
+}
+
+.th-blue .icon {
+  background-color: white;
+}

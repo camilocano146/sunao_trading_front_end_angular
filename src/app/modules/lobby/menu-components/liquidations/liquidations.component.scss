@@ -72,3 +72,10 @@ th, td {
 .div-buttons button {
   width: fit-content;
 }
+
+.button-compare {
+  background-color: $color-yellow !important;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
