@@ -133,7 +133,10 @@
     </div>
   </div>
 
-  <button *ngIf="selection.selected.length === 3" mat-fab class="button-compare" (click)="compareLiquidations()">
+  <button matTooltip="Comparar Liquidaciones Seleccionadas"
+          *ngIf="selection.selected.length === 3" mat-fab class="button-compare"
+          matTooltipClass="tooltip-comparator"
+          (click)="compareLiquidations()">
     <mat-icon>compare</mat-icon>
   </button>
 

@@ -55,7 +55,7 @@
       "enter_with": "Ingresar con",
       "not_account": "No tienes cuenta ? Crea una",
       "forget_password": "Olvidaste tu contraseña ? Ir a recuperar",
-      "sign_ok": "Sesión iniciada",
+      "sign_ok": "Iniciando Sesión, espera un momento por favor...",
       "sign_error": "Usuario o contraseña incorrectos",
       "look_account": "Esta cuenta está bloqueada",
       "email_not_verifies": "Por favor digite el código enviado a su correo electrónico"

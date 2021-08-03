@@ -79,3 +79,11 @@ th, td {
   bottom: 10px;
   left: 10px;
 }
+
+::ng-deep .tooltip-comparator {
+  background-color: $color-dark-blue;
+  font-size: 20px;
+  padding-left: 30px !important;
+  width: unset !important;
+  max-width: unset !important;
+}
