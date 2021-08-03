@@ -116,6 +116,11 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content style="overflow-x: hidden">
+
+      <button (click)="util.openWhatsApp()" mat-raised-button class="bc-dark-blue float-button-contact">
+        <img src="../../../assets/icons/question_answer_black_24dp-white.svg" alt="">
+      </button>
+
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

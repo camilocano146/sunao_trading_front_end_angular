@@ -46,6 +46,8 @@ export class ManageSessionStorage {
 
   static getListCompareLiquidations(): number[] {
     const result = sessionStorage.getItem('compareLiquidations');
-    return result.split(',').map(v => +v);
+    if (result) {
+      return result.split(',').map(v => +v);
+    }
   }
 }

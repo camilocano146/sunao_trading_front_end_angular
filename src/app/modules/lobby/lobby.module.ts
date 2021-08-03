@@ -68,6 +68,8 @@ import {DialogExportReportComponent} from "../common-components/dialog-export-re
 import { DialogImportPortChargesComponent } from './menu-components/port-charge/dialog-import-port-charges/dialog-import-port-charges.component';
 import { DialogVerifyAccountComponent } from './settings-components/profile/dialog-verify-account/dialog-verify-account.component';
 import {LiquidationComparatorComponent} from './menu-components/liquidations/liquidation-compator/liquidation-comparator.component';
+import {DialogExportSendLiquidationComponent} from './menu-components/liquidations/dialog-export-send-liquidation/dialog-export-send-liquidation.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -112,6 +114,7 @@ import {LiquidationComparatorComponent} from './menu-components/liquidations/liq
     DialogImportPortChargesComponent,
     DialogVerifyAccountComponent,
     LiquidationComparatorComponent,
+    DialogExportSendLiquidationComponent,
   ],
   imports: [
     CommonModule,
@@ -140,7 +143,8 @@ import {LiquidationComparatorComponent} from './menu-components/liquidations/liq
     MatTabsModule,
     ImportModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatRadioModule
   ],
   providers: [
     {

@@ -4,8 +4,7 @@
   </div>
 
   <div class="row" style=" width: 100%;">
-
-    <div >
+    <div>
       <button mat-raised-button
               (click)="exportDate()"
               class="col-12 w-75 btn-soft-blue" style="width: 200px !important; float: right;">
@@ -16,14 +15,16 @@
           </span>
         </h4>
       </button>
-      <button mat-raised-button class="col-4 btn-yellow" routerLink="/import" style="width: 250px !important; float: right;">
-        <h5 class="m-0">
-          <img src="./assets/import/menu/worldwide-shipping.svg" alt="" width="25" class="mr-5">
-          <span style="margin-left: 1em">
+      <a href="#/import">
+        <button mat-raised-button class="col-4 btn-yellow" style="width: 250px !important; float: right;">
+          <h5 class="m-0">
+            <img src="./assets/import/menu/worldwide-shipping.svg" alt="" width="25" class="mr-5">
+            <span style="margin-left: 1em">
             Nueva liquidación
           </span>
-        </h5>
-      </button>
+          </h5>
+        </button>
+      </a>
     </div>
   </div>
 
@@ -133,14 +134,41 @@
     </div>
   </div>
 
-  <button matTooltip="Comparar Liquidaciones Seleccionadas"
-          *ngIf="selection.selected.length === 3" mat-fab class="button-compare"
-          matTooltipClass="tooltip-comparator"
-          (click)="compareLiquidations()">
-    <mat-icon>compare</mat-icon>
-  </button>
+  <div class="div-compare">
+    <div class="div-compare-item"
+         [ngStyle]="{'margin-left.px': selection.selected.length > 1 ? 10 : 0}"
+         *ngFor="let item of selection.selected; let i = index">
+      <div style="position: absolute; top: 0; right: 0;">
+        <div matTooltip="Borrar"
+             class="button-close-item-compare"
+             matTooltipClass="tooltip-comparator"
+             (click)="deselectItem(item)">
+          X
+        </div>
+      </div>
+      <h6 class="my-2">
+        {{item}}
+      </h6>
+    </div>
 
-  <div class="mat-elevation-z8 container" style="max-width: max-content">
+    <button matTooltip="Comparar Liquidaciones Seleccionadas"
+            *ngIf="selection.selected.length >= 2"
+            mat-raised-button
+            class="button-compare"
+            matTooltipClass="tooltip-comparator"
+            (click)="compareLiquidations()">
+      Comparar
+    </button>
+  </div>
+
+<!--  <button matTooltip="Comparar Liquidaciones Seleccionadas"-->
+<!--          *ngIf="selection.selected.length === 3" mat-fab class="button-compare"-->
+<!--          matTooltipClass="tooltip-comparator"-->
+<!--          (click)="compareLiquidations()">-->
+<!--    <mat-icon>compare</mat-icon>-->
+<!--  </button>-->
+
+  <div class="mat-elevation-z8 container" style="max-width: max-content; margin-bottom: 5em">
     <div class="div-parent-table">
       <table mat-table [dataSource]="list" class="w-100">
 
@@ -155,7 +183,7 @@
           <td mat-cell *matCellDef="let row">
             <mat-checkbox #check (click)="$event.stopPropagation()"
                           (change)="$event ? selectLiquidation(row, check) : null"
-                          [checked]="selection.isSelected(row)">
+                          [checked]="selection.isSelected(row.id)">
             </mat-checkbox>
           </td>
         </ng-container>

@@ -1,0 +1,80 @@
+@import '../../../../../../styles';
+
+.btn-liquidate {
+  background-color: $color-soft-blue;
+  color: white !important;
+  //height: 3em !important;
+  padding: 1em 3em;
+  border-radius: 0 !important;
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+}
+
+.div-content {
+  margin-top: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.div-content h6 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  text-align: justify;
+}
+
+.div-content div {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1em;
+}
+
+.div-content div div {
+  background-color: $color-dark-blue;
+  width: 2em;
+  height: 2em;
+  mask-size: 2em !important;
+  -webkit-mask-size: 2em !important;
+}
+
+.div-export-send-liquidation {
+
+  ::ng-deep .check-white .mat-checkbox-frame {
+    border-color: white !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    border: 1px solid gray !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 !important;
+    background-color: white !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 0 !important;
+    background-color: white !important;
+    min-width: 0 !important;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding-top: 0 !important;
+    display: flex;
+    align-items: center;
+    border-top: .84375em solid transparent !important;
+    border-top-width: 0.84375em !important;
+  }
+
+  ::ng-deep .div-filter-right .mat-form-field-flex {
+    background-color: white !important;
+  }
+
+  ::ng-deep .mat-form-field-flex {
+    //height: 3em !important;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    color: black;
+  }
+}

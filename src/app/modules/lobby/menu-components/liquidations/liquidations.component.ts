@@ -47,7 +47,7 @@ export class LiquidationsComponent implements OnInit {
   filterSelectedValue: any;
   values: any[] = ['CFR', 'CIF', 'DDP'];
   private timer: number;
-  selection = new SelectionModel<Liquidation>(true, []);
+  selection = new SelectionModel<number>(true, []);
   userPackage: boolean;
 
   constructor(
@@ -59,6 +59,9 @@ export class LiquidationsComponent implements OnInit {
     private userService: UserService
   ) {
     this.userHasActivePackage();
+    if (ManageSessionStorage.getListCompareLiquidations()) {
+      this.selection.select(...ManageSessionStorage.getListCompareLiquidations());
+    }
   }
 
   ngOnInit(): void {
@@ -163,11 +166,20 @@ export class LiquidationsComponent implements OnInit {
       check.checked = false;
       return;
     }
-    this.selection.toggle(row);
+    this.selection.toggle(row.id);
+    ManageSessionStorage.setListCompareLiquidations(this.selection.selected);
   }
 
   compareLiquidations(): void {
-    ManageSessionStorage.setListCompareLiquidations(this.selection.selected.map(s => s.id));
     this.router.navigate([`lobby/liquidations-comparator`]);
+  }
+
+  deselectItem(item: number): void {
+    this.selection.deselect(item);
+    ManageSessionStorage.setListCompareLiquidations(this.selection.selected);
+  }
+
+  goToNewLiquidation(): void {
+    this.router.navigate(['/import']);
   }
 }

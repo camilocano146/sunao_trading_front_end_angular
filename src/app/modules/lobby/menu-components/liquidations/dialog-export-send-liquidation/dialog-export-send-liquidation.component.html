@@ -1,0 +1,42 @@
+<div class="row dialog-title">
+  <h5 class="col-10">
+    {{data === exportSendLiquidation.EXPORT ? 'Exportar Liquidación' : 'Enviar Liquidación'}}
+  </h5>
+  <div class="col-2 text-right">
+    <img class="img-close-dialog" src="./assets/icons/close_white.svg" alt="" (click)="matDialogRef.close()">
+  </div>
+</div>
+
+<div class="div-content div-export-send-liquidation">
+  <h6 class="color-blue mb-3">
+    Seleccione una Formato
+  </h6>
+  <div class="flex-box-middle">
+    <mat-radio-group [(ngModel)]="optionSelected">
+      <mat-radio-button class="mb-2" [value]="exportSendFormatOption.PDF">
+        PDF
+      </mat-radio-button>
+      <br>
+      <mat-radio-button [value]="exportSendFormatOption.EXCEL">
+        EXCEL
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div *ngIf="data === exportSendLiquidation.SEND">
+    <h6 class="color-blue mb-2">
+      Ingrese un Email
+    </h6>
+    <mat-form-field class="w-100" appearance="outline">
+      <input type="email" matInput placeholder="Email" [formControl]="formControlEmail" required>
+      <mat-error *ngIf="formControlEmail.invalid">{{getErrorMessageUser()}}</mat-error>
+    </mat-form-field>
+  </div>
+</div>
+<div class="text-center">
+  <button mat-raised-button class="btn-liquidate" (click)="exportOrSend()">
+    <h5 class="m-0">
+      {{data === exportSendLiquidation.EXPORT ? 'Exportar' : 'Enviar'}}
+    </h5>
+  </button>
+</div>
