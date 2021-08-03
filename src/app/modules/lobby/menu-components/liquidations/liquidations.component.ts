@@ -10,10 +10,12 @@ import {LiquidationService} from '../../../../services/liquidation/liquidation.s
 import {FormControl} from '@angular/forms';
 import {Liquidation} from '../../../../models/Liquidation';
 import {Router} from '@angular/router';
-import {DialogExportReportComponent} from "../../../common-components/dialog-export-report/dialog-export-report.component";
-import {DialogChapterCreateEditComponent} from "../chapters/dialog-chapter-create-edit/dialog-chapter-create-edit.component";
-import {ReportsEnum} from "../../../../enums/Reports.enum";
+import {DialogExportReportComponent} from '../../../common-components/dialog-export-report/dialog-export-report.component';
+import {ReportsEnum} from '../../../../enums/Reports.enum';
 import { UserService } from 'src/app/services/user/user.service';
+import {SelectionModel} from '@angular/cdk/collections';
+import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-liquidation',
@@ -22,8 +24,9 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class LiquidationsComponent implements OnInit {
   preload: boolean;
-  list: Location[];
+  list: Liquidation[];
   public displayedColumns: string[] = [
+    'select',
     'id',
     'product',
     'origin',
@@ -36,7 +39,6 @@ export class LiquidationsComponent implements OnInit {
   resultsLength: number;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  listLocations: Location[];
   formControlReference: FormControl = new FormControl('');
   formControlOrigin: FormControl = new FormControl('');
   formControlDestination: FormControl = new FormControl('');
@@ -45,8 +47,9 @@ export class LiquidationsComponent implements OnInit {
   filterSelectedValue: any;
   values: any[] = ['CFR', 'CIF', 'DDP'];
   private timer: number;
+  selection = new SelectionModel<Liquidation>(true, []);
+  userPackage: boolean;
 
-  userPackage:boolean;
   constructor(
     private translate: TranslateService,
     private notifyService: NotifyService,
@@ -55,7 +58,7 @@ export class LiquidationsComponent implements OnInit {
     private router: Router,
     private userService: UserService
   ) {
-    this.userHasActivePackage();  
+    this.userHasActivePackage();
   }
 
   ngOnInit(): void {
@@ -65,12 +68,11 @@ export class LiquidationsComponent implements OnInit {
 
   }
 
-  userHasActivePackage(){
-    this.userService.userHasActivePackage().subscribe(res=>{
-      this.userPackage=res.result;
+  userHasActivePackage(): void {
+    this.userService.userHasActivePackage().subscribe(res => {
+      this.userPackage = res.result;
       this.loadTable();
-    })
-
+    });
   }
 
   loadTable(): void {
@@ -132,8 +134,8 @@ export class LiquidationsComponent implements OnInit {
   }
 
   goToSeeDetails(row: Liquidation): void {
-    
-    if (this.userPackage==false) {
+
+    if (this.userPackage == false) {
       this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
       this.router.navigate(['import/plans']);
     } else {
@@ -153,5 +155,19 @@ export class LiquidationsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  selectLiquidation(row: Liquidation, check: MatCheckbox): void {
+    if (this.selection.selected.length >= 3 && check.checked) {
+      this.notifyService.showErrorSnapshotLong('No puedes seleccionar más de 3 liquidaciones');
+      check.checked = false;
+      return;
+    }
+    this.selection.toggle(row);
+  }
+
+  compareLiquidations(): void {
+    ManageSessionStorage.setListCompareLiquidations(this.selection.selected.map(s => s.id));
+    this.router.navigate([`lobby/liquidations-comparator`]);
   }
 }

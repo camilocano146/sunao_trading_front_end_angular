@@ -39,4 +39,13 @@ export class ManageSessionStorage {
     }
     return undefined;
   }
+
+  static setListCompareLiquidations(numbers: number[]): void {
+    sessionStorage.setItem('compareLiquidations', numbers + '');
+  }
+
+  static getListCompareLiquidations(): number[] {
+    const result = sessionStorage.getItem('compareLiquidations');
+    return result.split(',').map(v => +v);
+  }
 }

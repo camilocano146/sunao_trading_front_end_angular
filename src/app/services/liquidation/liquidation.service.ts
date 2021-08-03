@@ -24,6 +24,10 @@ export class LiquidationService {
     return this.httpClient.get(`liquidation/${id}/get_liquidation_info/`);
   }
 
+  getManyById(ids: { list_liquidations: number[] }): Observable<any> {
+    return this.httpClient.post(`liquidation/comparator_liquidations/`, ids);
+  }
+
   validateInfoPortTarifNational(body: {port_origin_id: number, port_destination_id: number, city_destination_id: number, container_type_id: number, incoterm: IncotermType}): Observable<any> {
     return this.httpClient.post(`liquidation_no_auth/validate_info_port_tarif_national/`, body);
   }

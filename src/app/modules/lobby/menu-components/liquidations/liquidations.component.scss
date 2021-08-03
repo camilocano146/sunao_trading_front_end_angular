@@ -72,3 +72,18 @@ th, td {
 .div-buttons button {
   width: fit-content;
 }
+
+.button-compare {
+  background-color: $color-yellow !important;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+
+::ng-deep .tooltip-comparator {
+  background-color: $color-dark-blue;
+  font-size: 20px;
+  padding-left: 30px !important;
+  width: unset !important;
+  max-width: unset !important;
+}

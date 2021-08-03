@@ -22,6 +22,7 @@ import { CurrenciesComponent } from './menu-components/currencies/currencies.com
 import { PortChargeComponent } from './menu-components/port-charge/port-charge.component';
 import { ContainersTypeComponent } from './menu-components/containers-type/containers-type.component';
 import {GuardRoleGuard} from "../../guard/guard-role-admin/guard-role.guard";
+import {LiquidationComparatorComponent} from './menu-components/liquidations/liquidation-compator/liquidation-comparator.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
     children: [
       {path: '', component: LiquidationsComponent},
       {path: 'liquidations-detail/:idLiquidation', component: LiquidationDetailsComponent},
+      {path: 'liquidations-comparator', component: LiquidationComparatorComponent},
       {path: 'transactions', component: TransactionsComponent},
       {path: 'locations', component: CountriesComponent, canActivate: [GuardRoleGuard] },
       {path: 'locations/cities/:idCountry', component: CitiesComponent, canActivate: [GuardRoleGuard] },

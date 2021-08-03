@@ -89,7 +89,7 @@
                 </mat-form-field>
 
                 <agm-map [latitude]="+this.formControlOriginPort?.value?.latitude || defaultLatitude" [longitude]="+this.formControlOriginPort?.value?.longitude || defaultLongitude">
-                  <agm-marker [iconUrl]="{url: './assets/icons/grua.svg', scaledSize: {height: 40,width: 40}}"
+                  <agm-marker [iconUrl]="{url: './assets/icons/grua.png', scaledSize: {height: 40,width: 40}}"
                               [latitude]="+this.formControlOriginPort?.value?.latitude || defaultLatitude"
                               [longitude]="+this.formControlOriginPort?.value?.longitude || defaultLongitude">
                   </agm-marker>
@@ -144,7 +144,7 @@
                 </mat-form-field>
 
                 <agm-map [latitude]="+this.formControlDestinationPort?.value?.latitude || defaultLatitude" [longitude]="+this.formControlDestinationPort?.value?.longitude || defaultLongitude">
-                  <agm-marker [iconUrl]="{url: './assets/icons/grua.svg', scaledSize: {height: 40,width: 40}}"
+                  <agm-marker [iconUrl]="{url: './assets/icons/grua.png', scaledSize: {height: 40,width: 40}}"
                               [latitude]="+this.formControlDestinationPort?.value?.latitude || defaultLatitude"
                               [longitude]="+this.formControlDestinationPort?.value?.longitude || defaultLongitude"></agm-marker>
                 </agm-map>
@@ -246,7 +246,7 @@
                    class="col-5 col-md-25 div-currency cursor-pointer">
                 <div class="row bc-white p-3">
                   <h6 class="col-6 currency-name">
-                    {{currency.name === 'Dolar'? 'Dólar' : currency.name}} 
+                    {{currency.name === 'Dolar'? 'Dólar' : currency.name}}
                   </h6>
                   <div class="col-6 text-right">
                     <img [src]="currency.imageCountry" alt="" width="30">
