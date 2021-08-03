@@ -69,7 +69,7 @@
         <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/clipboard.svg' + ') no-repeat center'}"></div>
           <span class="col-10">
-            <h6>
+            <h6 class="number-field-text">
               Partida arancelaria: {{liquidation?.product?.code}}
             </h6>
           </span>
@@ -77,7 +77,7 @@
 
         <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/icons/calendar.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/calendar.svg' + ') no-repeat center'}"></div>
-          <h6 class="col-10">
+          <h6 class="col-10 number-field-text">
             Fecha: {{liquidation?.create_at | date}}
           </h6>
         </div>
@@ -85,7 +85,7 @@
         <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/worldwide-shipping.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            Contenedor: {{liquidation?.container_type?.name | uppercase}}
+            Contenedor: {{liquidation?.container_type?.name }}
           </h6>
         </div>
 
@@ -99,7 +99,7 @@
         <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/internet.svg' + ') no-repeat center'}"></div>
           <h6 class="col-10">
-            INCOTERM: {{liquidation?.incoterm}}
+            Incoterm: {{liquidation?.incoterm}}
           </h6>
         </div>
 
@@ -121,28 +121,16 @@
           </span>
         </div>
 
-        <div class="row col-lg-3 col-sm-6 col-12" *ngIf="liquidation?.incoterm=='DDP'">
-          <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/money.svg' + ') no-repeat center'}"></div>
-          <span class="col-10">
-            <h6>
-              Valor Fob en moneda seleccionada por el usuario ({{liquidation?.currency?.name}}): {{liquidation?.fob_cost_user | currency:' ':'symbol':'1.0'}} 
-            </h6>
-          </span>
-        </div>
       </div>
 
       <h6 class="color-blue py-3 mb-0">
 
-
-        TRM: Semana para levantes del {{liquidation?.currency_usd?.from_date}} al {{liquidation?.currency_usd?.to_date}}. {{liquidation?.currency_usd?.value | currency:' ':'symbol':'1.0'}} COP, Fuente DIAN   
-        <div class="color-blue py-3 mb-0" *ngIf="liquidation?.currency?.acronym=='EUR'"> 
-          El valor del euro entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}} es de {{liquidation?.currency?.value | currency:' ':'symbol':'1.0'}} USD 
+        <div class="number-field-text">
+          TRM: Semana para levantes del {{liquidation?.currency_usd?.from_date}} al {{liquidation?.currency_usd?.to_date}}. {{liquidation?.currency_usd?.value | currency:' ':'symbol':'1.0'}} COP, Fuente DIAN   
         </div>
-        <div class="color-blue py-3 mb-0" *ngIf="liquidation?.currency?.acronym=='GBP'"> 
-          El valor de la libra esterlina entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}} es de {{liquidation?.currency?.value | currency:' ':'symbol':'1.0'}} USD 
-        </div>
+        
         <div class="color-blue py-3 mb-0">
-          Por favor selecciona los costos que desea visualizar.
+          Por favor selecciona los costos que deseas visualizar.
         </div>
       </h6>
       
@@ -189,7 +177,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.fob_cost | currency:' ':'symbol':'1.0')}} USD
+                {{(liquidation?.fob_cost | currency:' ':'symbol':'1.2')}} USD
               </h4>
             </div>
 
@@ -209,6 +197,33 @@
             </h5>
           </div>
 
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              Valor Fob ingresado por el usuario ({{liquidation?.currency?.acronym}})
+            </h5>
+            <h5 class="col-4">
+              {{liquidation?.fob_cost_user | currency:' ':'symbol':'1.2'}}
+            </h5>
+          </div>
+
+          <div class="row" *ngIf="liquidation?.currency?.acronym=='EUR'"> 
+            <h5 class="col-8 ps-5">
+              El valor EUR entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}:
+            </h5>
+            <h5 class="col-4">
+              {{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}} USD
+            </h5>
+          </div>
+          
+          <div class="row" *ngIf="liquidation?.currency?.acronym=='GBP'"> 
+            <h5 class="col-8 ps-5">
+              El valor de la libra esterlina entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}:
+            </h5>
+            <h5 class="col-4">
+              {{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}} USD 
+            </h5>
+          </div>
+
         </mat-expansion-panel>
 
         <mat-expansion-panel #matExpansionPanel2 *ngIf="selectedFilterButton(1)">
@@ -216,7 +231,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
+                {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.2')}} USD
               </h4>
             </div>
 
@@ -245,7 +260,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.0')}} USD
+                {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.2')}} USD
               </h4>
             </div>
 
@@ -264,7 +279,7 @@
 
           <div class="row">
             <h5 class="col-8 ps-5">
-              ({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.0')}} USD
+              ({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.2')}} USD
             </h5>
           </div>
 
@@ -299,8 +314,8 @@
                 No hay valores portuarios.
               </div>
               <ul *ngIf="listPortCharge?.length > 0">
-                <li *ngFor="let item of listPortCharge">
-                  Concepto = {{item.concept}}, valor = {{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.0')}} USD.
+                <li *ngFor="let item of listPortCharge" class="number-field-text">
+                  Concepto = {{item.concept}}, valor = {{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.2')}} USD.
                 </li>
               </ul>
             </h5>
@@ -313,7 +328,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.gravamen_tarif | currency:' ':'symbol':'1.0')}} USD
+                {{(liquidation?.data?.gravamen_tarif | currency:' ':'symbol':'1.2')}} USD
               </h4>
             </div>
 
@@ -346,7 +361,7 @@
               </div>
               <ul *ngIf="listGravament?.length > 0">
                 <li *ngFor="let item of listGravament">
-                  Fecha = {{item.date | date}}, tarifa = {{(item.tarif | currency:'$ ':'symbol':'1.0')}}%.
+                  Fecha = {{item.date | date}}, tarifa = {{(item.tarif | currency:'$ ':'symbol':'1.2')}}%.
                 </li>
               </ul>
             </h5>
@@ -359,7 +374,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4>
-                {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
+                {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.2')}} USD
               </h4>
             </div>
 
@@ -373,7 +388,7 @@
           <div class="row">
             <h5 class="col-8 ps-5" style="text-align: justify">
               El producto viaja del puerto destino {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}} a la ciudad {{liquidation?.city_destination?.name | titlecase}}
-              y tiene un costo de {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
+              y tiene un costo de {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.2')}} USD
 <!--              quien es el proveedor, de donde a donde y cual es el valor-->
             </h5>
 
@@ -397,7 +412,7 @@
           Total {{getCalculateIcoterm()}}:
         </h4>
         <h4 class="col-6 text-right">
-          {{((calculateTotalValue() | currency:' ':'symbol':'1.0') + '')?.replace(',', '.')}} USD
+          {{((calculateTotalValue() | currency:' ':'symbol':'1.2') + '')}} USD
         </h4>
       </div>
 
@@ -417,7 +432,7 @@
 
             <div class="col-2 div-table-price me-3">
               <h4 *ngIf="liquidation?.data?.iva_tarif">
-                {{liquidation?.data?.iva_tarif | currency : ' ' : 'symbol' : '1.0-0' }} USD
+                {{liquidation?.data?.iva_tarif | currency : ' ' : 'symbol' : '1.2' }} USD
               </h4>
               <h4 *ngIf="!liquidation?.data?.iva_tarif">
                 0

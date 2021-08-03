@@ -1,0 +1,41 @@
+<div class="row dialog-title m-0">
+    <h5 class="col-10">
+      Verificar usuario
+    </h5>
+    <div class="col-2 text-right">
+      <img class="img-close-dialog" src="./assets/icons/close_white.svg" alt="" (click)="matDialogRef.close()">
+    </div>
+  </div>
+  
+  <div class="div-content text-center mt-3">
+    <mat-form-field *ngIf="!codeSent" class="w-75 m-auto" appearance="outline">
+        <input type="email" matInput placeholder="Ingrese código" [formControl]="formControlCode" required>
+        <mat-error *ngIf="formControlCode.invalid">{{getErrorMessageCode()}}</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="codeSent">
+        <div class="d-flex justify-content-center">
+            <img class="img-logo" src="./assets/icons/cheque.svg" width="40em">
+        </div>
+        <h5 style="margin-top: 1em; margin-bottom: 1em;" class="color-white text-center">Código enviado</h5>
+    </div>
+  
+
+  </div>
+  
+  <div class="text-center">
+    <button *ngIf="!preload && !codeSent" mat-raised-button class="btn-soft-blue" (click)="activateAccount()">
+        <h5>
+          Verificar
+        </h5>
+    </button>
+    <button *ngIf="codeSent" mat-raised-button class="btn-soft-blue" (click)="goToLogin()">
+        <h5>
+          Ok
+        </h5>
+    </button>
+    <div *ngIf="preload" class="w-100 text-center">
+        <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+    </div>
+  </div>
+  

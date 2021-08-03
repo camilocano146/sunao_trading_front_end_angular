@@ -16,12 +16,12 @@
 
     <button mat-raised-button
             (click)="verifyAccount()"
-            [ngClass]="{'btn-verify': user?.isActive, 'btn-not-verify': !user?.isActive}">
+            [ngClass]="{'btn-verify': user?.is_active, 'btn-not-verify': !user?.is_active}">
       <h5 class="m-0">
-        <img *ngIf="user?.isActive" src="./assets/icons/cheque.svg" alt="" class="mr-5" style="width: 25px">
-        <img *ngIf="!user?.isActive" src="./assets/icons/close_white.svg" alt="" class="mr-5" style="width: 20px">
+        <img *ngIf="user?.is_active" src="./assets/icons/cheque.svg" alt="" class="mr-5" style="width: 25px">
+        <img *ngIf="!user?.is_active" src="./assets/icons/close_white.svg" alt="" class="mr-5" style="width: 20px">
         <span style="margin-left: 1em">
-          {{user?.isActive ? 'Verificada' : 'No Verificada'}}
+          {{user?.is_active ? 'Verificada' : 'No Verificada'}}
         </span>
       </h5>
     </button>

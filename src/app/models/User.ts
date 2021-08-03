@@ -3,6 +3,7 @@ export interface User {
   id?: string;
   is_look?: boolean;
   isActive?: boolean;
+  is_active?:boolean;
   image?: string;
   name?: string;
   lastName?: string;

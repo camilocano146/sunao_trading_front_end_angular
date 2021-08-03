@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogChangeEmailComponent} from "./dialog-change-email/dialog-change-email.component";
 import {DialogChangePasswordComponent} from "./dialog-change-password/dialog-change-password.component";
 import {DialogChangeNameDocumentComponent} from "./dialog-change-name-document/dialog-change-name-document.component";
+import { DialogVerifyAccountComponent } from './dialog-verify-account/dialog-verify-account.component';
 
 @Component({
   selector: 'app-profile',
@@ -38,9 +39,16 @@ export class ProfileComponent implements OnInit {
   }
 
   verifyAccount(): void {
-    if (!this.user.isActive) {
-      window.open('/#/activate-account');
+    if (!this.user.is_active) {
+      //window.open('/#/activate-account');
       // this.router.navigate(['']);
+
+      const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+        width: '400px',
+        maxWidth: '96vw',
+        backdropClass: 'backdrop-dark',
+        panelClass: 'div-without-padding',
+      });
     }
   }
 
