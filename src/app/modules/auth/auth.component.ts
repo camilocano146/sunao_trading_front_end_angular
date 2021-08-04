@@ -2,6 +2,7 @@ import {AfterContentChecked, AfterViewInit, Component, HostListener, OnDestroy, 
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {SnotifyService} from 'ng-snotify';
+import {Utilities} from '../../utils/Utilities';
 
 export const paddingBottom = 16 * 2;
 
@@ -11,6 +12,7 @@ export const paddingBottom = 16 * 2;
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, AfterViewInit, OnDestroy {
+  util = Utilities;
 
   constructor() {}
 

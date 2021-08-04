@@ -149,4 +149,8 @@ export class Utilities {
     }
     return false;
   }
+
+  static openWhatsApp(): void {
+    window.open('https://wa.me/573004265124', '_blank');
+  }
 }

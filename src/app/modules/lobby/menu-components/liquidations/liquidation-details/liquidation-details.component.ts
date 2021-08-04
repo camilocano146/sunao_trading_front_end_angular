@@ -10,6 +10,11 @@ import {SupportDocument} from '../../../../../models/SupportDocument';
 import {PortsService} from '../../../../../services/ports/ports.service';
 import {Utilities} from '../../../../../utils/Utilities';
 import { TradeRegimen } from 'src/app/models/TradeRegimen';
+import {DialogExportReportComponent} from '../../../../common-components/dialog-export-report/dialog-export-report.component';
+import {ReportsEnum} from '../../../../../enums/Reports.enum';
+import {DialogExportSendLiquidationComponent} from '../dialog-export-send-liquidation/dialog-export-send-liquidation.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ExportSendLiquidation} from '../../../../../enums/ExportSendLiquidation';
 
 @Component({
   selector: 'app-dashboards',
@@ -36,7 +41,8 @@ export class LiquidationDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private liquidationService: LiquidationService,
     private productsService: ProductsService,
-    private portsService: PortsService
+    private portsService: PortsService,
+    private matDialog: MatDialog
   ) {
     activatedRoute.params.subscribe(params => {
       this.idLiquidation = params.idLiquidation;
@@ -161,5 +167,35 @@ export class LiquidationDetailsComponent implements OnInit {
       return 'DDP';
     }
     return '';
+  }
+
+  exportLiquidation(): void {
+    const dialogRef = this.matDialog.open(DialogExportSendLiquidationComponent, {
+      width: '400px',
+      maxWidth: '96vw',
+      height: 'max-content',
+      maxHeight: '96vh',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+      data: ExportSendLiquidation.EXPORT,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  sendLiquidation(): void {
+    const dialogRef = this.matDialog.open(DialogExportSendLiquidationComponent, {
+      width: '400px',
+      maxWidth: '96vw',
+      height: 'max-content',
+      maxHeight: '96vh',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+      data: ExportSendLiquidation.SEND,
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../models/User';
 import {MatDialog} from '@angular/material/dialog';
 import {UserService} from '../../services/user/user.service';
+import {Utilities} from '../../utils/Utilities';
 
 @Component({
   selector: 'app-lobby',
@@ -19,6 +20,7 @@ export class LobbyComponent implements OnInit {
   public loadingMoreNotifications: boolean;
   public pageIndexCurrent: number;
   public notMoreMessagesForLoad: boolean;
+  util = Utilities;
 
   constructor(
     private router: Router,

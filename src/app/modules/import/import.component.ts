@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 import { ManageLocalStorage } from 'src/app/utils/ManageLocalStorage';
+import {Utilities} from '../../utils/Utilities';
 
 @Component({
   selector: 'app-import',
@@ -9,12 +10,13 @@ import { ManageLocalStorage } from 'src/app/utils/ManageLocalStorage';
 })
 export class ImportComponent implements OnInit {
 
-  
-  public tokenActive:Boolean;
+  public tokenActive: boolean;
+  util = Utilities;
+
   constructor(
     private router: Router
-  ) { 
-    this.tokenActive= ManageLocalStorage.getToken()==null? false: true;
+  ) {
+    this.tokenActive = ManageLocalStorage.getToken() != null;
   }
 
   ngOnInit(): void {

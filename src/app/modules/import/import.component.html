@@ -12,8 +12,13 @@
       </div>
     </div>
     <div class="col-12 col-sm-4" style="text-align: right;">
-      <img class="cursor-pointer" src="./assets/logos/logo-white.png" alt="" width="150" style="padding: 1em;" (click)="goToHome()"> 
+      <img class="cursor-pointer" src="./assets/logos/logo-white.png" alt="" width="150" style="padding: 1em;" (click)="goToHome()">
     </div>
   </div>
+
+  <button (click)="util.openWhatsApp()" mat-raised-button class="bc-dark-blue float-button-contact">
+    <img src="../../../assets/icons/question_answer_black_24dp-white.svg" alt="">
+  </button>
+
   <router-outlet></router-outlet>
 </div>

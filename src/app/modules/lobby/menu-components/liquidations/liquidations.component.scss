@@ -73,11 +73,45 @@ th, td {
   width: fit-content;
 }
 
-.button-compare {
-  background-color: $color-yellow !important;
+.div-compare {
+  //background-color: $color-yellow !important;
+  //background-color: white !important;
   position: fixed;
-  bottom: 10px;
+  bottom: 13px;
+  left: 20px;
+  transform: scale(1.2);
+  z-index: 100;
+}
+
+.div-compare-item {
+  //padding: 10px;
+  background-color: $color-yellow !important;
+  display: inline-block;
+  width: 70px;
+  text-align: center;
+  position: relative;
+}
+
+.button-close-item-compare {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 17px !important;
+  height: 17px;
+  font-size: 12px;
+  background-color: $color-dark-blue;
+  color: white;
+  cursor: pointer;
+}
+
+.button-compare {
+  background-color: $color-dark-blue !important;
+  color: white;
+  position: fixed;
+  bottom: 43px;
   left: 10px;
+  transform: scale(1);
+  display: inline-block;
 }
 
 ::ng-deep .tooltip-comparator {
