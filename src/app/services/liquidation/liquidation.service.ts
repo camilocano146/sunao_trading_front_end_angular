@@ -39,4 +39,24 @@ export class LiquidationService {
   validatePortTarifInternational(body){
     return this.httpClient.post(`liquidation_no_auth/validate_info_port_tarif_international/`, body);
   }
+
+  export_liquidation_pdf(id:number): Observable<any> {
+    return this.httpClient.get(`liquidation/${id}/export_liquidation_pdf/`,  { responseType: 'blob' });
+  }
+  export_liquidation_excel(id:number): Observable<any> {
+    return this.httpClient.get(`liquidation/${id}/export_liquidation_excel/`,  { responseType: 'blob' });
+  }
+
+  send_liquidation_pdf(id:number, email:string): Observable<any> {
+    let body = {
+      email:email
+    }
+    return this.httpClient.post(`liquidation/${id}/send_liquidation_pdf/`, body, { responseType: 'blob' });
+  }
+  send_liquidation_excel(id:number, email:string): Observable<any> {
+    let body = {
+      email:email
+    }
+    return this.httpClient.post(`liquidation/${id}/send_liquidation_excel/`, body, { responseType: 'blob' });
+  }
 }

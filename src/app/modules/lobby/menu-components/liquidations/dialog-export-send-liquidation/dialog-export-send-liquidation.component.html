@@ -23,7 +23,7 @@
     </mat-radio-group>
   </div>
 
-  <div *ngIf="data === exportSendLiquidation.SEND">
+  <div *ngIf="data.type === exportSendLiquidation.SEND">
     <h6 class="color-blue mb-2">
       Ingrese un Email
     </h6>
@@ -34,9 +34,12 @@
   </div>
 </div>
 <div class="text-center">
-  <button mat-raised-button class="btn-liquidate" (click)="exportOrSend()">
+  <button mat-raised-button class="btn-liquidate" (click)="exportOrSend()" *ngIf="!preload">
     <h5 class="m-0">
-      {{data === exportSendLiquidation.EXPORT ? 'Exportar' : 'Enviar'}}
+      {{data.type === exportSendLiquidation.EXPORT ? 'Exportar' : 'Enviar'}}
     </h5>
   </button>
+</div>
+<div *ngIf="preload" class="text-center">
+  <mat-spinner diameter="40" class="m-auto"></mat-spinner>
 </div>

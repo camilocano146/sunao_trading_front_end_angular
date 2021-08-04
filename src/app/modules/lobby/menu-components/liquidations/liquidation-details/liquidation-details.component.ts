@@ -177,7 +177,10 @@ export class LiquidationDetailsComponent implements OnInit {
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
       panelClass: 'div-without-padding',
-      data: ExportSendLiquidation.EXPORT,
+      data: {
+        type: ExportSendLiquidation.EXPORT,
+        id_liquidation : this.idLiquidation
+      },
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -192,7 +195,10 @@ export class LiquidationDetailsComponent implements OnInit {
       maxHeight: '96vh',
       backdropClass: 'backdrop-dark',
       panelClass: 'div-without-padding',
-      data: ExportSendLiquidation.SEND,
+      data:{
+        type: ExportSendLiquidation.SEND,
+        id_liquidation : this.idLiquidation
+      } ,
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
