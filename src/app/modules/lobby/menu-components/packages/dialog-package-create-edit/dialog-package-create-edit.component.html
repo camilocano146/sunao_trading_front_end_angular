@@ -22,7 +22,16 @@
       <mat-spinner diameter="40" class="m-auto"></mat-spinner>
     </div>
     <div *ngIf="!preload" class="row text-center">
-      <div class="col-12" style="margin-bottom: 10px;">
+      
+      <div class="col-12" style="margin-bottom: 5px;">
+        <ngx-dropzone (change)="onSelect($event)" accept="image/*" style="height: 160px;" multiple="false">
+              <ngx-dropzone-label>Imagen del plan</ngx-dropzone-label>
+              <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">     
+              </ngx-dropzone-image-preview>
+        </ngx-dropzone>
+      </div>
+
+      <div class="col-12" style="margin-bottom: 5px;">
         <mat-form-field class="w-100">
           <mat-label>Nombre</mat-label>
           <input matInput [formControl]="formControlName">
@@ -30,7 +39,7 @@
           <mat-error *ngIf="formControlName.invalid">Nombre requerido</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-12" style="margin-bottom: 10px;">
+      <div class="col-12" style="margin-bottom: 5px;">
         <mat-form-field class="w-100">
           <mat-label>Costo</mat-label>
           <input matInput type="number" [formControl]="formControlCost">
@@ -40,7 +49,7 @@
       </div>
 
 
-      <div class="col-12" style="margin-bottom: 10px;">
+      <div class="col-12" style="margin-bottom: 5px;">
         <mat-form-field class="w-100">
           <mat-label>Tiempo</mat-label>
           <input matInput type="number" [formControl]="formControlTime">
@@ -49,7 +58,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12" style="margin-bottom: 10px;">
+      <div class="col-12" style="margin-bottom: 5px;">
         <mat-form-field class="w-100">
           <mat-label>Cantidad de liquidacion</mat-label>
           <input matInput type="number" [formControl]="formControlLiquidationQuantity">
