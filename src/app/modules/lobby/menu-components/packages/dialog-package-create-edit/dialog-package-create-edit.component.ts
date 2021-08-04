@@ -20,6 +20,7 @@ export class DialogPackageCreateEditComponent implements OnInit {
   public preload: boolean;
   public preloadSave: boolean;
   maxLengthName = 100;
+  public files: File[] = [];
 
 
   public formControlLiquidationQuantity: FormControl = new FormControl(
@@ -49,7 +50,7 @@ export class DialogPackageCreateEditComponent implements OnInit {
       this.formControlName.setValue(data.dataEdit.name);
       this.formControlCost.setValue(data.dataEdit.cost);
       this.formControlLiquidationQuantity.setValue(data.dataEdit.liquidation_quantity);
-      this.formControlTime.setValue(data.dataEdit.time)
+      this.formControlTime.setValue(data.dataEdit.time);
     }
 
    }
@@ -61,18 +62,29 @@ export class DialogPackageCreateEditComponent implements OnInit {
   saveOrEdit(): void {
     if (this.formControlName.valid && this.formControlLiquidationQuantity.valid && this.formControlTime.valid && this.formControlCost) {
       this.preloadSave = true;
-      const body: Package = {
-        name: this.formControlName.value,
-        cost: this .formControlCost.value,
-        liquidation_quantity: this.formControlLiquidationQuantity.value,
-        time: this.formControlTime.value
-      };
+      const formData = new FormData();
+      formData.append('name', this.formControlName.value);
+      formData.append('cost', this.formControlCost.value);
+      formData.append('liquidation_quantity', this.formControlCost.value);
+      formData.append('time', this.formControlTime.value);
+      if(this.files.length > 0){
+        formData.append('image', this.files[0]);
+      }
+
+      // const body: Package = {
+      //   name: this.formControlName.value,
+      //   cost: this .formControlCost.value,
+      //   liquidation_quantity: this.formControlCost.value,
+      //   time: this.formControlTime.value
+      // };
+
+      
       let observable;
 
       if (this.data.dataEdit) {
-        observable = this.packageService.edit(this.data.dataEdit.id, body);
+        observable = this.packageService.edit(this.data.dataEdit.id, formData);
       } else {
-        observable = this.packageService.register(body);
+        observable = this.packageService.register(formData);
       }
       observable.subscribe(res => {
         this.preloadSave = false;
@@ -107,4 +119,37 @@ export class DialogPackageCreateEditComponent implements OnInit {
           : '';
   }
 
+
+  /**
+   * Imagenes
+   * 
+   */
+   onSelect(event) {
+    this.files = [];
+    this.files.push(...event.addedFiles);
+    if (this.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(this.files[0]);
+      reader.onload = () => {
+        const img = new Image();
+        img.src = reader.result as string;
+        img.onload = () => {
+          const height = img.naturalHeight;
+          const width = img.naturalWidth;
+          let diference=height-width
+
+          if(Math.abs(diference)<50){
+
+          }else{
+            this.files = [];
+            this.notifyService.showErrorSnapshot('La imagen debe ser cuadrada.');
+          }  
+        }
+      }
+    }
+  }
+ 
+  onRemove(event) {
+    this.files.splice(this.files.indexOf(event), 1);
+  }
 }

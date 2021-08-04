@@ -9,4 +9,5 @@ export interface Package {
     cost: number;
     name: string;
     status?:string;
+    image?: any;
 }

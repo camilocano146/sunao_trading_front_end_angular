@@ -20,11 +20,15 @@
   </div>
 
   <div class="row justify-content-center">
-    <div class="bc-white col-xl-3 col-md-4 mx-4 mb-3" *ngFor="let plan of listPlans; let i = index">
+    <div class="bc-white col-xl-3 col-md-4 mx-4 mb-3" *ngFor="let plan of listPlans; let i = index" style="margin-bottom: 30px !important;">
       <h3 class="pt-5 text-center color-dark-blue" style="font-size: 22px">
         {{plan.name}}
       </h3>
-      <img class="py-5" src="" alt="">
+
+      <div class="text-center">
+        <img src="{{plan.image}}" style=" width: 80%; height: 80%; margin-bottom: 20px;" *ngIf="plan.image">
+        <img src="./assets/img/blanco.png" style=" width: 80%; height: 80%; margin-bottom: 20px;" *ngIf="!plan.image">
+      </div>
       <div class="mx-3 div-plan-info">
         <h6 class="pb-3 color-dark-blue m-0">
           <img src="./assets/icons/check_green_24dp.svg" alt="">
@@ -38,8 +42,8 @@
       <h3 class="text-center color-dark-blue" style="font-size: 22px">
         {{(plan.cost | currency:'$ ':'symbol':'1.0')?.replaceAll(',', '.')}}
       </h3>
-      <div class="text-center">
-        <button mat-raised-button class="btn-blue w-75 button-buy" (click)="showBuyDialog(plan)">
+      <div class="text-center" style="margin-bottom: -35px;">
+        <button mat-raised-button class="btn-soft-blue w-75 button-buy" (click)="showBuyDialog(plan)">
           <h3 class="mb-0">
             Comprar
           </h3>

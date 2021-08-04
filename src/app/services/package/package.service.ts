@@ -17,12 +17,12 @@ export class PackageService {
     return this.httpClient.get(`package/list_actives_packages/?offset=${offset}&limit=${limit}&regex=${regex}`);
   }
 
-  register(body: Package): Observable<any> {
+  register(body: FormData): Observable<any> {
     return this.httpClient.post('package/', body);
   }
 
-  edit(id: number, body: Package): Observable<any> {
-    return this.httpClient.put(`package/${id}/edit/`, body);
+  edit(id: number, body: FormData): Observable<any> {
+    return this.httpClient.post(`package/${id}/edit/`, body);
   }
 
   getLastPackage(): Observable<any> {
