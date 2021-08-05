@@ -54,7 +54,7 @@ export class DialogExportSendLiquidationComponent implements OnInit {
       this.preload = true;
       if (this.optionSelected==0){
         this.liquidationService.export_liquidation_pdf(this.data.id_liquidation).subscribe(res => {
-          this.notifyService.showSuccess('Documento Generado');
+          this.notifyService.showSuccessSnapshot('Documento generado');
           FileSaver.saveAs(res, 'liquidacion_'+this.data.id_liquidation + '.pdf');
           this.preload=false;
           this.matDialogRef.close('created');
@@ -65,7 +65,7 @@ export class DialogExportSendLiquidationComponent implements OnInit {
         });
       }else if (this.optionSelected==1){
         this.liquidationService.export_liquidation_excel(this.data.id_liquidation).subscribe(res => {
-          this.notifyService.showSuccess('Documento Generado');
+          this.notifyService.showSuccessSnapshot('Documento generado');
           FileSaver.saveAs(res, 'liquidacion_'+this.data.id_liquidation+ '.xls');
           this.preload=false;
           this.matDialogRef.close('created');
@@ -80,7 +80,7 @@ export class DialogExportSendLiquidationComponent implements OnInit {
       if (this.optionSelected==0){
         this.liquidationService.send_liquidation_pdf(this.data.id_liquidation, this.formControlEmail.value).subscribe(res => {
           this.preload=false;
-          this.notifyService.showSuccess('Operacion Exitosa');
+          this.notifyService.showSuccessSnapshot('Liquidacion enviada correctamente');
           this.matDialogRef.close('created');
         }, error => {
           this.notifyService.showError('', 'No fué posible realizar la operación, por favor intente nuevamente.');
@@ -88,7 +88,7 @@ export class DialogExportSendLiquidationComponent implements OnInit {
         });
       }else if (this.optionSelected==1){
         this.liquidationService.send_liquidation_excel(this.data.id_liquidation, this.formControlEmail.value).subscribe(res => {
-          this.notifyService.showSuccess('Operacion Exitosa');
+          this.notifyService.showSuccessSnapshot('Liquidacion enviada correctamente');
           this.preload=false;
           this.matDialogRef.close('created');
         }, error => {

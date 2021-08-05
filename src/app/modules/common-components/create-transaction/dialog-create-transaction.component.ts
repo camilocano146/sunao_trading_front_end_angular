@@ -12,6 +12,9 @@ import {Package} from "../../../models/Package";
 import {ManageSessionStorage} from "../../../utils/ManageSessionStorage";
 import { CouponsService } from 'src/app/services/cuopons/coupons.service';
 import { Coupon } from 'src/app/models/Coupon';
+import { PackageService } from 'src/app/services/package/package.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-transaction',
@@ -49,6 +52,7 @@ export class DialogCreateTransactionComponent implements OnInit {
   // public terms: FormControl;
   public link = 'https://wompi.co/wp-content/uploads/2019/09/TERMINOS-Y-CONDICIONES-DE-USO-USUARIOS-WOMPI.pdf';
   public hideCVC = true;
+  public isActivePackage= false;
 
   constructor(
     private router: Router,
@@ -57,10 +61,34 @@ export class DialogCreateTransactionComponent implements OnInit {
     private formBuilder: FormBuilder,
     public matDialogRef: MatDialogRef<DialogCreateTransactionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Package,
-    private couponsService: CouponsService
+    private couponsService: CouponsService,
+    private packageService:PackageService
   ) {
     // this.terms = new FormControl(false, Validators.required);
-    this.preload_pay = false;
+    this.preload_pay = true;
+    this.preload_coupon = true;
+    this.initForms();
+    this.getPaymenthMethodsAndPretoken();
+    this.getActivePackageUser();
+
+    // console.log(Utilities.encrypt('comer'));
+    //
+    // const asd = {data: 'FVIlIYDiYO4Y0uBYwoFPKG5aOiGqv9fYl9S/duuHJxG7XBwzFfoESgT+6XEnFQcteXdPtp704jrlORcE4/6Zc3z/vjyou5vj+jSY4UYGKAQcCoXtSPM5ClpsQ/ASNaV00Bzl64ShK7iUKCXctsqi0X/JNleLfoQkByDlaScL+1Jlr0ckb5Ke0vymkBqmbED3Gz6kChNzdy+W3NgKoEY0U2LzIgea6gyz0WNejju4q2iBqA51PL1qQC8GqgZ+MVRXIHIhbQKOInPxmhsck0b9Aw0NmrD1ROQoyHhTrqjNToMPY9Z63Bus/F6o3cphw4WsEkmAMjMk5QatpReGE8DptMYskzYg3Bos8Rx0eQABjHYRpGRQrnIzu/dz/rPsNeDVM6DkAeMC4Sm8hMyBay7uOG5ENb1C87zUzqJuZiHeD/aQRj48ZjwzlV779wT4h3UVo07bwTA6yM5K9PwSSUf1DUC0AbUChzVWoTyyVH70aiMSM5DiIkWlGoLtAtL3Rbh1CP5JhLzN7C0TWSHmPMpwakcVLowKUQIpSGb/gTFRi5aWz5LDGEL/mo9RuGiWTvI2jAeDnzNDuhdvrD548tWMXFf4o9d3LXcNRtB+/nLHhZj5YjNLzFqew52dJP4zAnxIayfoib5FaMQp9ej36L10o+YvsegjRPkfBSmF9Msgl8r9LWEOEanbOBoyV4kNsgyvoQsC4tCf1IcQ9oo3xOKOtJEjxkNxPgPapJt2CWShxYO+qyYLIPrjGGroU8PRUIHOkLxSbWTVftLXlZFyeymqpiyHFAzN/OLx45/u+58P1Bp7tWWrkptJ7pSDYYsi5cJ0pxpyINJjT3mwtceSHhoJRer66HDV+P3y4D2hE1vm9TM='};
+    // const data1 = Utilities.decrypt(asd);
+    // console.log(data1);
+  }
+
+  ngOnInit(): void {
+    // this.getPaymenthMethodsAndPretoken();
+    this.paymentService.getInstitutions().subscribe(resp => {
+      // const bodyInstruction = resp.body;
+      const bodyInstruction = Utilities.decrypt(resp.body);
+      this.pse_institutions = bodyInstruction.data;
+      this.preload = false;
+    });
+  }
+
+  initForms(): void{
     this.card = this.formBuilder.group({
       number: ['', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
       cvc: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
@@ -90,24 +118,6 @@ export class DialogCreateTransactionComponent implements OnInit {
 
     this.coupon = this.formBuilder.group({
       coupon_code: ['', Validators.required]
-    });
-
-    this.getPaymenthMethodsAndPretoken();
-
-    // console.log(Utilities.encrypt('comer'));
-    //
-    // const asd = {data: 'FVIlIYDiYO4Y0uBYwoFPKG5aOiGqv9fYl9S/duuHJxG7XBwzFfoESgT+6XEnFQcteXdPtp704jrlORcE4/6Zc3z/vjyou5vj+jSY4UYGKAQcCoXtSPM5ClpsQ/ASNaV00Bzl64ShK7iUKCXctsqi0X/JNleLfoQkByDlaScL+1Jlr0ckb5Ke0vymkBqmbED3Gz6kChNzdy+W3NgKoEY0U2LzIgea6gyz0WNejju4q2iBqA51PL1qQC8GqgZ+MVRXIHIhbQKOInPxmhsck0b9Aw0NmrD1ROQoyHhTrqjNToMPY9Z63Bus/F6o3cphw4WsEkmAMjMk5QatpReGE8DptMYskzYg3Bos8Rx0eQABjHYRpGRQrnIzu/dz/rPsNeDVM6DkAeMC4Sm8hMyBay7uOG5ENb1C87zUzqJuZiHeD/aQRj48ZjwzlV779wT4h3UVo07bwTA6yM5K9PwSSUf1DUC0AbUChzVWoTyyVH70aiMSM5DiIkWlGoLtAtL3Rbh1CP5JhLzN7C0TWSHmPMpwakcVLowKUQIpSGb/gTFRi5aWz5LDGEL/mo9RuGiWTvI2jAeDnzNDuhdvrD548tWMXFf4o9d3LXcNRtB+/nLHhZj5YjNLzFqew52dJP4zAnxIayfoib5FaMQp9ej36L10o+YvsegjRPkfBSmF9Msgl8r9LWEOEanbOBoyV4kNsgyvoQsC4tCf1IcQ9oo3xOKOtJEjxkNxPgPapJt2CWShxYO+qyYLIPrjGGroU8PRUIHOkLxSbWTVftLXlZFyeymqpiyHFAzN/OLx45/u+58P1Bp7tWWrkptJ7pSDYYsi5cJ0pxpyINJjT3mwtceSHhoJRer66HDV+P3y4D2hE1vm9TM='};
-    // const data1 = Utilities.decrypt(asd);
-    // console.log(data1);
-  }
-
-  ngOnInit(): void {
-    // this.getPaymenthMethodsAndPretoken();
-    this.paymentService.getInstitutions().subscribe(resp => {
-      // const bodyInstruction = resp.body;
-      const bodyInstruction = Utilities.decrypt(resp.body);
-      this.pse_institutions = bodyInstruction.data;
-      this.preload = false;
     });
   }
 
@@ -159,7 +169,27 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.value_total = this.value_total>1500 ? this.value_total: 1500;
   }
 
-  async onSubmit(): Promise<any> {
+  /**
+   * Valida si tiene paquete activo 
+   */
+  onSubmit(): void{
+    if (this.isActivePackage){
+      Swal.fire({
+        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.onSubmitTransaction();     
+        } 
+      });
+    }else{
+      this.onSubmitTransaction();
+    }
+  }
+
+  async onSubmitTransaction(): Promise<any> {
     this.submitted = true;
     // if (this.card.invalid) {
     //   this.card.markAllAsTouched();
@@ -170,6 +200,7 @@ export class DialogCreateTransactionComponent implements OnInit {
     //   this.terms.markAsTouched();
     //   return;
     // }
+
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const infocard = {
@@ -215,9 +246,30 @@ export class DialogCreateTransactionComponent implements OnInit {
       this.notifyService.showError('Aviso', 'No pudimos realizar tu pago, por favor veririca los datos e intenta nuevamente.');
       this.preload_pay = false;
     });
+   
   }
 
-  async paymentNequi(): Promise<any> {
+  /**
+   * Valida si tiene paquete activo 
+   */
+  paymentNequi(): void{
+    if (this.isActivePackage){
+      Swal.fire({
+        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.paymentNequiTransaction();     
+        } 
+      });
+    }else{
+      this.paymentNequiTransaction();
+    }
+  }
+
+  async paymentNequiTransaction(): Promise<any> {
     this.submitted = true;
     // if (this.nequi.invalid) {
     //   this.nequi.markAllAsTouched();
@@ -228,6 +280,8 @@ export class DialogCreateTransactionComponent implements OnInit {
     //   this.terms.markAsTouched();
     //   return;
     // }
+
+      
     this.preload_pay = true;
     await this.getPaymenthMethodsAndPretoken();
     const transaction = {
@@ -260,7 +314,27 @@ export class DialogCreateTransactionComponent implements OnInit {
     });
   }
 
-  async paymentBancolombia(): Promise<any> {
+  /**
+   * Valida si tiene paquete activo 
+   */
+  paymentBancolombia(): void{
+    if (this.isActivePackage){
+      Swal.fire({
+        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.paymentBancolombiaTransaction();     
+        } 
+      });
+    }else{
+      this.paymentBancolombiaTransaction();
+    }
+  }
+
+  async paymentBancolombiaTransaction(): Promise<any> {
     this.submitted = true;
     // if (this.bancolombia.invalid) {
     //   this.bancolombia.markAllAsTouched();
@@ -306,7 +380,27 @@ export class DialogCreateTransactionComponent implements OnInit {
     });
   }
 
-  async paymentPse(): Promise<any> {
+  /**
+   * Valida si tiene paquete activo 
+   */
+  paymentPse(): void{
+    if (this.isActivePackage){
+      Swal.fire({
+        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.paymentPseTransaction();     
+        } 
+      });
+    }else{
+      this.paymentPseTransaction();
+    }
+  }
+
+  async paymentPseTransaction(): Promise<any> {
     this.submitted = true;
     // if (this.pse.invalid) {
     //   this.pse.markAllAsTouched();
@@ -642,6 +736,20 @@ export class DialogCreateTransactionComponent implements OnInit {
       this.preload_coupon= false;
       this.notifyService.showError('Aviso', 'Error al hacer el pago.');
     })
+
+  }
+
+  async getActivePackageUser():Promise<any>{
+    this.preload_pay = true;
+    this.preload_coupon = true;
+    this.packageService.getLastPackage().subscribe(value => {
+      this.isActivePackage = value.is_active_package;
+      this.preload_pay = false;
+      this.preload_coupon = false;
+    }, (error: HttpErrorResponse) => {
+      this.preload_coupon = false;
+      this.preload_pay = false;
+    });
 
   }
 }
