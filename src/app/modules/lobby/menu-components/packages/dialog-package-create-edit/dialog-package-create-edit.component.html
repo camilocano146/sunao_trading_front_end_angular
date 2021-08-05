@@ -25,7 +25,7 @@
       
       <div class="col-12" style="margin-bottom: 5px;">
         <ngx-dropzone (change)="onSelect($event)" accept="image/*" style="height: 160px;" multiple="false">
-              <ngx-dropzone-label>Imagen del plan</ngx-dropzone-label>
+              <ngx-dropzone-label>Imagen del plan, ancho y alto deben ser iguales</ngx-dropzone-label>
               <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">     
               </ngx-dropzone-image-preview>
         </ngx-dropzone>

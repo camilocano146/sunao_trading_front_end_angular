@@ -112,7 +112,7 @@
           </span>
         </div>
 
-        <div class="row col-lg-3 col-sm-6 col-12" *ngIf="liquidation?.incoterm=='DDP'">
+        <div class="row col-lg-3 col-sm-6 col-12">
           <div class="col-2" [ngStyle]="{'mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/import/menu/location.svg' + ') no-repeat center'}"></div>
           <span class="col-10">
             <h6>
@@ -245,7 +245,7 @@
           <div class="row">
             <h5 class="col-9 ps-5" style="text-align: justify">
               El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} ({{liquidation?.port_origin?.location?.name | titlecase}}) al puerto {{liquidation?.port_destination?.name | titlecase}} ({{liquidation?.port_destination?.location?.name | titlecase}})
-              y tiene un costo de = {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
+              y tiene un costo de = {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.2')}} USD
 
             </h5>
             <h5 class="col-9 ps-5" style="text-align: justify">
@@ -337,6 +337,7 @@
             <mat-panel-title>
               Arancel
             </mat-panel-title>
+            
           </mat-expansion-panel-header>
 
           <div class="row">
@@ -365,6 +366,10 @@
                 </li>
               </ul>
             </h5>
+          </div>
+          <div class="row">
+            <h3>Importante: Favor tener presente que el puerto de origen seleccionado se tomará como país de origen de la mercancía para efectos de calculo de arancel y acuerdos internacionales</h3>
+
           </div>
 
         </mat-expansion-panel>

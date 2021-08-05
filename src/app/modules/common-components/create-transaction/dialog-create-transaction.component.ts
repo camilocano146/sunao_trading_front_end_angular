@@ -175,9 +175,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   onSubmit(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
         showDenyButton: true,
-        showCancelButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
         if (result.isConfirmed) {
@@ -255,9 +254,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   paymentNequi(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
         showDenyButton: true,
-        showCancelButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
         if (result.isConfirmed) {
@@ -320,9 +318,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   paymentBancolombia(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
         showDenyButton: true,
-        showCancelButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
         if (result.isConfirmed) {
@@ -386,9 +383,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   paymentPse(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
         showDenyButton: true,
-        showCancelButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
         if (result.isConfirmed) {
@@ -722,9 +718,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   payFreeCuopon(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
         showDenyButton: true,
-        showCancelButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
         if (result.isConfirmed) {

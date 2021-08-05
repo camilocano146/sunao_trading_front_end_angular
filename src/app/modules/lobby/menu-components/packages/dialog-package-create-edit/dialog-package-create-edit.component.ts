@@ -138,11 +138,11 @@ export class DialogPackageCreateEditComponent implements OnInit {
           const width = img.naturalWidth;
           let diference=height-width
 
-          if(Math.abs(diference)<50){
+          if(Math.abs(diference)<10){
 
           }else{
             this.files = [];
-            this.notifyService.showErrorSnapshot('La imagen debe ser cuadrada.');
+            this.notifyService.showErrorSnapshot('El alto y ancho de la imagen deben ser iguales.');
           }  
         }
       }
