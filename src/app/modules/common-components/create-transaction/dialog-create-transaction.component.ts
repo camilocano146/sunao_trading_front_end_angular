@@ -716,7 +716,27 @@ export class DialogCreateTransactionComponent implements OnInit {
     this.calculateCommissionAndTotalValue();
   }
 
-  async payFreeCuopon(): Promise<any> {
+  /**
+   * Valida si tiene paquete activo 
+   */
+  payFreeCuopon(): void{
+    if (this.isActivePackage){
+      Swal.fire({
+        title: 'Ya tienes un plan activo, si continuas con la transaccion este será remplazado.',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.payFreeCuoponTransaction();     
+        } 
+      });
+    }else{
+      this.payFreeCuoponTransaction();
+    }
+  }
+
+  async payFreeCuoponTransaction(): Promise<any> {
     this.preload_coupon= true;
     let transacction={
       coupon_code: this.coupon_user?.code,
