@@ -25,21 +25,27 @@ export class ProfileComponent implements OnInit {
     private matDialog: MatDialog
   ) {
     this.user = ManageLocalStorage.getUser();
-
-    this.preload = true;
-    this.userService.getUser().subscribe(res => {
-      this.user = res;
-      this.preload = false;
-    }, error => {
-      this.preload = false;
-    });
+    this.getUser();
   }
 
   ngOnInit(): void {
   }
 
+  async getUser(): Promise<any>{
+
+    this.preload = true;
+    this.userService.getUser().subscribe(res => {
+      this.user = res;
+      console.log(this.user)
+      this.preload = false;
+    }, error => {
+      this.preload = false;
+    });
+
+  }
+
   verifyAccount(): void {
-    if (!this.user.is_active) {
+    if (!this.user.is_verify) {
       //window.open('/#/activate-account');
       // this.router.navigate(['']);
 
@@ -49,6 +55,10 @@ export class ProfileComponent implements OnInit {
         backdropClass: 'backdrop-dark',
         panelClass: 'div-without-padding',
       });
+      dialogRef.afterClosed().subscribe(result => {
+        this.getUser();
+      });
+
     }
   }
 

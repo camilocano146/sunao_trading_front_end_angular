@@ -52,7 +52,6 @@ export class DialogPackageCreateEditComponent implements OnInit {
       this.formControlLiquidationQuantity.setValue(data.dataEdit.liquidation_quantity);
       this.formControlTime.setValue(data.dataEdit.time);
     }
-
    }
 
   ngOnInit(): void {
@@ -137,7 +136,6 @@ export class DialogPackageCreateEditComponent implements OnInit {
           const height = img.naturalHeight;
           const width = img.naturalWidth;
           let diference=height-width
-
           if(Math.abs(diference)<10){
 
           }else{

@@ -4,6 +4,7 @@ export interface User {
   is_look?: boolean;
   isActive?: boolean;
   is_active?:boolean;
+  is_verify?:boolean;
   image?: string;
   name?: string;
   lastName?: string;

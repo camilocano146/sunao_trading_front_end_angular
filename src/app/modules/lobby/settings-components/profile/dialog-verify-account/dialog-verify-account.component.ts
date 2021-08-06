@@ -55,7 +55,8 @@ export class DialogVerifyAccountComponent implements OnInit {
         value => {
           this.codeSent = true;
           this.preload = false;
-          this.notifyService.showSuccessSnapshot(this.translate.instant('auth.activate_account.account_activated'));
+          this.notifyService.showSuccessSnapshot('Tu cuenta ha sido verificada.');
+          this.matDialogRef.close('Verify');
         }, error => {
           this.preload = false;
           if (error.status === 400 || error.status === 404) {

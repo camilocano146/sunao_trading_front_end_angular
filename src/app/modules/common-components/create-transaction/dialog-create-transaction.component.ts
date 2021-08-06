@@ -175,7 +175,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   onSubmit(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
+        title: 'Ya tienes un plan vigente',
+        text:'El saldo de liquidaciones que tienes sera transferido a este nuevo paquete, ¿Deseas continuar?',
         showDenyButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
@@ -254,7 +255,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   paymentNequi(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
+        title: 'Ya tienes un plan vigente',
+        text:'El saldo de liquidaciones que tienes sera transferido a este nuevo paquete, ¿Deseas continuar?',
         showDenyButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
@@ -318,7 +320,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   paymentBancolombia(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
+        title: 'Ya tienes un plan vigente',
+        text:'El saldo de liquidaciones que tienes sera transferido a este nuevo paquete, ¿Deseas continuar?',
         showDenyButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
@@ -383,7 +386,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   paymentPse(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
+        title: 'Ya tienes un plan vigente',
+        text:'El saldo de liquidaciones que tienes sera transferido a este nuevo paquete, ¿Deseas continuar?',
         showDenyButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
@@ -718,7 +722,8 @@ export class DialogCreateTransactionComponent implements OnInit {
   payFreeCuopon(): void{
     if (this.isActivePackage){
       Swal.fire({
-        title: 'Ya tienes un plan vigente, ¿Estas seguro que deseas remplazarlo?',
+        title: 'Ya tienes un plan vigente',
+        text:'El saldo de liquidaciones que tienes sera transferido a este nuevo paquete, ¿Deseas continuar?',
         showDenyButton: true,
         confirmButtonText: 'Continuar',
       }).then((result) => {
