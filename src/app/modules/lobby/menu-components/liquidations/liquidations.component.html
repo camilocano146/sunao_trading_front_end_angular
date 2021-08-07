@@ -37,10 +37,11 @@
   </div>
 
   <div class="row m-0 div-filter mb-3">
-    <div class="row col-md-8 col-12 m-0">
-      <div class="col-lg-3">
-        <mat-form-field class="w-100" appearance="outline">
-          <input placeholder="Referencia"
+    
+    <div class="row col-md-12 col-12 m-0 div-filter-right">
+      <div class="col-lg-2">
+        <mat-form-field class="w-100" appearance="fill">
+          <input placeholder="Partida"
                  type="text"
                  aria-label="Number"
                  matInput
@@ -48,8 +49,8 @@
                  [formControl]="formControlReference">
         </mat-form-field>
       </div>
-      <div class="col-lg-3">
-        <mat-form-field class="w-100" appearance="outline">
+      <div class="col-lg-2">
+        <mat-form-field class="w-100" appearance="fill">
           <input placeholder="Origen"
                  type="text"
                  aria-label="Number"
@@ -69,8 +70,8 @@
 <!--          </mat-autocomplete>-->
 <!--        </mat-form-field>-->
       </div>
-      <div class="col-lg-3">
-        <mat-form-field class="w-100" appearance="outline">
+      <div class="col-lg-2">
+        <mat-form-field class="w-100" appearance="fill">
           <input placeholder="Destino"
                  type="text"
                  aria-label="Number"
@@ -78,57 +79,34 @@
                  (ngModelChange)="loadTable()"
                  [formControl]="formControlDestination">
         </mat-form-field>
-<!--        <mat-form-field class="w-100" appearance="outline">-->
-<!--          <input placeholder="Destino" type="text" aria-label="Number" matInput-->
-<!--                 (ngModelChange)="loadTable()"-->
-<!--                 [formControl]="formControlDestination" [matAutocomplete]="autoLocations">-->
-<!--          <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">-->
-<!--            <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"-->
-<!--                        [value]="option.name">-->
-<!--              <span>{{option.name}}</span>-->
-<!--            </mat-option>-->
-<!--          </mat-autocomplete>-->
-<!--        </mat-form-field>-->
       </div>
-      <div class="col-lg-3">
-        <mat-form-field class="w-100" appearance="outline">
-          <input placeholder="Producto"
-                 type="text"
-                 aria-label="Number"
-                 matInput
-                 (ngModelChange)="loadTable()"
-                 [formControl]="formControlProduct">
-        </mat-form-field>
-<!--        <mat-form-field class="w-100" appearance="outline">-->
-<!--          <input placeholder="Producto" type="text" aria-label="Number" matInput-->
-<!--                 (ngModelChange)="loadTable()"-->
-<!--                 [formControl]="formControlProduct" [matAutocomplete]="autoLocations">-->
-<!--          <mat-autocomplete autoActiveFirstOption #autoLocations="matAutocomplete">-->
-<!--            <mat-option *ngFor="let option of listLocations" (onSelectionChange)="onSelectOptionOrigin(option)"-->
-<!--                        [value]="option.name">-->
-<!--              <span>{{option.name}}</span>-->
-<!--            </mat-option>-->
-<!--          </mat-autocomplete>-->
-<!--        </mat-form-field>-->
-      </div>
-    </div>
-    <div class="row col-md-4 col-12 m-0 div-filter-right">
-      <div class="col-lg-6">
-        <mat-form-field appearance="fill">
+      <div class="col-lg-2">
+        <mat-form-field class="w-100" appearance="fill">
           <mat-label>Incoterm</mat-label>
           <mat-select (ngModelChange)="loadTable()" [(ngModel)]="filterSelectedValue">
+            <mat-option [value]="null">
+              -------
+            </mat-option>
             <mat-option *ngFor="let value of values" [value]="value">
               {{value}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-lg-6">
-        <mat-form-field appearance="fill">
-          <mat-label>Fecha</mat-label>
-          <input (ngModelChange)="loadTable()" matInput [formControl]="formControlDate" [matDatepicker]="picker">
+      <div class="col-lg-2">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Fecha inicial</mat-label>
+          <input (ngModelChange)="loadTable()" matInput [formControl]="formControlDate1" [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-2">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>Fecha final</mat-label>
+          <input (ngModelChange)="loadTable()" matInput [formControl]="formControlDate2" [matDatepicker]="picker2">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
     </div>

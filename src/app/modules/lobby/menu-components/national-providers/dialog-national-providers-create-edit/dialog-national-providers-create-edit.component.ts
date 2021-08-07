@@ -64,7 +64,7 @@ export class DialogNationalProvidersCreateEditComponent implements OnInit {
        this.preloadSave = true;
        const body: Provider = {
          name: this.formControlName.value,
-         email: this.formControlEmail.value.toLowerCase(),
+         email: this.formControlEmail.value? this.formControlEmail.value.toLowerCase(): this.formControlEmail.value,
          address: this.formControlAddress.value,
          phone: this.formControlPhone.value,
          status: '1',

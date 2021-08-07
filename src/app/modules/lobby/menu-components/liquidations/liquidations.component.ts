@@ -43,7 +43,8 @@ export class LiquidationsComponent implements OnInit {
   formControlOrigin: FormControl = new FormControl('');
   formControlDestination: FormControl = new FormControl('');
   formControlProduct: FormControl = new FormControl('');
-  formControlDate: FormControl = new FormControl('');
+  formControlDate1: FormControl = new FormControl('');
+  formControlDate2: FormControl = new FormControl('');
   filterSelectedValue: any;
   values: any[] = ['CFR', 'CIF', 'DDP'];
   private timer: number;
@@ -87,8 +88,11 @@ export class LiquidationsComponent implements OnInit {
       this.list = undefined;
       const limit = this.paginator?.pageSize ? this.paginator.pageSize : this.pageSizeOptions[0];
       const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
-      if (this.formControlDate.value) {
-        const date = new Date(this.formControlDate.value);
+      if (this.formControlDate1.value) {
+        const date = new Date(this.formControlDate1.value);
+      }
+      if (this.formControlDate2.value) {
+        const date2 = new Date(this.formControlDate2.value);
       }
       let textRegex = '';
       if (this.formControlReference.value) {
@@ -106,10 +110,15 @@ export class LiquidationsComponent implements OnInit {
       if (this.filterSelectedValue) {
         textRegex += '&incoterm=' + this.filterSelectedValue;
       }
-      if (this.formControlDate.value) {
-        const date = new Date(this.formControlDate.value);
-        textRegex += '&date=' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate());
+      if (this.formControlDate1.value) {
+        const date = new Date(this.formControlDate1.value);
+        textRegex += '&date1=' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate());
       }
+      if (this.formControlDate2.value) {
+        const date = new Date(this.formControlDate2.value);
+        textRegex += '&date2=' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate());
+      }
+
       this.liquidationService.getAll(page, limit, textRegex).subscribe(
         value => {
           this.preload = false;
