@@ -174,6 +174,18 @@
   }
 }
 
+#matExpansionPanel4_3, #matExpansionPanel4_1, #matExpansionPanel4_2{ 
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border: 1px solid white;
+  background-color: $color-dark-blue;
+  color: white;
+}
+
+#sub_mat-panel-title{
+  color: white;
+}
+
 ::ng-deep .mat-expansion-indicator {
   display: none !important;
 }
@@ -200,4 +212,23 @@ h5{
 h3{
   font-family: Arial;
   font-size: x-small;
+}
+
+
+th,td{
+  border: 1px solid white;
+  background-color: $color-dark-blue;
+  color: white;
+  padding: 5px;
+}
+
+table{
+  width: auto;
+  margin-left: 10px;
+  margin-top: 0px;
+}
+
+
+span{
+  font-family: Arial;
 }

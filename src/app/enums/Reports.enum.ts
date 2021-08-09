@@ -3,4 +3,5 @@ export enum ReportsEnum {
   NATIONAL_TARIFF,
   INTERNATION_TARIFF,
   PORT_CHARGE,
+  TRANSACTIONS
 }

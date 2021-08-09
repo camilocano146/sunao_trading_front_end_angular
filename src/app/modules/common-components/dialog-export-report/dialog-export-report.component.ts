@@ -11,6 +11,7 @@ import {PortChargeService} from '../../../services/portCharge/port-charge.servic
 import {PortTarifService} from '../../../services/port-tarif/port-tarif.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as FileSaver from 'file-saver';
+import { TransactionService } from 'src/app/services/transactions/transaction.service';
 
 @Component({
   selector: 'app-export-report',
@@ -29,6 +30,7 @@ export class DialogExportReportComponent implements OnInit {
     private liquidationService: LiquidationService,
     private portChargeService: PortChargeService,
     private portTariffService: PortTarifService,
+    private transacctionService: TransactionService,
     public matDialogRef: MatDialogRef<DialogExportReportComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ReportsEnum,
   ) {
@@ -44,6 +46,9 @@ export class DialogExportReportComponent implements OnInit {
         break;
       case ReportsEnum.PORT_CHARGE:
         this.title = 'Gastos portuarios';
+        break;
+      case ReportsEnum.TRANSACTIONS:
+        this.title = 'Transacciones';
         break;
     }
   }
@@ -74,6 +79,7 @@ export class DialogExportReportComponent implements OnInit {
     if (this.formControlInitDate.valid && this.formControlFinishDate.valid) {
       this.preloadExport = true;
       if (Utilities.isWrongDatesReports(this.formControlInitDate.value, this.formControlFinishDate.value, Swal)) {
+        this.preloadExport = false;
         return;
       }
       const body = this.buildBodyFilter();
@@ -90,6 +96,9 @@ export class DialogExportReportComponent implements OnInit {
           break;
         case ReportsEnum.PORT_CHARGE:
           observable = this.portChargeService.downloadReport(body);
+          break;
+        case ReportsEnum.TRANSACTIONS:
+          observable = this.transacctionService.downloadReport(body);
           break;
       }
       observable.subscribe(res => {

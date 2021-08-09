@@ -56,17 +56,20 @@
               <div class="row">
                 <h5 class="col-11 text-center mt-4">
                   <img class="col-1 me-3" src="./assets/icons/suministros.svg" alt="">
-                  Capacidad
+                  Capacidad adquirida
                 </h5>
               </div>
               <h6 *ngIf="userActivePackage?.package?.time!=30">
                 Dias: {{userActivePackage?.package?.time}}
               </h6>
               <h6 *ngIf="userActivePackage?.package?.time==30">
-                meses: 1
+                Meses: 1
               </h6>
-              <h6>
+              <!-- <h6>
                 Precio: {{userActivePackage?.package?.cost | currency:'$ ':'symbol':'1.0'}}
+              </h6> -->
+              <h6>
+                Cantidad de liquidaciones {{userActivePackage?.liquidation_quantity}}
               </h6>
             </div>
             <div class="div-info-package-usage col-sm-5 col-10 mb-2">
@@ -80,7 +83,7 @@
                 Caduca en: {{userActivePackage?.finish_at | date}}
               </h6>
               <h6>
-                Cantidad de liquidaciones: {{userActivePackage?.liquidation_balance}}
+                Liquidaciones Usadas: {{userActivePackage?.liquidation_balance}}
               </h6>
             </div>
           </div>

@@ -6,5 +6,6 @@ export interface UserActivePackage {
   created_at: string;
   finish_at: string;
   liquidation_balance: number;
+  liquidation_quantity?:number;
   package: Package;
 }

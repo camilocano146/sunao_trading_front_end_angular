@@ -5,6 +5,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {AppComponent} from '../../../../app.component';
 import {MatDialog} from '@angular/material/dialog';
 import {TransactionService} from "../../../../services/transactions/transaction.service";
+import { DialogExportReportComponent } from 'src/app/modules/common-components/dialog-export-report/dialog-export-report.component';
+import { ReportsEnum } from 'src/app/enums/Reports.enum';
 
 @Component({
   selector: 'app-port-tarifs-national',
@@ -45,6 +47,20 @@ export class TransactionsComponent implements OnInit {
       this.list = res.results;
       this.resultsLength = res.count;
       this.preload = false;
+    });
+  }
+
+  exportDate(): void {
+    const dialogRef = this.matDialog.open(DialogExportReportComponent, {
+      width: '600px',
+      maxWidth: '96vw',
+      height: 'max-content',
+      maxHeight: '96vh',
+      backdropClass: 'backdrop-dark',
+      panelClass: 'div-without-padding',
+      data: ReportsEnum.TRANSACTIONS
+    });
+    dialogRef.afterClosed().subscribe(result => {
     });
   }
 }

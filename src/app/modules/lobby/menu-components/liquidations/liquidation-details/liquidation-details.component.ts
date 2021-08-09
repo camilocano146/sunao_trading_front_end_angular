@@ -31,7 +31,11 @@ export class LiquidationDetailsComponent implements OnInit {
   listGravament: Gravamen[];
   listInternationalAgreement: any;
   listSupportDocuments: SupportDocument[];
-  listPortCharge: any;
+  
+  listPortCharge: Array<any>=[];
+  listNationalCost: Array<any>=[];
+  listStorageChargeByDay: Array<any>=[];
+  
   listTradeRegimes: TradeRegimen[];
 
   constructor(
@@ -57,7 +61,6 @@ export class LiquidationDetailsComponent implements OnInit {
     this.preload = true;
     this.liquidationService.getById(this.idLiquidation).subscribe(res => {
       this.liquidation = res;
-      console.log(this.liquidation);
       this.preload = false;
       switch (this.liquidation.incoterm) {
         case 'CFR':
@@ -84,7 +87,7 @@ export class LiquidationDetailsComponent implements OnInit {
       });
 
       this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.id).subscribe(res => {
-        this.listPortCharge = res.results;
+        this.initPortsCharges(res.results);
       });
 
       this.productsService.getTradeRegimen(this.liquidation.product.id, 0, 1000).subscribe(res=>{
@@ -97,6 +100,20 @@ export class LiquidationDetailsComponent implements OnInit {
 
   goToLiquidations(): void {
     this.router.navigate(['']);
+  }
+
+  initPortsCharges(list:Array<any>):void{
+    list.forEach(p => {
+      if(p.group==='almacenaje_de_contenedor_por_dia'){
+        this.listStorageChargeByDay.push(p);
+      }else if(p.group==='gasto_portuario'){
+        this.listPortCharge.push(p);
+      }else{
+        this.listNationalCost.push(p);
+      }
+      console.log(p)
+    });
+
   }
 
   showIVA(): void {
