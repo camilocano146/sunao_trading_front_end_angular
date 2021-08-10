@@ -37,6 +37,10 @@ export class LiquidationComparatorComponent implements OnInit {
   listPortCharge: any;
   listTradeRegimes: TradeRegimen[];
   showError: boolean = true;
+  public min_total=0;
+
+  // 
+  listSelectedItems: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
 
   constructor(
     private translate: TranslateService,
@@ -59,6 +63,7 @@ export class LiquidationComparatorComponent implements OnInit {
     };
     this.liquidationService.getManyById(body).subscribe(res => {
       this.liquidations = res;
+      this.calculateMinTotal();
       this.preload = false;
     }, error => {
       this.showError = true;
@@ -86,5 +91,27 @@ export class LiquidationComparatorComponent implements OnInit {
       result += +liquidation?.data?.national_freight_cost;
     }
     return result;
+  }
+
+  calculateMinTotal(){
+    this.min_total=this.calculateTotalValue(this.liquidations[0]);
+    for (let i = 0; i < this.liquidations.length; i++) {
+      let total= this.calculateTotalValue(this.liquidations[i]);
+      this.min_total = total < this.min_total? total: this.min_total;
+    }
+  }
+
+
+  clickFilterButtons(position: number): void {
+    const item = this.listSelectedItems.findIndex(v => v === position);
+    if (item !== -1) {
+      this.listSelectedItems.splice(item, 1);
+    } else {
+      this.listSelectedItems.push(position);
+    }
+  }
+
+  selectedFilterButton(position: number): boolean {
+    return this.listSelectedItems.findIndex(v => v === position) !== -1;
   }
 }

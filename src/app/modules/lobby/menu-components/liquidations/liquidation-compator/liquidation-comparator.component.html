@@ -24,12 +24,108 @@
       </button>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-2 col-sm-4 col-6" >
+      <div class="panel-info-selector-yellow">Seleccionada</div>
+      <div class="panel-info-selector-blue">No seleccionada</div>
+    </div>
 
+    <div class="col-lg-3 col-sm-4 col-6">
+      <div class="panel-info-selector-yellow">Liquidacion de menor valor</div>
+      <div class="panel-info-selector-blue">Liquidacion de mas valor</div>
+    </div>
+  </div>
+  
+  <br>
+  <div class="row">
+    <div (click)="clickFilterButtons(0)" class="col-lg-2 col-sm-4 col-6">
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(0)}">
+        Fecha
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(1)" class="col-lg-2 col-sm-4 col-6">
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(1)}">
+        Valor fob
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(2)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(2)}">
+        Origen
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(3)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(3)}">
+        Destino
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(4)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(4)}">
+        Producto
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(5)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(5)}">
+        Partida arancelaria
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(6)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(6)}">
+        Contenedor 
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(7)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(7)}">
+        Divisa
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(8)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(8)}">
+        Incoterm
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(9)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(9)}">
+        Flete internacional
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(10)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(10)}">
+        Seguro internacional
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(11)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(11)}">
+        Aduana y portuarios
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(12)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(12)}">
+        Arancel
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(13)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(13)}">
+        Flete local
+      </div>
+    </div>
+    <div (click)="clickFilterButtons(14)" class="col-lg-2 col-sm-4 col-6" >
+      <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(14)}">
+        Iva
+      </div>
+    </div>
+  </div>
   <mat-spinner *ngIf="preload" diameter="50" style="margin: auto"></mat-spinner>
 
   <div *ngIf="!preload" class="div-info container px-0">
     <table>
       <tr>
+        <th class="row m-0 th-white">
+        </th>
+        <td *ngFor="let liquidation of liquidations; let i = index;" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow' : 'th-head-blue'" [attr.data-index]="i" class="th-yellow" >
+          <span>Liquidacion {{i+1}}</span>
+        </td>
+      </tr>
+      <tr *ngIf= "selectedFilterButton(0)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -40,11 +136,11 @@
             Fecha
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           {{liquidation.create_at | date:'longDate'}}
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(1)">
         <th class="row m-0 th-blue">
           <div class="col-3 p-0">
             <div class="icon"
@@ -55,11 +151,11 @@
             Valor FOB
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-blue">
           {{(liquidation?.fob_cost | currency:' ':'symbol':'1.0')}} USD
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(2)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -70,11 +166,11 @@
             Origen
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           {{liquidation?.port_origin?.location?.name | titlecase}} ({{liquidation?.port_origin?.name | titlecase}})
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(3)">
         <th class="row m-0 th-blue">
           <div class="col-3 p-0">
             <div class="icon"
@@ -85,11 +181,11 @@
             Destino
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-blue">
           {{liquidation?.port_destination?.location?.name | titlecase}} ({{liquidation?.port_destination?.name | titlecase}})
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(4)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -100,11 +196,11 @@
             Producto
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           {{liquidation.product?.name}}
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(5)">
         <th class="row m-0 th-blue">
           <div class="col-3 p-0">
             <div class="icon"
@@ -115,11 +211,11 @@
             Partida arancelaria
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-blue">
           {{liquidation.product?.code}}
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(6)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -130,11 +226,11 @@
             Contenedor
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           {{liquidation.container_type?.name}}
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(7)">
         <th class="row m-0 th-blue">
           <div class="col-3 p-0">
             <div class="icon"
@@ -145,11 +241,11 @@
             Divisa
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-blue">
           {{liquidation.currency?.acronym}}
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(8)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -160,11 +256,11 @@
             Incoterm
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           {{liquidation.incoterm}}
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(9)">
         <th class="row m-0 th-blue">
           <div class="col-3 p-0">
             <div class="icon"
@@ -175,7 +271,7 @@
             Flete Internacional
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-blue">
           <span *ngIf="liquidation?.data?.international_freight_cost">
             {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -184,7 +280,7 @@
           </span>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(10)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -195,7 +291,7 @@
             Seguro internacional
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           <span *ngIf="liquidation?.data?.insurance_cost">
             {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -204,7 +300,7 @@
           </span>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(11)">
         <th class="row m-0 th-blue">
           <div class="col-3 p-0">
             <div class="icon"
@@ -215,7 +311,7 @@
             Aduana y portuarios
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-blue">
           <span *ngIf="liquidation?.data?.port_charge">
             {{(liquidation?.data?.port_charge | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -224,7 +320,7 @@
           </span>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(12)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -235,7 +331,7 @@
             Arancel
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           <span *ngIf="liquidation?.data?.gravamen_tarif">
             {{(liquidation?.data?.gravamen_tarif | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -244,7 +340,7 @@
           </span>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(13)">
         <th class="row m-0 th-blue">
           <div class="col-3 p-0">
             <div class="icon"
@@ -255,7 +351,7 @@
             Flete local
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-blue">
           <span *ngIf="liquidation?.data?.national_freight_cost">
             {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -264,7 +360,7 @@
           </span>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf= "selectedFilterButton(14)">
         <th class="row m-0 th-yellow">
           <div class="col-3 p-0">
             <div class="icon"
@@ -275,7 +371,7 @@
             IVA
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow">
           <span *ngIf="liquidation?.data?.iva_tarif">
             {{(liquidation?.data?.iva_tarif | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -285,17 +381,9 @@
         </td>
       </tr>
       <tr>
-        <th class="row m-0 th-blue">
-          <div class="col-3 p-0">
-            <div class="icon"
-                 [ngStyle]="{'mask': 'url(' + './assets/icons/money-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/money-24.svg' + ') no-repeat center'}">
-            </div>
-          </div>
-          <span class="col-9 p-0">
-            Total
-          </span>
+        <th class=" th-white">
         </th>
-        <td *ngFor="let liquidation of liquidations">
+        <td *ngFor="let liquidation of liquidations" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow' : 'th-head-blue'" >
           <span>
             {{((calculateTotalValue(liquidation) | currency:' ':'symbol':'1.0') + '')?.replace(',', '.')}} USD
           </span>

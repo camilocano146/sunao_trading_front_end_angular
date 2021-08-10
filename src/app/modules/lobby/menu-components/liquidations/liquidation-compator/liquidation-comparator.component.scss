@@ -82,12 +82,14 @@
 .div-option {
   background-color: $color-yellow;
   padding: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
   color: white;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70px;
+  height: 50px;
 }
 
 .div-option-to-show {
@@ -209,7 +211,10 @@ h3{
 table {
   width: 100%;
   min-width: 1000px;
+  border-collapse:separate; 
+  border-spacing: 0 1px;
 }
+
 
 th img {
   width: 20px;
@@ -238,6 +243,7 @@ th span {
   font-size: 14px;
 }
 
+
 tr, th {
   height: 50px !important;
   text-align: center !important;
@@ -257,6 +263,9 @@ tr:nth-child(odd) {
 .th-yellow {
   background-color: $color-yellow !important;
 }
+.th-white{
+  background-color: #F3EEEE !important;
+}
 
 .th-yellow .icon {
   background-color: $color-dark-blue;
@@ -272,4 +281,57 @@ tr:nth-child(odd) {
 
 .th-blue .icon {
   background-color: white;
+}
+
+
+.td-yellow{
+  background-color: white !important;
+  border-bottom: 3px solid $color-yellow;
+  border-top: 3px solid $color-yellow;
+  font-family: Arial;
+  span{
+    font-family: Arial;
+  }
+}
+
+.td-blue{
+  background-color: white !important;
+  border-bottom: 3px solid $color-dark-blue;
+  border-top: 3px solid $color-dark-blue;
+  font-family: Arial;
+  span{
+    font-family: Arial;
+  }
+}
+
+.th-head-yellow{
+  background-color: $color-yellow !important;
+  span{
+    font-family: Arial;
+    color: white;
+  }
+  
+
+}
+.th-head-blue{
+  background-color: $color-dark-blue !important;
+  span{
+    font-family: Arial;
+    color: white;
+  }
+
+}
+
+.panel-info-selector-yellow{
+  background-color:#ffbf3b; 
+  width: 100%; 
+  color: aliceblue; 
+  text-align: center;
+}
+
+.panel-info-selector-blue{
+  background-color:#00303c; 
+  width: 100%; 
+  color: aliceblue; 
+  text-align: center;
 }
