@@ -180,6 +180,19 @@
   border: 1px solid white;
   background-color: $color-dark-blue;
   color: white;
+  max-width: 700px;
+  td{
+    border: 1px solid $color-dark-blue;
+    background-color: white;
+    color: $color-dark-blue;
+    padding: 5px;
+  }
+  th{
+    border: 1px solid $color-dark-blue;
+    background-color: $color-yellow !important;
+    color: white;
+    padding: 5px;
+  }
 }
 
 #sub_mat-panel-title{
@@ -203,6 +216,7 @@ mat-panel-title {
 h4{
   font-family: Arial;
   font-size: medium;
+  text-align: right;
 }
 
 h5{
@@ -214,10 +228,20 @@ h3{
   font-size: x-small;
 }
 
+.div-parent-table {
+  overflow: auto !important;
+}
 
-th,td{
+
+td{
   border: 1px solid white;
   background-color: $color-dark-blue;
+  color: white;
+  padding: 5px;
+}
+th{
+  border: 1px solid white;
+  background-color: $color-yellow !important;
   color: white;
   padding: 5px;
 }

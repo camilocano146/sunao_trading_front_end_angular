@@ -33,9 +33,11 @@ export class LiquidationDetailsComponent implements OnInit {
   listSupportDocuments: SupportDocument[];
   
   listPortCharge: Array<any>=[];
+  valuePortCharge:number=0;
   listNationalCost: Array<any>=[];
+  valueNationalCost:number=0;
   listStorageChargeByDay: Array<any>=[];
-  
+  valueStorageChargeByDay:number=0;
   listTradeRegimes: TradeRegimen[];
 
   constructor(
@@ -106,10 +108,13 @@ export class LiquidationDetailsComponent implements OnInit {
     list.forEach(p => {
       if(p.group==='almacenaje_de_contenedor_por_dia'){
         this.listStorageChargeByDay.push(p);
+        this.valueStorageChargeByDay+=(p.value/ this.liquidation?.currency_usd.value);
       }else if(p.group==='gasto_portuario'){
         this.listPortCharge.push(p);
+        this.valuePortCharge+=(p.value/ this.liquidation?.currency_usd.value);
       }else{
         this.listNationalCost.push(p);
+        this.valueNationalCost+=(p.value/ this.liquidation?.currency_usd.value);
       }
       console.log(p)
     });

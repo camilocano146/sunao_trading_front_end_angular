@@ -189,42 +189,45 @@
           </mat-expansion-panel-header>
           
           <div class="row">
-            <table>
-              <tbody>
-                <tr >
-                  <td>Divisa</td>
-                  <td>
-                    {{liquidation?.currency?.acronym | uppercase}}
-                  </td>
-                </tr>
-                
-                <tr>
-                  <td >
-                    Valor Fob ingresado por el usuario ({{liquidation?.currency?.acronym}})
-                  </td>
-                  <td >
-                    <span>{{liquidation?.fob_cost_user | currency:' ':'symbol':'1.2'}}</span>
-                  </td>
-                </tr>
-                <tr *ngIf="liquidation?.currency?.acronym=='EUR'">
-                  <td>
-                    El valor EUR entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}:
-                  </td>
-                  <td>
-                    {{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}} USD
-                  </td>
-                </tr>
+            <div class="div-parent-table">
+              <table>
+                <thead>
+                  <th>Divisa</th>
+                  <th>Valor Fob ingresado por el usuario ({{liquidation?.currency?.acronym}})</th>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td>
+                      <span>{{liquidation?.currency?.acronym | uppercase}}</span>
+                    </td>
+                    <td>
+                      <span>{{liquidation?.fob_cost_user | currency:' ':'symbol':'1.2'}} </span>USD.
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-                <tr *ngIf="liquidation?.currency?.acronym=='GBP'">
-                  <td>
-                    El valor de la libra esterlina entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}:
-                  </td>
-                  <td>
-                    {{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}} USD
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="row">
+            <div class="div-parent-table">
+              <table>
+                <tbody>
+                  <tr >
+                    <td>
+                      El valor EUR entre <span>{{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}: {{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}}</span> USD
+                    </td>
+                  </tr>
+
+                  <tr *ngIf="liquidation?.currency?.acronym=='GBP'">
+                    <td>
+                      El valor de la libra esterlina entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}: <span>{{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}}</span> USD
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
         </mat-expansion-panel>
@@ -324,108 +327,125 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="row" style="padding-right: 40px;">
+          <div class="row" style="padding-right: 20px; padding-left: 20px;">
 
             <mat-expansion-panel #matExpansionPanel4_1 id="matExpansionPanel4_1">
               <mat-expansion-panel-header>
-
+                <div class="col-2 div-table-price me-3">
+                  <h4>
+                    {{( valuePortCharge | currency:' ':'symbol':'1.2')}} USD
+                  </h4>
+                </div>
                 <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel4_1.expanded ? 180 : 0) + 'deg)'}" src="./assets/icons/arrow_drop_down_white_24dp.svg" alt="">
                 <mat-panel-title id="sub_mat-panel-title">
                   Gastos portuarios
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <table>
-                <thead>
-                  <th>Concepto</th>
-                  <th>Valor</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of listPortCharge">
-                    <td>
-                      {{item.concept}}
-                    </td>
-                    <td>
-                      <span>{{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.2')}} </span> USD.
-                    </td>
-                  </tr>
-                  <tr *ngIf="!listPortCharge || listPortCharge?.length === 0">
-                    <td>
-                      No hay datos.
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="div-parent-table">
+                <table>
+                  <thead>
+                    <th>Concepto</th>
+                    <th>Valor</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of listPortCharge">
+                      <td>
+                        {{item.concept}}
+                      </td>
+                      <td>
+                        <span>{{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.2')}} </span> USD.
+                      </td>
+                    </tr>
+                    <tr *ngIf="!listPortCharge || listPortCharge?.length === 0">
+                      <td>
+                        No hay datos.
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </mat-expansion-panel>
             <mat-expansion-panel #matExpansionPanel4_2 id="matExpansionPanel4_2">
               <mat-expansion-panel-header>
-                
+                <div class="col-2 div-table-price me-3">
+                  <h4>
+                    {{( valueStorageChargeByDay | currency:' ':'symbol':'1.2')}} USD
+                  </h4>
+                </div>
                 <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel4_2.expanded ? 180 : 0) + 'deg)'}" src="./assets/icons/arrow_drop_down_white_24dp.svg" alt="">
                 <mat-panel-title id="sub_mat-panel-title">
                   Almacenaje de contenedor por día
                 </mat-panel-title>
 
               </mat-expansion-panel-header>
-              <table>
-                <thead>
-                  <th>Concepto</th>
-                  <th>Valor</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of listStorageChargeByDay">
-                    <td>
-                      {{item.concept}}
-                    </td>
-                    <td>
-                      <span>{{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.2')}} </span> USD.
-                    </td>
-                  </tr>
-                  <tr *ngIf="!listStorageChargeByDay || listStorageChargeByDay?.length === 0">
-                    <td>
-                      No hay datos.
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="div-parent-table">
+                <table>
+                  <thead>
+                    <th>Concepto</th>
+                    <th>Valor</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of listStorageChargeByDay">
+                      <td>
+                        {{item.concept}}
+                      </td>
+                      <td>
+                        <span>{{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.2')}} </span> USD.
+                      </td>
+                    </tr>
+                    <tr *ngIf="!listStorageChargeByDay || listStorageChargeByDay?.length === 0">
+                      <td>
+                        No hay datos.
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               
               
             </mat-expansion-panel>
             <mat-expansion-panel #matExpansionPanel4_3 id="matExpansionPanel4_3">
               <mat-expansion-panel-header>
-                
+                <div class="col-2 div-table-price me-3">
+                  <h4>
+                    {{( valueNationalCost | currency:' ':'symbol':'1.2')}} USD
+                  </h4>
+                </div>
                 <img [ngStyle]="{'transform': 'scale(2) rotate(' + (matExpansionPanel4_3.expanded ? 180 : 0) + 'deg)'}" src="./assets/icons/arrow_drop_down_white_24dp.svg" alt="">
                 <mat-panel-title id="sub_mat-panel-title">
                   Costos de nacionalización
                 </mat-panel-title>
 
               </mat-expansion-panel-header>
-              <table>
-                <thead>
-                  <th>Concepto</th>
-                  <th>Valor</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of listNationalCost">
-                    <td>
-                      {{item.concept}}
-                    </td>
-                    <td>
-                      <span>{{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.2')}} </span> USD.
-                    </td>
-                  </tr>
-                  <tr *ngIf="!listNationalCost || listNationalCost?.length === 0">
-                    <td>
-                      No hay datos.
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              
+              <div class="div-parent-table">
+                <table>
+                  <thead>
+                    <th>Concepto</th>
+                    <th>Valor</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of listNationalCost">
+                      <td>
+                        {{item.concept}}
+                      </td>
+                      <td>
+                        <span>{{ ( item.value / liquidation?.currency_usd.value  | currency:' ':'symbol':'1.2')}} </span> USD.
+                      </td>
+                    </tr>
+                    <tr *ngIf="!listNationalCost || listNationalCost?.length === 0">
+                      <td>
+                        No hay datos.
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </mat-expansion-panel>
             
           </div>
@@ -449,34 +469,79 @@
             
           </mat-expansion-panel-header>
 
+
           <div class="row">
             <h5 class="col-8 ps-5">
-<!--              Mostrar todos los Trados y Gravamen-->
               Tratados:
-              <div *ngIf="!listInternationalAgreement || listInternationalAgreement?.length === 0" style="text-indent: 30px">
-                No hay tratados.
-              </div>
-              <ul *ngIf="listInternationalAgreement?.length > 0">
-                <li *ngFor="let item of listInternationalAgreement">
-                  País = {{item.location}}, Título = {{item.title}}, Fecha = {{item.date | date}}, Título = {{item.title}}, Gravamen = {{item.gravamen}}%.
-                </li>
-              </ul>
-
-              <br>
-              <div>
-                Gravamen:
-              </div>
-              <div *ngIf="!listGravament || listGravament?.length === 0" style="text-indent: 30px">
-                No hay gramaven.
-              </div>
-              <ul *ngIf="listGravament?.length > 0">
-                <li *ngFor="let item of listGravament">
-                  Fecha = {{item.date | date}}, tarifa = {{(item.tarif | currency:'$ ':'symbol':'1.2')}}%.
-                </li>
-              </ul>
             </h5>
+
+            <div class="div-parent-table">
+              <table>
+                <thead>
+                  <th>País</th>
+                  <th>Título</th>
+                  <th>Fecha</th>
+                  <th>Gravamen</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listInternationalAgreement">
+                    <td>
+                      {{item.location}}
+                    </td>
+                    <td>
+                      {{item.title}}
+                    </td>
+                    <td>
+                      <span>{{item.date}}</span>
+                    </td>
+                    <td>
+                      <span>{{( item.gravamen | currency:' ':'symbol':'1.2')}} </span>.
+                    </td>
+                  </tr>
+                  <tr *ngIf="!listInternationalAgreement || listInternationalAgreement?.length === 0">
+                    <td>
+                      No hay datos.
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+          <br>
           <div class="row">
+            <h5 class="col-8 ps-5">
+              Gravamen:
+            </h5>
+            <div class="div-parent-table">
+              <table>
+                <thead>
+                  <th>Fecha</th>
+                  <th>Tarifa</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listGravament">
+                    <td>
+                      <span>{{item.date | date}}</span>
+                    </td>
+                    <td>
+                      <span>{{( item.tarif | currency:' ':'symbol':'1.2')}} </span>.
+                    </td>
+                  </tr>
+                  <tr *ngIf="!listGravament || listGravament?.length === 0">
+                    <td>
+                      No hay datos.
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+          <div class="row" style="margin-top: 10px;">
             <h3>Importante: Favor tener presente que el puerto de origen seleccionado se tomará como país de origen de la mercancía para efectos de calculo de arancel y acuerdos internacionales</h3>
 
           </div>
@@ -498,24 +563,25 @@
               Flete local
             </mat-panel-title>
           </mat-expansion-panel-header>
-
           <div class="row">
-            <h5 class="col-8 ps-5" style="text-align: justify">
-              El producto viaja del puerto destino {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}} a la ciudad {{liquidation?.city_destination?.name | titlecase}}
-              y tiene un costo de {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.2')}} USD
-<!--              quien es el proveedor, de donde a donde y cual es el valor-->
-            </h5>
+            <div class="div-parent-table">
+              <table>
+                <tr>
+                  <td>
+                    El producto viaja del puerto destino {{liquidation?.port_destination?.name | titlecase}} en {{liquidation?.port_destination?.location?.name | titlecase}} a la ciudad {{liquidation?.city_destination?.name | titlecase}}
+                  y tiene un costo de <span>{{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.2')}}</span> USD
+                    <div *ngIf='liquidation?.data?.return_cost==true' >
+                      Incluye costo de retorno: Sí
+                    </div>
+                    <div *ngIf='liquidation?.data?.return_cost==false' >
+                      Incluye costo de retorno: No
+                    </div>
+                  </td>
+    
+                </tr>
+              </table>
 
-            <h5 class="col-9 ps-5" *ngIf='liquidation?.data?.return_cost==true' style="text-align: justify">
-              Incluye costo de retorno: Sí
-            </h5>
-            <h5 class="col-9 ps-5" *ngIf='liquidation?.data?.return_cost==false' style="text-align: justify">
-              Incluye costo de retorno: No
-            </h5>
-
-<!--            <h5 class="col-4">-->
-<!--              {{1200 | currency}}-->
-<!--            </h5>-->
+            </div>
           </div>
 
         </mat-expansion-panel>
@@ -584,8 +650,38 @@
               Documentos Soporte
             </mat-panel-title>
           </mat-expansion-panel-header>
+          
+          <div class="row">
+            <div class="div-parent-table">
+              <table>
+                <thead>
+                  <th>Documento</th>
+                  <th>Entidad</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let document of listSupportDocuments">
+                    <td>
+                      <span>{{document?.document}}</span>
+                    </td>
+                    <td>
+                      <span>{{document?.entity}} </span>USD.
+                    </td>
+                  </tr>
+                  <tr *ngIf="!listGravament || listGravament?.length === 0">
+                    <td>
+                      No hay datos.
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
 
-          <div class="row my-2">
+
+          <!-- <div class="row my-2">
             <h5 class="col-7 text-center">
               Documento
             </h5>
@@ -605,7 +701,7 @@
                 </h5>
               </div>
             </li>
-          </ul>
+          </ul> -->
 
         </mat-expansion-panel>
       </mat-accordion>
@@ -621,21 +717,33 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="row my-2">
-            <h5 class="col-7 ">
-              Concepto
+          <div class="row">
+            <h5 class="col-8 ps-5">
+              Regimenes
             </h5>
-          </div>
 
-          <ul *ngFor="let tradeRegimen of listTradeRegimes">
-            <li>
-              <div class="row">
-                <h5 class="col-7">
-                  {{tradeRegimen?.concept}}
-                </h5>
-              </div>
-            </li>
-          </ul>
+            <div class="div-parent-table">
+              <table>
+                <thead>
+                  <th>Concepto</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let tradeRegimen of listTradeRegimes">
+                    <td>
+                      {{tradeRegimen?.concept}}
+                    </td>
+                  </tr>
+                  <tr *ngIf="!listTradeRegimes || listTradeRegimes?.length === 0">
+                    <td>
+                      No hay datos.
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
         </mat-expansion-panel>
       </mat-accordion>
