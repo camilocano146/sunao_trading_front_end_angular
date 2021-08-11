@@ -24,20 +24,34 @@
       </button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-2 col-sm-4 col-6" >
-      <div class="panel-info-selector-yellow">Seleccionada</div>
-      <div class="panel-info-selector-blue">No seleccionada</div>
-    </div>
-
-    <div class="col-lg-3 col-sm-4 col-6">
-      <div class="panel-info-selector-yellow">Liquidacion de menor valor</div>
-      <div class="panel-info-selector-blue">Liquidacion de mas valor</div>
-    </div>
-  </div>
   
   <br>
   <div class="row">
+    <div class="col-lg-6 col-sm-9 col-12">
+      <mat-form-field style="width: 100%;">
+        <mat-label>Filtrar</mat-label>
+        <mat-select [formControl]="filterFormControl"  panelClass="toppings-panel" multiple>
+          <mat-option (click)="clickFilterButtons(0)"  [value]="0">Fecha</mat-option>
+          <mat-option (click)="clickFilterButtons(1)"  [value]="1">Valor fob</mat-option>
+          <mat-option (click)="clickFilterButtons(2)"  [value]="2">Origen</mat-option>
+          <mat-option (click)="clickFilterButtons(3)"  [value]="3">Destino</mat-option>
+          <mat-option (click)="clickFilterButtons(4)"  [value]="4">Producto</mat-option>
+          <mat-option (click)="clickFilterButtons(5)"  [value]="5">Partida arancelaria</mat-option>
+          <mat-option (click)="clickFilterButtons(6)"  [value]="6">Contenedor</mat-option>
+          <mat-option (click)="clickFilterButtons(7)"  [value]="7">Divisa</mat-option>
+          <mat-option (click)="clickFilterButtons(8)"  [value]="8">Incoterm</mat-option>
+          <mat-option (click)="clickFilterButtons(9)"  [value]="9">Flete internacional</mat-option>
+          <mat-option (click)="clickFilterButtons(10)"  [value]="10">Seguro internacional</mat-option>
+          <mat-option (click)="clickFilterButtons(11)"  [value]="11">Aduana y portuarios</mat-option>
+          <mat-option (click)="clickFilterButtons(12)"  [value]="12">Arancel</mat-option>
+          <mat-option (click)="clickFilterButtons(13)"  [value]="13">Flete local</mat-option>
+          <mat-option (click)="clickFilterButtons(14)"  [value]="14">Iva</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- <div class="row">
     <div (click)="clickFilterButtons(0)" class="col-lg-2 col-sm-4 col-6">
       <div class="div-option" [ngClass]="{'div-option-to-hide': !selectedFilterButton(0)}">
         Fecha
@@ -113,7 +127,7 @@
         Iva
       </div>
     </div>
-  </div>
+  </div> -->
   <mat-spinner *ngIf="preload" diameter="50" style="margin: auto"></mat-spinner>
 
   <div *ngIf="!preload" class="div-info container px-0">

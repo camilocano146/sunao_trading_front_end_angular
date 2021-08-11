@@ -11,6 +11,7 @@ import {PortsService} from '../../../../../services/ports/ports.service';
 import {Utilities} from '../../../../../utils/Utilities';
 import {TradeRegimen} from 'src/app/models/TradeRegimen';
 import {ManageSessionStorage} from '../../../../../utils/ManageSessionStorage';
+import { FormControl } from '@angular/forms';
 
 interface HeaderData {
   name: string;
@@ -38,6 +39,7 @@ export class LiquidationComparatorComponent implements OnInit {
   listTradeRegimes: TradeRegimen[];
   showError: boolean = true;
   public min_total=0;
+  filterFormControl:FormControl;
 
   // 
   listSelectedItems: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
@@ -50,9 +52,12 @@ export class LiquidationComparatorComponent implements OnInit {
     private liquidationService: LiquidationService,
   ) {
     this.getLiquidations();
+    this.filterFormControl = new FormControl();
+    this.filterFormControl.setValue(this.listSelectedItems)
   }
 
   ngOnInit(): void {
+    
   }
 
   getLiquidations(): void {
@@ -77,17 +82,18 @@ export class LiquidationComparatorComponent implements OnInit {
 
   calculateTotalValue(liquidation: Liquidation): number {
     let result = 0;
+    console.log(liquidation)
     if (liquidation?.fob_cost) {
       result += +liquidation?.fob_cost;
-    } else if (liquidation?.data?.international_freight_cost) {
+    }  if (liquidation?.data?.international_freight_cost) {
       result += +liquidation?.data?.international_freight_cost;
-    } else if (liquidation?.data?.insurance_cost) {
+    }  if (liquidation?.data?.insurance_cost) {
       result += +liquidation?.data?.insurance_cost;
-    } else if (liquidation?.data?.port_charge) {
+    }  if (liquidation?.data?.port_charge) {
       result += +liquidation?.data?.port_charge;
-    } else if (liquidation?.data?.gravamen_tarif) {
+    }  if (liquidation?.data?.gravamen_tarif) {
       result += +liquidation?.data?.gravamen_tarif;
-    } else if (liquidation?.data?.national_freight_cost) {
+    }  if (liquidation?.data?.national_freight_cost) {
       result += +liquidation?.data?.national_freight_cost;
     }
     return result;
@@ -114,4 +120,6 @@ export class LiquidationComparatorComponent implements OnInit {
   selectedFilterButton(position: number): boolean {
     return this.listSelectedItems.findIndex(v => v === position) !== -1;
   }
+
+  
 }
