@@ -71,6 +71,7 @@ import {LiquidationComparatorComponent} from './menu-components/liquidations/liq
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import {DialogExportSendLiquidationComponent} from './menu-components/liquidations/dialog-export-send-liquidation/dialog-export-send-liquidation.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { DialogUserChangeRolesComponent } from './menu-components/users/dialog-user-change-roles/dialog-user-change-roles.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import {MatRadioModule} from '@angular/material/radio';
     DialogVerifyAccountComponent,
     LiquidationComparatorComponent,
     DialogExportSendLiquidationComponent,
+    DialogUserChangeRolesComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,38 @@
+<div class="" mat-dialog-title>
+    <div class="row justify-content-between">
+      <div class="col-10 col-sm-10 col-md-10">
+        <strong class="color-blue">
+            Roles de usuario
+        </strong>
+      </div>
+      <div class="col-2 col-sm-2 col-md-2">
+        <button type="button" class="close btn-close-dialog" (click)="onNoClick()">
+          <span aria-hidden="false">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div *ngIf="preload" class="w-100 text-center">
+      <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+    </div>
+    <div *ngIf="!preload" class="row text-center">
+      <div class="col-12" style="margin-bottom: 10px;">
+        <mat-form-field class="w-100">
+            <mat-label>Roles</mat-label>
+            <mat-select [formControl]="rolFormControl"  panelClass="toppings-panel" multiple>
+                <mat-option *ngFor='let rol of rolesAvaiables' [value]="rol.id">{{rol.title}}</mat-option>
+            </mat-select>
+          <!-- <mat-error *ngIf="rolFormControl.invalid">{{getErrorMessageName()}}</mat-error> -->
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!preload" class="text-center" mat-dialog-actions style="margin-top: 10px;">
+    <button *ngIf="!preloadSave" mat-raised-button color="primary" class="w-100" (click)="save()">
+      {{'buttons.save' | translate}}
+    </button>
+    <div *ngIf="preloadSave" class="w-100 text-center">
+      <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+    </div>
+  </div>

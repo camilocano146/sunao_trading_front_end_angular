@@ -24,8 +24,8 @@
                 Nombre
               </th>
               <td mat-cell *matCellDef="let row">
-                <span *ngIf="row.name  ">{{row.name}} </span>
-                <span *ngIf="!row.name ">N/A</span>
+                <span *ngIf="row.name" class="number-field-text">{{row.name}} </span>
+                <span *ngIf="!row.name">N/A</span>
               </td>
           </ng-container>
 

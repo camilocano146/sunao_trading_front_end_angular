@@ -82,4 +82,19 @@ export class UserService {
   userHasActivePackage():Observable<any>{
     return this.httpClient.get(`users/user_has_active_package/`);
   }
+  getRoles(idUser: number) {
+    return this.httpClient.get<any>("users/" + idUser + "/list_roles/", { observe: 'response' });
+  }
+
+  getAllRoles(){
+    return this.httpClient.get<any>(`rol/?offset=${0}&limit=${10}`, { observe: 'response' });
+  }
+
+  setRoles(vect_id:number [], userId:number) : Observable<any>{
+    let data ={
+      list:vect_id
+    }
+    return this.httpClient.post(`users/${userId}/set_roles/`, data);
+
+  }
 }

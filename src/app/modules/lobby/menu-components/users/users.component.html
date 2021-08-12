@@ -40,7 +40,7 @@
             Id
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.id">{{row.id}}</span>
+            <span *ngIf="row.id" class="number-field-text">{{row.id}}</span>
           </td>
         </ng-container>
 
@@ -110,7 +110,10 @@
                 <img src="./assets/icons/delete_black_24dp.svg" alt="">
                 Desactivar
               </button>
-
+              <button mat-button matTooltip="" (click)="openDialogRoles(row.id)">
+                <img src="./assets/icons-menu/message-24px.svg" alt="">
+                Administrar roles
+            </button>
             </mat-menu>
           </td>
         </ng-container>

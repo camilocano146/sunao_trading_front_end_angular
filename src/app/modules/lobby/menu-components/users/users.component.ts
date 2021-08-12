@@ -9,6 +9,8 @@ import { User } from 'src/app/models/User';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import {FormControl} from '@angular/forms';
+import { DialogUserChangeRolesComponent } from './dialog-user-change-roles/dialog-user-change-roles.component';
+import { NotifyService } from 'src/app/services/notify/notify.service';
 // import {DialogImportPortTarifsComponent} from './dialog-import-port-tarifs/dialog-import-port-tarifs.component';
 
 @Component({
@@ -39,6 +41,8 @@ export class UsersComponent implements OnInit {
     private userService: UserService,
     private matDialog: MatDialog,
     private translate: TranslateService,
+    public dialog: MatDialog,
+    public notifyService:NotifyService
   ) { }
 
   ngOnInit(): void {
@@ -82,6 +86,37 @@ export class UsersComponent implements OnInit {
           this.loadTable();
         });
       } else if (result.isDenied) {
+      }
+    });
+
+  }
+
+
+  obtainerBetterRange(list: any[]): any {
+    let i= 3;
+    list.forEach(elemet=>{
+      if (elemet.rol.level<i){
+        i=elemet.rol.level
+      }
+    });
+    return i;
+  }
+
+  openDialogRoles(idUser): void {
+    this.userService.getRoles(idUser).subscribe(res => {
+      console.log(res.body)
+      let betterUserSelected = this.obtainerBetterRange(res.body);
+      if (betterUserSelected < 2) {
+        this.notifyService.showErrorLong('', 'No tienes permisos para editar este usuario.');
+      } else {
+        const dialogRef = this.dialog.open(DialogUserChangeRolesComponent, {
+          width: "300px",
+          data: +idUser
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          this.loadTable();
+        });
       }
     });
 
