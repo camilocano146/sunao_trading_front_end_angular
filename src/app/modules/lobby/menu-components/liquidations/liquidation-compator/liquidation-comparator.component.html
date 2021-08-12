@@ -24,6 +24,12 @@
       </button>
     </div>
   </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="col-12" style="background-color:#ffbf3b; color: aliceblue; text-align: center;">Liquidación de menor valor</div>
+      <div class="col-12" style="background-color:#00303c; color: aliceblue; text-align: center;">Liquidación de mayor valor</div>
+    </div>
+  </div>
   
   <div class="row">
     <div class="col-lg-6 col-sm-9 col-12">
@@ -134,8 +140,8 @@
       <tr>
         <th class="row m-0 th-white">
         </th>
-        <td *ngFor="let liquidation of liquidations; let i = index;" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow' : 'th-head-blue'" [attr.data-index]="i" class="th-yellow" >
-          <span>Liquidacion {{i+1}}</span>
+        <td *ngFor="let liquidation of liquidations; let i = index;" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow' : 'th-head-blue'" [attr.data-index]="i">
+          <span>Liquidación {{i+1}}</span>
         </td>
       </tr>
       <tr *ngIf= "selectedFilterButton(0)">
@@ -394,7 +400,15 @@
         </td>
       </tr>
       <tr>
-        <th class=" th-white">
+        <th class="row m-0 th-total">
+          <div class="col-3 p-0">
+            <div class="icon"
+                 [ngStyle]="{'mask': 'url(' + './assets/icons/money-24.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons/money-24.svg' + ') no-repeat center'}">
+            </div>
+          </div>
+          <span class="col-9 p-0">
+            Total:
+          </span>
         </th>
         <td *ngFor="let liquidation of liquidations" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow' : 'th-head-blue'" >
           <span>

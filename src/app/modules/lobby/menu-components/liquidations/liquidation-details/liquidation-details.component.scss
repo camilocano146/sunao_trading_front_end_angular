@@ -136,6 +136,7 @@
 
 .div-total h4 {
   margin: 0;
+  text-align: left;
 }
 
 .div-bottom-info {
@@ -178,9 +179,13 @@
   margin-top: 0px;
   margin-bottom: 0px;
   border: 1px solid white;
-  background-color: $color-dark-blue;
+  background-color: white;
   color: white;
   max-width: 700px;
+  table{
+    margin-top: 10px ;
+
+  }
   td{
     border: 1px solid $color-dark-blue;
     background-color: white;
@@ -189,9 +194,13 @@
   }
   th{
     border: 1px solid $color-dark-blue;
-    background-color: $color-yellow !important;
+    background-color: $color-dark-blue !important;
     color: white;
     padding: 5px;
+  }
+  mat-expansion-panel-header{
+    background-color: $color-dark-blue;
+    width: 100%;
   }
 }
 
@@ -234,15 +243,15 @@ h3{
 
 
 td{
-  border: 1px solid white;
-  background-color: $color-dark-blue;
-  color: white;
+  border: 1px solid $color-dark-blue;
+  background-color: white;
+  color: $color-dark-blue;
   padding: 5px;
 }
 th{
-  border: 1px solid white;
-  background-color: $color-yellow !important;
-  color: white;
+  border: 1px solid $color-dark-blue;
+  background-color: $color-dark-blue !important;
+  color: $color-dark-blue;
   padding: 5px;
 }
 

@@ -201,7 +201,7 @@
                       <span>{{liquidation?.currency?.acronym | uppercase}}</span>
                     </td>
                     <td>
-                      <span>{{liquidation?.fob_cost_user | currency:' ':'symbol':'1.2'}} </span>USD.
+                      <span>{{liquidation?.fob_cost_user | currency:' ':'symbol':'1.2'}} </span>
                     </td>
                   </tr>
                   
@@ -209,25 +209,13 @@
               </table>
             </div>
           </div>
-
-          <div class="row">
-            <div class="div-parent-table">
-              <table>
-                <tbody>
-                  <tr >
-                    <td>
-                      El valor EUR entre <span>{{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}: {{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}}</span> USD
-                    </td>
-                  </tr>
-
-                  <tr *ngIf="liquidation?.currency?.acronym=='GBP'">
-                    <td>
-                      El valor de la libra esterlina entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}: <span>{{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}}</span> USD
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="row" style="padding: 5px;" >
+              <h5 *ngIf="liquidation?.currency?.acronym=='EUR'">
+                El valor EUR entre <span>{{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}: {{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}}</span> USD
+              </h5>
+              <h5 *ngIf="liquidation?.currency?.acronym=='GBP'">
+                El valor de la libra esterlina entre {{liquidation?.currency?.from_date}} y {{liquidation?.currency?.to_date}}: <span>{{liquidation?.currency?.value | currency:' ':'symbol':'1.2'}}</span> USD
+              </h5>
           </div>
 
         </mat-expansion-panel>
@@ -250,18 +238,20 @@
 
 
           <div class="row">
-            <table>
-              <tr>
-                <td>
-                  El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} ({{liquidation?.port_origin?.location?.name | titlecase}}) al puerto {{liquidation?.port_destination?.name | titlecase}} ({{liquidation?.port_destination?.location?.name | titlecase}})
-                y tiene un costo de <span >{{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.2')}} </span> USD
-                  
-                <br>
-                Dias Libres: {{liquidation?.data?.free_days}} dias    
-                </td>
-              </tr>
-              
-            </table>
+            <div class="div-parent-table">
+              <table>
+                <tr>
+                  <td>
+                    El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} ({{liquidation?.port_origin?.location?.name | titlecase}}) al puerto {{liquidation?.port_destination?.name | titlecase}} ({{liquidation?.port_destination?.location?.name | titlecase}})
+                  y tiene un costo de <span >{{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.2')}} </span> USD
+                    
+                  <br>
+                  Dias Libres: {{liquidation?.data?.free_days}} dias    
+                  </td>
+                </tr>
+                
+              </table>
+            </div>
           </div>
 
         </mat-expansion-panel>
@@ -283,15 +273,17 @@
           </mat-expansion-panel-header>
 
           <div class="row">
-            <table>
-              <tr>
-                <td>
-                  (Valor FOB + Flete Internacional) x <span>0.4%</span> = Valor seguro internacional
-                  <br>
-                  <span>({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.2')}} USD</span>    
-                </td>
-              </tr>
-            </table>
+            <div class="div-parent-table">
+              <table>
+                <tr>
+                  <td>
+                    (Valor FOB + Flete Internacional) x <span>0.4%</span> = Valor seguro internacional
+                    <br>
+                    <span>({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.2')}} USD</span>    
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
 
           <!-- <div class="row">
@@ -306,7 +298,7 @@
             </h5>
           </div> -->
           <div class="row" style="padding: 5px;" >
-            <h3>Nota: El valor minimo del seguro internacional es igual a 50 USD</h3>
+            <h5>Nota: El valor minimo del seguro internacional es igual a 50 USD</h5>
 
           </div>
         </mat-expansion-panel>
@@ -542,7 +534,7 @@
             
           </div>
           <div class="row" style="margin-top: 10px;">
-            <h3>Importante: Favor tener presente que el puerto de origen seleccionado se tomará como país de origen de la mercancía para efectos de calculo de arancel y acuerdos internacionales</h3>
+            <h5>Importante: Favor tener presente que el puerto de origen seleccionado se tomará como país de origen de la mercancía para efectos de calculo de arancel y acuerdos internacionales</h5>
 
           </div>
 
@@ -597,11 +589,11 @@
       </div>
 
       <div class="row m-0 div-bottom-info">
-        <h6 class="color-blue py-3 mb-0 col-10">
+        <h6 class="color-blue py-3 mb-0 col-lg-10 col-md-9 col-sm-8">
           Valor liquidado solo para efectos de flujo de caja, NO incluido en el costo total de la liquidación, por ser el IVA un valor deducible.
         </h6>
 
-        <mat-checkbox [(ngModel)]="seeIVA" (click)="showIVA()" class="col-2">
+        <mat-checkbox [(ngModel)]="seeIVA" (click)="showIVA()" class="col-lg-2 col-md-3 col-sm-4">
           Visualizar IVA
         </mat-checkbox>
       </div>
