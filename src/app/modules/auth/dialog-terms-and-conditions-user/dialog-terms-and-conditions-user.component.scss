@@ -1,1 +1,18 @@
 @import '../../../../styles';
+
+h5{
+    font-weight: bold;
+}
+
+h6{
+    font-weight: bold;
+}
+
+td{
+    border: 1px solid black;
+}
+
+
+.ul-secundary ul{ 
+    list-style-type: "✓";
+}

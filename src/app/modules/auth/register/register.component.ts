@@ -121,6 +121,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         width: window.innerWidth < 500 ? '96vw' : '90vw',
         maxWidth: '96vw',
         height: 'max-content',
+        autoFocus:false
       });
       dialogRef.afterClosed().subscribe(result => {
         this.checkTermsAndConditions = !!result;
