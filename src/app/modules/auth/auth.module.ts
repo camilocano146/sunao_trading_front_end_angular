@@ -25,6 +25,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {DialogTermsAndConditionsUserComponent} from './dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
+import { DialogRegisterQuizComponent } from './register/dialog-register-quiz/dialog-register-quiz.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {DialogTermsAndConditionsUserComponent} from './dialog-terms-and-conditio
     RecoverPasswordComponent,
     ChangePasswordComponent,
     DialogTermsAndConditionsUserComponent,
+    DialogRegisterQuizComponent,
   ],
   imports: [
     CommonModule,

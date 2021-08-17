@@ -27,6 +27,13 @@
                     class="d-flex justify-content-center color-white check-white mb-3">
         Términos y condiciones
       </mat-checkbox>
+      <mat-checkbox [(ngModel)]="checkQuiz"
+                    (click)="openDialogQuiz($event)"
+                    [disabled]="preload"
+                    class="d-flex justify-content-center color-white check-white mb-3">
+        Preguntas
+      </mat-checkbox>
+
       <div class="d-flex justify-content-center">
         <button *ngIf="!preload" mat-raised-button class="w-75 button-auth" (click)="register()">
           <h5>Continuar</h5>

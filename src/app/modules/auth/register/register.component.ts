@@ -11,6 +11,7 @@ import {MatDialog} from '@angular/material/dialog';
 import * as sha1 from 'js-sha1';
 import {Credential} from '../../../models/Credential';
 import {DialogTermsAndConditionsUserComponent} from '../dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
+import { DialogRegisterQuizComponent } from './dialog-register-quiz/dialog-register-quiz.component';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   );
   preload: boolean;
   checkTermsAndConditions: boolean;
+  checkQuiz:boolean;
   hidePass = true;
+
+  questions:any;
 
   constructor(
     private translate: TranslateService,
@@ -81,13 +85,18 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     if (!this.checkTermsAndConditions) {
       this.notifyService.showErrorSnapshot('Debes aceptar los términos y condiciones');
     }
-    if (this.formControlEmail.valid && this.formControlPassword.valid && this.checkTermsAndConditions) {
+    if(!this.checkQuiz){
+      this.notifyService.showErrorSnapshot('Debes contestar las preguntas para registrarte.');
+    }
+
+    if (this.formControlEmail.valid && this.formControlPassword.valid && this.checkTermsAndConditions && this.checkQuiz) {
       this.preload = true;
       const credential: Credential = new Credential(
         this.formControlEmail.value.toString().toLowerCase(),
         sha1(this.formControlPassword.value)
       );
       credential.email = this.formControlEmail.value.toString().toLowerCase();
+      credential.questions=this.questions;
       this.userService.register(credential).subscribe(
         value => {
           // this.router.navigate(['/activate-account']);
@@ -125,6 +134,29 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         this.checkTermsAndConditions = !!result;
+      });
+    }
+  }
+
+  openDialogQuiz(event:MouseEvent): void{
+    if (!this.checkQuiz) {
+      event.preventDefault();
+      let width='40vw';
+      if (window.innerWidth < 500){
+        width='110vw';
+      }else if (window.innerWidth > 500 && window.innerWidth < 950 ){
+        width='60vw';
+      }
+      const dialogRef = this.matDialog.open(DialogRegisterQuizComponent, {
+        width: width,
+        maxWidth: '110vw',
+        height: 'max-content',
+        autoFocus:false
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.questions=result;
+        this.checkQuiz=!!result;
+        
       });
     }
   }

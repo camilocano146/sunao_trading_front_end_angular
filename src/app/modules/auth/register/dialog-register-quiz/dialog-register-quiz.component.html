@@ -1,0 +1,57 @@
+<!-- <mat-form-field>
+    <mat-select placeholder="Toppings">
+        <mat-option *ngFor="let topping of toppingList; let i =index" [value]="topping">
+            <mat-checkbox [checked]="selected === i" (change)="onChange(topping);selected = i"> {{topping}}</mat-checkbox>
+        </mat-option>
+    </mat-select>
+</mat-form-field> -->
+
+<div mat-dialog-title>
+    <h5 class="color-blue-warehouse text-center">
+        Conteste las siguientes preguntas.
+    </h5>
+</div>
+
+<div mat-dialog-content class="text-justify" style="text-align: justify;
+  text-justify: inter-word;">
+
+    <div class="row text-center">
+        <div class="col-12">
+            <label class="col-12"> <b>¿Usted hace operaciones de comercio exterior?</b></label>
+            <mat-checkbox  style="margin-right: 10px;" *ngFor="let c of listConfirmOptions; let i = index" [checked]="formConfirmOption.value === i"
+                (change)="onChange($event,i);  ">{{c}}</mat-checkbox>
+        </div>
+        <br>
+    </div>
+    
+    <div class="row " *ngIf="formConfirmOption.value === 0">
+        <div class="col-12 text-center">
+            <label class="col-12"> <b>¿Que operaciones hace? </b></label>
+            <mat-checkbox  style="margin-right: 10px;" *ngFor="let o of listOperationsType; let i = index" [checked]="formOperationsType.value === i"
+                (change)="onChangeOperationsType($event,i);">{{o}}</mat-checkbox>
+        </div>
+        <br>
+    </div>
+    
+    <div class="row" *ngIf="formConfirmOption.value === 0">
+        <div class="col-12 text-center">
+            <label class="col-12"> <b> ¿Cuantas toneladas? </b></label>
+            <mat-checkbox class="col-12" style="margin-right: 10px;" *ngFor="let q of listQuantities; let i =index" [checked]="formQuantities.value === i"
+                (change)="onChangeQuantities($event,i);"> {{q}}</mat-checkbox>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <mat-error *ngIf="(formConfirmOption.invalid  || formOperationsType.invalid ||formQuantities.invalid) && isClickedSave==true">Responda todas las preguntas</mat-error>
+    </div>
+
+</div>
+
+<div mat-dialog-actions class="d-flex justify-content-center">
+    <!-- <button mat-raised-button class="btn-red color-white me-3" (click)="dialogRef.close()">
+        Declinar
+    </button> -->
+    <button mat-raised-button class="btn-blue color-white ms-3" (click)="save()">
+        Guardar
+    </button>
+</div>
