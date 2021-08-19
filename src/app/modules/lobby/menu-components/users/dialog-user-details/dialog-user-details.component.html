@@ -1,0 +1,115 @@
+<div class="" mat-dialog-title>
+    <div class="row justify-content-between">
+        <div class="col-10 col-sm-10 col-md-10">
+            <strong class="color-blue">
+                Detalle de usuario
+            </strong>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2">
+            <button type="button" class="close btn-close-dialog" (click)="onNoClick()">
+                <span aria-hidden="false">&times;</span>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<div mat-dialog-content>
+
+
+    <div *ngIf="preload" class="w-100 text-center">
+        <mat-spinner diameter="40" class="m-auto"></mat-spinner>
+    </div>
+
+    <div *ngIf="!preload">
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+                <h4>Nombre</h4>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div *ngIf="info?.first_name || info?.last_name">
+                    {{info?.first_name}} {{info?.last_name}}
+                </div>
+                <div *ngIf="!info?.first_name && !info?.last_name">
+                    Sin asignar
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+                <h4>Documento</h4>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div *ngIf="info?.document">
+                    {{info?.document}}
+                </div>
+                <div *ngIf="!info?.document">
+                    Sin asignar
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+                <h4>Email</h4>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div *ngIf="info?.email">
+                    {{info?.email}}
+                </div>
+                <div *ngIf="!info?.email">
+                    Sin asignar
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="info?.quiz">
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6">
+                    <h4>¿Hace operaciones de comercio exterior?</h4>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6">
+                    <div *ngIf="info?.comerce_operations">
+                        {{info?.comerce_operations}}
+                    </div>
+                    <div *ngIf="!info?.comerce_operations">
+                        Sin asignar
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="info?.quiz && info?.operations_type">
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6">
+                    <h4>¿Que operaciones hace?</h4>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6">
+                    <div>
+                        {{info?.operations_type}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="info?.quiz && info?.quantity_ton">
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6">
+                    <h4>¿Cuantas toneladas?</h4>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6">
+                    <div>
+                        {{info?.quantity_ton}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="text-center" mat-dialog-actions style="margin-top: 10px;">
+    <button mat-raised-button color="primary" class="w-100" (click)="onNoClick()">
+        Cerrar
+    </button>
+</div>

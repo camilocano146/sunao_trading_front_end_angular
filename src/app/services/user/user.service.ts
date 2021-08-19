@@ -95,6 +95,9 @@ export class UserService {
       list:vect_id
     }
     return this.httpClient.post(`users/${userId}/set_roles/`, data);
+  }
 
+  get_info_user_by_id(idUser): Observable<any>{
+    return this.httpClient.get<any>("users/" + idUser + "/get_info_user_by_id/", { observe: 'response' });
   }
 }

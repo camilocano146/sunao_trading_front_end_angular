@@ -110,10 +110,14 @@
                 <img src="./assets/icons/delete_black_24dp.svg" alt="">
                 Desactivar
               </button>
-              <button mat-button matTooltip="" (click)="openDialogRoles(row.id)">
+              <button mat-menu-item matTooltip="" (click)="openDialogRoles(row.id)">
                 <img src="./assets/icons-menu/message-24px.svg" alt="">
                 Administrar roles
-            </button>
+              </button>
+              <button mat-menu-item matTooltip="" (click)="openDetailsUser(row.id)">
+                <img src="./assets/icons/fact_check_black_24dp.svg" alt="">
+                Detalles
+              </button>
             </mat-menu>
           </td>
         </ng-container>

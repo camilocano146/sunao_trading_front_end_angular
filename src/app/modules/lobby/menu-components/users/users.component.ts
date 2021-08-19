@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import {FormControl} from '@angular/forms';
 import { DialogUserChangeRolesComponent } from './dialog-user-change-roles/dialog-user-change-roles.component';
 import { NotifyService } from 'src/app/services/notify/notify.service';
+import { DialogUserDetailsComponent } from './dialog-user-details/dialog-user-details.component';
 // import {DialogImportPortTarifsComponent} from './dialog-import-port-tarifs/dialog-import-port-tarifs.component';
 
 @Component({
@@ -121,4 +122,15 @@ export class UsersComponent implements OnInit {
     });
 
   }
+
+  openDetailsUser(idUser){
+    const dialogRef = this.dialog.open(DialogUserDetailsComponent, {
+      minWidth: '350px',
+      maxWidth: '700px',
+      width: '700px',
+      data: +idUser
+    });
+  }
+
+
 }

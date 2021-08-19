@@ -72,6 +72,7 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
 import {DialogExportSendLiquidationComponent} from './menu-components/liquidations/dialog-export-send-liquidation/dialog-export-send-liquidation.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { DialogUserChangeRolesComponent } from './menu-components/users/dialog-user-change-roles/dialog-user-change-roles.component';
+import { DialogUserDetailsComponent } from './menu-components/users/dialog-user-details/dialog-user-details.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { DialogUserChangeRolesComponent } from './menu-components/users/dialog-u
     LiquidationComparatorComponent,
     DialogExportSendLiquidationComponent,
     DialogUserChangeRolesComponent,
+    DialogUserDetailsComponent,
   ],
   imports: [
     CommonModule,
