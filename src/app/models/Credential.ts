@@ -9,7 +9,7 @@ export class Credential {
     public grant_type = 'password';
     public email?: string;
     public questions?:any;
-
+    public info_user?:any;
     constructor(
         public username: string,
         public password: string

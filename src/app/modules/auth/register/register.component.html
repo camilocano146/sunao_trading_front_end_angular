@@ -10,9 +10,33 @@
       </h6>
       <div class="pt-3 pb-1 mx-2">
         <mat-form-field class="w-100" appearance="outline">
-          <input type="email" matInput placeholder="Usuario" [formControl]="formControlEmail" required>
+          <input type="email" matInput placeholder="Usuario (email)" [formControl]="formControlEmail" required>
           <mat-error *ngIf="formControlEmail.invalid">{{getErrorMessageEmail()}}</mat-error>
         </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput placeholder="Nombre o razon social" [formControl]="formControlName" [type]=" 'text'" required>
+          <mat-error *ngIf="formControlName.invalid">{{getErrorMessageName()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput placeholder="Apellidos (Opcional)" [formControl]="formControlLastName" [type]="'text'" required>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput placeholder="Documento/Nit" [formControl]="formControlNit" [type]=" 'text'" required>
+          <mat-error *ngIf="formControlNit.invalid">{{getErrorMessageNit()}}</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput placeholder="País" [formControl]="formControlCountry" [type]=" 'text'" required>
+          <mat-error *ngIf="formControlCountry.invalid">{{getErrorMessageCountry()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput placeholder="Telefono" [formControl]="formControlPhone" [type]=" 'text'" required>
+          <mat-error *ngIf="formControlPhone.invalid">{{getErrorMessagePhone()}}</mat-error>
+        </mat-form-field>
+
         <mat-form-field (keyup.enter)="register()" class="w-100" appearance="outline">
           <input type="password" matInput placeholder="Contraseña" [formControl]="formControlPassword" [type]="hidePass ? 'password' : 'text'" required>
           <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">

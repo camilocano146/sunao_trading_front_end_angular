@@ -99,6 +99,8 @@ export class ProfileComponent implements OnInit {
         this.user.last_name = result?.last_name;
         this.user.document = result?.document;
         this.user.digit_check = result?.digit_check;
+        this.user.country= result?.country;
+        this.user.phone= result?.phone;
       }
     });
   }

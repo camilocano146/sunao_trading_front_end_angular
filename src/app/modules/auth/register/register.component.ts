@@ -25,6 +25,26 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   formControlPassword: FormControl = new FormControl('',
     [Validators.required, Validators.minLength(8), Validators.maxLength(100)]
   );
+
+  formControlName: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+
+  formControlLastName: FormControl = new FormControl('',
+    [Validators.maxLength(100)]
+  );
+
+  formControlNit: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+
+  formControlCountry: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+  formControlPhone: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+
   preload: boolean;
   checkTermsAndConditions: boolean;
   checkQuiz:boolean;
@@ -78,6 +98,52 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           : '';
   }
 
+  /**
+   * Devuelve el mensaje de nombre incorrecto
+   */
+   getErrorMessageName(): string {
+    return this.formControlName.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlName.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlName.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
+  }
+
+  /**
+   * Devuelve el mensaje de nombre incorrecto
+   */
+   getErrorMessageNit(): string {
+    return this.formControlNit.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlNit.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlNit.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
+  }
+
+  getErrorMessageCountry(): string {
+    return this.formControlCountry.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlCountry.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlCountry.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
+  }
+  getErrorMessagePhone(): string {
+    return this.formControlPhone.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlPhone.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlPhone.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
+  }
+
+
   register(): void {
     if (this.formControlEmail.value) {
       this.formControlEmail.setValue(this.formControlEmail.value.toString().toLowerCase().trim());
@@ -89,14 +155,32 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.notifyService.showErrorSnapshot('Debes contestar las preguntas para registrarte.');
     }
 
-    if (this.formControlEmail.valid && this.formControlPassword.valid && this.checkTermsAndConditions && this.checkQuiz) {
+    if (this.formControlEmail.valid && 
+      this.formControlPassword.valid && 
+      this.checkTermsAndConditions && 
+      this.checkQuiz &&
+      this.formControlName.valid &&
+      this.formControlLastName.valid &&
+      this.formControlNit.valid &&
+      this.formControlCountry.valid &&
+      this.formControlPhone.valid) {
       this.preload = true;
       const credential: Credential = new Credential(
         this.formControlEmail.value.toString().toLowerCase(),
         sha1(this.formControlPassword.value)
       );
+      let info_user ={
+        first_name: this.formControlName.value,
+        last_name:this.formControlLastName.value?this.formControlLastName.value:'',
+        nit: this.formControlNit.value,
+        country:this.formControlCountry.value,
+        phone: this.formControlPhone.value
+      }
       credential.email = this.formControlEmail.value.toString().toLowerCase();
       credential.questions=this.questions;
+      credential.info_user= info_user;
+      
+
       this.userService.register(credential).subscribe(
         value => {
           // this.router.navigate(['/activate-account']);
@@ -120,6 +204,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     } else {
       this.formControlEmail.markAsTouched();
       this.formControlPassword.markAsTouched();
+      this.formControlName.markAllAsTouched();
+      this.formControlLastName.markAllAsTouched();
+      this.formControlNit.markAllAsTouched();
+      this.formControlCountry.markAllAsTouched();
+      this.formControlPhone.markAllAsTouched();
     }
   }
 
@@ -141,7 +230,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   openDialogQuiz(event:MouseEvent): void{
     if (!this.checkQuiz) {
       event.preventDefault();
-      let width='40vw';
+      let width='35vw';
       if (window.innerWidth < 500){
         width='110vw';
       }else if (window.innerWidth > 500 && window.innerWidth < 950 ){

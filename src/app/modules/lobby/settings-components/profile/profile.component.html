@@ -50,7 +50,7 @@
             <h4>
               <img src="./assets/icons/person_black_24dp.svg" alt="">
               <span>
-              Nombre
+              Nombre/Razon social
             </span>
             </h4>
           </div>
@@ -67,10 +67,10 @@
         </div>
         <div class="row justify-content-evenly mt-3 mt-lg-0">
           <div class="col-7 col-lg-3 text-center text-lg-start">
-            <h4>
+            <h4 class="number-field-text">
               <img src="./assets/icons/badge_black_24dp.svg" alt="">
               <span>
-              Documento
+              Documento/NIT
             </span>
             </h4>
           </div>
@@ -98,6 +98,46 @@
             <h4>
               {{user?.email}}
             </h4>
+          </div>
+        </div>
+        <div class="row justify-content-evenly mt-3 mt-lg-0">
+          <div class="col-7 col-lg-3 text-center text-lg-start">
+            <h4>
+              <img src="./assets/icons/phone_white_black_24dp.svg" alt="">
+              <span>
+              Telefono
+            </span>
+            </h4>
+          </div>
+          <div class="col-7 col-lg-3 text-center text-lg-start">
+            <h4 *ngIf="user?.phone; else notDocument" class="number-field-text">
+              {{user?.phone}}
+            </h4>
+            <ng-template #notDocument>
+              <h4>
+                Sin asignar
+              </h4>
+            </ng-template>
+          </div>
+        </div>
+        <div class="row justify-content-evenly mt-3 mt-lg-0">
+          <div class="col-7 col-lg-3 text-center text-lg-start">
+            <h4>
+              <img src="./assets/icons/location_city_black_24dp.svg" alt="">
+              <span>
+              País
+            </span>
+            </h4>
+          </div>
+          <div class="col-7 col-lg-3 text-center text-lg-start">
+            <h4 *ngIf="user?.country; else notCountry" class="number-field-text">
+              {{user?.country}}
+            </h4>
+            <ng-template #notCountry>
+              <h4>
+                Sin asignar
+              </h4>
+            </ng-template>
           </div>
         </div>
       </div>

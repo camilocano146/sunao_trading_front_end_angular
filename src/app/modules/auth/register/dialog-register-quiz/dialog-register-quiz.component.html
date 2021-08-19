@@ -15,32 +15,30 @@
 <div mat-dialog-content class="text-justify" style="text-align: justify;
   text-justify: inter-word;">
 
-    <div class="row text-center">
-        <div class="col-12">
+    <div class="row mb-3">
+        <div class="text-lg-start col-12">
             <label class="col-12"> <b>¿Usted hace operaciones de comercio exterior?</b></label>
             <mat-checkbox  style="margin-right: 10px;" *ngFor="let c of listConfirmOptions; let i = index" [checked]="formConfirmOption.value === i"
                 (change)="onChange($event,i);  ">{{c}}</mat-checkbox>
         </div>
-        <br>
     </div>
     
-    <div class="row " *ngIf="formConfirmOption.value === 0">
-        <div class="col-12 text-center">
+    <div class="row mb-3" *ngIf="formConfirmOption.value === 0">
+        <div class="col-12 text-lg-start">
             <label class="col-12"> <b>¿Que operaciones hace? </b></label>
             <mat-checkbox  style="margin-right: 10px;" *ngFor="let o of listOperationsType; let i = index" [checked]="formOperationsType.value === i"
                 (change)="onChangeOperationsType($event,i);">{{o}}</mat-checkbox>
         </div>
-        <br>
     </div>
     
     <div class="row" *ngIf="formConfirmOption.value === 0">
-        <div class="col-12 text-center">
+        <div class="col-12 text-lg-start">
             <label class="col-12"> <b> ¿Cuantas toneladas? </b></label>
             <mat-checkbox class="col-12" style="margin-right: 10px;" *ngFor="let q of listQuantities; let i =index" [checked]="formQuantities.value === i"
                 (change)="onChangeQuantities($event,i);"> {{q}}</mat-checkbox>
         </div>
     </div>
-
+    
     <div class="row text-center">
         <mat-error *ngIf="(formConfirmOption.invalid  || formOperationsType.invalid ||formQuantities.invalid) && isClickedSave==true">Responda todas las preguntas</mat-error>
     </div>

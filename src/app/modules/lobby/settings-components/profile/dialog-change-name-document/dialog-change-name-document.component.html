@@ -19,8 +19,18 @@
   </mat-form-field>
 
   <mat-form-field class="w-75 m-auto" appearance="outline">
-    <input matInput placeholder="Ingrese Documento" [formControl]="formControlDocument" required>
+    <input matInput placeholder="Ingrese Documento/NIT" [formControl]="formControlDocument" required>
     <mat-error *ngIf="formControlDocument.invalid">{{getErrorMessageDocument()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-75 m-auto" appearance="outline">
+    <input matInput placeholder="Ingrese país" [formControl]="formControlCountry" required>
+    <mat-error *ngIf="formControlCountry.invalid">{{getErrorMessageCountry()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-75 m-auto" appearance="outline">
+    <input matInput placeholder="Ingrese teléfono" [formControl]="formControlPhone" required>
+    <mat-error *ngIf="formControlPhone.invalid">{{getErrorMessagePhone()}}</mat-error>
   </mat-form-field>
 </div>
 

@@ -15,8 +15,10 @@ import {User} from "../../../../../models/User";
 })
 export class DialogChangeNameDocumentComponent implements OnInit {
   formControlFirstName: FormControl = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]);
-  formControlLastName: FormControl = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]);
+  formControlLastName: FormControl = new FormControl('', [Validators.maxLength(30)]);
   formControlDocument: FormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]);
+  formControlCountry: FormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]);
+  formControlPhone: FormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]);
   preload: boolean;
 
   constructor(
@@ -30,6 +32,8 @@ export class DialogChangeNameDocumentComponent implements OnInit {
       this.formControlFirstName.setValue(user.first_name);
       this.formControlLastName.setValue(user.last_name);
       this.formControlDocument.setValue(user.document);
+      this.formControlCountry.setValue(user.country);
+      this.formControlPhone.setValue(user.phone);
     }
   }
 
@@ -47,13 +51,7 @@ export class DialogChangeNameDocumentComponent implements OnInit {
   }
 
   getErrorMessageLastName(): string {
-    return this.formControlLastName.hasError('required')
-      ? 'Este campo es obligatorio'
-      : this.formControlLastName.hasError('minlength')
-        ? 'Longitud mínima de 2 cacteres'
-        : this.formControlLastName.hasError('maxlength')
-          ? 'Longitud máxima de 30 cacteres'
-          : '';
+    return this.formControlLastName.hasError('maxlength')? 'Longitud máxima de 30 cacteres' : '';
   }
 
   getErrorMessageDocument(): string {
@@ -66,16 +64,40 @@ export class DialogChangeNameDocumentComponent implements OnInit {
           : '';
   }
 
+  getErrorMessageCountry(): string {
+    return this.formControlCountry.hasError('required')
+      ? 'Este campo es obligatorio'
+      : this.formControlCountry.hasError('minlength')
+        ? 'Longitud mínima de 5 cacteres'
+        : this.formControlCountry.hasError('maxlength')
+          ? 'Longitud máxima de 20 cacteres'
+          : '';
+  }
+
+  getErrorMessagePhone(): string {
+    return this.formControlPhone.hasError('required')
+      ? 'Este campo es obligatorio'
+      : this.formControlPhone.hasError('minlength')
+        ? 'Longitud mínima de 5 cacteres'
+        : this.formControlPhone.hasError('maxlength')
+          ? 'Longitud máxima de 20 cacteres'
+          : '';
+  }
+
   changeEmail(): void {
     const firstName = this.formControlFirstName.value?.trim();
     const lastName = this.formControlLastName.value?.trim();
     const document = this.formControlDocument.value?.trim();
+    const country = this.formControlCountry.value?.trim();
+    const phone= this.formControlPhone.value?.trim();
     if (this.formControlFirstName.valid && this.formControlLastName.valid && this.formControlDocument.valid) {
       this.preload = true;
       const user = {
         first_name: firstName,
         last_name: lastName,
         document,
+        country:country,
+        phone: phone, 
         digit_check: undefined
       };
       if (user.document) {
@@ -93,6 +115,8 @@ export class DialogChangeNameDocumentComponent implements OnInit {
       this.formControlFirstName.markAsTouched();
       this.formControlLastName.markAsTouched();
       this.formControlDocument.markAsTouched();
+      this.formControlCountry.markAllAsTouched();
+      this.formControlPhone.markAllAsTouched();
     }
   }
 }

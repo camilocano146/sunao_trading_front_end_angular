@@ -24,7 +24,7 @@
     <div *ngIf="!preload">
         <div class="row">
             <div class="col-6 col-sm-6 col-md-6">
-                <h4>Nombre</h4>
+                <h4>Nombre/Razon social</h4>
             </div>
             <div class="col-6 col-sm-6 col-md-6">
                 <div *ngIf="info?.first_name || info?.last_name">
@@ -37,7 +37,7 @@
         </div>
         <div class="row">
             <div class="col-6 col-sm-6 col-md-6">
-                <h4>Documento</h4>
+                <h4>Documento/NIT</h4>
             </div>
             <div class="col-6 col-sm-6 col-md-6">
                 <div *ngIf="info?.document">
@@ -57,6 +57,34 @@
                     {{info?.email}}
                 </div>
                 <div *ngIf="!info?.email">
+                    Sin asignar
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+                <h4>País</h4>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div *ngIf="info?.country">
+                    {{info?.country}}
+                </div>
+                <div *ngIf="!info?.country">
+                    Sin asignar
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+                <h4>Teléfono</h4>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div *ngIf="info?.phone">
+                    {{info?.phone}}
+                </div>
+                <div *ngIf="!info?.phone">
                     Sin asignar
                 </div>
             </div>
