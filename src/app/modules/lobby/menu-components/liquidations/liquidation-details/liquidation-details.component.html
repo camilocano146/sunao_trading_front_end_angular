@@ -588,7 +588,7 @@
         </h4>
       </div>
 
-      <div class="row m-0 div-bottom-info">
+      <div class="row m-0 div-bottom-info" *ngIf="isIncotermDDP()">
         <h6 class="color-blue py-3 mb-0 col-lg-10 col-md-9 col-sm-8">
           Valor liquidado solo para efectos de flujo de caja, NO incluido en el costo total de la liquidación, por ser el IVA un valor deducible.
         </h6>
@@ -598,7 +598,7 @@
         </mat-checkbox>
       </div>
 
-      <mat-accordion *ngIf="seeIVA" class="mat-accordion-blue">
+      <mat-accordion *ngIf="seeIVA && isIncotermDDP()" class="mat-accordion-blue">
         <mat-expansion-panel #matExpansionFiles>
           <mat-expansion-panel-header>
 

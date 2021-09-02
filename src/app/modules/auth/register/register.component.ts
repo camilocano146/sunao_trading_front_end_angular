@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(40)]
   );
   formControlPassword: FormControl = new FormControl('',
-    [Validators.required, Validators.minLength(8), Validators.maxLength(100)]
+    [Validators.required]
   );
 
   formControlName: FormControl = new FormControl('',

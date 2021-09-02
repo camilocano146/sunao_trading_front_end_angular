@@ -99,7 +99,7 @@
             Valor
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.value">{{row.value}}</span>
+            <span *ngIf="row.value" class="number-field-text">{{row.value}}</span>
             <span *ngIf="!row.value">N/A</span>
           </td>
         </ng-container>

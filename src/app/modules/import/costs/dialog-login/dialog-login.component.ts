@@ -9,6 +9,7 @@ import {Credential} from '../../../../models/Credential';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as sha1 from 'js-sha1';
 import {DialogTermsAndConditionsUserComponent} from '../../../auth/dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
+import { DialogRegisterQuizComponent } from 'src/app/modules/auth/register/dialog-register-quiz/dialog-register-quiz.component';
 
 @Component({
   selector: 'app-dialog-resume',
@@ -22,11 +23,39 @@ export class DialogLoginComponent implements OnInit {
   formControlPassword: FormControl = new FormControl('',
     [Validators.required]
   );
+
+  formControlEmail: FormControl = new FormControl('',
+    [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(40)]
+  );
+
+  formControlName: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+
+  formControlLastName: FormControl = new FormControl('',
+    [Validators.maxLength(100)]
+  );
+
+  formControlNit: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+
+  formControlCountry: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+  formControlPhone: FormControl = new FormControl('',
+    [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
+  );
+
+
   preload: boolean;
   hidePass = true;
   showLogin = true;
   showRegister: boolean;
   checkTermsAndConditions: boolean;
+
+  checkQuiz:boolean;
+  questions:any;
 
   constructor(
     private translate: TranslateService,
@@ -60,6 +89,67 @@ export class DialogLoginComponent implements OnInit {
     return this.formControlPassword.hasError('required')
       ? this.translate.instant('fields.required')
       : '';
+  }
+
+
+  /**
+   * Mensajes de error campo usuario
+   */
+   getErrorMessageEmail(): string {
+    return this.formControlEmail.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlEmail.hasError('email')
+        ? this.translate.instant('fields.invalid_email')
+        : this.formControlEmail.hasError('minlength')
+          ? this.translate.instant('fields.min_5')
+          : this.formControlEmail.hasError('maxlength')
+            ? this.translate.instant('fields.max_40')
+            : '';
+  }
+
+  /**
+   * Devuelve el mensaje de nombre incorrecto
+   */
+   getErrorMessageName(): string {
+    return this.formControlName.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlName.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlName.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
+  }
+
+  /**
+   * Devuelve el mensaje de nombre incorrecto
+   */
+   getErrorMessageNit(): string {
+    return this.formControlNit.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlNit.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlNit.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
+  }
+
+  getErrorMessageCountry(): string {
+    return this.formControlCountry.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlCountry.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlCountry.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
+  }
+  getErrorMessagePhone(): string {
+    return this.formControlPhone.hasError('required')
+      ? this.translate.instant('fields.required')
+      : this.formControlPhone.hasError('minlength')
+        ? this.translate.instant('fields.min_4')
+        : this.formControlPhone.hasError('maxlength')
+          ? this.translate.instant('fields.max_100')
+          : '';
   }
 
   signIn(): void {
@@ -106,30 +196,50 @@ export class DialogLoginComponent implements OnInit {
     }
   }
 
+
   register(): void {
-    if (this.formControlUser.value) {
-      this.formControlUser.setValue(this.formControlUser.value.toString().toLowerCase().trim());
+    if (this.formControlEmail.value) {
+      this.formControlEmail.setValue(this.formControlEmail.value.toString().toLowerCase().trim());
     }
     if (!this.checkTermsAndConditions) {
       this.notifyService.showErrorSnapshot('Debes aceptar los términos y condiciones');
     }
-    if (this.formControlUser.valid && this.formControlPassword.valid && this.checkTermsAndConditions) {
+    if(!this.checkQuiz){
+      this.notifyService.showErrorSnapshot('Debes contestar las preguntas para registrarte.');
+    }
+
+    if (this.formControlEmail.valid && 
+      this.formControlPassword.valid && 
+      this.checkTermsAndConditions && 
+      this.checkQuiz &&
+      this.formControlName.valid &&
+      this.formControlLastName.valid &&
+      this.formControlNit.valid &&
+      this.formControlCountry.valid &&
+      this.formControlPhone.valid) {
       this.preload = true;
       const credential: Credential = new Credential(
-        this.formControlUser.value.toString().toLowerCase(),
+        this.formControlEmail.value.toString().toLowerCase(),
         sha1(this.formControlPassword.value)
       );
-      credential.email = this.formControlUser.value.toString().toLowerCase();
+      let info_user ={
+        first_name: this.formControlName.value,
+        last_name:this.formControlLastName.value?this.formControlLastName.value:'',
+        nit: this.formControlNit.value,
+        country:this.formControlCountry.value,
+        phone: this.formControlPhone.value
+      }
+      credential.email = this.formControlEmail.value.toString().toLowerCase();
+      credential.questions=this.questions;
+      credential.info_user= info_user;
+      
+
       this.userService.register(credential).subscribe(
         value => {
-          // this.router.navigate(['/activate-account']);
-          // this.userService.saveLocalStorageToken(value.body.token);
-          // this.router.navigate(['lobby']);
           this.userService.saveLocalStorageToken(value.access_token);
           this.userService.saveLocalStorageUser(value.user);
           this.matDialogRef.close(value);
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.register.create_ok'));
-          // this.notifyService.showWarningSnapshot(this.translate.instant('auth.register.email_not_verifies'));
         }, (error: HttpErrorResponse) => {
           const errorEmail = error.error;
           if (errorEmail?.email) {
@@ -141,8 +251,13 @@ export class DialogLoginComponent implements OnInit {
         }
       );
     } else {
-      this.formControlUser.markAsTouched();
+      this.formControlEmail.markAsTouched();
       this.formControlPassword.markAsTouched();
+      this.formControlName.markAllAsTouched();
+      this.formControlLastName.markAllAsTouched();
+      this.formControlNit.markAllAsTouched();
+      this.formControlCountry.markAllAsTouched();
+      this.formControlPhone.markAllAsTouched();
     }
   }
 
@@ -172,6 +287,29 @@ export class DialogLoginComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         this.checkTermsAndConditions = !!result;
+      });
+    }
+  }
+
+  openDialogQuiz(event:MouseEvent): void{
+    if (!this.checkQuiz) {
+      event.preventDefault();
+      let width='35vw';
+      if (window.innerWidth < 500){
+        width='110vw';
+      }else if (window.innerWidth > 500 && window.innerWidth < 950 ){
+        width='60vw';
+      }
+      const dialogRef = this.matDialog.open(DialogRegisterQuizComponent, {
+        width: width,
+        maxWidth: '110vw',
+        height: 'max-content',
+        autoFocus:false
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.questions=result;
+        this.checkQuiz=!!result;
+        
       });
     }
   }

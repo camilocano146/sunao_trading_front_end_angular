@@ -116,7 +116,7 @@
             $ Costo
           </th>
           <td mat-cell *matCellDef="let row">
-            <span *ngIf="row.cost">$ {{row.cost}}</span>
+            <span *ngIf="row.cost" class="number-field-text">$ {{row.cost}}</span>
             <span *ngIf="!row.cost">N/A</span>
           </td>
         </ng-container>

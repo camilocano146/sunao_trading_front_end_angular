@@ -54,7 +54,7 @@
           Ingresa los siguientes datos para realizar tu registro.
         </h6>
         <div class="pt-3 pb-1 mx-2">
-          <mat-form-field class="w-100" appearance="outline">
+          <!-- <mat-form-field class="w-100" appearance="outline">
             <input type="email" matInput placeholder="Usuario" [formControl]="formControlUser" required>
             <mat-error *ngIf="formControlUser.invalid">{{getErrorMessageUser()}}</mat-error>
           </mat-form-field>
@@ -64,13 +64,57 @@
               <mat-icon class="color-aqua-blue">{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error *ngIf="formControlPassword.invalid">{{getErrorMessagePassword()}}</mat-error>
+          </mat-form-field> -->
+
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="email" matInput placeholder="Usuario (email)" [formControl]="formControlEmail" required>
+            <mat-error *ngIf="formControlEmail.invalid">{{getErrorMessageEmail()}}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput placeholder="Nombre o razon social" [formControl]="formControlName" [type]=" 'text'" required>
+            <mat-error *ngIf="formControlName.invalid">{{getErrorMessageName()}}</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput placeholder="Apellidos (Opcional)" [formControl]="formControlLastName" [type]="'text'" required>
+          </mat-form-field>
+  
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput placeholder="Documento/Nit" [formControl]="formControlNit" [type]=" 'text'" required>
+            <mat-error *ngIf="formControlNit.invalid">{{getErrorMessageNit()}}</mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput placeholder="País" [formControl]="formControlCountry" [type]=" 'text'" required>
+            <mat-error *ngIf="formControlCountry.invalid">{{getErrorMessageCountry()}}</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput placeholder="Telefono" [formControl]="formControlPhone" [type]=" 'text'" required>
+            <mat-error *ngIf="formControlPhone.invalid">{{getErrorMessagePhone()}}</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field (keyup.enter)="register()" class="w-100" appearance="outline">
+            <input type="password" matInput placeholder="Contraseña" [formControl]="formControlPassword" [type]="hidePass ? 'password' : 'text'" required>
+            <button mat-icon-button matSuffix (click)="hidePass = !hidePass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+              <mat-icon class="color-aqua-blue">{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="formControlPassword.invalid">{{getErrorMessagePassword()}}</mat-error>
           </mat-form-field>
         </div>
+
+
         <mat-checkbox [(ngModel)]="checkTermsAndConditions"
                       (click)="openDialogTermsAndConditions($event)"
                       [disabled]="preload"
                       class="d-flex justify-content-center color-white check-white mb-3">
           Términos y condiciones
+        </mat-checkbox>
+        <mat-checkbox [(ngModel)]="checkQuiz"
+                      (click)="openDialogQuiz($event)"
+                      [disabled]="preload"
+                      class="d-flex justify-content-center color-white check-white mb-3">
+          Preguntas
         </mat-checkbox>
         <div class="d-flex justify-content-center">
           <button *ngIf="!preload" mat-raised-button class="w-75 button-auth" (click)="register()">
