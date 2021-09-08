@@ -13,4 +13,5 @@ export interface Port_tarif {
     cost:number;
     return_cost?:boolean; 
     free_days?: number;
+    user?: any;
   }

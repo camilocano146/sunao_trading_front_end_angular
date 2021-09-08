@@ -81,6 +81,17 @@
           </td>
         </ng-container>
 
+        <!-- Usuario  Column -->
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/account_circle_white_24dp.svg" alt="">
+            Usuario
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span class="number-field-text">({{row.user.id}}) {{row.user.email}}</span>
+          </td>
+        </ng-container>
+
         <!-- transist_days Column -->
         <ng-container matColumnDef="payment_method">
           <th mat-header-cell *matHeaderCellDef>

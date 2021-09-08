@@ -26,6 +26,7 @@ export class TransactionsComponent implements OnInit {
     'date',
     'status',
     'value',
+    'user',
     'payment_method',
   ];
 
@@ -45,6 +46,7 @@ export class TransactionsComponent implements OnInit {
     const page = this.paginator?.pageIndex ? this.paginator.pageIndex * limit : 0;
     this.portTarifService.getAll(page, limit).subscribe(res => {
       this.list = res.results;
+      console.log(this.list)
       this.resultsLength = res.count;
       this.preload = false;
     });

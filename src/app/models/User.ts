@@ -23,6 +23,7 @@ export interface User {
   digit_check?: string;
   last_name?: string;
   first_name?: string;
+  roles?:any;
 }
 
 export interface UserLogin {

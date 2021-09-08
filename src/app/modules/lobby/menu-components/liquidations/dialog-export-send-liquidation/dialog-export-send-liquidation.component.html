@@ -1,6 +1,6 @@
 <div class="row dialog-title">
   <h5 class="col-10">
-    {{data === exportSendLiquidation.EXPORT ? 'Exportar Liquidación' : 'Enviar Liquidación'}}
+    {{data.type === exportSendLiquidation.EXPORT ? 'Exportar Liquidación' : 'Enviar Liquidación'}}
   </h5>
   <div class="col-2 text-right">
     <img class="img-close-dialog" src="./assets/icons/close_white.svg" alt="" (click)="matDialogRef.close()">

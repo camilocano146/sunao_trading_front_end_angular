@@ -42,11 +42,11 @@
       <mat-nav-list class="mt-4">
         <a [ngClass]="isSelectOption('/lobby') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="/" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/bar_chart-black-18dp.svg' + ') no-repeat center'}"></div>
-          Mis Liquidaciones
+          Liquidaciones
         </a>
         <a [ngClass]="isSelectOption('/transactions') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="transactions" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/shopping_bag_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/shopping_bag_black_24dp.svg' + ') no-repeat center'}"></div>
-          Mis Transacciones
+          Transacciones
         </a>
         <a *ngIf="isAdminUser" [ngClass]="isSelectOption('/locations') ? 'a-option-menu-selected' : ''" mat-list-item routerLink="locations" (click)="snav.toggle()">
           <div class="icon" [ngStyle]="{'mask': 'url(' + './assets/icons-menu/location_on_black_24dp.svg' + ') no-repeat center', '-webkit-mask': 'url(' + './assets/icons-menu/location_on_black_24dp.svg' + ') no-repeat center'}"></div>

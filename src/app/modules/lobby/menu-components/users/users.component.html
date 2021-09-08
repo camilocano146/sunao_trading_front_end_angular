@@ -90,6 +90,20 @@
             <span *ngIf="row.is_active==false">No</span>
           </td>
         </ng-container>
+        
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/nota.svg" alt="">
+            Roles
+
+          </th>
+          <td mat-cell *matCellDef="let row">
+
+            <span   *ngFor="let r of row.roles">{{r}} <br></span>
+            <span *ngIf="row.roles.length==0"> ----- </span>
+          </td>
+        </ng-container>
+        
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
