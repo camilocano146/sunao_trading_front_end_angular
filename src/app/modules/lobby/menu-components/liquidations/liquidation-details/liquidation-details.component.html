@@ -187,7 +187,7 @@
               Valor FOB
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div class="row">
             <div class="div-parent-table">
               <table>
@@ -204,7 +204,7 @@
                       <span>{{liquidation?.fob_cost_user | currency:' ':'symbol':'1.2'}} </span>
                     </td>
                   </tr>
-                  
+
                 </tbody>
               </table>
             </div>
@@ -244,12 +244,12 @@
                   <td>
                     El producto viaja del puerto {{liquidation?.port_origin?.name | titlecase}} ({{liquidation?.port_origin?.location?.name | titlecase}}) al puerto {{liquidation?.port_destination?.name | titlecase}} ({{liquidation?.port_destination?.location?.name | titlecase}})
                   y tiene un costo de <span >{{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.2')}} </span> USD
-                    
+
                   <br>
-                  Dias Libres: {{liquidation?.data?.free_days}} dias    
+                  Dias Libres: {{liquidation?.data?.free_days}} dias
                   </td>
                 </tr>
-                
+
               </table>
             </div>
           </div>
@@ -279,7 +279,7 @@
                   <td>
                     (Valor FOB + Flete Internacional) x <span>0.4%</span> = Valor seguro internacional
                     <br>
-                    <span>({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.2')}} USD</span>    
+                    <span>({{(+liquidation.fob_cost).toFixed(2)}} + {{liquidation?.data?.international_freight_cost}}) x 0.4% = {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.2')}} USD</span>
                   </td>
                 </tr>
               </table>
@@ -397,8 +397,8 @@
                   </tbody>
                 </table>
               </div>
-              
-              
+
+
             </mat-expansion-panel>
             <mat-expansion-panel #matExpansionPanel4_3 id="matExpansionPanel4_3">
               <mat-expansion-panel-header>
@@ -439,7 +439,7 @@
                 </table>
               </div>
             </mat-expansion-panel>
-            
+
           </div>
 
         </mat-expansion-panel>
@@ -458,7 +458,7 @@
             <mat-panel-title>
               Arancel
             </mat-panel-title>
-            
+
           </mat-expansion-panel-header>
 
 
@@ -531,7 +531,7 @@
                 </tbody>
               </table>
             </div>
-            
+
           </div>
           <div class="row" style="margin-top: 10px;">
             <h5>Importante: Favor tener presente que el puerto de origen seleccionado se tomará como país de origen de la mercancía para efectos de calculo de arancel y acuerdos internacionales</h5>
@@ -569,7 +569,7 @@
                       Incluye costo de retorno: No
                     </div>
                   </td>
-    
+
                 </tr>
               </table>
 
@@ -642,7 +642,7 @@
               Documentos Soporte
             </mat-panel-title>
           </mat-expansion-panel-header>
-          
+
           <div class="row">
             <div class="div-parent-table">
               <table>
@@ -669,7 +669,7 @@
                 </tbody>
               </table>
             </div>
-            
+
           </div>
 
 
