@@ -37,8 +37,7 @@ export class DialogUserChangeRolesComponent implements OnInit {
     this.rolFormControl = new FormControl(null,Validators.required);
     this.rolesAvaiables = [];
     this.userService.getAllRoles().subscribe(res=>{
-      this.rolesAvaiables=res.body.results;
-      console.log(this.rolesAvaiables)
+      this.rolesAvaiables=res.body.results.filter(r => r.level==='1');;
       this.getRolesUser();
     })
   }
@@ -50,6 +49,7 @@ export class DialogUserChangeRolesComponent implements OnInit {
     this.preload=true;
     this.userService.getRoles(this.data).subscribe(res => {
       this.preload=false;
+      
       let list=res.body;
       let vect:number[]=[]
 

@@ -48,8 +48,8 @@
                 Vigente desde
               </th>
               <td mat-cell *matCellDef="let row">
-                <span *ngIf="row.from_date" class="number-field-text">{{row.from_date}}</span>
-                <span *ngIf="!row.from_date">N/A</span>
+                <span *ngIf="row.from_date && row.acronym != 'COP' " class="number-field-text">{{row.from_date}}</span>
+                <span *ngIf="!row.to_date || row.acronym == 'COP'">N/A</span>
               </td>
           </ng-container>
 
@@ -60,8 +60,9 @@
               Vigente hasta 
               </th>
               <td mat-cell *matCellDef="let row">
-                <span *ngIf="row.to_date" class="number-field-text">{{row.to_date}}</span>
-                <span *ngIf="!row.to_date">N/A</span>
+                
+                <span *ngIf="row.to_date && row.acronym != 'COP'" class="number-field-text">{{row.to_date}}</span>
+                <span *ngIf="!row.to_date || row.acronym == 'COP'">N/A</span>
               </td>
           </ng-container>
           
@@ -72,8 +73,9 @@
                 Valor
               </th>
               <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.acronym == 'COP'" class="number-field-text">N/A</span>
                 <span *ngIf="row.acronym == 'USD'" class="number-field-text">{{row.value | number:"1.2" }} COP</span>
-                <span *ngIf="row.acronym != 'USD'" class="number-field-text">{{row.value | number:"1.2" }} USD</span>
+                <span *ngIf="row.acronym != 'USD' && row.acronym != 'COP'" class="number-field-text">{{row.value | number:"1.2" }} USD</span>
               </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

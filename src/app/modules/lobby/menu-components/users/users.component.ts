@@ -107,9 +107,9 @@ export class UsersComponent implements OnInit {
   openDialogRoles(idUser): void {
     this.userService.getRoles(idUser).subscribe(res => {
       let betterUserSelected = this.obtainerBetterRange(res.body);
-      // if (betterUserSelected < 2) {
-      //   this.notifyService.showErrorLong('', 'No tienes permisos para editar este usuario.');
-      // } else {
+      if (betterUserSelected < 2) {
+        this.notifyService.showErrorLong('', 'No tienes permisos para editar este usuario.');
+      } else {
         const dialogRef = this.dialog.open(DialogUserChangeRolesComponent, {
           width: "300px",
           data: +idUser
@@ -118,7 +118,7 @@ export class UsersComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
           this.loadTable();
         });
-      // }
+      }
     });
 
   }

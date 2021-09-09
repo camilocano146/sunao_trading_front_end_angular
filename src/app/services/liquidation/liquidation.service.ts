@@ -59,4 +59,21 @@ export class LiquidationService {
     }
     return this.httpClient.post(`liquidation/${id}/send_liquidation_excel/`, body, { responseType: 'blob' });
   }
+
+  getInternationalAgreementByLocation(id: number, idLocation: number, offset: number, limit: number): Observable<any>{
+    return this.httpClient.get(`liquidation/${id}/get_international_agreement/?offset=${offset}&limit=${limit}&location=${idLocation}`);
+  }
+
+  getTradeRegimen(id: number, offset: number, limit: number): Observable<any>{
+    return this.httpClient.get(`liquidation/${id}/get_trade_regimen/?offset=${offset}&limit=${limit}`);
+  }
+
+  getSupportDocument(id: number, offset: number, limit: number): Observable<any>{
+    return this.httpClient.get(`liquidation/${id}/get_support_document/?offset=${offset}&limit=${limit}`);
+  }
+  
+  getGravaments(id: number, offset: number, limit: number): Observable<any>{
+    return this.httpClient.get(`liquidation/${id}/get_gravaments/?offset=${offset}&limit=${limit}`);
+  }
+
 }

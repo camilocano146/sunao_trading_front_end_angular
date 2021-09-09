@@ -75,25 +75,27 @@ export class LiquidationDetailsComponent implements OnInit {
           break;
       }
 
-      this.productsService.getInternationalAgreementByLocation(this.liquidation.product.id, this.liquidation?.port_origin?.location?.id, 0, 1000).subscribe(res => {
+      this.liquidationService.getInternationalAgreementByLocation(this.liquidation.id, this.liquidation?.port_origin?.location?.id, 0, 1000).subscribe(res => {
         this.listInternationalAgreement = res.results;
       });
 
-      this.productsService.getGravaments(this.liquidation.product.id, 0, 1000).subscribe(res => {
+      this.liquidationService.getGravaments(this.liquidation.id, 0, 1000).subscribe(res => {
         this.listGravament = res.results;
       });
 
-      this.productsService.getSupportDocument(this.liquidation.product.id, 0, 1000).subscribe(res => {
+      this.liquidationService.getSupportDocument(this.liquidation.id, 0, 1000).subscribe(res => {
         this.listSupportDocuments = res.results;
+      });
+
+      this.liquidationService.getTradeRegimen(this.liquidation.id, 0, 1000).subscribe(res=>{
+        this.listTradeRegimes = res.results;
       });
 
       this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.id).subscribe(res => {
         this.initPortsCharges(res.results);
       });
 
-      this.productsService.getTradeRegimen(this.liquidation.product.id, 0, 1000).subscribe(res=>{
-        this.listTradeRegimes = res.results;
-      });
+      
     }, error => {
       this.preload = false;
     });
