@@ -14,14 +14,14 @@
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12 text-right p-0" style="max-width: 1250px; min-width: 200px;">
-        <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 200px !important;">
+        <!-- <button mat-raised-button class="w-75 btn-yellow" (click)="openDialogCreate()" style="width: 200px !important;">
           <h4>
             <img src="./assets/icons/add_white.svg" alt="" width="25" class="mr-5">
             <span style="margin-left: 1em">
               Crear
             </span>
           </h4>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -65,7 +65,7 @@
           </td>
         </ng-container>
         <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
+        <!-- <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>
             <img src="./assets/icons/nota.svg" alt="">
             Acciones
@@ -82,7 +82,7 @@
             </mat-menu>
 
           </td>
-        </ng-container>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

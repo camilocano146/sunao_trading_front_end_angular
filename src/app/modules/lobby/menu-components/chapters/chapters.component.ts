@@ -27,8 +27,7 @@ export class ChaptersComponent implements OnInit {
   public displayedColumns: string[] = [
     'id',
     'name',
-    'code',
-    'actions'
+    'code'
   ];
   formControlFilter: FormControl = new FormControl('');
   private timer: number;
