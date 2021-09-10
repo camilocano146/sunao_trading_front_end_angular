@@ -16,6 +16,8 @@ import { UserService } from 'src/app/services/user/user.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ManageSessionStorage} from '../../../../utils/ManageSessionStorage';
 import {MatCheckbox} from '@angular/material/checkbox';
+import { User } from 'src/app/models/User';
+import { DialogVerifyAccountComponent } from '../../settings-components/profile/dialog-verify-account/dialog-verify-account.component';
 
 @Component({
   selector: 'app-liquidation',
@@ -156,6 +158,32 @@ export class LiquidationsComponent implements OnInit {
   }
 
   exportDate(): void {
+    let user:User;
+    this.userService.getUser().subscribe(res=>{
+      user= res;
+      if(user.is_verify){
+        this.opendialogExport();
+      }else{
+        const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+          width: '400px',
+          maxWidth: '96vw',
+          backdropClass: 'backdrop-dark',
+          panelClass: 'div-without-padding',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if(result=='Verify'){
+            this.opendialogExport();
+          }else{
+            this.router.navigate(['/lobby'])
+          }
+        });
+      }
+    })
+
+    
+  }
+
+  opendialogExport(){
     const dialogRef = this.matDialog.open(DialogExportReportComponent, {
       width: '600px',
       maxWidth: '96vw',

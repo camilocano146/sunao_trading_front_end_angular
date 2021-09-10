@@ -17,11 +17,15 @@ import {Utilities} from '../../../utils/Utilities';
 import {Incoterm} from '../../../models/Incoterm';
 import {ProductsService} from '../../../services/products/products.service';
 import {Product} from '../../../models/Product';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LiquidationService} from '../../../services/liquidation/liquidation.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotifyService} from '../../../services/notify/notify.service';
 import Swal from 'sweetalert2';
+import { ManageLocalStorage } from 'src/app/utils/ManageLocalStorage';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/User';
+import { DialogVerifyAccountComponent } from '../../lobby/settings-components/profile/dialog-verify-account/dialog-verify-account.component';
 
 interface Step {
   imagePath: string;
@@ -109,6 +113,8 @@ export class CostsComponent implements OnInit {
   private changeSelectedDestination: boolean;
   tempNextStep: number;
 
+  tokenActive:boolean;
+
   constructor(
     public matDialog: MatDialog,
     public locationService: LocationService,
@@ -118,9 +124,42 @@ export class CostsComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public liquidationService: LiquidationService,
     public notifyService: NotifyService,
+    public userService:UserService,
+    public router:Router
   ) { }
 
   ngOnInit(): void {
+    this.tokenActive = ManageLocalStorage.getToken() != null;
+    this.verifyUser();
+    this.loadData();
+  }
+
+  verifyUser(){
+    if(this.tokenActive){
+      let user:User;
+      this.userService.getUser().subscribe(res=>{
+        user= res;
+        if(!user.is_verify){
+          const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+            width: '400px',
+            maxWidth: '96vw',
+            backdropClass: 'backdrop-dark',
+            panelClass: 'div-without-padding',
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if(result=='Verify'){
+            }else{
+              this.router.navigate(['/lobby'])
+            }
+          });
+        }
+
+      })
+    }
+    
+  }
+
+  loadData(){
     this.getAllCountries(this.formControlOrigin, true);
     this.getContainers();
     this.getProducts();
@@ -378,6 +417,8 @@ export class CostsComponent implements OnInit {
       this.preloadCityPortDestination = true;
       this.listPortsDestination?.splice(0, this.listPortsDestination?.length);
     }
+
+    console.log(formControl.value);
     try {
       const res = await this.portsService.getPublicListPorts(city.id, 0, this.limit, formControl.value).toPromise();
       if (formControl === this.formControlOriginPort) {

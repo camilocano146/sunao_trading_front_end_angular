@@ -8,8 +8,9 @@
   </div>
   
   <div class="div-content text-center mt-3">
+    <label for="">Ingrese el código enviado al email</label><br>
     <mat-form-field *ngIf="!codeSent" class="w-75 m-auto" appearance="outline">
-        <input type="email" matInput placeholder="Ingrese código" [formControl]="formControlCode" required>
+        <input type="text" matInput placeholder="Ingrese código" [formControl]="formControlCode" required>
         <mat-error *ngIf="formControlCode.invalid">{{getErrorMessageCode()}}</mat-error>
     </mat-form-field>
 

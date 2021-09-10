@@ -12,6 +12,10 @@ import {Utilities} from '../../../../../utils/Utilities';
 import {TradeRegimen} from 'src/app/models/TradeRegimen';
 import {ManageSessionStorage} from '../../../../../utils/ManageSessionStorage';
 import { FormControl } from '@angular/forms';
+import { User } from 'src/app/models/User';
+import { MatDialog } from '@angular/material/dialog';
+import { UserService } from 'src/app/services/user/user.service';
+import { DialogVerifyAccountComponent } from '../../../settings-components/profile/dialog-verify-account/dialog-verify-account.component';
 
 interface HeaderData {
   name: string;
@@ -50,8 +54,10 @@ export class LiquidationComparatorComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private liquidationService: LiquidationService,
+    private matDialog: MatDialog,
+    private userService: UserService
   ) {
-    this.getLiquidations();
+    this.verifyUser();
     this.filterFormControl = new FormControl();
     this.filterFormControl.setValue(this.listSelectedItems)
   }
@@ -59,6 +65,33 @@ export class LiquidationComparatorComponent implements OnInit {
   ngOnInit(): void {
     
   }
+
+  verifyUser(){
+    let user:User;
+    this.userService.getUser().subscribe(res=>{
+      user= res;
+      if(user.is_verify){
+        this.getLiquidations();
+      }else{
+        const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+          width: '400px',
+          maxWidth: '96vw',
+          backdropClass: 'backdrop-dark',
+          panelClass: 'div-without-padding',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if(result=='Verify'){
+            this.getLiquidations();
+          }else{
+            this.router.navigate(['/lobby'])
+          }
+        });
+      }
+    })
+    
+  }
+  
+
 
   getLiquidations(): void {
     this.preload = true;
@@ -82,7 +115,6 @@ export class LiquidationComparatorComponent implements OnInit {
 
   calculateTotalValue(liquidation: Liquidation): number {
     let result = 0;
-    console.log(liquidation)
     if (liquidation?.fob_cost) {
       result += +liquidation?.fob_cost;
     }  if (liquidation?.data?.international_freight_cost) {

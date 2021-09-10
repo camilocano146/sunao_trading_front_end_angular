@@ -11,6 +11,9 @@ import {Liquidation} from '../../../../models/Liquidation';
 import {NotifyService} from "../../../../services/notify/notify.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ManageSessionStorage} from "../../../../utils/ManageSessionStorage";
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/User';
+import { DialogVerifyAccountComponent } from 'src/app/modules/lobby/settings-components/profile/dialog-verify-account/dialog-verify-account.component';
 
 @Component({
   selector: 'app-dialog-resume',
@@ -28,6 +31,7 @@ export class DialogResumeComponent implements OnInit {
     public router: Router,
     public liquidationService: LiquidationService,
     private notifyService: NotifyService,
+    public userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +54,29 @@ export class DialogResumeComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.callServiceLiquidation();
+        let user:User;
+        this.userService.getUser().subscribe(res=>{
+          user= res;
+          if(!user.is_verify){
+            const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+              width: '400px',
+              maxWidth: '96vw',
+              backdropClass: 'backdrop-dark',
+              panelClass: 'div-without-padding',
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if(result=='Verify'){
+                this.callServiceLiquidation();
+              }else{
+                this.router.navigate(['/lobby'])
+                this.matDialogRef.close();
+              }
+            });
+          }else{
+            this.callServiceLiquidation();
+          }
+        });
+        
       }
     });
   }

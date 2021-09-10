@@ -36,7 +36,6 @@ export class ProfileComponent implements OnInit {
     this.preload = true;
     this.userService.getUser().subscribe(res => {
       this.user = res;
-      console.log(this.user)
       this.preload = false;
     }, error => {
       this.preload = false;
@@ -46,9 +45,6 @@ export class ProfileComponent implements OnInit {
 
   verifyAccount(): void {
     if (!this.user.is_verify) {
-      //window.open('/#/activate-account');
-      // this.router.navigate(['']);
-
       const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
         width: '400px',
         maxWidth: '96vw',

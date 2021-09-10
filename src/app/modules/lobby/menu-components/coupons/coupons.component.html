@@ -3,8 +3,8 @@
     <h3 class="w-100">Lista de cupones</h3>
   </div>
 
-  <div class="container">
-    <div class="row m-auto">
+  <div class="container" style="max-width: 1250px;">
+    <div class="row m-auto" style=" width: 100%;">
       <div class="col-md-6 col-12 p-0">
         <mat-form-field class="m-auto mt-3 mat-form-field-filter-table" appearance="fill">
           <input [formControl]="formControlFilter"
@@ -26,13 +26,13 @@
     </div>
   </div>
 
-  <div class="mat-elevation-z8 container">
+  <div class="mat-elevation-z8 container" style="max-width: 1250px;">
     <div class="div-parent-table">
       <table mat-table [dataSource]="list" class="w-100">
 
         <!-- column id -->
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef>
+          <th mat-header-cell *matHeaderCellDef width="3%">
             Id
           </th>
           <td mat-cell *matCellDef="let row">
@@ -42,9 +42,8 @@
 
         <!-- Code Column -->
         <ng-container matColumnDef="code">
-          <th mat-header-cell *matHeaderCellDef>
+          <th mat-header-cell *matHeaderCellDef width="7%">
             <img src="./assets/icons/codigo.svg" alt="">
-            Código
           </th>
           <td mat-cell *matCellDef="let row">
             <span *ngIf="row.code">{{row.code}}</span>
@@ -54,8 +53,7 @@
 
         <!-- discount_percent Column -->
         <ng-container matColumnDef="discount_percent">
-          <th mat-header-cell *matHeaderCellDef>
-            <img src="./assets/icons/nota.svg" alt="">
+          <th mat-header-cell *matHeaderCellDef width="10%">
             % Descuento
           </th>
           <td mat-cell *matCellDef="let row">
@@ -67,7 +65,7 @@
         <ng-container matColumnDef="created_at">
           <th mat-header-cell *matHeaderCellDef>
             <img src="./assets/icons/calendar.svg" alt="">
-            Fecha de creacion
+            Creado
           </th>
           <td mat-cell *matCellDef="let row">
             <span *ngIf="row.created_at">{{row.created_at | date : 'short'}}</span>
@@ -76,7 +74,7 @@
         </ng-container>
 
         <ng-container matColumnDef="created_by">
-          <th mat-header-cell *matHeaderCellDef>
+          <th mat-header-cell *matHeaderCellDef >
             <img src="./assets/icons/pencil.svg" alt="" style="transform: scale(1.2)">
             Creado por
           </th>
@@ -95,9 +93,21 @@
             <span *ngIf="!row.used_by">N/A</span>
           </td>
         </ng-container>
+
+        <ng-container matColumnDef="used_at">
+          <th mat-header-cell *matHeaderCellDef>
+            <img src="./assets/icons/calendar.svg" alt="">
+            Usado en
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.used_at">{{row.used_at | date : 'short'}}</span>
+            <span *ngIf="!row.used_at">N/A</span>
+          </td>
+        </ng-container>
+
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>
+          <th mat-header-cell *matHeaderCellDef width="5%">
             <img src="./assets/icons/nota.svg" alt="">
             Acciones
           </th>

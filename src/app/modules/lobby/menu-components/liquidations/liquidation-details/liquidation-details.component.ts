@@ -15,6 +15,9 @@ import {ReportsEnum} from '../../../../../enums/Reports.enum';
 import {DialogExportSendLiquidationComponent} from '../dialog-export-send-liquidation/dialog-export-send-liquidation.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ExportSendLiquidation} from '../../../../../enums/ExportSendLiquidation';
+import { DialogVerifyAccountComponent } from '../../../settings-components/profile/dialog-verify-account/dialog-verify-account.component';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-dashboards',
@@ -48,16 +51,44 @@ export class LiquidationDetailsComponent implements OnInit {
     private liquidationService: LiquidationService,
     private productsService: ProductsService,
     private portsService: PortsService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private userService: UserService
   ) {
     activatedRoute.params.subscribe(params => {
       this.idLiquidation = params.idLiquidation;
-      this.loadInfo();
+      this.verifyUser();
     });
   }
 
   ngOnInit(): void {
   }
+
+
+  verifyUser(){
+    let user:User;
+    this.userService.getUser().subscribe(res=>{
+      user= res;
+      if(user.is_verify){
+        this.loadInfo();
+      }else{
+        const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+          width: '400px',
+          maxWidth: '96vw',
+          backdropClass: 'backdrop-dark',
+          panelClass: 'div-without-padding',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if(result=='Verify'){
+            this.loadInfo();
+          }else{
+            this.router.navigate(['/lobby'])
+          }
+        });
+      }
+    })
+    
+  }
+  
 
   loadInfo(): void {
     this.preload = true;

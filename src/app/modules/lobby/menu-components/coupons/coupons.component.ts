@@ -34,6 +34,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
     'created_at',
     'created_by',
     'used_by',
+    'used_at',
     'actions'
   ];
 
