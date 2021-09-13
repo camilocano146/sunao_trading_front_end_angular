@@ -42,6 +42,7 @@ export class LiquidationDetailsComponent implements OnInit {
   listStorageChargeByDay: Array<any>=[];
   valueStorageChargeByDay:number=0;
   listTradeRegimes: TradeRegimen[];
+  userPackage: boolean;
 
   constructor(
     private translate: TranslateService,
@@ -63,13 +64,20 @@ export class LiquidationDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  userHasActivePackage(): void {
+    
+  }
 
   verifyUser(){
+
     let user:User;
     this.userService.getUser().subscribe(res=>{
-      user= res;
+      user = res;
       if(user.is_verify){
-        this.loadInfo();
+        this.userService.userHasActivePackage().subscribe(res => {
+          this.userPackage = res.result;
+          this.loadInfo();
+        });
       }else{
         const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
           width: '400px',
@@ -79,57 +87,62 @@ export class LiquidationDetailsComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
           if(result=='Verify'){
-            this.loadInfo();
+            this.userService.userHasActivePackage().subscribe(res => {
+              this.userPackage = res.result;
+              this.loadInfo();
+            });
           }else{
             this.router.navigate(['/lobby'])
           }
         });
       }
     })
-    
+
   }
-  
 
   loadInfo(): void {
     this.preload = true;
     this.liquidationService.getById(this.idLiquidation).subscribe(res => {
       this.liquidation = res;
-      switch (this.liquidation.incoterm) {
-        case 'CFR':
-          this.listSelectedItems.push(0, 1);
-          break;
-        case 'CIF':
-          this.listSelectedItems.push(0, 1, 2);
-          break;
-        case 'DDP':
-          this.listSelectedItems.push(0, 1, 2, 3, 4, 5);
-          break;
+      if(this.liquidation.status==='PENDIENT' && !this.userPackage){
+        this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
+        this.router.navigate(['import/plans']);
+      }else{
+        switch (this.liquidation.incoterm) {
+          case 'CFR':
+            this.listSelectedItems.push(0, 1);
+            break;
+          case 'CIF':
+            this.listSelectedItems.push(0, 1, 2);
+            break;
+          case 'DDP':
+            this.listSelectedItems.push(0, 1, 2, 3, 4, 5);
+            break;
+        }
+        this.liquidationService.getInternationalAgreementByLocation(this.liquidation.id, this.liquidation?.port_origin?.location?.id, 0, 1000).subscribe(res => {
+          this.listInternationalAgreement = res.results;
+        });
+        this.liquidationService.getGravaments(this.liquidation.id, 0, 1000).subscribe(res => {
+          this.listGravament = res.results;
+        });
+        this.liquidationService.getSupportDocument(this.liquidation.id, 0, 1000).subscribe(res => {
+          this.listSupportDocuments = res.results;
+        });
+        this.liquidationService.getTradeRegimen(this.liquidation.id, 0, 1000).subscribe(res=>{
+          this.listTradeRegimes = res.results;
+        });
+        this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.id).subscribe(res => {
+          this.initPortsCharges(res.results);
+        });
+
       }
-
-      this.liquidationService.getInternationalAgreementByLocation(this.liquidation.id, this.liquidation?.port_origin?.location?.id, 0, 1000).subscribe(res => {
-        this.listInternationalAgreement = res.results;
-      });
-
-      this.liquidationService.getGravaments(this.liquidation.id, 0, 1000).subscribe(res => {
-        this.listGravament = res.results;
-      });
-
-      this.liquidationService.getSupportDocument(this.liquidation.id, 0, 1000).subscribe(res => {
-        this.listSupportDocuments = res.results;
-      });
-
-      this.liquidationService.getTradeRegimen(this.liquidation.id, 0, 1000).subscribe(res=>{
-        this.listTradeRegimes = res.results;
-      });
-
-      this.portsService.getPortCharge(this.liquidation.product.id, 0, 1000, this.liquidation.id).subscribe(res => {
-        this.initPortsCharges(res.results);
-      });
-
-      
     }, error => {
+      if(error.status === 406){
+        this.router.navigate(['/lobby']);
+      }
       this.preload = false;
     });
+
   }
 
   goToLiquidations(): void {

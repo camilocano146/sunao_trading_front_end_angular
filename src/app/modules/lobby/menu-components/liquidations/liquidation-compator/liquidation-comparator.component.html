@@ -140,7 +140,7 @@
       <tr>
         <th class="row m-0 th-white">
         </th>
-        <td *ngFor="let liquidation of liquidations; let i = index;" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow' : 'th-head-blue'" [attr.data-index]="i">
+        <td *ngFor="let liquidation of liquidations; let i = index;" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow td-min-total' : 'th-head-blue'" [attr.data-index]="i">
           <span>Liquidación {{i+1}}</span>
         </td>
       </tr>
@@ -155,7 +155,7 @@
             Fecha
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{liquidation.create_at | date:'longDate'}}
         </td>
       </tr>
@@ -170,7 +170,7 @@
             Valor FOB
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-blue">
+        <td *ngFor="let liquidation of liquidations" class="td-blue" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{(liquidation?.fob_cost | currency:' ':'symbol':'1.0')}} USD
         </td>
       </tr>
@@ -185,7 +185,7 @@
             Origen
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''" >
           {{liquidation?.port_origin?.location?.name | titlecase}} ({{liquidation?.port_origin?.name | titlecase}})
         </td>
       </tr>
@@ -200,7 +200,7 @@
             Destino
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-blue">
+        <td *ngFor="let liquidation of liquidations" class="td-blue" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{liquidation?.port_destination?.location?.name | titlecase}} ({{liquidation?.port_destination?.name | titlecase}})
         </td>
       </tr>
@@ -215,7 +215,7 @@
             Producto
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{liquidation.product?.name}}
         </td>
       </tr>
@@ -230,7 +230,7 @@
             Partida arancelaria
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-blue">
+        <td *ngFor="let liquidation of liquidations" class="td-blue" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{liquidation.product?.code}}
         </td>
       </tr>
@@ -245,7 +245,7 @@
             Contenedor
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{liquidation.container_type?.name}}
         </td>
       </tr>
@@ -260,7 +260,7 @@
             Divisa
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-blue">
+        <td *ngFor="let liquidation of liquidations" class="td-blue" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{liquidation.currency?.acronym}}
         </td>
       </tr>
@@ -275,7 +275,7 @@
             Incoterm
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           {{liquidation.incoterm}}
         </td>
       </tr>
@@ -290,7 +290,7 @@
             Flete Internacional
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-blue">
+        <td *ngFor="let liquidation of liquidations" class="td-blue" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           <span *ngIf="liquidation?.data?.international_freight_cost">
             {{(liquidation?.data?.international_freight_cost | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -310,7 +310,7 @@
             Seguro internacional
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           <span *ngIf="liquidation?.data?.insurance_cost">
             {{(liquidation?.data?.insurance_cost | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -330,7 +330,7 @@
             Aduana y portuarios
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-blue">
+        <td *ngFor="let liquidation of liquidations" class="td-blue" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           <span *ngIf="liquidation?.data?.port_charge">
             {{(liquidation?.data?.port_charge | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -350,7 +350,7 @@
             Arancel
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           <span *ngIf="liquidation?.data?.gravamen_tarif">
             {{(liquidation?.data?.gravamen_tarif | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -370,7 +370,7 @@
             Flete local
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-blue">
+        <td *ngFor="let liquidation of liquidations" class="td-blue" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           <span *ngIf="liquidation?.data?.national_freight_cost">
             {{(liquidation?.data?.national_freight_cost | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -390,7 +390,7 @@
             IVA
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" class="td-yellow">
+        <td *ngFor="let liquidation of liquidations" class="td-yellow" [ngClass]="calculateTotalValue(liquidation)==min_total? 'td-min-total' :''">
           <span *ngIf="liquidation?.data?.iva_tarif">
             {{(liquidation?.data?.iva_tarif | currency:' ':'symbol':'1.0')}} USD
           </span>
@@ -410,7 +410,7 @@
             Total:
           </span>
         </th>
-        <td *ngFor="let liquidation of liquidations" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow' : 'th-head-blue'" >
+        <td *ngFor="let liquidation of liquidations" [ngClass]="calculateTotalValue(liquidation)==min_total? 'th-head-yellow td-min-total' : 'th-head-blue'" >
           <span>
             {{((calculateTotalValue(liquidation) | currency:' ':'symbol':'1.0') + '')?.replace(',', '.')}} USD
           </span>

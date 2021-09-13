@@ -143,18 +143,59 @@ export class LiquidationsComponent implements OnInit {
   }
 
   reuse(liquidation: Liquidation): void {
-    // ManageSessionStorage.setLiquidationReuse(liquidation);
-    this.router.navigate(['import'], {queryParams: {id_liquidation: liquidation.id}});
-  }
-
-  goToSeeDetails(row: Liquidation): void {
-
-    if (this.userPackage == false) {
+    if (this.userPackage == false ) {
       this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
       this.router.navigate(['import/plans']);
     } else {
-      this.router.navigate([`lobby/liquidations-detail/${row.id}`]);
+      let user:User;
+      this.userService.getUser().subscribe(res=>{
+        user= res;
+        if(user.is_verify){
+          this.router.navigate(['import'], {queryParams: {id_liquidation: liquidation.id}});
+        }else{
+          const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+            width: '400px',
+            maxWidth: '96vw',
+            backdropClass: 'backdrop-dark',
+            panelClass: 'div-without-padding',
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if(result=='Verify'){
+              this.router.navigate(['import'], {queryParams: {id_liquidation: liquidation.id}});
+            }
+          });
+        }
+      });
     }
+  }
+
+  goToSeeDetails(row: Liquidation): void {
+    
+    if (row.status==='PENDIENT' && this.userPackage == false ) {
+      this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
+      this.router.navigate(['import/plans']);
+    } else {
+      let user:User;
+      this.userService.getUser().subscribe(res=>{
+        user= res;
+        if(user.is_verify){
+          this.router.navigate([`lobby/liquidations-detail/${row.id}`]);
+        }else{
+          const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+            width: '400px',
+            maxWidth: '96vw',
+            backdropClass: 'backdrop-dark',
+            panelClass: 'div-without-padding',
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if(result=='Verify'){
+              this.router.navigate([`lobby/liquidations-detail/${row.id}`]);
+            }
+          });
+        }
+      })
+    }
+
   }
 
   exportDate(): void {
@@ -178,9 +219,7 @@ export class LiquidationsComponent implements OnInit {
           }
         });
       }
-    })
-
-    
+    })    
   }
 
   opendialogExport(){
@@ -208,7 +247,25 @@ export class LiquidationsComponent implements OnInit {
   }
 
   compareLiquidations(): void {
-    this.router.navigate([`lobby/liquidations-comparator`]);
+    let user:User;
+    this.userService.getUser().subscribe(res=>{
+      user= res;
+      if(user.is_verify){
+        this.router.navigate([`lobby/liquidations-comparator`]);
+      }else{
+        const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+          width: '400px',
+          maxWidth: '96vw',
+          backdropClass: 'backdrop-dark',
+          panelClass: 'div-without-padding',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if(result=='Verify'){
+            this.router.navigate([`lobby/liquidations-comparator`]);
+          }
+        });
+      }
+    })
   }
 
   deselectItem(item: number): void {
@@ -217,6 +274,31 @@ export class LiquidationsComponent implements OnInit {
   }
 
   goToNewLiquidation(): void {
-    this.router.navigate(['/import']);
+    if(this.userPackage!=null){
+      if (this.userPackage == false ) {
+        this.notifyService.showErrorLong('', 'Aún no tiene un plan activo, debe realizar la comprar de uno.');
+        this.router.navigate(['import/plans']);
+      }else{
+        let user:User;
+        this.userService.getUser().subscribe(res=>{
+          user= res;
+          if(user.is_verify){
+            this.router.navigate(['/import']);
+          }else{
+            const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+              width: '400px',
+              maxWidth: '96vw',
+              backdropClass: 'backdrop-dark',
+              panelClass: 'div-without-padding',
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if(result=='Verify'){
+                this.router.navigate(['/import']);
+              }
+            });
+          }
+        })
+      }
+    }
   }
 }

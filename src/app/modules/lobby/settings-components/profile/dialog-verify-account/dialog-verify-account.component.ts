@@ -66,7 +66,9 @@ export class DialogVerifyAccountComponent implements OnInit {
             } else {
               this.notifyService.showErrorSnapshot(this.translate.instant('errors.connection_error'));
             }
-          } else {
+          }else if(error.status === 406){
+            this.notifyService.showErrorSnapshot(this.translate.instant('El codígo ingresado expiró, se ha enviado uno nuevo a tu correo.'));
+          }else {
             this.notifyService.showErrorSnapshot(this.translate.instant('errors.connection_error'));
           }
         }

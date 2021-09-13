@@ -57,24 +57,25 @@ export class DialogResumeComponent implements OnInit {
         let user:User;
         this.userService.getUser().subscribe(res=>{
           user= res;
-          if(!user.is_verify){
-            const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
-              width: '400px',
-              maxWidth: '96vw',
-              backdropClass: 'backdrop-dark',
-              panelClass: 'div-without-padding',
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if(result=='Verify'){
-                this.callServiceLiquidation();
-              }else{
-                this.router.navigate(['/lobby'])
-                this.matDialogRef.close();
-              }
-            });
-          }else{
-            this.callServiceLiquidation();
-          }
+          this.callServiceLiquidation();
+          // if(!user.is_verify){
+          //   const dialogRef = this.matDialog.open(DialogVerifyAccountComponent, {
+          //     width: '400px',
+          //     maxWidth: '96vw',
+          //     backdropClass: 'backdrop-dark',
+          //     panelClass: 'div-without-padding',
+          //   });
+          //   dialogRef.afterClosed().subscribe(result => {
+          //     if(result=='Verify'){
+          //       this.callServiceLiquidation();
+          //     }else{
+          //       this.router.navigate(['/lobby'])
+          //       this.matDialogRef.close();
+          //     }
+          //   });
+          // }else{
+          //   this.callServiceLiquidation();
+          // }
         });
         
       }
