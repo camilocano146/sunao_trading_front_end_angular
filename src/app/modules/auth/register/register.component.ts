@@ -12,6 +12,7 @@ import * as sha1 from 'js-sha1';
 import {Credential} from '../../../models/Credential';
 import {DialogTermsAndConditionsUserComponent} from '../dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
 import { DialogRegisterQuizComponent } from './dialog-register-quiz/dialog-register-quiz.component';
+import { ManageSessionStorage } from 'src/app/utils/ManageSessionStorage';
 
 @Component({
   selector: 'app-register',
@@ -30,9 +31,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
   );
 
-  formControlLastName: FormControl = new FormControl('',
-    [Validators.maxLength(100)]
-  );
+  formControlLastName: FormControl = new FormControl('');
 
   formControlNit: FormControl = new FormControl('',
     [Validators.required, Validators.minLength(4), Validators.maxLength(100)]
@@ -145,6 +144,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
 
   register(): void {
+    
     if (this.formControlEmail.value) {
       this.formControlEmail.setValue(this.formControlEmail.value.toString().toLowerCase().trim());
     }
@@ -154,7 +154,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     if(!this.checkQuiz){
       this.notifyService.showErrorSnapshot('Debes contestar las preguntas para registrarte.');
     }
-
+    this.formControlLastName.clearValidators();
+    this.formControlLastName.setValidators([Validators.maxLength(100)]);
+    this.formControlLastName.updateValueAndValidity();
     if (this.formControlEmail.valid && 
       this.formControlPassword.valid && 
       this.checkTermsAndConditions && 
@@ -188,6 +190,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           // this.router.navigate(['lobby']);
           this.userService.saveLocalStorageToken(value.access_token);
           this.userService.saveLocalStorageUser(value.user);
+          ManageSessionStorage.setListCompareLiquidations([]);
           this.router.navigate(['lobby']);
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.register.create_ok'));
           // this.notifyService.showWarningSnapshot(this.translate.instant('auth.register.email_not_verifies'));

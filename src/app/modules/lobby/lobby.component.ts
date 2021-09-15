@@ -4,6 +4,7 @@ import {User} from '../../models/User';
 import {MatDialog} from '@angular/material/dialog';
 import {UserService} from '../../services/user/user.service';
 import {Utilities} from '../../utils/Utilities';
+import { ManageSessionStorage } from 'src/app/utils/ManageSessionStorage';
 
 @Component({
   selector: 'app-lobby',
@@ -42,6 +43,7 @@ export class LobbyComponent implements OnInit {
   }
 
   logOut(): void {
+    ManageSessionStorage.setListCompareLiquidations([]);
     this.router.navigate(['']);
     localStorage.clear();
   }

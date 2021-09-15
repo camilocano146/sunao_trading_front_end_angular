@@ -10,6 +10,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import * as sha1 from 'js-sha1';
 import {DialogTermsAndConditionsUserComponent} from '../../../auth/dialog-terms-and-conditions-user/dialog-terms-and-conditions-user.component';
 import { DialogRegisterQuizComponent } from 'src/app/modules/auth/register/dialog-register-quiz/dialog-register-quiz.component';
+import { ManageSessionStorage } from 'src/app/utils/ManageSessionStorage';
 
 @Component({
   selector: 'app-dialog-resume',
@@ -164,6 +165,7 @@ export class DialogLoginComponent implements OnInit {
           // const user: User = value.body.user;
           this.userService.saveLocalStorageToken(value.access_token);
           this.notifyService.clear();
+          ManageSessionStorage.setListCompareLiquidations([]);
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.sign_in.sign_ok'));
           this.matDialogRef.close(value);
         }, (httpErrorResponse: HttpErrorResponse) => {
@@ -207,6 +209,9 @@ export class DialogLoginComponent implements OnInit {
     if(!this.checkQuiz){
       this.notifyService.showErrorSnapshot('Debes contestar las preguntas para registrarte.');
     }
+    this.formControlLastName.clearValidators();
+    this.formControlLastName.setValidators([Validators.maxLength(100)]);
+    this.formControlLastName.updateValueAndValidity();
 
     if (this.formControlEmail.valid && 
       this.formControlPassword.valid && 
@@ -239,6 +244,7 @@ export class DialogLoginComponent implements OnInit {
           this.userService.saveLocalStorageToken(value.access_token);
           this.userService.saveLocalStorageUser(value.user);
           this.matDialogRef.close(value);
+          ManageSessionStorage.setListCompareLiquidations([]);
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.register.create_ok'));
         }, (error: HttpErrorResponse) => {
           const errorEmail = error.error;

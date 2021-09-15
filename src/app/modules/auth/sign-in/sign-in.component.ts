@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {ManageLocalStorage} from '../../../utils/ManageLocalStorage';
 import * as sha1 from 'js-sha1';
 import {Credential} from '../../../models/Credential';
+import { ManageSessionStorage } from 'src/app/utils/ManageSessionStorage';
 
 @Component({
   selector: 'app-sign-in',
@@ -80,6 +81,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
         value => {
           // const user: User = value.body.user;
           this.userService.saveLocalStorageToken(value.access_token);
+          ManageSessionStorage.setListCompareLiquidations([]);
           this.router.navigate(['lobby']);
           this.notifyService.clear();
           this.notifyService.showSuccessSnapshot(this.translate.instant('auth.sign_in.sign_ok'));
